@@ -1,8 +1,0 @@
-{
-  "name": "insurance-copilot",
-  "version": "0.1.0",
-  "description": "Assists insurance agents with client intake, coverage gap analysis, product-fit review, objection handling, renewal follow-up, and compliance-gated communication drafts. Every output is a draft for licensed agent and compliance review, not insurance, legal, tax, or investment advice.",
-  "author": {
-    "name": "Insurance Copilot Project"
-  }
-}
