@@ -5,13 +5,13 @@ description: Learn an insurance agency's playbook before running other workflows
 
 # Cold-Start Interview
 
-Use this skill before any substantive workflow. The goal is to create or update the agency practice profile that all other insurance-agent skills read.
+Use this skill before any substantive workflow. The goal is to create or update the agency practice profile that all other insurance-copilot skills read.
 
 ## Output Location
 
 Write the resulting profile to the configured plugin profile path, typically:
 
-`~/.claude/plugins/config/insurance-agent/insurance-agent/CLAUDE.md`
+`~/.claude/plugins/config/insurance-copilot/insurance-copilot/CLAUDE.md`
 
 If file access is unavailable, output a complete profile draft the user can paste into that path.
 
@@ -64,7 +64,7 @@ Ask only the questions needed for the user's situation; do not interrogate unnec
 Produce this structure:
 
 ```markdown
-# Insurance Agent Practice Profile
+# Insurance Copilot Practice Profile
 
 ## Agency Context
 - Agency:

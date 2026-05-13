@@ -1,11 +1,11 @@
-# Insurance Agent Assistant
+# Insurance Copilot
 
-A Claude-style insurance-agent workflow plugin inspired by `anthropics/claude-for-legal`.
+A Claude-style insurance-copilot workflow plugin inspired by `anthropics/claude-for-legal`.
 
 This repository is intentionally focused on the plugin/agent structure, not a web application. The main project lives in:
 
 ```text
-insurance-agent/
+insurance-copilot/
 ```
 
 ## Purpose
@@ -28,7 +28,7 @@ Every output is a draft for licensed agent and compliance review. This project d
 ## Project Structure
 
 ```text
-insurance-agent/
+insurance-copilot/
 ├── .claude-plugin/
 │   └── plugin.json
 ├── .mcp.json
@@ -66,15 +66,15 @@ insurance-agent/
 ## First Command
 
 ```text
-/insurance-agent:cold-start-interview
+/insurance-copilot:cold-start-interview
 ```
 
 Use this first to define jurisdiction, license scope, product universe, compliance rules, escalation paths, and preferred output formats.
 
 ## Important Files
 
-- `insurance-agent/CLAUDE.md` — global insurance-agent practice profile.
-- `insurance-agent/skills/*/SKILL.md` — workflow definitions.
-- `insurance-agent/.mcp.json` — placeholder connectors.
-- `insurance-agent/managed-agent-cookbooks/README.md` — scheduled/monitoring agent patterns.
-- `insurance-agent/references/compliance-starter.md` — starter compliance checklist.
+- `insurance-copilot/CLAUDE.md` — global insurance-copilot practice profile.
+- `insurance-copilot/skills/*/SKILL.md` — workflow definitions.
+- `insurance-copilot/.mcp.json` — placeholder connectors.
+- `insurance-copilot/managed-agent-cookbooks/README.md` — scheduled/monitoring agent patterns.
+- `insurance-copilot/references/compliance-starter.md` — starter compliance checklist.

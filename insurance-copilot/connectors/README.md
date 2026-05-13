@@ -1,4 +1,4 @@
-# Insurance Agent Connectors
+# Insurance Copilot Connectors
 
 Connector placeholders for production integration.
 

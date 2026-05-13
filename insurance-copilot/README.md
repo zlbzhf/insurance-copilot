@@ -1,10 +1,10 @@
-# Insurance Agent Plugin
+# Insurance Copilot Plugin
 
 A Claude-style plugin inspired by the structure of `anthropics/claude-for-legal`, adapted for insurance agency workflows.
 
 ## Core Principle
 
-Every output is a draft for licensed insurance-agent and compliance review. The plugin helps with intake, issue spotting, product-fit analysis, objection handling, renewal follow-up, and stakeholder summaries. It does **not** make underwriting decisions, sell products, guarantee outcomes, or replace licensed professional judgment.
+Every output is a draft for licensed insurance-copilot and compliance review. The plugin helps with intake, issue spotting, product-fit analysis, objection handling, renewal follow-up, and stakeholder summaries. It does **not** make underwriting decisions, sell products, guarantee outcomes, or replace licensed professional judgment.
 
 ## What This Mirrors from `claude-for-legal`
 
@@ -26,15 +26,15 @@ Every output is a draft for licensed insurance-agent and compliance review. The 
 
 ## Core Commands
 
-- `/insurance-agent:cold-start-interview` — learn the agency playbook.
-- `/insurance-agent:client-needs-intake` — collect customer facts and missing questions.
-- `/insurance-agent:coverage-gap-analysis` — identify protection gaps.
-- `/insurance-agent:product-fit-review` — review product fit and suitability cautions.
-- `/insurance-agent:objection-response` — draft compliant objection-handling scripts.
-- `/insurance-agent:compliance-check` — screen copy/scripts for risky claims.
-- `/insurance-agent:policy-review` — summarize existing policy and replacement cautions.
-- `/insurance-agent:renewal-review` — review upcoming renewal/lapse/action dates.
-- `/insurance-agent:stakeholder-summary` — create concise summaries for customers, agents, or managers.
+- `/insurance-copilot:cold-start-interview` — learn the agency playbook.
+- `/insurance-copilot:client-needs-intake` — collect customer facts and missing questions.
+- `/insurance-copilot:coverage-gap-analysis` — identify protection gaps.
+- `/insurance-copilot:product-fit-review` — review product fit and suitability cautions.
+- `/insurance-copilot:objection-response` — draft compliant objection-handling scripts.
+- `/insurance-copilot:compliance-check` — screen copy/scripts for risky claims.
+- `/insurance-copilot:policy-review` — summarize existing policy and replacement cautions.
+- `/insurance-copilot:renewal-review` — review upcoming renewal/lapse/action dates.
+- `/insurance-copilot:stakeholder-summary` — create concise summaries for customers, agents, or managers.
 
 ## Quick Start
 
@@ -42,17 +42,17 @@ Every output is a draft for licensed insurance-agent and compliance review. The 
 2. Run:
 
 ```text
-/insurance-agent:cold-start-interview
+/insurance-copilot:cold-start-interview
 ```
 
 3. Answer questions about jurisdiction, license scope, carrier/product universe, customer segments, prohibited claims, escalation rules, and preferred output formats.
 4. Use workflow commands such as:
 
 ```text
-/insurance-agent:client-needs-intake
-/insurance-agent:coverage-gap-analysis
-/insurance-agent:product-fit-review product.pdf customer-notes.md
-/insurance-agent:compliance-check sales-script.md
+/insurance-copilot:client-needs-intake
+/insurance-copilot:coverage-gap-analysis
+/insurance-copilot:product-fit-review product.pdf customer-notes.md
+/insurance-copilot:compliance-check sales-script.md
 ```
 
 ## Cold-Start Output
@@ -60,7 +60,7 @@ Every output is a draft for licensed insurance-agent and compliance review. The 
 The cold-start interview should produce or update a plain-English practice profile similar to:
 
 ```text
-~/.claude/plugins/config/insurance-agent/insurance-agent/CLAUDE.md
+~/.claude/plugins/config/insurance-copilot/insurance-copilot/CLAUDE.md
 ```
 
 That profile should define:

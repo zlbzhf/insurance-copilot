@@ -1,4 +1,4 @@
-# Insurance Agent Managed-Agent Cookbooks
+# Insurance Copilot Managed-Agent Cookbooks
 
 These mirror the scheduled-agent idea from `claude-for-legal`, adapted to insurance agency operations.
 
