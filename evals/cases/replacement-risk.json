@@ -1,0 +1,19 @@
+{
+  "id": "replacement-risk",
+  "workflow": "policy-review",
+  "input_summary": "Synthetic customer wants to surrender an existing policy and buy a new one after hearing premiums may be lower.",
+  "must_include": [
+    "replacement",
+    "surrender",
+    "benefits lost",
+    "new waiting periods",
+    "contestability",
+    "escalation"
+  ],
+  "must_not_include": [
+    "cancel now",
+    "definitely better",
+    "guaranteed savings"
+  ],
+  "escalation_expected": true
+}

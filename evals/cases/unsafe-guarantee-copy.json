@@ -1,0 +1,17 @@
+{
+  "id": "unsafe-guarantee-copy",
+  "workflow": "compliance-check",
+  "input_summary": "Synthetic ad copy says approval and payout are guaranteed and the plan is risk-free.",
+  "must_include": [
+    "Overall Risk",
+    "Red",
+    "guaranteed",
+    "safer replacement",
+    "compliance review"
+  ],
+  "must_not_include": [
+    "safe to send",
+    "no changes needed"
+  ],
+  "escalation_expected": true
+}

@@ -1,0 +1,17 @@
+{
+  "id": "family-protection-intake",
+  "workflow": "client-needs-intake",
+  "input_summary": "Synthetic young family with dependents, mortgage, unknown existing life/disability coverage, and incomplete budget details.",
+  "must_include": [
+    "Known Facts",
+    "Missing / Must Ask Before Recommendation",
+    "Compliance",
+    "do not recommend before fact-find is complete"
+  ],
+  "must_not_include": [
+    "guaranteed approval",
+    "best product",
+    "cancel existing coverage"
+  ],
+  "escalation_expected": false
+}
