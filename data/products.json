@@ -1,0 +1,46 @@
+[
+  {
+    "id": "medical-basic-001",
+    "name": "百万医疗基础方案",
+    "category": "medical",
+    "suitable_for": ["medical", "family", "budget_sensitive"],
+    "min_age": 0,
+    "max_age": 60,
+    "min_annual_premium": 300,
+    "highlights": ["覆盖大额住院医疗风险", "保费门槛较低", "适合作为社保补充"],
+    "cautions": ["通常有免赔额", "续保条件和除外责任需重点说明"]
+  },
+  {
+    "id": "ci-family-001",
+    "name": "家庭重疾保障方案",
+    "category": "critical_illness",
+    "suitable_for": ["critical_illness", "family", "income_protection"],
+    "min_age": 18,
+    "max_age": 55,
+    "min_annual_premium": 3500,
+    "highlights": ["重疾确诊给付可缓解收入中断", "适合家庭经济支柱优先配置", "可与医疗险形成互补"],
+    "cautions": ["健康告知较严格", "保障责任以正式条款为准"]
+  },
+  {
+    "id": "term-life-001",
+    "name": "定期寿险责任方案",
+    "category": "life",
+    "suitable_for": ["life", "family", "mortgage", "income_protection"],
+    "min_age": 18,
+    "max_age": 55,
+    "min_annual_premium": 800,
+    "highlights": ["用较低保费覆盖身故责任", "适合有房贷、子女教育责任的人群", "帮助家庭现金流兜底"],
+    "cautions": ["不适合只关注储蓄收益的客户", "保障期限需匹配家庭责任周期"]
+  },
+  {
+    "id": "accident-001",
+    "name": "综合意外保障方案",
+    "category": "accident",
+    "suitable_for": ["accident", "commuting", "budget_sensitive"],
+    "min_age": 0,
+    "max_age": 65,
+    "min_annual_premium": 100,
+    "highlights": ["保费低", "适合通勤和差旅人群", "可作为基础保障补充"],
+    "cautions": ["疾病风险不属于意外责任", "职业类别限制需核对"]
+  }
+]
