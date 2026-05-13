@@ -1,54 +1,80 @@
-# 保险代理人助手
+# Insurance Agent Assistant
 
-面向保险代理人的 AI 工作台 MVP，帮助完成客户需求采集、保障缺口分析、产品推荐草案、异议处理话术和合规提醒。
+A Claude-style insurance-agent workflow plugin inspired by `anthropics/claude-for-legal`.
 
-## 合规边界
+This repository is intentionally focused on the plugin/agent structure, not a web application. The main project lives in:
 
-- 本项目只提供销售辅助和信息整理，不构成保险、投资、法律或税务建议。
-- 输出内容必须由持牌保险从业人员复核后才能用于客户沟通。
-- 不承诺收益，不夸大保障，不替代正式产品条款、费率表和投保规则。
-- 真实部署前需要接入公司合规审查、日志审计、权限控制和敏感信息保护。
-
-## 本地启动
-
-### 后端
-
-```bash
-cd /root/insurance-agent-assistant/backend
-python3 -m venv .venv
-. .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+```text
+insurance-agent/
 ```
 
-健康检查：
+## Purpose
 
-```bash
-curl http://127.0.0.1:8000/health
+Help licensed insurance agents and agency teams draft, organize, and review insurance workflow outputs:
+
+- customer fact-find and needs intake;
+- coverage gap analysis;
+- product-fit and suitability review;
+- objection-handling scripts;
+- compliance screening for sales copy;
+- existing policy review and replacement cautions;
+- renewal/lapse follow-up;
+- stakeholder summaries.
+
+## Non-Negotiable Boundary
+
+Every output is a draft for licensed agent and compliance review. This project does not provide binding insurance advice, legal advice, tax advice, investment advice, underwriting decisions, claims decisions, or product guarantees.
+
+## Project Structure
+
+```text
+insurance-agent/
+├── .claude-plugin/
+│   └── plugin.json
+├── .mcp.json
+├── CLAUDE.md
+├── README.md
+├── connectors/
+│   └── README.md
+├── managed-agent-cookbooks/
+│   └── README.md
+├── references/
+│   └── compliance-starter.md
+└── skills/
+    ├── cold-start-interview/
+    ├── client-needs-intake/
+    ├── coverage-gap-analysis/
+    ├── product-fit-review/
+    ├── objection-response/
+    ├── compliance-check/
+    ├── policy-review/
+    ├── renewal-review/
+    └── stakeholder-summary/
 ```
 
-### 前端
+## Core Pattern Borrowed from `claude-for-legal`
 
-```bash
-cd /root/insurance-agent-assistant/frontend
-npm install
-npm run dev -- --host 127.0.0.1 --port 5173
+- A practice-area plugin folder.
+- `.claude-plugin/plugin.json` metadata.
+- `CLAUDE.md` as the shared practice profile and safety policy.
+- Workflow-specific `skills/`.
+- A `cold-start-interview` skill that learns the agency playbook.
+- MCP connector placeholders for CRM, product library, and knowledge base.
+- Managed-agent cookbooks for recurring monitoring workflows.
+- Human-review gates before consequential actions.
+
+## First Command
+
+```text
+/insurance-agent:cold-start-interview
 ```
 
-打开：`http://127.0.0.1:5173`
+Use this first to define jurisdiction, license scope, product universe, compliance rules, escalation paths, and preferred output formats.
 
-## API
+## Important Files
 
-- `GET /health`：健康检查
-- `POST /api/needs/analyze`：客户保障缺口分析
-- `POST /api/products/recommend`：产品推荐草案
-- `POST /api/objections/respond`：异议处理话术
-- `POST /api/chat`：综合助手回复
-
-## 下一步
-
-1. 接入真实保险产品库和条款结构化解析。
-2. 增加向量知识库/RAG，沉淀合规、条款、销售 SOP。
-3. 加入客户资料脱敏、权限、审计日志。
-4. 接入 LLM，并为每类输出增加合规 guardrail。
-5. 加入 CRM/企微/飞书等渠道集成。
+- `insurance-agent/CLAUDE.md` — global insurance-agent practice profile.
+- `insurance-agent/skills/*/SKILL.md` — workflow definitions.
+- `insurance-agent/.mcp.json` — placeholder connectors.
+- `insurance-agent/managed-agent-cookbooks/README.md` — scheduled/monitoring agent patterns.
+- `insurance-agent/references/compliance-starter.md` — starter compliance checklist.
