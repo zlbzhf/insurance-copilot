@@ -1,0 +1,40 @@
+{
+  "generated_by": "scripts/renewal_watcher.py",
+  "workflow": "Local Renewal Watcher",
+  "as_of": "2026-05-14",
+  "internal_only": true,
+  "no_external_writes": true,
+  "review_notice": "Draft for licensed/compliance review; internal alert only.",
+  "counts": {
+    "total": 1,
+    "d_30": 0,
+    "d_14": 0,
+    "d_7": 0,
+    "d_plus_1": 0,
+    "grace_period_before_end": 0,
+    "grace_ended": 0,
+    "in_grace_period": 0,
+    "verify_status": 1,
+    "monitor": 0
+  },
+  "alerts": [
+    {
+      "bucket": "verify-status",
+      "priority": 50,
+      "reason": "status/review flags require verification",
+      "customer_ref": "SYN-CUSTOMER-001",
+      "policy_ref": "SYN-POLICY-001",
+      "premium_due_date": "2026-05-20",
+      "grace_period_end": "2026-06-20",
+      "status_source": "[verify]",
+      "status_as_of": "[verify]",
+      "next_action": "verify payment status before outreach",
+      "review_flags": "possible lapse risk"
+    }
+  ],
+  "verify_before_action": [
+    "[verify] carrier policy/payment status before any customer statement.",
+    "[verify] grace period and lapse/reinstatement rules with official carrier source.",
+    "[verify] approved script source and contact consent before outreach."
+  ]
+}

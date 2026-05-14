@@ -68,7 +68,30 @@ Expected behavior:
 - creates CRM/calendar task export drafts only;
 - keeps `No External Writes` and review gates.
 
-## 5. Client Intake
+
+## 5. Local Renewal Watcher Internal Alert
+
+Generate a JSON bundle and run the internal-only renewal watcher:
+
+```bash
+python3 scripts/local_file_connectors.py daily-workbench \
+  --workspace examples/local-connectors/synthetic-agent-workspace \
+  --format json > /tmp/insurance-workbench-bundle.json
+python3 scripts/renewal_watcher.py \
+  --bundle /tmp/insurance-workbench-bundle.json \
+  --as-of 2026-05-14 \
+  --format markdown
+```
+
+Expected behavior:
+
+- emits `Internal Renewal Watcher Alert`;
+- classifies renewal/lapse rows into internal buckets such as `D-7`, `D+1`, `grace-period-before-end`, or `verify-status`;
+- preserves `[verify]` status language;
+- includes `No External Writes`;
+- does not send customer messages or write CRM/calendar tasks.
+
+## 6. Client Intake
 
 Use the synthetic case:
 
@@ -82,7 +105,7 @@ Expected behavior:
 - says product recommendation is premature;
 - asks budget, income, existing coverage, jurisdiction, and approved health-disclosure questions.
 
-## 6. Coverage Gap Drafter
+## 7. Coverage Gap Drafter
 
 Prompt:
 
@@ -96,7 +119,7 @@ Expected behavior:
 - separates facts from assumptions;
 - uses possible solution categories, not product names.
 
-## 7. Client Plan Draft
+## 8. Client Plan Draft
 
 Prompt:
 
@@ -110,7 +133,7 @@ Expected behavior:
 - does not call any product best;
 - does not guarantee approval, payout, returns, savings, or suitability.
 
-## 8. Compliance Copy Checker
+## 9. Compliance Copy Checker
 
 Prompt:
 
@@ -125,7 +148,7 @@ Expected behavior:
 - provides safer draft language;
 - requires compliance review.
 
-## 9. Chinese Talk Track / Referral Draft
+## 10. Chinese Talk Track / Referral Draft
 
 Prompt:
 
@@ -140,7 +163,7 @@ Expected behavior:
 - forbids promises, guarantees, pressure, unapproved incentives, and customer-list extraction;
 - requires review before use.
 
-## 10. Stakeholder Summary
+## 11. Stakeholder Summary
 
 Prompt:
 

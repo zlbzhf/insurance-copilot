@@ -32,3 +32,5 @@ jobs:
         run: python3 scripts/ingest_gateway.py --help
       - name: Test local file connectors
         run: python3 -m pytest tests/test_local_file_connectors.py -q
+      - name: Test renewal watcher
+        run: python3 -m pytest tests/test_renewal_watcher.py -q

@@ -112,6 +112,23 @@ python3 scripts/local_file_connectors.py daily-workbench   --workspace examples/
 
 It reads local Markdown/CSV files and emits a Daily Agent Workbench bundle. Symlinked inputs are skipped and explicit output files must be outside the workspace. It does **not** send messages, update CRM/calendar systems, contact carriers, file claims, submit applications, or change policies. See `docs/local-file-connectors.md`.
 
+
+## Local Renewal Watcher Slice
+
+A first internal-only scheduled-agent-ready watcher is available for renewal/lapse review:
+
+```bash
+python3 scripts/local_file_connectors.py daily-workbench \
+  --workspace examples/local-connectors/synthetic-agent-workspace \
+  --format json > /tmp/insurance-workbench-bundle.json
+python3 scripts/renewal_watcher.py \
+  --bundle /tmp/insurance-workbench-bundle.json \
+  --as-of 2026-05-14 \
+  --format markdown
+```
+
+It emits an internal alert only: `[verify]` carrier/payment status, no customer send, no CRM/calendar writes, and no coverage/lapse/reinstatement conclusions. See `docs/local-renewal-watcher.md` and `cron/renewal-watcher-cookbook.md`.
+
 ## Public Institution Packs
 
 Public institution packs live under:
@@ -165,7 +182,9 @@ The quickstart walks through:
 4. coverage gap drafting;
 5. client plan/product-fit draft;
 6. compliance check;
-7. stakeholder summary.
+7. local file connector bundle;
+8. local renewal watcher internal alert;
+9. stakeholder summary.
 
 ## Repository Layout
 
@@ -184,7 +203,7 @@ evals/                        Regression fixtures and expected outputs
 cron/                         Scheduled workflow recipes for Hermes cron
 mcp/                          Optional connector notes and contracts
 docs/                         Architecture, privacy, action safety, quality gates
-scripts/                      Repo validation, packaging, eval, pack helpers
+scripts/                      Repo validation, packaging, eval, connector, watcher helpers
 AGENTS.md                     Hermes project instructions
 ROADMAP.md                    Durable project direction
 ```
@@ -198,6 +217,7 @@ python3 scripts/run_evals.py
 python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia
 python3 scripts/validate_agent_workspace.py agent-workspace-template --template
 python3 scripts/ingest_gateway.py --help
+python3 -m pytest tests/test_ingest_gateway.py tests/test_local_file_connectors.py tests/test_renewal_watcher.py -q
 ```
 
 CI runs these checks on push and pull request.
