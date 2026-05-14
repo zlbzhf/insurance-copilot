@@ -1,0 +1,2 @@
+customer_ref,policy_ref,carrier,product_category,premium_due_date,grace_period_end,status_source,status_as_of,last_contact,next_action,review_flags
+SYN-CUSTOMER-001,SYN-POLICY-001,Example Carrier,life,2026-05-20,2026-06-20,,,,verify payment status before outreach,possible lapse risk

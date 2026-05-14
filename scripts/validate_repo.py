@@ -29,12 +29,15 @@ REQUIRED = [
     ROOT / "CONTRIBUTING.md",
     ROOT / "SECURITY.md",
     ROOT / "CHANGELOG.md",
+    ROOT / "requirements-dev.txt",
     ROOT / "docs" / "continuity.md",
     ROOT / "docs" / "quality-gates.md",
     ROOT / "docs" / "hermes-first-design.md",
     ROOT / "docs" / "quickstart.md",
     ROOT / "docs" / "workflow-surface.md",
+    ROOT / "docs" / "local-file-connectors.md",
     ROOT / "docs" / "plans" / "2026-05-14-practical-agent-workflow-beta.md",
+    ROOT / "docs" / "plans" / "2026-05-14-local-file-connector-slice.md",
     ROOT / "docs" / "privacy-and-data-handling.md",
     ROOT / "docs" / "action-safety.md",
     ROOT / "docs" / "jurisdiction-adaptation.md",
@@ -56,6 +59,10 @@ REQUIRED = [
     ROOT / "scripts" / "validate_knowledge_pack.py",
     ROOT / "scripts" / "validate_agent_workspace.py",
     ROOT / "scripts" / "create_source_record.py",
+    ROOT / "scripts" / "local_file_connectors.py",
+    ROOT / "tests" / "test_local_file_connectors.py",
+    ROOT / "examples" / "local-connectors" / "synthetic-agent-workspace" / "README.md",
+    ROOT / "examples" / "local-connectors" / "expected-daily-workbench.md",
     ROOT / "cron" / "renewal-watcher.md",
     ROOT / "cron" / "compliance-copy-monitor.md",
     ROOT / "cron" / "replacement-risk-monitor.md",
@@ -283,6 +290,8 @@ def main() -> int:
         "docs/workflow-surface.md",
         "Daily Agent Workbench",
         "Client Plan Draft",
+        "scripts/local_file_connectors.py",
+        "docs/local-file-connectors.md",
     ]:
         if snippet not in readme:
             return fail(f"README missing required install/validation snippet: {snippet}")
@@ -306,6 +315,8 @@ def main() -> int:
         "python3 scripts/run_evals.py",
         "python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia",
         "python3 scripts/validate_agent_workspace.py agent-workspace-template --template",
+        "python3 -m pytest tests/test_local_file_connectors.py -q",
+        "python3 -m pip install -r requirements-dev.txt",
     ]:
         if cmd not in workflow:
             return fail(f"CI workflow missing command: {cmd}")
@@ -315,8 +326,8 @@ def main() -> int:
         return fail("knowledge registry missing public aia pack")
 
     eval_cases = sorted((ROOT / "evals" / "cases").glob("*.json"))
-    if len(eval_cases) < 14:
-        return fail("expected at least 14 eval cases")
+    if len(eval_cases) < 15:
+        return fail("expected at least 15 eval cases")
     for case in eval_cases:
         try:
             data = json.loads(case.read_text())
@@ -351,6 +362,8 @@ def main() -> int:
         [sys.executable, "scripts/validate_knowledge_pack.py", "knowledge/institutions/aia"],
         [sys.executable, "scripts/validate_knowledge_pack.py", "knowledge/institutions/_template", "--template"],
         [sys.executable, "scripts/validate_agent_workspace.py", "agent-workspace-template", "--template"],
+        [sys.executable, "scripts/local_file_connectors.py", "daily-workbench", "--workspace", "examples/local-connectors/synthetic-agent-workspace", "--format", "json"],
+        [sys.executable, "-m", "pytest", "tests/test_local_file_connectors.py", "-q"],
     ]:
         code, output = run_script(cmd)
         if code != 0:

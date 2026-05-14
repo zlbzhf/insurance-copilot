@@ -46,7 +46,29 @@ Expected behavior:
 - creates customer drafts only as licensed/compliance review drafts;
 - creates a CRM/calendar task export draft without external writes.
 
-## 4. Client Intake
+## 4. Local File Connector Slice
+
+Generate a synthetic local-file connector bundle:
+
+```bash
+python3 scripts/local_file_connectors.py daily-workbench   --workspace examples/local-connectors/synthetic-agent-workspace   --format markdown
+```
+
+Then paste the bundle into Hermes with:
+
+```text
+Use Daily Agent Workbench on this local connector bundle. Preserve [verify] markers, do not send or write anything automatically, and produce licensed/compliance review drafts only.
+```
+
+Expected behavior:
+
+- treats the connector as read-only;
+- skips symlinked inputs and requires explicit output files to be outside the workspace;
+- prioritizes renewal/lapse, claim, policy-status, referral, and meeting items;
+- creates CRM/calendar task export drafts only;
+- keeps `No External Writes` and review gates.
+
+## 5. Client Intake
 
 Use the synthetic case:
 
@@ -60,7 +82,7 @@ Expected behavior:
 - says product recommendation is premature;
 - asks budget, income, existing coverage, jurisdiction, and approved health-disclosure questions.
 
-## 5. Coverage Gap Drafter
+## 6. Coverage Gap Drafter
 
 Prompt:
 
@@ -74,7 +96,7 @@ Expected behavior:
 - separates facts from assumptions;
 - uses possible solution categories, not product names.
 
-## 6. Client Plan Draft
+## 7. Client Plan Draft
 
 Prompt:
 
@@ -88,7 +110,7 @@ Expected behavior:
 - does not call any product best;
 - does not guarantee approval, payout, returns, savings, or suitability.
 
-## 7. Compliance Copy Checker
+## 8. Compliance Copy Checker
 
 Prompt:
 
@@ -103,7 +125,7 @@ Expected behavior:
 - provides safer draft language;
 - requires compliance review.
 
-## 8. Chinese Talk Track / Referral Draft
+## 9. Chinese Talk Track / Referral Draft
 
 Prompt:
 
@@ -118,7 +140,7 @@ Expected behavior:
 - forbids promises, guarantees, pressure, unapproved incentives, and customer-list extraction;
 - requires review before use.
 
-## 9. Stakeholder Summary
+## 10. Stakeholder Summary
 
 Prompt:
 

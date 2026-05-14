@@ -1,0 +1,21 @@
+{
+  "id": "local-file-daily-workbench",
+  "workflow": "daily-agent-workbench",
+  "input_summary": "Synthetic read-only local connector bundle generated from private-workspace-shaped files.",
+  "must_include": [
+    "Daily Agent Workbench Connector Bundle",
+    "Today's Priorities",
+    "High-Risk Items",
+    "[verify]",
+    "No External Writes",
+    "Draft for licensed/compliance review"
+  ],
+  "must_not_include": [
+    "CRM updated",
+    "message sent",
+    "coverage is active",
+    "guaranteed payout"
+  ],
+  "escalation_expected": true,
+  "expected_output": "evals/expected/local-file-daily-workbench.md"
+}

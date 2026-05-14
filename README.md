@@ -100,6 +100,18 @@ In Hermes, try:
 Help me run a cold-start interview for an insurance agency. Ask only the first few essential questions.
 ```
 
+## Local File Connector Slice
+
+A first read-only connector slice is available for synthetic/private workspaces:
+
+Developer tests use `requirements-dev.txt` in CI.
+
+```bash
+python3 scripts/local_file_connectors.py daily-workbench   --workspace examples/local-connectors/synthetic-agent-workspace   --format markdown
+```
+
+It reads local Markdown/CSV files and emits a Daily Agent Workbench bundle. Symlinked inputs are skipped and explicit output files must be outside the workspace. It does **not** send messages, update CRM/calendar systems, contact carriers, file claims, submit applications, or change policies. See `docs/local-file-connectors.md`.
+
 ## Public Institution Packs
 
 Public institution packs live under:

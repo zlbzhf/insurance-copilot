@@ -28,7 +28,7 @@ Use the Agency Playbook Builder. Help me create or update an Insurance Copilot p
 ## Workflow 2: Daily Agent Workbench
 
 - **When to use:** The agent wants a daily operating plan across meetings, follow-ups, renewal/lapse risks, claims support, referrals, and compliance-sensitive drafts.
-- **Required inputs:** Practice profile status, today's meetings, open follow-ups, renewal/lapse register or due-date notes, claim/support items, pending referrals, draft messages, source timestamps.
+- **Required inputs:** Practice profile status, today's meetings, open follow-ups, renewal/lapse register or due-date notes, claim/support items, pending referrals, draft messages, source timestamps, or a read-only local connector bundle from `scripts/local_file_connectors.py`.
 - **Output:** Prioritized daily workbench with high-risk items, customer follow-up drafts, verification checklist, and CRM/calendar task export draft.
 - **Review owner:** Assigned agent for daily priorities; compliance reviewer for customer-facing drafts or high-risk items.
 - **Forbidden actions:** Automatically sending outreach, making CRM/calendar writes, representing coverage status without carrier verification, bypassing escalation for lapse/replacement/claim issues.
