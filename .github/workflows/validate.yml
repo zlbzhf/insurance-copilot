@@ -36,3 +36,5 @@ jobs:
         run: python3 -m pytest tests/test_renewal_watcher.py -q
       - name: Test renewal watcher cron wrapper
         run: python3 -m pytest tests/test_renewal_watcher_cron_wrapper.py -q
+      - name: Test private workspace readiness gate
+        run: python3 -m pytest tests/test_private_workspace_readiness.py -q

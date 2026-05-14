@@ -24,6 +24,7 @@ Goal: make `insurance-copilot` directly usable as a Hermes skill package and a t
 - Three-layer public/private knowledge architecture.
 - Evidence-driven standards framework under `standards/`, `schemas/`, and `prompts/`.
 - Deterministic ingestion gateway prototype under `scripts/ingest_gateway.py`.
+- Local connector, renewal watcher, script-only cron wrapper, and private workspace readiness gate before scheduled monitoring.
 
 ## Priority 1 — Public Institution Knowledge Packs and Standards
 
@@ -47,6 +48,7 @@ Goal: make `insurance-copilot` directly usable as a Hermes skill package and a t
 - Keep private customer data and non-public institution materials outside this public repo.
 - Improve `agent-workspace-template/` for private LLM-wiki organization.
 - Add private pack/workspace validation that agents can run locally.
+- Private workspace readiness gate before scheduled monitoring: structure, freshness, privacy/PII-like risks, output boundary, retention/audit readiness.
 - Provide safe promotion path from private notes to public contribution bundles.
 
 ## Priority 4 — Better Regression Testing

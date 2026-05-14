@@ -65,6 +65,7 @@ Required:
 - Template states it is private and not for public upload.
 - `.gitignore` excludes likely local private workspace paths.
 - Validator can check template structure without requiring real private data.
+- Private workspace readiness gate exists before scheduled monitoring and checks structure, freshness, PII-like risks, output boundaries, and retention/audit readiness.
 
 ## Gate 6 — Workflow Usability
 
@@ -129,6 +130,7 @@ python3 scripts/run_evals.py
 python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia
 python3 scripts/validate_knowledge_pack.py knowledge/institutions/_template --template
 python3 scripts/validate_agent_workspace.py agent-workspace-template --template
+python3 scripts/private_workspace_readiness.py --workspace examples/local-connectors/synthetic-agent-workspace --as-of 2026-05-14 --format json
 python3 scripts/ingest_gateway.py --help
 ```
 
@@ -148,3 +150,5 @@ To avoid architecture-only drift, every major release must preserve first-day pr
 - Synthetic end-to-end demos prove a realistic loop without real customer or insurer data.
 
 These gates are intentionally closer to `claude-for-legal` usability discipline: task surface first, professional profile next, connectors/workspaces as support, review gates always.
+
+- Private workspace readiness blocks symlinked required workspace paths, validates every renewal row freshness timestamp, rejects future dates, and prevents output hardlink aliases to workspace files.

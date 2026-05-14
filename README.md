@@ -142,6 +142,19 @@ bash cron/scripts/renewal_watcher.sh \
 
 For cron use, `--mode alert-only` prints only review-worthy internal alerts. Empty stdout means silent/no-alert; non-zero exit means fail-loud error alert. This repository does not create a live job. See `docs/script-only-cron-wrapper.md` and `examples/cron/renewal-watcher-no-agent.md`.
 
+## Private Workspace Readiness Gate
+
+Before connecting a private workspace to scheduled monitoring, run the deterministic readiness gate:
+
+```bash
+python3 scripts/private_workspace_readiness.py \
+  --workspace examples/local-connectors/synthetic-agent-workspace \
+  --as-of 2026-05-14 \
+  --format markdown
+```
+
+It checks structure, renewal register freshness, PII-like fixture risks, output boundaries, and retention/audit readiness. It is read-only, internal-only, and creates no live cron job. See `docs/private-workspace-readiness.md`.
+
 ## Public Institution Packs
 
 Public institution packs live under:
@@ -197,8 +210,9 @@ The quickstart walks through:
 6. compliance check;
 7. local file connector bundle;
 8. local renewal watcher internal alert;
-9. script-only renewal watcher cron wrapper dry run;
-10. stakeholder summary.
+9. private workspace readiness gate;
+10. script-only renewal watcher cron wrapper dry run;
+11. stakeholder summary.
 
 ## Repository Layout
 
@@ -231,7 +245,7 @@ python3 scripts/run_evals.py
 python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia
 python3 scripts/validate_agent_workspace.py agent-workspace-template --template
 python3 scripts/ingest_gateway.py --help
-python3 -m pytest tests/test_ingest_gateway.py tests/test_local_file_connectors.py tests/test_renewal_watcher.py tests/test_renewal_watcher_cron_wrapper.py -q
+python3 -m pytest tests/test_ingest_gateway.py tests/test_local_file_connectors.py tests/test_renewal_watcher.py tests/test_renewal_watcher_cron_wrapper.py tests/test_private_workspace_readiness.py -q
 ```
 
 CI runs these checks on push and pull request.

@@ -41,3 +41,17 @@ A private note can become a public contribution only after it is transformed int
 - follows the pack schema;
 - passes validation;
 - is reviewed by maintainers.
+
+
+## Readiness Gate Before Scheduled Monitoring
+
+Before connecting a private workspace to local connector, renewal watcher, or Hermes cron wrapper workflows, run:
+
+```bash
+python3 scripts/private_workspace_readiness.py \
+  --workspace ~/.insurance-copilot/agents/<agent-id> \
+  --as-of "$(date +%F)" \
+  --format markdown
+```
+
+The readiness gate checks structure, renewal register freshness, privacy/PII-like risks, output boundaries, and retention/audit readiness. It is read-only and creates no live cron job.

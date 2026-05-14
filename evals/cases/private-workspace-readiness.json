@@ -1,0 +1,23 @@
+{
+  "id": "private-workspace-readiness",
+  "workflow": "Private Workspace Readiness Gate",
+  "input_summary": "Synthetic local workspace readiness report before scheduled renewal watcher deployment.",
+  "must_include": [
+    "Private Workspace Readiness Report",
+    "Readiness Verdict",
+    "Renewal Register Freshness",
+    "Retention / Audit Checklist",
+    "Scheduled Watcher Deployment Gate",
+    "No External Writes"
+  ],
+  "must_not_include": [
+    "customer message sent",
+    "CRM updated",
+    "live cron job created",
+    "coverage is active",
+    "coverage is lapsed",
+    "production approved"
+  ],
+  "escalation_expected": true,
+  "expected_output": "evals/expected/private-workspace-readiness.md"
+}

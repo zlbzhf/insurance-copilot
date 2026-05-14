@@ -38,10 +38,12 @@ REQUIRED = [
     ROOT / "docs" / "local-file-connectors.md",
     ROOT / "docs" / "local-renewal-watcher.md",
     ROOT / "docs" / "script-only-cron-wrapper.md",
+    ROOT / "docs" / "private-workspace-readiness.md",
     ROOT / "docs" / "plans" / "2026-05-14-practical-agent-workflow-beta.md",
     ROOT / "docs" / "plans" / "2026-05-14-local-file-connector-slice.md",
     ROOT / "docs" / "plans" / "2026-05-14-local-renewal-watcher.md",
     ROOT / "docs" / "plans" / "2026-05-14-script-only-cron-wrapper.md",
+    ROOT / "docs" / "plans" / "2026-05-14-private-workspace-readiness.md",
     ROOT / "docs" / "privacy-and-data-handling.md",
     ROOT / "docs" / "action-safety.md",
     ROOT / "docs" / "jurisdiction-adaptation.md",
@@ -65,15 +67,19 @@ REQUIRED = [
     ROOT / "scripts" / "create_source_record.py",
     ROOT / "scripts" / "local_file_connectors.py",
     ROOT / "scripts" / "renewal_watcher.py",
+    ROOT / "scripts" / "private_workspace_readiness.py",
     ROOT / "cron" / "scripts" / "renewal_watcher.sh",
     ROOT / "tests" / "test_local_file_connectors.py",
     ROOT / "tests" / "test_renewal_watcher.py",
     ROOT / "tests" / "test_renewal_watcher_cron_wrapper.py",
+    ROOT / "tests" / "test_private_workspace_readiness.py",
     ROOT / "examples" / "local-connectors" / "synthetic-agent-workspace" / "README.md",
     ROOT / "examples" / "local-connectors" / "expected-daily-workbench.md",
     ROOT / "examples" / "renewal-watcher" / "synthetic-renewal-alert.md",
     ROOT / "examples" / "renewal-watcher" / "synthetic-renewal-alert.json",
     ROOT / "examples" / "cron" / "renewal-watcher-no-agent.md",
+    ROOT / "examples" / "private-workspace-readiness" / "synthetic-readiness-report.md",
+    ROOT / "examples" / "private-workspace-readiness" / "synthetic-readiness-report.json",
     ROOT / "cron" / "renewal-watcher.md",
     ROOT / "cron" / "compliance-copy-monitor.md",
     ROOT / "cron" / "replacement-risk-monitor.md",
@@ -306,7 +312,9 @@ def main() -> int:
         "scripts/renewal_watcher.py",
         "docs/local-renewal-watcher.md",
         "docs/script-only-cron-wrapper.md",
+        "docs/private-workspace-readiness.md",
         "cron/scripts/renewal_watcher.sh",
+        "scripts/private_workspace_readiness.py",
     ]:
         if snippet not in readme:
             return fail(f"README missing required install/validation snippet: {snippet}")
@@ -315,6 +323,11 @@ def main() -> int:
     for phrase in ["no_agent=True", "empty stdout", "non-zero exit", "custom:fufu", "mimo-v2.5-pro", "No External Writes"]:
         if phrase not in cron_doc:
             return fail(f"script-only cron wrapper doc missing phrase: {phrase}")
+
+    readiness_doc = (ROOT / "docs" / "private-workspace-readiness.md").read_text()
+    for phrase in ["Private Workspace Readiness Report", "Renewal Register Freshness", "Retention / Audit Checklist", "No External Writes", "ready_for_cron"]:
+        if phrase not in readiness_doc:
+            return fail(f"private workspace readiness doc missing phrase: {phrase}")
 
     workflow_surface = (ROOT / "docs" / "workflow-surface.md").read_text()
     for name in [
@@ -339,6 +352,7 @@ def main() -> int:
         "python3 -m pytest tests/test_local_file_connectors.py -q",
         "python3 -m pytest tests/test_renewal_watcher.py -q",
         "python3 -m pytest tests/test_renewal_watcher_cron_wrapper.py -q",
+        "python3 -m pytest tests/test_private_workspace_readiness.py -q",
         "python3 -m pip install -r requirements-dev.txt",
     ]:
         if cmd not in workflow:
@@ -349,8 +363,8 @@ def main() -> int:
         return fail("knowledge registry missing public aia pack")
 
     eval_cases = sorted((ROOT / "evals" / "cases").glob("*.json"))
-    if len(eval_cases) < 16:
-        return fail("expected at least 16 eval cases")
+    if len(eval_cases) < 17:
+        return fail("expected at least 17 eval cases")
     for case in eval_cases:
         try:
             data = json.loads(case.read_text())
@@ -389,12 +403,30 @@ def main() -> int:
         [sys.executable, "-m", "pytest", "tests/test_local_file_connectors.py", "-q"],
         [sys.executable, "-m", "pytest", "tests/test_renewal_watcher.py", "-q"],
         [sys.executable, "-m", "pytest", "tests/test_renewal_watcher_cron_wrapper.py", "-q"],
+        [sys.executable, "-m", "pytest", "tests/test_private_workspace_readiness.py", "-q"],
         [sys.executable, "scripts/renewal_watcher.py", "--csv", "examples/local-connectors/synthetic-agent-workspace/renewal-registers/synthetic-renewal-register.csv", "--as-of", "2026-05-14", "--format", "json"],
         ["bash", "cron/scripts/renewal_watcher.sh", "--workspace", "examples/local-connectors/synthetic-agent-workspace", "--as-of", "2026-05-14", "--mode", "always"],
     ]:
         code, output = run_script(cmd)
         if code != 0:
             return fail(f"command failed {' '.join(cmd)}:\n{output}")
+
+    readiness_cmd = [
+        sys.executable,
+        "scripts/private_workspace_readiness.py",
+        "--workspace",
+        "examples/local-connectors/synthetic-agent-workspace",
+        "--as-of",
+        "2026-05-14",
+        "--format",
+        "markdown",
+    ]
+    code, output = run_script(readiness_cmd)
+    if code not in {0, 1}:
+        return fail(f"command failed {' '.join(readiness_cmd)}:\n{output}")
+    for phrase in ["Private Workspace Readiness Report", "Readiness Verdict", "No External Writes"]:
+        if phrase not in output:
+            return fail(f"private workspace readiness smoke output missing phrase: {phrase}")
 
     print("insurance-copilot Hermes-first repo ok")
     print(f"references: {len(refs)}")

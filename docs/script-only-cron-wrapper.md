@@ -116,6 +116,19 @@ The summary prompt must be self-contained and must say:
 - do not claim coverage is active, lapsed, or reinstated;
 - output urgent internal items, verification checklist, escalation list, and reviewed task notes only.
 
+## Private Workspace Readiness Gate
+
+Run the private workspace readiness gate before wrapper dry runs on real private data:
+
+```bash
+python3 scripts/private_workspace_readiness.py \
+  --workspace ~/.insurance-copilot/agents/<agent-id> \
+  --as-of "$(date +%F)" \
+  --format markdown
+```
+
+Run the private workspace readiness gate before wrapper dry runs on real private data. Resolve blocker risks before creating or enabling any scheduled watcher.
+
 ## Deployment Checklist
 
 Before creating a live job:

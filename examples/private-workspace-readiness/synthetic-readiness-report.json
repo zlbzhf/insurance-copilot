@@ -1,0 +1,61 @@
+{
+  "checks": [
+    {
+      "detail": "required workspace directories and README.md are present as regular in-workspace paths",
+      "id": "required-structure",
+      "status": "pass"
+    },
+    {
+      "detail": "1 renewal row(s) lack status_as_of freshness evidence",
+      "id": "renewal-register-freshness",
+      "status": "fail"
+    },
+    {
+      "detail": "no basic PII-like patterns detected in text files",
+      "id": "privacy-pii-scan",
+      "status": "pass"
+    },
+    {
+      "detail": "retention/audit policy and log.md must exist before scheduled monitoring",
+      "id": "retention-audit-policy",
+      "status": "fail"
+    },
+    {
+      "detail": "report output is stdout by default and explicit --output must be outside workspace and not same-file/hardlink any workspace file",
+      "id": "output-boundary",
+      "status": "pass"
+    },
+    {
+      "detail": "validator performs no network, customer-message, CRM, calendar, carrier, claim, application, or policy-change actions",
+      "id": "no-external-writes",
+      "status": "pass"
+    }
+  ],
+  "internal_only": true,
+  "no_external_writes": true,
+  "ready_for_cron": false,
+  "recommended_next_actions": [
+    "Refresh renewal register with current carrier/payment status timestamps.",
+    "Add retention/audit policy with owner, log location, review cadence, and deletion/escalation rules."
+  ],
+  "risks": [
+    {
+      "detail": "renewal-registers/synthetic-renewal-register.csv row 2 policy SYN-POLICY-001 has blank status_as_of",
+      "id": "missing-renewal-status-date",
+      "severity": "blocker"
+    },
+    {
+      "detail": "missing regular in-workspace RETENTION.md/AUDIT.md with retention and audit guidance, or missing regular in-workspace log.md",
+      "id": "missing-retention-audit-policy",
+      "severity": "blocker"
+    }
+  ],
+  "summary": {
+    "as_of": "2026-05-14",
+    "blockers": 2,
+    "max_stale_days": 7,
+    "synthetic_mode": false,
+    "warnings": 0,
+    "workspace": "/root/insurance-agent-assistant/examples/local-connectors/synthetic-agent-workspace"
+  }
+}
