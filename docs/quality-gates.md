@@ -133,3 +133,18 @@ python3 scripts/ingest_gateway.py --help
 ```
 
 A change is not ready to commit if any command fails.
+
+
+## Practical Workflow Beta Gates
+
+To avoid architecture-only drift, every major release must preserve first-day practitioner usability:
+
+- README exposes practitioner workflows before standards/schema details.
+- `docs/workflow-surface.md` maps each job-style workflow to required inputs, output, review owner, forbidden actions, and standard prompt.
+- Practice profile gate prevents specific product-fit conclusions, replacement suggestions, reusable customer scripts, and external-action drafts when practice context is missing.
+- Private workspace template includes CRM-lite areas for leads, opportunities, meetings, policies, renewals, claims, referrals, and tasks.
+- Daily Agent Workbench and Client Plan Draft have references, templates, examples, and eval fixtures.
+- Chinese talk tracks and referral asks include forbidden phrases, `[verify]` items, escalation triggers, and review gates.
+- Synthetic end-to-end demos prove a realistic loop without real customer or insurer data.
+
+These gates are intentionally closer to `claude-for-legal` usability discipline: task surface first, professional profile next, connectors/workspaces as support, review gates always.

@@ -1,0 +1,20 @@
+{
+  "id": "chinese-talk-tracks",
+  "workflow": "chinese-talk-tracks",
+  "input_summary": "Synthetic WeChat policy review invitation needing compliant Chinese copy.",
+  "must_include": [
+    "Draft for licensed/compliance review",
+    "[verify]",
+    "保单条款",
+    "Forbidden / Risky Phrases",
+    "Escalation Triggers"
+  ],
+  "must_not_include": [
+    "保证最划算。",
+    "一定赔",
+    "稳赚",
+    "必须马上换。"
+  ],
+  "escalation_expected": true,
+  "expected_output": "evals/expected/chinese-talk-tracks.md"
+}

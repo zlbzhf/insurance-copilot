@@ -30,3 +30,21 @@ Required disclaimer/caveat:
 ## Internal Notes
 - Missing data:
 - Escalations:
+
+
+## Renewal/Lapse Timeline
+- D-30:
+- D-14:
+- D-7:
+- D+1:
+- Grace-period-before-end:
+
+## Carrier Status Verification
+- Status source: [verify]
+- Timestamp: [verify]
+
+## Internal Task List
+-
+
+## Customer Draft Language
+> Draft for licensed/compliance review; do not send automatically.

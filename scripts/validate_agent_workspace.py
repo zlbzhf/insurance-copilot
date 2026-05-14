@@ -16,6 +16,13 @@ ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_ROOT = ["README.md", "AGENT.md", "SCHEMA.md", "index.md", "log.md"]
 REQUIRED_DIRS = [
     "clients",
+    "leads",
+    "opportunities",
+    "meetings",
+    "policies",
+    "claims",
+    "referrals",
+    "tasks",
     "private-institution-notes",
     "renewal-registers",
     "private-scripts",
@@ -33,6 +40,18 @@ PII_PATTERNS = {
     "ssn-like": re.compile(r"\b\d{3}-\d{2}-\d{4}\b"),
     "credit-card-like": re.compile(r"\b(?:\d[ -]*?){13,16}\b"),
 }
+
+REQUIRED_TEMPLATE_FILES = [
+    "leads/template-lead.md",
+    "opportunities/template-opportunity.md",
+    "meetings/template-meeting-note.md",
+    "policies/template-policy-summary.md",
+    "claims/template-claim-tracker.md",
+    "referrals/template-referral-tracker.md",
+    "tasks/template-task-list.md",
+    "tasks/template-daily-workbench.md",
+    "renewal-registers/template-renewal-register.csv",
+]
 
 
 def fail(msg: str) -> int:
@@ -76,6 +95,9 @@ def main() -> int:
     for name in REQUIRED_DIRS:
         if not (ws / name).is_dir():
             return fail(f"missing directory {name}/")
+    for name in REQUIRED_TEMPLATE_FILES:
+        if not (ws / name).is_file():
+            return fail(f"missing template file {name}")
 
     try:
         fm, body = parse_frontmatter(ws / "AGENT.md")
@@ -89,7 +111,7 @@ def main() -> int:
         return fail("AGENT.md must warn against public upload")
 
     schema = (ws / "SCHEMA.md").read_text(errors="ignore")
-    for phrase in ["Agent Private Wiki Schema", "private-institution-note", "Customer Pages", "Private Institution Notes"]:
+    for phrase in ["Agent Private Wiki Schema", "private-institution-note", "Customer Pages", "Private Institution Notes", "CRM-lite Page Types", "lead", "opportunity", "policy-summary", "claim-tracker", "referral-tracker"]:
         if phrase not in schema:
             return fail(f"SCHEMA.md missing required phrase: {phrase}")
     if "Do not publish" not in (ws / "README.md").read_text(errors="ignore"):

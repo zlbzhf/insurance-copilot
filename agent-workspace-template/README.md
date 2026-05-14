@@ -33,3 +33,20 @@ Before adding/updating pages, read:
 3. last entries in `log.md`
 
 Then update `index.md` and append to `log.md` after changes.
+
+
+## CRM-lite Operating Areas
+
+This template now includes lightweight private operating areas for real agent work:
+
+- `leads/` — lead source, consent, and first next action.
+- `clients/` — customer pages and private customer knowledge.
+- `opportunities/` — sales/service opportunity tracking.
+- `meetings/` — meeting prep and post-meeting notes.
+- `policies/` — policy summaries and verification flags.
+- `renewal-registers/` — renewal/lapse registers and due-date data.
+- `claims/` — claim-support trackers and document checklists.
+- `referrals/` — referral consent and follow-up tracking.
+- `tasks/` — daily workbench and task export drafts.
+
+Do not publish private copies of these files. Public examples must remain synthetic or de-identified.

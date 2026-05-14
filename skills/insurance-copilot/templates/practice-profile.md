@@ -2,13 +2,16 @@
 
 ## Agency Context
 - Agency:
+- Role / license owner:
 - Jurisdictions:
 - License scope:
 - Channels:
 - Languages:
+- CRM/tool status:
 
 ## Product Universe
 - Carriers:
+- AIA/public pack preference:
 - Product lines:
 - Excluded products:
 - Source hierarchy:
@@ -29,6 +32,7 @@
 - Comparison requirements:
 
 ## Compliance Rules
+- Approved script sources:
 - Forbidden claims:
 - Required disclaimers:
 - Approval workflow:
@@ -36,9 +40,11 @@
 - Required forms:
 - Record retention:
 - Reviewer roles:
+- Escalation path:
 - Jurisdiction-specific disclaimers:
 
 ## Privacy / Data Handling
+- Customer data policy:
 - Minimum necessary data:
 - De-identification rules:
 - Approved storage locations:
@@ -52,3 +58,9 @@
 - Customer script:
 - Compliance check:
 - Stakeholder summary:
+
+
+## Practice Profile Gate
+- Allowed before profile exists: generic education, intake, missing-fact checklists, neutral source organization, provisional internal drafts.
+- Block before profile/context exists: specific product-fit conclusions, replacement suggestions, reusable customer scripts, external-action drafts, jurisdiction-specific compliance conclusions.
+- Default label for incomplete context: provisional draft for licensed/compliance review.

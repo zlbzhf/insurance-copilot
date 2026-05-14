@@ -1,0 +1,2 @@
+customer_ref,policy_ref,carrier,product_category,premium_due_date,grace_period_end,status_source,status_as_of,last_contact,next_action,review_flags
+SYN-CUSTOMER,SYN-POLICY,Example Carrier,life,YYYY-MM-DD,YYYY-MM-DD,carrier portal [verify],YYYY-MM-DD,,verify status before outreach,synthetic template only

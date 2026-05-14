@@ -18,3 +18,15 @@
 ## Private Evals
 
 ## Queries
+
+
+## CRM-lite Index
+
+- Leads: `leads/`
+- Opportunities: `opportunities/`
+- Meetings: `meetings/`
+- Policies: `policies/`
+- Renewal registers: `renewal-registers/`
+- Claims: `claims/`
+- Referrals: `referrals/`
+- Tasks: `tasks/`

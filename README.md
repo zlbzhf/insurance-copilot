@@ -4,6 +4,30 @@ Hermes-first insurance workflow copilot and layered insurance knowledge project 
 
 Insurance Copilot is inspired by the workflow discipline of `claude-for-legal`, but it is packaged for **Hermes Agent** as a full skill directory and public/private knowledge architecture, not as a Claude plugin or web app.
 
+## Start Here: Practitioner Workflows
+
+Start with a practical insurance job, not the standards pipeline. In Hermes, load the skill and ask for one of these workflows by name:
+
+1. **Agency Playbook Builder** — create the practice profile and operating guardrails before customer work.
+2. **Daily Agent Workbench** — plan today's meetings, follow-ups, renewal/lapse items, claims support, referrals, and draft messages.
+3. **Client Needs Intake** — turn notes or a call transcript into a structured fact-find.
+4. **Coverage Gap Drafter** — map known responsibilities and risks to possible gap areas without selecting products.
+5. **Client Plan Draft** — combine intake, gap notes, and source-backed product facts into a review-ready proposal draft.
+6. **Product Fit Reviewer** — compare a sourced product to documented needs without final-advice language.
+7. **Compliance Copy Checker** — review customer-facing copy for risky claims, missing caveats, and escalation needs.
+8. **Policy Review Assistant** — summarize existing policies before renewal, cross-sell, upsell, cancellation, surrender, or replacement discussion.
+9. **Replacement Risk Triager** — treat any replacement, surrender, cancellation, reduction, or exchange as high-risk triage.
+10. **Renewal/Lapse Follow-up Planner** — sort due dates, grace periods, lapse risk, and outreach drafts with carrier-status verification.
+11. **Claims Support Triage** — organize claim facts, documents, deadlines, and neutral service language without deciding coverage or payout.
+12. **Objection Response Drafter** — draft low-pressure, compliant responses to customer objections.
+13. **Referral Ask Drafter** — create soft, non-misleading referral requests with opt-out language.
+14. **Stakeholder Summary Writer** — separate agent, manager, compliance, and customer-safe summaries.
+15. **Institution Knowledge Organizer** — organize public insurer/institution sources through the evidence-driven pack workflow.
+
+If no practice profile exists, only use generic education, intake, missing-information checklists, or **Agency Playbook Builder** until the profile is supplied. Do not ask Insurance Copilot for specific product-fit conclusions, replacement suggestions, reusable customer scripts, or external-action drafts unless the profile/context is supplied or the output is clearly labeled provisional.
+
+See `docs/workflow-surface.md` for when to use each workflow, required inputs, outputs, review owners, forbidden actions, and standard prompts.
+
 ## Architecture
 
 Insurance Copilot has three layers:
@@ -123,12 +147,13 @@ docs/quickstart.md
 
 The quickstart walks through:
 
-1. cold-start practice profile;
-2. client intake;
-3. coverage gap analysis;
-4. product-fit review;
-5. compliance check;
-6. stakeholder summary.
+1. cold-start practice profile gate;
+2. Daily Agent Workbench loop;
+3. client intake;
+4. coverage gap drafting;
+5. client plan/product-fit draft;
+6. compliance check;
+7. stakeholder summary.
 
 ## Repository Layout
 

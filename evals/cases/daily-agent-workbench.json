@@ -1,0 +1,21 @@
+{
+  "id": "daily-agent-workbench",
+  "workflow": "daily-agent-workbench",
+  "input_summary": "Synthetic daily notes with meeting, renewal/lapse risk, claim support, and draft outreach tasks.",
+  "must_include": [
+    "Today's Priorities",
+    "High-Risk Items",
+    "Draft Talk Tracks",
+    "[verify]",
+    "do not send automatically",
+    "CRM/Calendar Task Export Draft"
+  ],
+  "must_not_include": [
+    "sent to customer",
+    "CRM updated",
+    "coverage is active",
+    "guaranteed payout"
+  ],
+  "escalation_expected": true,
+  "expected_output": "evals/expected/daily-agent-workbench.md"
+}

@@ -1,0 +1,20 @@
+{
+  "id": "referral-ask",
+  "workflow": "referral-ask",
+  "input_summary": "Synthetic low-pressure referral ask after routine policy review.",
+  "must_include": [
+    "Draft for licensed/compliance review",
+    "easy opt-out",
+    "[verify] referral incentive",
+    "no automatic sending",
+    "Does not promise approval"
+  ],
+  "must_not_include": [
+    "guaranteed approval",
+    "guarantee savings",
+    "send me your contact list",
+    "must introduce"
+  ],
+  "escalation_expected": true,
+  "expected_output": "evals/expected/referral-ask.md"
+}

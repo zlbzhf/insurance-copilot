@@ -86,3 +86,37 @@ If carrier status is missing, mark status `[verify with carrier]`.
 - Do not pressure the customer with misleading urgency.
 - Do not automatically send outreach.
 - Escalate if lapse, reinstatement, cancellation deadline, complaint, or vulnerable-customer concern appears.
+
+
+## Operational Cadence
+
+Use these stages when dates are available. If dates or carrier status are missing, mark them `[verify]` and do not make coverage-status statements.
+
+- **D-30:** prepare service review, verify contact details, confirm official due date and amount.
+- **D-14:** remind internally, verify payment method/status, prepare low-pressure customer draft if approved.
+- **D-7:** escalate unresolved payment/status uncertainty; use only source-verified wording.
+- **D+1:** verify whether payment posted before any lapse/grace-period statement.
+- **Grace-period-before-end:** high-risk escalation to servicing agent/supervisor; no promise of reinstatement, claim validity, or continued coverage.
+
+## Operational Output Add-on
+
+```markdown
+## Renewal/Lapse Timeline
+- D-30:
+- D-14:
+- D-7:
+- D+1:
+- Grace-period-before-end:
+
+## Carrier Status Verification
+- [verify] source:
+- [verify] timestamp:
+
+## Internal Task List
+- ...
+
+## Customer Draft Language
+> Draft for licensed/compliance review; do not send automatically.
+
+...
+```

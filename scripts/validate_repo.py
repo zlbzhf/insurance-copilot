@@ -33,6 +33,8 @@ REQUIRED = [
     ROOT / "docs" / "quality-gates.md",
     ROOT / "docs" / "hermes-first-design.md",
     ROOT / "docs" / "quickstart.md",
+    ROOT / "docs" / "workflow-surface.md",
+    ROOT / "docs" / "plans" / "2026-05-14-practical-agent-workflow-beta.md",
     ROOT / "docs" / "privacy-and-data-handling.md",
     ROOT / "docs" / "action-safety.md",
     ROOT / "docs" / "jurisdiction-adaptation.md",
@@ -87,6 +89,10 @@ REQUIRED_REFERENCES = [
     "stakeholder-summary.md",
     "compliance-starter.md",
     "default-practice-profile.md",
+    "daily-agent-workbench.md",
+    "client-plan-draft.md",
+    "chinese-talk-tracks.md",
+    "referral-ask.md",
 ]
 
 REQUIRED_TEMPLATES = [
@@ -102,6 +108,10 @@ REQUIRED_TEMPLATES = [
     "renewal-review.md",
     "stakeholder-summary.md",
     "objection-response.md",
+    "client-plan-draft.md",
+    "daily-agent-workbench.md",
+    "chinese-talk-tracks.md",
+    "referral-ask.md",
 ]
 
 REQUIRED_MCP_CONTRACTS = [
@@ -270,9 +280,24 @@ def main() -> int:
         "full skill directory",
         "knowledge/institutions/",
         "agent-workspace-template/",
+        "docs/workflow-surface.md",
+        "Daily Agent Workbench",
+        "Client Plan Draft",
     ]:
         if snippet not in readme:
             return fail(f"README missing required install/validation snippet: {snippet}")
+
+    workflow_surface = (ROOT / "docs" / "workflow-surface.md").read_text()
+    for name in [
+        "Agency Playbook Builder",
+        "Daily Agent Workbench",
+        "Client Plan Draft",
+        "Compliance Copy Checker",
+        "Referral Ask Drafter",
+        "Institution Knowledge Organizer",
+    ]:
+        if name not in workflow_surface:
+            return fail(f"workflow surface missing workflow: {name}")
 
     workflow = (ROOT / ".github" / "workflows" / "validate.yml").read_text()
     for cmd in [
@@ -290,8 +315,8 @@ def main() -> int:
         return fail("knowledge registry missing public aia pack")
 
     eval_cases = sorted((ROOT / "evals" / "cases").glob("*.json"))
-    if len(eval_cases) < 10:
-        return fail("expected at least 10 eval cases")
+    if len(eval_cases) < 14:
+        return fail("expected at least 14 eval cases")
     for case in eval_cases:
         try:
             data = json.loads(case.read_text())

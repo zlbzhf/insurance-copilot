@@ -24,7 +24,9 @@ Use this skill when the user asks for help with:
 
 - learning or documenting an insurance agency playbook;
 - structuring a client fact-find or needs intake;
+- planning daily meetings, follow-ups, renewals, claims support, referrals, and task exports;
 - identifying possible coverage gaps from known facts;
+- drafting a review-ready client plan from intake, gap notes, and source-backed product facts;
 - comparing a product to known customer needs;
 - drafting compliant responses to customer objections;
 - checking customer-facing language for risky insurance claims;
@@ -87,6 +89,29 @@ When institution knowledge is needed, use this order:
 
 Do not create one-off public pack templates purely from intuition. When a real public source does not fit current standards, record a schema gap and follow `standards/schema-evolution.md`.
 
+## Practice Profile Gate
+
+Insurance Copilot should behave like a practice-aware professional assistant, not a generic sales script generator. If the agency/practice profile is missing, stale, or too thin:
+
+**Allowed before profile is supplied:**
+
+- generic insurance education;
+- Agency Playbook Builder / cold-start profile creation;
+- client needs intake and missing-information checklists;
+- neutral source organization;
+- conservative, clearly provisional internal drafts.
+
+**Do not produce as if ready for use before profile/context exists:**
+
+- specific product-fit conclusions;
+- replacement, surrender, cancellation, or reduction suggestions;
+- reusable customer-facing scripts;
+- external-action drafts that imply approval to send;
+- jurisdiction-specific compliance conclusions;
+- carrier/product claims not supported by supplied authoritative sources.
+
+If the user needs speed, run the Quick Start version of `references/cold-start-interview.md`, state conservative assumptions, and label downstream outputs as provisional drafts for licensed/compliance review.
+
 ## First Step: Practice Profile
 
 If the agency/practice context is unknown, start with `references/cold-start-interview.md` and produce or update a practice profile. Store it only in a user-approved location, commonly:
@@ -114,18 +139,23 @@ The practice profile should define:
 
 Choose the linked reference that matches the task:
 
-- **Agency setup / playbook:** `references/cold-start-interview.md`
-- **Client fact-find:** `references/client-needs-intake.md`
-- **Coverage needs:** `references/coverage-gap-analysis.md`
-- **Product suitability draft:** `references/product-fit-review.md`
-- **Objection handling:** `references/objection-response.md`
-- **Compliance review:** `references/compliance-check.md`
-- **Existing policy review:** `references/policy-review.md`
-- **Replacement/surrender triage:** `references/replacement-suitability.md`
-- **Claims question triage:** `references/claims-triage.md`
+- **Agency Playbook Builder:** `references/cold-start-interview.md`
+- **Daily Agent Workbench:** `references/daily-agent-workbench.md`
+- **Client Needs Intake:** `references/client-needs-intake.md`
+- **Coverage Gap Drafter:** `references/coverage-gap-analysis.md`
+- **Client Plan Draft:** `references/client-plan-draft.md`
+- **Product Fit Reviewer:** `references/product-fit-review.md`
+- **Compliance Copy Checker:** `references/compliance-check.md`
+- **Policy Review Assistant:** `references/policy-review.md`
+- **Replacement Risk Triager:** `references/replacement-suitability.md`
+- **Renewal/Lapse Follow-up Planner:** `references/renewal-review.md`
+- **Claims Support Triage:** `references/claims-triage.md`
+- **Objection Response Drafter:** `references/objection-response.md`
+- **Referral Ask Drafter:** `references/referral-ask.md`
+- **Chinese Talk Tracks:** `references/chinese-talk-tracks.md`
 - **Annuity / investment-linked caution review:** `references/annuity-investment-linked-review.md`
-- **Renewal/lapse workflow:** `references/renewal-review.md`
-- **Audience-specific summary:** `references/stakeholder-summary.md`
+- **Stakeholder Summary Writer:** `references/stakeholder-summary.md`
+- **Institution Knowledge Organizer:** use public pack docs plus `docs/workflow-surface.md`
 - **Baseline compliance vocabulary:** `references/compliance-starter.md`
 - **Default conservative profile:** `references/default-practice-profile.md`
 

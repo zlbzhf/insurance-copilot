@@ -53,3 +53,17 @@ Use `private-institution-notes/<institution>/`. Required sections:
 - Public-Pack Candidate?
 
 Only mark something as a public-pack candidate if it can be shared publicly without customer data, confidential material, or redistribution issues.
+
+
+## CRM-lite Page Types
+
+- `lead` — private lead source, consent, known facts, missing facts, and next action.
+- `customer` — private customer page under `clients/`.
+- `opportunity` — potential new sale, review, renewal, referral, or service opportunity.
+- `meeting-note` — meeting prep, facts learned, missing facts, and follow-up tasks.
+- `policy-summary` — private policy facts with `[verify]` carrier/source status markers.
+- `claim-tracker` — claim-support documents, deadlines, and neutral service notes.
+- `referral-tracker` — referral consent, channel, incentive verification, and next action.
+- `task-list` — daily/weekly tasks and CRM/calendar export drafts.
+
+CRM-lite pages must keep private facts in the private workspace only. They may be summarized for public repo examples only after full de-identification or synthetic rewriting.
