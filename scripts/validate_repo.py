@@ -39,11 +39,13 @@ REQUIRED = [
     ROOT / "docs" / "local-renewal-watcher.md",
     ROOT / "docs" / "script-only-cron-wrapper.md",
     ROOT / "docs" / "private-workspace-readiness.md",
+    ROOT / "docs" / "private-dry-run-harness.md",
     ROOT / "docs" / "plans" / "2026-05-14-practical-agent-workflow-beta.md",
     ROOT / "docs" / "plans" / "2026-05-14-local-file-connector-slice.md",
     ROOT / "docs" / "plans" / "2026-05-14-local-renewal-watcher.md",
     ROOT / "docs" / "plans" / "2026-05-14-script-only-cron-wrapper.md",
     ROOT / "docs" / "plans" / "2026-05-14-private-workspace-readiness.md",
+    ROOT / "docs" / "plans" / "2026-05-14-private-dry-run-harness.md",
     ROOT / "docs" / "privacy-and-data-handling.md",
     ROOT / "docs" / "action-safety.md",
     ROOT / "docs" / "jurisdiction-adaptation.md",
@@ -68,11 +70,13 @@ REQUIRED = [
     ROOT / "scripts" / "local_file_connectors.py",
     ROOT / "scripts" / "renewal_watcher.py",
     ROOT / "scripts" / "private_workspace_readiness.py",
+    ROOT / "scripts" / "private_dry_run.py",
     ROOT / "cron" / "scripts" / "renewal_watcher.sh",
     ROOT / "tests" / "test_local_file_connectors.py",
     ROOT / "tests" / "test_renewal_watcher.py",
     ROOT / "tests" / "test_renewal_watcher_cron_wrapper.py",
     ROOT / "tests" / "test_private_workspace_readiness.py",
+    ROOT / "tests" / "test_private_dry_run.py",
     ROOT / "examples" / "local-connectors" / "synthetic-agent-workspace" / "README.md",
     ROOT / "examples" / "local-connectors" / "expected-daily-workbench.md",
     ROOT / "examples" / "renewal-watcher" / "synthetic-renewal-alert.md",
@@ -80,6 +84,8 @@ REQUIRED = [
     ROOT / "examples" / "cron" / "renewal-watcher-no-agent.md",
     ROOT / "examples" / "private-workspace-readiness" / "synthetic-readiness-report.md",
     ROOT / "examples" / "private-workspace-readiness" / "synthetic-readiness-report.json",
+    ROOT / "examples" / "private-dry-run" / "synthetic-manifest.json",
+    ROOT / "examples" / "private-dry-run" / "synthetic-deployment-checklist.md",
     ROOT / "cron" / "renewal-watcher.md",
     ROOT / "cron" / "compliance-copy-monitor.md",
     ROOT / "cron" / "replacement-risk-monitor.md",
@@ -313,8 +319,10 @@ def main() -> int:
         "docs/local-renewal-watcher.md",
         "docs/script-only-cron-wrapper.md",
         "docs/private-workspace-readiness.md",
+        "docs/private-dry-run-harness.md",
         "cron/scripts/renewal_watcher.sh",
         "scripts/private_workspace_readiness.py",
+        "scripts/private_dry_run.py",
     ]:
         if snippet not in readme:
             return fail(f"README missing required install/validation snippet: {snippet}")
@@ -328,6 +336,11 @@ def main() -> int:
     for phrase in ["Private Workspace Readiness Report", "Renewal Register Freshness", "Retention / Audit Checklist", "No External Writes", "ready_for_cron"]:
         if phrase not in readiness_doc:
             return fail(f"private workspace readiness doc missing phrase: {phrase}")
+
+    dry_run_doc = (ROOT / "docs" / "private-dry-run-harness.md").read_text()
+    for phrase in ["Private Dry-Run Deployment Harness", "ready_for_scheduled_watcher", "live_cron_created", "No External Writes", "manifest.json", "deployment-checklist.md"]:
+        if phrase not in dry_run_doc:
+            return fail(f"private dry-run harness doc missing phrase: {phrase}")
 
     workflow_surface = (ROOT / "docs" / "workflow-surface.md").read_text()
     for name in [
@@ -353,6 +366,7 @@ def main() -> int:
         "python3 -m pytest tests/test_renewal_watcher.py -q",
         "python3 -m pytest tests/test_renewal_watcher_cron_wrapper.py -q",
         "python3 -m pytest tests/test_private_workspace_readiness.py -q",
+        "python3 -m pytest tests/test_private_dry_run.py -q",
         "python3 -m pip install -r requirements-dev.txt",
     ]:
         if cmd not in workflow:
@@ -363,8 +377,8 @@ def main() -> int:
         return fail("knowledge registry missing public aia pack")
 
     eval_cases = sorted((ROOT / "evals" / "cases").glob("*.json"))
-    if len(eval_cases) < 17:
-        return fail("expected at least 17 eval cases")
+    if len(eval_cases) < 18:
+        return fail("expected at least 18 eval cases")
     for case in eval_cases:
         try:
             data = json.loads(case.read_text())
@@ -404,6 +418,7 @@ def main() -> int:
         [sys.executable, "-m", "pytest", "tests/test_renewal_watcher.py", "-q"],
         [sys.executable, "-m", "pytest", "tests/test_renewal_watcher_cron_wrapper.py", "-q"],
         [sys.executable, "-m", "pytest", "tests/test_private_workspace_readiness.py", "-q"],
+        [sys.executable, "-m", "pytest", "tests/test_private_dry_run.py", "-q"],
         [sys.executable, "scripts/renewal_watcher.py", "--csv", "examples/local-connectors/synthetic-agent-workspace/renewal-registers/synthetic-renewal-register.csv", "--as-of", "2026-05-14", "--format", "json"],
         ["bash", "cron/scripts/renewal_watcher.sh", "--workspace", "examples/local-connectors/synthetic-agent-workspace", "--as-of", "2026-05-14", "--mode", "always"],
     ]:
@@ -427,6 +442,31 @@ def main() -> int:
     for phrase in ["Private Workspace Readiness Report", "Readiness Verdict", "No External Writes"]:
         if phrase not in output:
             return fail(f"private workspace readiness smoke output missing phrase: {phrase}")
+
+    dry_run_out = Path("/tmp/insurance-copilot-validator-dry-run")
+    if dry_run_out.exists():
+        import shutil
+        shutil.rmtree(dry_run_out)
+    dry_run_cmd = [
+        sys.executable,
+        "scripts/private_dry_run.py",
+        "--workspace",
+        "examples/local-connectors/synthetic-agent-workspace",
+        "--as-of",
+        "2026-05-14",
+        "--out",
+        str(dry_run_out),
+    ]
+    code, output = run_script(dry_run_cmd)
+    if code not in {0, 1}:
+        return fail(f"command failed {' '.join(dry_run_cmd)}:\n{output}")
+    manifest_path = dry_run_out / "manifest.json"
+    checklist_path = dry_run_out / "deployment-checklist.md"
+    if not manifest_path.exists() or not checklist_path.exists():
+        return fail("private dry-run smoke did not create manifest/checklist")
+    manifest = json.loads(manifest_path.read_text())
+    if manifest.get("workflow") != "Private Dry-Run Deployment Harness" or manifest.get("live_cron_created") is not False or manifest.get("no_external_writes") is not True:
+        return fail("private dry-run smoke manifest missing safety fields")
 
     print("insurance-copilot Hermes-first repo ok")
     print(f"references: {len(refs)}")

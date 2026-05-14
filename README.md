@@ -155,6 +155,19 @@ python3 scripts/private_workspace_readiness.py \
 
 It checks structure, renewal register freshness, PII-like fixture risks, output boundaries, and retention/audit readiness. It is read-only, internal-only, and creates no live cron job. See `docs/private-workspace-readiness.md`.
 
+## Private Dry-Run Deployment Harness
+
+Before creating any live Hermes scheduled watcher, run the full private dry-run harness:
+
+```bash
+python3 scripts/private_dry_run.py \
+  --workspace examples/local-connectors/synthetic-agent-workspace \
+  --as-of 2026-05-14 \
+  --out /tmp/insurance-copilot-dry-run
+```
+
+It chains readiness, connector bundle generation, renewal watcher output, and script-only cron wrapper simulation into one diagnostic output directory with `manifest.json` and `deployment-checklist.md`. It remains read-only, reports `ready_for_scheduled_watcher`, records `live_cron_created: false`, and performs No External Writes. See `docs/private-dry-run-harness.md` and `examples/private-dry-run/`.
+
 ## Public Institution Packs
 
 Public institution packs live under:
@@ -211,8 +224,9 @@ The quickstart walks through:
 7. local file connector bundle;
 8. local renewal watcher internal alert;
 9. private workspace readiness gate;
-10. script-only renewal watcher cron wrapper dry run;
-11. stakeholder summary.
+10. private dry-run deployment harness;
+11. script-only renewal watcher cron wrapper dry run;
+12. stakeholder summary.
 
 ## Repository Layout
 
@@ -245,7 +259,8 @@ python3 scripts/run_evals.py
 python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia
 python3 scripts/validate_agent_workspace.py agent-workspace-template --template
 python3 scripts/ingest_gateway.py --help
-python3 -m pytest tests/test_ingest_gateway.py tests/test_local_file_connectors.py tests/test_renewal_watcher.py tests/test_renewal_watcher_cron_wrapper.py tests/test_private_workspace_readiness.py -q
+python3 scripts/private_dry_run.py --workspace examples/local-connectors/synthetic-agent-workspace --as-of 2026-05-14 --out /tmp/insurance-copilot-dry-run --force || test $? -eq 1
+python3 -m pytest tests/test_ingest_gateway.py tests/test_local_file_connectors.py tests/test_renewal_watcher.py tests/test_renewal_watcher_cron_wrapper.py tests/test_private_workspace_readiness.py tests/test_private_dry_run.py -q
 ```
 
 CI runs these checks on push and pull request.

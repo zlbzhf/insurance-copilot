@@ -1,0 +1,196 @@
+{
+  "artifacts": {
+    "cron-simulation.md": {
+      "checksum_recorded": true,
+      "path": "/tmp/insurance-copilot-synthetic-dry-run/cron-simulation.md",
+      "sha256": "6e1157106c225a0cdfbe755d3cba0353b5f25061323a7ef0765d6f0cc124672e",
+      "size_bytes": 1801
+    },
+    "deployment-checklist.md": {
+      "checksum_recorded": true,
+      "path": "/tmp/insurance-copilot-synthetic-dry-run/deployment-checklist.md",
+      "sha256": "a8e334a5ddfb92b96e31d9310286d7168abe52605762c2bce52b4b427c771c77",
+      "size_bytes": 1739
+    },
+    "manifest.json": {
+      "checksum_recorded": false,
+      "path": "/tmp/insurance-copilot-synthetic-dry-run/manifest.json",
+      "sha256": "self-referential-not-recorded",
+      "size_bytes": 3
+    },
+    "readiness-report.json": {
+      "checksum_recorded": true,
+      "path": "/tmp/insurance-copilot-synthetic-dry-run/readiness-report.json",
+      "sha256": "0c7868ebfa1b6739c07ec77b888d0a5c7f8acd5330c9c02a33029765323596cb",
+      "size_bytes": 2071
+    },
+    "readiness-report.md": {
+      "checksum_recorded": true,
+      "path": "/tmp/insurance-copilot-synthetic-dry-run/readiness-report.md",
+      "sha256": "b526dfc42281ebde788ca0a0e6eab047091d68e47230c5854bbbad7bb8caab52",
+      "size_bytes": 2370
+    },
+    "renewal-alert.json": {
+      "checksum_recorded": true,
+      "path": "/tmp/insurance-copilot-synthetic-dry-run/renewal-alert.json",
+      "sha256": "b895d411d45870c9eeff1d3fadae867f9a4be86306b3bb77997f640a929b5eea",
+      "size_bytes": 1226
+    },
+    "renewal-alert.md": {
+      "checksum_recorded": true,
+      "path": "/tmp/insurance-copilot-synthetic-dry-run/renewal-alert.md",
+      "sha256": "6e1157106c225a0cdfbe755d3cba0353b5f25061323a7ef0765d6f0cc124672e",
+      "size_bytes": 1801
+    },
+    "workbench-bundle.json": {
+      "checksum_recorded": true,
+      "path": "/tmp/insurance-copilot-synthetic-dry-run/workbench-bundle.json",
+      "sha256": "50f34b288d80db3259f2b19724a29551cfeee28d871818dc8648ac3af34ceeff",
+      "size_bytes": 4146
+    },
+    "workbench-bundle.md": {
+      "checksum_recorded": true,
+      "path": "/tmp/insurance-copilot-synthetic-dry-run/workbench-bundle.md",
+      "sha256": "e32713beac2ed360c177786d30375c19d4f91038fd9ed843b278be094b022dd1",
+      "size_bytes": 3745
+    }
+  },
+  "as_of": "2026-05-14",
+  "internal_only": true,
+  "live_cron_created": false,
+  "no_external_writes": true,
+  "read_only": true,
+  "ready_for_scheduled_watcher": false,
+  "review_notice": "Draft diagnostics for licensed/compliance/operations review; no live Hermes cron job was created.",
+  "stages": {
+    "connector_json": {
+      "command": [
+        "python3",
+        "scripts/local_file_connectors.py",
+        "daily-workbench",
+        "--workspace",
+        "/root/insurance-agent-assistant/examples/local-connectors/synthetic-agent-workspace",
+        "--format",
+        "json",
+        "--output",
+        "/tmp/insurance-copilot-synthetic-dry-run/workbench-bundle.json"
+      ],
+      "exit_code": 0,
+      "status": "ok",
+      "stderr": ""
+    },
+    "connector_markdown": {
+      "command": [
+        "python3",
+        "scripts/local_file_connectors.py",
+        "daily-workbench",
+        "--workspace",
+        "/root/insurance-agent-assistant/examples/local-connectors/synthetic-agent-workspace",
+        "--format",
+        "markdown",
+        "--output",
+        "/tmp/insurance-copilot-synthetic-dry-run/workbench-bundle.md"
+      ],
+      "exit_code": 0,
+      "status": "ok",
+      "stderr": ""
+    },
+    "cron_simulation": {
+      "command": [
+        "bash",
+        "cron/scripts/renewal_watcher.sh",
+        "--workspace",
+        "/root/insurance-agent-assistant/examples/local-connectors/synthetic-agent-workspace",
+        "--as-of",
+        "2026-05-14",
+        "--mode",
+        "always",
+        "--format",
+        "markdown",
+        "--output",
+        "/tmp/insurance-copilot-synthetic-dry-run/cron-simulation.md"
+      ],
+      "exit_code": 0,
+      "status": "ok",
+      "stderr": ""
+    },
+    "readiness": {
+      "command": [
+        "python3",
+        "scripts/private_workspace_readiness.py",
+        "--workspace",
+        "/root/insurance-agent-assistant/examples/local-connectors/synthetic-agent-workspace",
+        "--as-of",
+        "2026-05-14",
+        "--max-stale-days",
+        "7",
+        "--format",
+        "json",
+        "--output",
+        "/tmp/insurance-copilot-synthetic-dry-run/readiness-report.json"
+      ],
+      "exit_code": 1,
+      "status": "blocked",
+      "stderr": ""
+    },
+    "readiness_markdown": {
+      "command": [
+        "python3",
+        "scripts/private_workspace_readiness.py",
+        "--workspace",
+        "/root/insurance-agent-assistant/examples/local-connectors/synthetic-agent-workspace",
+        "--as-of",
+        "2026-05-14",
+        "--max-stale-days",
+        "7",
+        "--format",
+        "markdown",
+        "--output",
+        "/tmp/insurance-copilot-synthetic-dry-run/readiness-report.md"
+      ],
+      "exit_code": 1,
+      "status": "blocked",
+      "stderr": ""
+    },
+    "renewal_json": {
+      "command": [
+        "python3",
+        "scripts/renewal_watcher.py",
+        "--bundle",
+        "/tmp/insurance-copilot-synthetic-dry-run/workbench-bundle.json",
+        "--workspace",
+        "/root/insurance-agent-assistant/examples/local-connectors/synthetic-agent-workspace",
+        "--as-of",
+        "2026-05-14",
+        "--format",
+        "json",
+        "--output",
+        "/tmp/insurance-copilot-synthetic-dry-run/renewal-alert.json"
+      ],
+      "exit_code": 0,
+      "status": "ok",
+      "stderr": ""
+    },
+    "renewal_markdown": {
+      "command": [
+        "python3",
+        "scripts/renewal_watcher.py",
+        "--bundle",
+        "/tmp/insurance-copilot-synthetic-dry-run/workbench-bundle.json",
+        "--workspace",
+        "/root/insurance-agent-assistant/examples/local-connectors/synthetic-agent-workspace",
+        "--as-of",
+        "2026-05-14",
+        "--format",
+        "markdown",
+        "--output",
+        "/tmp/insurance-copilot-synthetic-dry-run/renewal-alert.md"
+      ],
+      "exit_code": 0,
+      "status": "ok",
+      "stderr": ""
+    }
+  },
+  "workflow": "Private Dry-Run Deployment Harness",
+  "workspace": "/root/insurance-agent-assistant/examples/local-connectors/synthetic-agent-workspace"
+}

@@ -112,7 +112,26 @@ Expected behavior:
 - remains read-only and includes `No External Writes`;
 - does not create a live cron job.
 
-## 7. Script-only Renewal Watcher Cron Wrapper Dry Run
+## 7. Private Dry-Run Deployment Harness
+
+Before creating any live scheduled watcher, run the full dry-run harness:
+
+```bash
+python3 scripts/private_dry_run.py \
+  --workspace examples/local-connectors/synthetic-agent-workspace \
+  --as-of 2026-05-14 \
+  --out /tmp/insurance-copilot-dry-run \
+  --force
+```
+
+Expected behavior:
+
+- emits a diagnostic output directory with readiness, connector, watcher, cron simulation, manifest, and checklist artifacts;
+- may return exit `1` when readiness blockers prevent scheduled deployment, while still producing diagnostics;
+- records `ready_for_scheduled_watcher`, `live_cron_created: false`, and `No External Writes`;
+- does not create a live Hermes job or send/write anything externally.
+
+## 8. Script-only Renewal Watcher Cron Wrapper Dry Run
 
 Run the wrapper in dry-run mode:
 
@@ -125,7 +144,7 @@ bash cron/scripts/renewal_watcher.sh \
 
 For future Hermes `no_agent=True` cron use, switch to `--mode alert-only` after approval. Empty stdout means silent/no-alert, and non-zero exit means Hermes should deliver an error alert. The wrapper never sends customer messages, never writes CRM/calendar tasks, and rejects report output inside the private workspace.
 
-## 8. Client Intake
+## 9. Client Intake
 
 Use the synthetic case:
 
@@ -139,7 +158,7 @@ Expected behavior:
 - says product recommendation is premature;
 - asks budget, income, existing coverage, jurisdiction, and approved health-disclosure questions.
 
-## 9. Coverage Gap Drafter
+## 10. Coverage Gap Drafter
 
 Prompt:
 
@@ -153,7 +172,7 @@ Expected behavior:
 - separates facts from assumptions;
 - uses possible solution categories, not product names.
 
-## 10. Client Plan Draft
+## 11. Client Plan Draft
 
 Prompt:
 
@@ -167,7 +186,7 @@ Expected behavior:
 - does not call any product best;
 - does not guarantee approval, payout, returns, savings, or suitability.
 
-## 11. Compliance Copy Checker
+## 12. Compliance Copy Checker
 
 Prompt:
 
@@ -182,7 +201,7 @@ Expected behavior:
 - provides safer draft language;
 - requires compliance review.
 
-## 12. Chinese Talk Track / Referral Draft
+## 13. Chinese Talk Track / Referral Draft
 
 Prompt:
 
@@ -197,7 +216,7 @@ Expected behavior:
 - forbids promises, guarantees, pressure, unapproved incentives, and customer-list extraction;
 - requires review before use.
 
-## 13. Stakeholder Summary
+## 14. Stakeholder Summary
 
 Prompt:
 

@@ -153,10 +153,12 @@ A future deployment sequence should be:
 ```text
 private workspace readiness report
 → fix blockers
-→ local connector dry run
-→ renewal watcher dry run
-→ script-only cron wrapper dry run with no delivery
+→ private dry-run deployment harness
+→ review manifest and deployment checklist
+→ script-only cron wrapper dry run with no delivery if needed
 → reviewed Hermes no_agent=True scheduled job
 ```
 
 Do not create a live job until reviewer, schedule, timezone, retention/audit policy, and data boundary are approved.
+
+For the one-command deployment preflight, see `docs/private-dry-run-harness.md`.

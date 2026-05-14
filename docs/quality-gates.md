@@ -131,6 +131,7 @@ python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia
 python3 scripts/validate_knowledge_pack.py knowledge/institutions/_template --template
 python3 scripts/validate_agent_workspace.py agent-workspace-template --template
 python3 scripts/private_workspace_readiness.py --workspace examples/local-connectors/synthetic-agent-workspace --as-of 2026-05-14 --format json
+python3 scripts/private_dry_run.py --workspace examples/local-connectors/synthetic-agent-workspace --as-of 2026-05-14 --out /tmp/insurance-copilot-dry-run --force || test $? -eq 1
 python3 scripts/ingest_gateway.py --help
 ```
 
@@ -152,3 +153,5 @@ To avoid architecture-only drift, every major release must preserve first-day pr
 These gates are intentionally closer to `claude-for-legal` usability discipline: task surface first, professional profile next, connectors/workspaces as support, review gates always.
 
 - Private workspace readiness blocks symlinked required workspace paths, validates every renewal row freshness timestamp, rejects future dates, and prevents output hardlink aliases to workspace files.
+
+- Private dry-run deployment blocks live scheduled watcher creation until manifest `ready_for_scheduled_watcher` is true; it records `live_cron_created: false`, artifact checksums, and No External Writes.
