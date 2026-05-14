@@ -40,3 +40,6 @@ jobs:
         run: python3 -m pytest tests/test_private_workspace_readiness.py -q
       - name: Test private dry-run deployment harness
         run: python3 -m pytest tests/test_private_dry_run.py -q
+
+      - name: Test practical practitioner MVP surface
+        run: python3 -m pytest tests/test_practitioner_mvp_surface.py -q

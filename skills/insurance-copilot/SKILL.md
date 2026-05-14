@@ -18,6 +18,28 @@ Insurance Copilot is a Hermes-first skill for helping licensed insurance profess
 
 This skill does **not** turn Hermes into a licensed insurance advisor. Every result is a draft for review by the user's licensed insurance agent, supervisor, compliance team, legal counsel, tax advisor, investment advisor, claims specialist, or other qualified professional as appropriate.
 
+
+## Practical MVP Operating Mode
+
+Use Insurance Copilot as a **task-first professional workflow router**, not as a broad menu bot.
+
+- Do not start by dumping the full workflow catalog.
+- If the user already states a task, route directly to the matching workflow reference.
+- Ask at most three essential questions before producing a useful draft; put the rest in `Next Questions`.
+- Manual-first: do not discuss cron, deployment, scheduled monitoring, connector hardening, or CI unless the user explicitly asks.
+- Prioritize daily agent usefulness: practice profile, daily workbench, client intake, policy/coverage review, customer-message drafting, compliance copy checking, replacement/lapse/claim triage.
+- Every customer-facing draft must remain a draft for licensed/compliance review; customer-facing drafts remain drafts and must not imply approval to send.
+- Use `[verify]` for missing carrier, policy, payment, claim, underwriting, product, jurisdiction, or compliance facts.
+- Separate internal agent notes from customer-safe language.
+
+Default flow:
+
+```text
+practice profile -> task-specific workflow -> known facts/sources -> review-ready draft -> human review owner
+```
+
+If no practice profile exists, run Agency Playbook Builder in Quick Start mode or state conservative provisional assumptions. If the user needs speed, produce a provisional internal draft and clearly label what must be verified.
+
 ## When to Use
 
 Use this skill when the user asks for help with:

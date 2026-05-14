@@ -1,235 +1,162 @@
-# Quickstart
+# Quickstart: Practical Insurance Agent Loop
 
-This guide shows a safe end-to-end Hermes workflow using synthetic data. Start with the practitioner workflow surface, not the standards pipeline.
+Use this guide when you want a usable first version of Insurance Copilot in Hermes. It is deliberately **manual-first**: no cron, no deployment, no customer sending, no CRM writes.
 
-## 1. Install and Load
+## The 30-Minute Useful Loop
 
-Install the full skill directory:
+### 1. Install and Load
 
 ```bash
 mkdir -p ~/.hermes/skills/insurance/insurance-copilot
 cp -R skills/insurance-copilot/* ~/.hermes/skills/insurance/insurance-copilot/
 ```
 
-Start a new Hermes session and load:
+In Hermes:
 
 ```text
 /skill insurance-copilot
 ```
 
-## 2. Practice Profile Gate
+### 2. Create the Practice Profile
 
 Prompt:
 
 ```text
-Use Agency Playbook Builder in Quick Start mode. Help me create an Insurance Copilot practice profile for a synthetic life/health insurance agency. Ask only the first essential questions and mark unknowns as [confirm with compliance/legal].
+Use Agency Playbook Builder in Quick Start mode. Help me create a practical insurance-agent profile. Ask only the essential questions: jurisdiction/market, license scope, product lines, carriers, client segments, compliance reviewer, escalation rules, approved sources/scripts, communication channels, and output tone. Manual-first only.
 ```
 
 Expected behavior:
 
-- asks about jurisdiction, license scope, product lines, carriers, approved script sources, compliance reviewer, escalation path, customer data policy, CRM/tool status, and output formats;
-- does not invent agency rules;
-- blocks specific product-fit conclusions, replacement suggestions, reusable customer scripts, and external-action drafts until adequate profile/context exists.
+- asks only essential setup questions;
+- marks unknown compliance/legal items as `[confirm with compliance/legal]`;
+- does not draft reusable customer scripts or product-fit conclusions until enough context exists.
 
-## 3. Daily Agent Workbench Loop
+### 3. Run Daily Agent Workbench
 
 Prompt:
 
 ```text
-Use Daily Agent Workbench for synthetic notes: one family-protection meeting today, one renewal due soon with carrier status unknown, one claim-support checklist, and one referral thank-you follow-up. Prioritize tasks and draft talk tracks, but do not send or write anything automatically.
+Use Daily Agent Workbench. Here are today's notes: one family-protection meeting, one policy renewal due soon with carrier status unknown, one claim-support question, and one referral thank-you. Prioritize my day, separate internal next actions from customer-facing drafts, and do not send or write anything automatically.
 ```
 
 Expected behavior:
 
 - prioritizes high-risk renewal/lapse and claim items;
 - marks policy/payment/claim facts `[verify]`;
-- creates customer drafts only as licensed/compliance review drafts;
-- creates a CRM/calendar task export draft without external writes.
+- drafts customer language only as review drafts;
+- produces internal CRM/calendar task export drafts without external writes.
 
-## 4. Local File Connector Slice
+### 4. Structure Client Notes
 
-Generate a synthetic local-file connector bundle:
+Prompt:
+
+```text
+Use Client Needs Intake. Turn these notes into a structured fact-find: Couple ages 35 and 34, two children, mortgage, employer health coverage, unknown life/disability coverage, wants family protection and education funding, budget unknown.
+```
+
+Expected behavior:
+
+- separates known facts from missing facts;
+- says product recommendation is premature when facts are incomplete;
+- asks for budget, income, existing coverage, jurisdiction, health-disclosure boundaries, and approved source materials.
+
+### 5. Draft Coverage Gaps Without Product Recommendations
+
+Prompt:
+
+```text
+Use Coverage Gap Drafter. Based on the intake above, draft a coverage-gap analysis. Use possible solution categories only, mark assumptions as [verify], and do not recommend a specific product.
+```
+
+Expected behavior:
+
+- identifies possible life, income-interruption/disability, medical/critical illness, accident, and education-funding needs where appropriate;
+- separates facts from assumptions;
+- avoids naming products unless a separate source-backed product-fit review is requested.
+
+### 6. Draft or Check Customer Language
+
+Prompt:
+
+```text
+Use Compliance Copy Checker. Review this WeChat draft before customer use: "This is guaranteed approval and the best risk-free plan for every family." Quote risky phrases, classify risk, suggest safer wording, and state who must review it.
+```
+
+Expected behavior:
+
+- classifies the draft as Red risk;
+- flags guaranteed approval, best, risk-free, and every family;
+- provides safer language;
+- requires licensed/compliance review before use.
+
+### 7. Summarize for Agent and Customer
+
+Prompt:
+
+```text
+Use Stakeholder Summary Writer. Summarize the intake, gap notes, and safer draft for me as the agent, then create a customer-safe version. Preserve [verify] markers and keep internal risk notes out of the customer copy.
+```
+
+Expected behavior:
+
+- separates internal agent notes from customer-safe language;
+- preserves caveats and `[verify]` markers;
+- lists review gates before external use.
+
+## Task-First Routing Rule
+
+If you already know the job, say it directly:
+
+```text
+Use Policy Review Assistant...
+Use Replacement Risk Triager...
+Use Claims Support Triage...
+Use Referral Ask Drafter...
+```
+
+Do not ask Insurance Copilot to show the entire workflow catalog unless you are exploring. The skill should behave as a task router, ask at most three essential missing questions, then produce a review-ready draft.
+
+## Complete Example
+
+See:
+
+```text
+examples/practical-mvp/agent-first-session.md
+```
+
+## Advanced Appendix
+
+The following tools are for later, after the manual workflow is useful and reviewed. They are not required for the practical MVP.
+
+### Local File Connector Bundle
 
 ```bash
 python3 scripts/local_file_connectors.py daily-workbench   --workspace examples/local-connectors/synthetic-agent-workspace   --format markdown
 ```
 
-Then paste the bundle into Hermes with:
+Paste the bundle into Hermes with:
 
 ```text
 Use Daily Agent Workbench on this local connector bundle. Preserve [verify] markers, do not send or write anything automatically, and produce licensed/compliance review drafts only.
 ```
 
-Expected behavior:
-
-- treats the connector as read-only;
-- skips symlinked inputs and requires explicit output files to be outside the workspace;
-- prioritizes renewal/lapse, claim, policy-status, referral, and meeting items;
-- creates CRM/calendar task export drafts only;
-- keeps `No External Writes` and review gates.
-
-
-## 5. Local Renewal Watcher Internal Alert
-
-Generate a JSON bundle and run the internal-only renewal watcher:
+### Internal Renewal Watcher
 
 ```bash
-python3 scripts/local_file_connectors.py daily-workbench \
-  --workspace examples/local-connectors/synthetic-agent-workspace \
-  --format json > /tmp/insurance-workbench-bundle.json
-python3 scripts/renewal_watcher.py \
-  --bundle /tmp/insurance-workbench-bundle.json \
-  --as-of 2026-05-14 \
-  --format markdown
+python3 scripts/local_file_connectors.py daily-workbench   --workspace examples/local-connectors/synthetic-agent-workspace   --format json > /tmp/insurance-workbench-bundle.json
+python3 scripts/renewal_watcher.py   --bundle /tmp/insurance-workbench-bundle.json   --as-of 2026-05-14   --format markdown
 ```
 
-Expected behavior:
+Expected behavior: internal alert only, `[verify]` status language, `No External Writes`, no customer send, no CRM/calendar write.
 
-- emits `Internal Renewal Watcher Alert`;
-- classifies renewal/lapse rows into internal buckets such as `D-7`, `D+1`, `grace-period-before-end`, or `verify-status`;
-- preserves `[verify]` status language;
-- includes `No External Writes`;
-- does not send customer messages or write CRM/calendar tasks.
+### Private Workspace Readiness / Dry Run
 
-
-
-## 6. Private Workspace Readiness Gate
-
-Before using the scheduled watcher wrapper on a private workspace, run the readiness gate:
+Only consider these before any scheduled monitoring is explicitly requested and approved:
 
 ```bash
-python3 scripts/private_workspace_readiness.py \
-  --workspace examples/local-connectors/synthetic-agent-workspace \
-  --as-of 2026-05-14 \
-  --format markdown
+python3 scripts/private_workspace_readiness.py   --workspace examples/local-connectors/synthetic-agent-workspace   --as-of 2026-05-14   --format markdown
+
+python3 scripts/private_dry_run.py   --workspace examples/local-connectors/synthetic-agent-workspace   --as-of 2026-05-14   --out /tmp/insurance-copilot-dry-run   --force
 ```
 
-Expected behavior:
-
-- emits `Private Workspace Readiness Report`;
-- checks required workspace structure, renewal register freshness, PII-like fixture risks, output boundary, and retention/audit policy;
-- may return exit `1` for a generated report with blockers;
-- remains read-only and includes `No External Writes`;
-- does not create a live cron job.
-
-## 7. Private Dry-Run Deployment Harness
-
-Before creating any live scheduled watcher, run the full dry-run harness:
-
-```bash
-python3 scripts/private_dry_run.py \
-  --workspace examples/local-connectors/synthetic-agent-workspace \
-  --as-of 2026-05-14 \
-  --out /tmp/insurance-copilot-dry-run \
-  --force
-```
-
-Expected behavior:
-
-- emits a diagnostic output directory with readiness, connector, watcher, cron simulation, manifest, and checklist artifacts;
-- may return exit `1` when readiness blockers prevent scheduled deployment, while still producing diagnostics;
-- records `ready_for_scheduled_watcher`, `live_cron_created: false`, and `No External Writes`;
-- does not create a live Hermes job or send/write anything externally.
-
-## 8. Script-only Renewal Watcher Cron Wrapper Dry Run
-
-Run the wrapper in dry-run mode:
-
-```bash
-bash cron/scripts/renewal_watcher.sh \
-  --workspace examples/local-connectors/synthetic-agent-workspace \
-  --as-of 2026-05-14 \
-  --mode always
-```
-
-For future Hermes `no_agent=True` cron use, switch to `--mode alert-only` after approval. Empty stdout means silent/no-alert, and non-zero exit means Hermes should deliver an error alert. The wrapper never sends customer messages, never writes CRM/calendar tasks, and rejects report output inside the private workspace.
-
-## 9. Client Intake
-
-Use the synthetic case:
-
-```text
-Use Client Needs Intake for this synthetic profile: Couple ages 35 and 34, two children, mortgage, employer health coverage, unknown life/disability coverage, wants family protection and education funding, budget unknown.
-```
-
-Expected behavior:
-
-- returns known facts and missing facts;
-- says product recommendation is premature;
-- asks budget, income, existing coverage, jurisdiction, and approved health-disclosure questions.
-
-## 10. Coverage Gap Drafter
-
-Prompt:
-
-```text
-Use Coverage Gap Drafter. Based on the intake above, draft a coverage gap analysis. Do not recommend specific products.
-```
-
-Expected behavior:
-
-- identifies possible life, income interruption/disability, critical illness/medical, accident, and education-funding needs where appropriate;
-- separates facts from assumptions;
-- uses possible solution categories, not product names.
-
-## 11. Client Plan Draft
-
-Prompt:
-
-```text
-Use Client Plan Draft. Combine the synthetic intake, coverage-gap notes, and only source-backed product/category facts into a review-ready client plan draft. Separate internal notes from customer-safe language, preserve [verify] markers, and avoid final advice or best/guaranteed wording.
-```
-
-Expected behavior:
-
-- includes customer profile, confirmed needs, missing facts, current coverage, gap summary, candidate solution categories, product/source caveats, compliance flags, customer-safe summary, internal notes, and next questions;
-- does not call any product best;
-- does not guarantee approval, payout, returns, savings, or suitability.
-
-## 12. Compliance Copy Checker
-
-Prompt:
-
-```text
-Use Compliance Copy Checker. Check this draft ad: "Guaranteed approval and guaranteed payout. This is the best risk-free plan for every family."
-```
-
-Expected behavior:
-
-- marks the risk Red;
-- flags guaranteed approval, guaranteed payout, best, risk-free, and every family;
-- provides safer draft language;
-- requires compliance review.
-
-## 13. Chinese Talk Track / Referral Draft
-
-Prompt:
-
-```text
-Use Chinese Talk Tracks and Referral Ask Drafter. Draft a low-pressure WeChat policy-review invitation and a referral ask for synthetic customers. Include forbidden phrases, [verify] items, and escalation triggers.
-```
-
-Expected behavior:
-
-- uses calm Chinese wording;
-- includes opt-out language for referral ask;
-- forbids promises, guarantees, pressure, unapproved incentives, and customer-list extraction;
-- requires review before use.
-
-## 14. Stakeholder Summary
-
-Prompt:
-
-```text
-Use Stakeholder Summary Writer. Summarize the above for the agent and then provide a customer-safe version.
-```
-
-Expected behavior:
-
-- keeps internal flags in the agent version;
-- removes internal-only notes from customer version;
-- preserves caveats and `[verify]` markers.
-
-## Full Synthetic Demo
-
-See `examples/end-to-end/family-protection-workflow.md` for the full synthetic loop.
+They remain read-only and do not create live jobs.

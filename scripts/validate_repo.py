@@ -46,6 +46,7 @@ REQUIRED = [
     ROOT / "docs" / "plans" / "2026-05-14-script-only-cron-wrapper.md",
     ROOT / "docs" / "plans" / "2026-05-14-private-workspace-readiness.md",
     ROOT / "docs" / "plans" / "2026-05-14-private-dry-run-harness.md",
+    ROOT / "docs" / "plans" / "2026-05-15-practical-mvp-focus.md",
     ROOT / "docs" / "privacy-and-data-handling.md",
     ROOT / "docs" / "action-safety.md",
     ROOT / "docs" / "jurisdiction-adaptation.md",
@@ -77,6 +78,8 @@ REQUIRED = [
     ROOT / "tests" / "test_renewal_watcher_cron_wrapper.py",
     ROOT / "tests" / "test_private_workspace_readiness.py",
     ROOT / "tests" / "test_private_dry_run.py",
+    ROOT / "tests" / "test_practitioner_mvp_surface.py",
+    ROOT / "examples" / "practical-mvp" / "agent-first-session.md",
     ROOT / "examples" / "local-connectors" / "synthetic-agent-workspace" / "README.md",
     ROOT / "examples" / "local-connectors" / "expected-daily-workbench.md",
     ROOT / "examples" / "renewal-watcher" / "synthetic-renewal-alert.md",
@@ -301,6 +304,13 @@ def main() -> int:
 
     readme = (ROOT / "README.md").read_text()
     for snippet in [
+        "Practical MVP: How an Agent Uses It",
+        "workflow router, not a menu bot",
+        "manual-first",
+        "Recommended First Session",
+        "examples/practical-mvp/agent-first-session.md",
+        "Advanced / Later: Local Connectors and Watchers",
+        "Developer Validation",
         "mkdir -p ~/.hermes/skills/insurance/insurance-copilot",
         "python3 scripts/validate_repo.py",
         "python3 scripts/package_skill.py --check",
@@ -355,6 +365,18 @@ def main() -> int:
         if name not in workflow_surface:
             return fail(f"workflow surface missing workflow: {name}")
 
+    quickstart = (ROOT / "docs" / "quickstart.md").read_text()
+    for phrase in ["Quickstart: Practical Insurance Agent Loop", "The 30-Minute Useful Loop", "Advanced Appendix", "manual-first"]:
+        if phrase not in quickstart:
+            return fail(f"quickstart missing practical MVP phrase: {phrase}")
+    if quickstart.index("The 30-Minute Useful Loop") > quickstart.index("Advanced Appendix"):
+        return fail("quickstart must put practical loop before advanced appendix")
+
+    practical_example = (ROOT / "examples" / "practical-mvp" / "agent-first-session.md").read_text()
+    for phrase in ["Practical MVP Example", "Input 1 — Set the Practice Profile", "Input 2 — Daily Workbench", "Input 3 — Client Intake", "Input 4 — Safer WeChat Draft", "Do not send automatically"]:
+        if phrase not in practical_example:
+            return fail(f"practical MVP example missing phrase: {phrase}")
+
     workflow = (ROOT / ".github" / "workflows" / "validate.yml").read_text()
     for cmd in [
         "python3 scripts/validate_repo.py",
@@ -367,6 +389,7 @@ def main() -> int:
         "python3 -m pytest tests/test_renewal_watcher_cron_wrapper.py -q",
         "python3 -m pytest tests/test_private_workspace_readiness.py -q",
         "python3 -m pytest tests/test_private_dry_run.py -q",
+        "python3 -m pytest tests/test_practitioner_mvp_surface.py -q",
         "python3 -m pip install -r requirements-dev.txt",
     ]:
         if cmd not in workflow:
@@ -377,8 +400,8 @@ def main() -> int:
         return fail("knowledge registry missing public aia pack")
 
     eval_cases = sorted((ROOT / "evals" / "cases").glob("*.json"))
-    if len(eval_cases) < 18:
-        return fail("expected at least 18 eval cases")
+    if len(eval_cases) < 19:
+        return fail("expected at least 19 eval cases")
     for case in eval_cases:
         try:
             data = json.loads(case.read_text())
@@ -419,6 +442,7 @@ def main() -> int:
         [sys.executable, "-m", "pytest", "tests/test_renewal_watcher_cron_wrapper.py", "-q"],
         [sys.executable, "-m", "pytest", "tests/test_private_workspace_readiness.py", "-q"],
         [sys.executable, "-m", "pytest", "tests/test_private_dry_run.py", "-q"],
+        [sys.executable, "-m", "pytest", "tests/test_practitioner_mvp_surface.py", "-q"],
         [sys.executable, "scripts/renewal_watcher.py", "--csv", "examples/local-connectors/synthetic-agent-workspace/renewal-registers/synthetic-renewal-register.csv", "--as-of", "2026-05-14", "--format", "json"],
         ["bash", "cron/scripts/renewal_watcher.sh", "--workspace", "examples/local-connectors/synthetic-agent-workspace", "--as-of", "2026-05-14", "--mode", "always"],
     ]:

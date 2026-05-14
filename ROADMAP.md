@@ -2,9 +2,9 @@
 
 This roadmap is durable project direction. Use it instead of relying on compressed chat history.
 
-## Current Phase: Evidence-Driven Knowledge Architecture Beta
+## Current Phase: Practical Practitioner MVP
 
-Goal: make `insurance-copilot` directly usable as a Hermes skill package and a three-layer insurance knowledge project with a standards-driven public ingestion pipeline:
+Goal: make `insurance-copilot` directly usable by an insurance agent in Hermes before adding more infrastructure. The primary surface is manual-first practitioner work, supported by the three-layer knowledge architecture and public ingestion pipeline:
 
 1. public general workflow skill;
 2. public, collaboratively maintained institution knowledge packs;
@@ -24,9 +24,18 @@ Goal: make `insurance-copilot` directly usable as a Hermes skill package and a t
 - Three-layer public/private knowledge architecture.
 - Evidence-driven standards framework under `standards/`, `schemas/`, and `prompts/`.
 - Deterministic ingestion gateway prototype under `scripts/ingest_gateway.py`.
-- Local connector, renewal watcher, script-only cron wrapper, private workspace readiness gate, and private dry-run deployment harness before scheduled monitoring.
+- Local connector, renewal watcher, script-only cron wrapper, private workspace readiness gate, and private dry-run deployment harness exist as advanced safeguards; they are not the practical MVP entrypoint.
 
-## Priority 1 — Public Institution Knowledge Packs and Standards
+## Priority 1 — Practical Agent Workflow Usability
+
+- Keep README and quickstart centered on the manual-first user loop.
+- Treat Insurance Copilot as a task-first workflow router, not a menu bot.
+- Optimize Agency Playbook Builder, Daily Agent Workbench, Client Needs Intake, Coverage Gap Drafter, Compliance Copy Checker, Policy Review Assistant, Replacement Risk Triager, Claims Support Triage, Referral Ask Drafter, and Stakeholder Summary Writer for real daily use.
+- Ask at most three essential questions before producing a useful provisional draft.
+- Keep customer-facing drafts clearly labeled for licensed/compliance review.
+- Maintain synthetic practical examples and regression fixtures for the first-session loop.
+
+## Priority 2 — Public Institution Knowledge Packs and Standards
 
 - Stabilize `knowledge/institutions/_template/` schema.
 - Maintain seed AIA/友邦 public pack without non-public claims.
@@ -36,36 +45,36 @@ Goal: make `insurance-copilot` directly usable as a Hermes skill package and a t
 - Support future remote pack registry and selective page retrieval.
 - Split mature institution packs into separate repos only when volume, maintainers, and release cadence justify it.
 
-## Priority 2 — Ingestion Gateway
+## Priority 3 — Agent Private Workspace
+
+- Keep private customer data and non-public institution materials outside this public repo.
+- Improve `agent-workspace-template/` for private LLM-wiki organization.
+- Add private pack/workspace validation that agents can run locally.
+- Keep local connectors read-only and manual-first for the MVP.
+- Keep scheduled monitoring, readiness gates, and dry-run deployment harnesses as advanced/later safeguards, not the primary user path.
+- Provide safe promotion path from private notes to public contribution bundles.
+
+## Priority 4 — Ingestion Gateway
 
 - Expand `scripts/ingest_gateway.py` from deterministic prototype into a maintained gateway.
 - Add fixture tests for classification, schema gaps, and page rendering.
 - Add optional maintainer-triggered LLM processing using `prompts/`, not automatic fork PR processing.
 - Keep generated staging output separate from canonical `knowledge/` content.
 
-## Priority 3 — Agent Private Workspace
-
-- Keep private customer data and non-public institution materials outside this public repo.
-- Improve `agent-workspace-template/` for private LLM-wiki organization.
-- Add private pack/workspace validation that agents can run locally.
-- Private workspace readiness gate before scheduled monitoring: structure, freshness, privacy/PII-like risks, output boundary, retention/audit readiness.
-- Private dry-run deployment harness before live watcher creation: readiness, connector bundle, renewal watcher, cron wrapper simulation, manifest, and deployment checklist.
-- Provide safe promotion path from private notes to public contribution bundles.
-
-## Priority 4 — Better Regression Testing
+## Priority 5 — Better Regression Testing
 
 - Add model-in-the-loop eval harness when Hermes exposes a stable noninteractive skill execution path.
 - Add more golden outputs for product-line-specific cases.
 - Add knowledge-pack validation cases for source records, wikilinks, frontmatter, and PII scans.
 - Track regression results in release notes.
 
-## Priority 5 — Optional Integrations
+## Priority 6 — Optional Integrations
 
 - Implement MCP servers or adapters for CRM, policy document KB, product library, compliance script library, and renewal register only after privacy/security/compliance approval.
 - Keep connectors read-only by default.
 - Add audit logs and source timestamps.
 
-## Priority 6 — Release Management
+## Priority 7 — Release Management
 
 - Tag beta releases after validation.
 - Keep `CHANGELOG.md` current.
