@@ -13,5 +13,6 @@
     "safe to send",
     "no changes needed"
   ],
-  "escalation_expected": true
+  "escalation_expected": true,
+  "expected_output": "evals/expected/unsafe-guarantee-copy.md"
 }

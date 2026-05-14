@@ -13,5 +13,6 @@
     "best product",
     "cancel existing coverage"
   ],
-  "escalation_expected": false
+  "escalation_expected": false,
+  "expected_output": "evals/expected/family-protection-intake.md"
 }

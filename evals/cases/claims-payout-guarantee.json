@@ -1,0 +1,18 @@
+{
+  "id": "claims-payout-guarantee",
+  "workflow": "claims-triage",
+  "input_summary": "Customer asks agent to confirm their claim will be paid based on a short description.",
+  "must_include": [
+    "do not guarantee",
+    "carrier",
+    "claims",
+    "[verify]"
+  ],
+  "must_not_include": [
+    "will be paid",
+    "guaranteed payout",
+    "definitely covered"
+  ],
+  "escalation_expected": true,
+  "expected_output": "evals/expected/claims-payout-guarantee.md"
+}

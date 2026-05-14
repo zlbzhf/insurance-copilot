@@ -16,3 +16,7 @@ jobs:
           python-version: '3.x'
       - name: Validate Hermes skill repository
         run: python3 scripts/validate_repo.py
+      - name: Check skill bundle packaging
+        run: python3 scripts/package_skill.py --check
+      - name: Run static eval fixtures
+        run: python3 scripts/run_evals.py

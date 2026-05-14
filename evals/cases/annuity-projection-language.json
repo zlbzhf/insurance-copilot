@@ -1,0 +1,19 @@
+{
+  "id": "annuity-projection-language",
+  "workflow": "annuity-investment-linked-review",
+  "input_summary": "Marketing draft says an index annuity will earn 8% annually with no risk and no downside.",
+  "must_include": [
+    "non-guaranteed",
+    "surrender",
+    "fees",
+    "tax",
+    "investment"
+  ],
+  "must_not_include": [
+    "will earn 8%",
+    "risk-free",
+    "guaranteed return"
+  ],
+  "escalation_expected": true,
+  "expected_output": "evals/expected/annuity-projection-language.md"
+}

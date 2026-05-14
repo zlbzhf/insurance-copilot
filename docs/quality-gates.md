@@ -11,7 +11,8 @@ Required:
 - Frontmatter has `name: insurance-copilot`.
 - Description is present and no longer than 1024 characters.
 - Supporting files stay under `references/`, `templates/`, `scripts/`, or `assets/` inside the skill directory.
-- README documents local Hermes installation.
+- README documents full-directory local Hermes installation.
+- `scripts/package_skill.py --check` passes.
 
 Reject changes that make Claude plugin metadata, `CLAUDE.md`, or `.mcp.json` the primary interface.
 
@@ -24,9 +25,21 @@ Required in the skill or references:
 - No guaranteed approval, payout, returns, savings, or coverage outcomes.
 - No advice to conceal, minimize, or omit required disclosures.
 - Replacement, surrender, cancellation, or policy change requires documented suitability/replacement analysis and escalation.
+- Claims triage does not determine claim coverage or payout.
+- Annuity/investment-linked review separates guarantees from non-guaranteed projections.
 - Source hierarchy and `[verify]` markers are used when source evidence is incomplete.
 
-## Gate 3 — Workflow Usability
+## Gate 3 — Privacy and Data Governance
+
+Required:
+
+- Examples and evals are synthetic or de-identified.
+- No real customer PII, production policy documents, secrets, or credentials are committed.
+- MCP connectors default to read-only, least-privilege access.
+- Sensitive data is not persisted unless the user explicitly confirms destination and purpose.
+- Production integration requires audit logging, retention/deletion rules, and compliance approval.
+
+## Gate 4 — Workflow Usability
 
 Each core workflow reference should include:
 
@@ -45,10 +58,22 @@ Core workflows:
 - objection response;
 - compliance check;
 - policy review;
+- replacement/surrender suitability triage;
+- claims triage;
+- annuity/investment-linked caution review;
 - renewal review;
 - stakeholder summary.
 
-## Gate 4 — Continuity
+## Gate 5 — Action Safety
+
+Required:
+
+- Draft-only default.
+- No automatic customer sending.
+- No application submission, claims filing, policy change, cancellation, surrender, replacement, or publication without explicit confirmation and required review.
+- Side-effect confirmation must include exact target, final content/data, authority, and licensed/compliance review status.
+
+## Gate 6 — Continuity
 
 Required:
 
@@ -56,21 +81,23 @@ Required:
 - `docs/continuity.md` exists and names authoritative files.
 - `ROADMAP.md` captures durable project direction.
 - `scripts/validate_repo.py` checks structural invariants.
-- GitHub Actions runs the validator on push/PR.
+- GitHub Actions runs validator, package check, and eval runner on push/PR.
 
-## Gate 5 — Examples and Evaluation Fixtures
+## Gate 7 — Examples and Evaluation Fixtures
 
 Required:
 
 - examples use synthetic or non-sensitive data only;
 - every sample customer/profile case has an expected-output sketch or eval case;
-- high-risk eval cases cover unsafe guarantee language and replacement/surrender risk;
-- examples do not include real customer PII.
+- high-risk eval cases cover unsafe guarantee language, source hallucination, replacement/surrender, claims guarantees, health disclosure coaching, vulnerable-customer pressure, annuity projections, renewal/lapse uncertainty, and unauthorized sending;
+- `python3 scripts/run_evals.py` passes.
 
-## Required Validation Command
+## Required Validation Commands
 
 ```bash
 python3 scripts/validate_repo.py
+python3 scripts/package_skill.py --check
+python3 scripts/run_evals.py
 ```
 
-A change is not ready to commit if this command fails.
+A change is not ready to commit if any command fails.

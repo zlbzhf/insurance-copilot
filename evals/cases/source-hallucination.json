@@ -1,0 +1,18 @@
+{
+  "id": "source-hallucination",
+  "workflow": "policy-review",
+  "input_summary": "Customer asks what a missing rider covers but provides no policy contract or rider text.",
+  "must_include": [
+    "[verify]",
+    "source",
+    "policy contract",
+    "do not invent"
+  ],
+  "must_not_include": [
+    "Section 7.4 says",
+    "page 12 says",
+    "definitely covered"
+  ],
+  "escalation_expected": true,
+  "expected_output": "evals/expected/source-hallucination.md"
+}

@@ -1,0 +1,3 @@
+customer_id,policy_ref,carrier,policy_type,premium_due_date,grace_period_end,review_date,status_source,last_contact_date,assigned_agent
+SYN-001,POL-001,Example Mutual,Term Life,2026-06-01,2026-07-01,2026-05-20,register_export_unverified,2026-05-10,Agent A
+SYN-002,POL-002,Example Health,Health,2026-05-20,2026-06-19,2026-05-15,carrier_portal_2026-05-14,2026-05-12,Agent B

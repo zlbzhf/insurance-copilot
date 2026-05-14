@@ -2,29 +2,34 @@
 
 Hermes-first insurance workflow copilot for licensed insurance professionals.
 
-This project is inspired by the structure and safety discipline of `claude-for-legal`, but it is packaged for **Hermes Agent** as an installable skill, not as a Claude plugin.
+Insurance Copilot is inspired by the workflow discipline of `claude-for-legal`, but it is packaged for **Hermes Agent** as a full skill directory, not as a Claude plugin or web app.
 
-## Status
+## What It Does
 
-Current status: early Hermes skill package.
-
-Usable for:
+Insurance Copilot helps licensed insurance professionals create structured drafts for:
 
 - agency playbook cold-start interviews;
-- client needs intake structuring;
-- coverage gap analysis drafts;
-- product-fit review drafts;
-- objection response drafts;
+- client needs intake;
+- coverage gap analysis;
+- product-fit review;
+- objection response scripts;
 - compliance language screening;
-- existing policy review summaries;
+- existing policy review;
+- replacement/surrender suitability triage;
+- claims question triage;
+- annuity or investment-linked caution review;
 - renewal/lapse follow-up planning;
 - stakeholder summaries.
 
-Not yet a full production insurance system. It does not connect to carrier portals, CRM systems, policy databases, quote engines, or compliance approval systems by default.
+## What It Does Not Do
+
+It does not provide binding insurance, legal, tax, investment, underwriting, claims, actuarial, or compliance decisions. It does not automatically send customer messages, submit applications, file claims, cancel/replace coverage, or make binding representations.
+
+Every customer-facing output is a draft for licensed/compliance review.
 
 ## Install into Hermes
 
-From a local clone:
+Install the **full skill directory** so linked `references/` and `templates/` are available:
 
 ```bash
 mkdir -p ~/.hermes/skills/insurance/insurance-copilot
@@ -37,13 +42,39 @@ Then start a new Hermes session and load:
 /skill insurance-copilot
 ```
 
-From GitHub raw URL, if your Hermes version supports direct skill URL installation:
+Important: a raw `SKILL.md`-only install is not enough unless your Hermes version also fetches linked files. This repository assumes the full directory is installed.
+
+## Smoke Test After Install
 
 ```bash
-hermes skills install https://raw.githubusercontent.com/zlbzhf/insurance-copilot/main/skills/insurance-copilot/SKILL.md --name insurance-copilot
+test -f ~/.hermes/skills/insurance/insurance-copilot/SKILL.md
+test -f ~/.hermes/skills/insurance/insurance-copilot/references/client-needs-intake.md
+test -f ~/.hermes/skills/insurance/insurance-copilot/templates/practice-profile.md
 ```
 
-For local development inside this repository, run Hermes with this repo as the working directory so `AGENTS.md` is included in project context.
+In Hermes, try:
+
+```text
+/skill insurance-copilot
+Help me run a cold-start interview for an insurance agency. Ask only the first few essential questions.
+```
+
+## Quickstart
+
+See:
+
+```text
+docs/quickstart.md
+```
+
+The quickstart walks through:
+
+1. cold-start practice profile;
+2. client intake;
+3. coverage gap analysis;
+4. product-fit review;
+5. compliance check;
+6. stakeholder summary.
 
 ## Repository Layout
 
@@ -53,29 +84,33 @@ skills/insurance-copilot/
   references/              Workflow playbooks
   templates/               Reusable output templates
   scripts/                 Skill-local helper scripts
-examples/                  Non-sensitive sample cases
+examples/                  Synthetic sample cases and expected outputs
+evals/                     Regression fixtures and expected outputs
 cron/                      Scheduled workflow recipes for Hermes cron
-mcp/                       Optional connector notes
-scripts/validate_repo.py   Repository validator
+mcp/                       Optional connector notes and contracts
+docs/                      Design, privacy, action safety, quality gates
+scripts/                   Repo validation, packaging, eval helpers
 AGENTS.md                  Hermes project instructions
+ROADMAP.md                 Durable project direction
 ```
-
-## Safety Boundary
-
-Insurance Copilot assists licensed insurance professionals with drafts and structured analysis. It does not provide binding insurance, legal, tax, investment, underwriting, claims, actuarial, or compliance decisions.
-
-Every customer-facing output should be reviewed by the appropriate licensed professional and, where required, compliance/legal supervision.
 
 ## Validate
 
 ```bash
 python3 scripts/validate_repo.py
+python3 scripts/package_skill.py --check
+python3 scripts/run_evals.py
 ```
 
-## Development Roadmap
+CI runs these checks on push and pull request.
 
-1. Harden the umbrella Hermes skill and linked workflow references.
-2. Add realistic non-sensitive examples and expected outputs.
-3. Add optional MCP connector recipes for CRM/product/policy knowledge bases.
-4. Add Hermes cron recipes for renewal watch, compliance copy monitor, and replacement-risk review.
-5. Build evaluation fixtures for compliance and hallucination regression testing.
+## Production Readiness Notes
+
+Before connecting production data or systems, read:
+
+- `docs/privacy-and-data-handling.md`
+- `docs/action-safety.md`
+- `docs/jurisdiction-adaptation.md`
+- `mcp/README.md`
+
+Production use requires agency-specific compliance/legal review, source-of-truth integrations, access control, audit logging, retention rules, and licensed human supervision.

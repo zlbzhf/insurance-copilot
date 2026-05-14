@@ -2,7 +2,7 @@
 
 Hermes MCP servers should be configured through Hermes, not by relying on Claude `.mcp.json` files.
 
-Potential future connectors:
+Potential connectors:
 
 - CRM/customer fact source;
 - policy document knowledge base;
@@ -18,4 +18,25 @@ hermes mcp test <name>
 hermes mcp list
 ```
 
-Never connect production customer data until privacy, access control, audit logging, and compliance review are in place.
+## Production Preconditions
+
+Do not connect production customer data until all are defined and approved:
+
+- least-privilege access;
+- read-only default mode;
+- secrets storage outside the repo;
+- audit logging;
+- retention/deletion rules;
+- compliance/legal approval;
+- incident reporting path;
+- clear source hierarchy and stale-data handling.
+
+## Connector Contracts
+
+Contract sketches live in `mcp/contracts/`:
+
+- `crm-customer-facts.md`
+- `policy-document-kb.md`
+- `product-library.md`
+- `compliance-script-library.md`
+- `renewal-register.md`

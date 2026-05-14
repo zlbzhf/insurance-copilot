@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 from pathlib import Path
+import csv
 import json
 import re
+import subprocess
 import sys
 
 try:
@@ -23,12 +25,23 @@ REQUIRED = [
     ROOT / "AGENTS.md",
     ROOT / "README.md",
     ROOT / "ROADMAP.md",
+    ROOT / "LICENSE",
+    ROOT / "CONTRIBUTING.md",
+    ROOT / "SECURITY.md",
+    ROOT / "CHANGELOG.md",
     ROOT / "docs" / "continuity.md",
     ROOT / "docs" / "quality-gates.md",
     ROOT / "docs" / "hermes-first-design.md",
+    ROOT / "docs" / "quickstart.md",
+    ROOT / "docs" / "privacy-and-data-handling.md",
+    ROOT / "docs" / "action-safety.md",
+    ROOT / "docs" / "jurisdiction-adaptation.md",
+    ROOT / "docs" / "release-checklist.md",
     ROOT / ".github" / "workflows" / "validate.yml",
     ROOT / "mcp" / "README.md",
     ROOT / "evals" / "README.md",
+    ROOT / "scripts" / "package_skill.py",
+    ROOT / "scripts" / "run_evals.py",
     ROOT / "cron" / "renewal-watcher.md",
     ROOT / "cron" / "compliance-copy-monitor.md",
     ROOT / "cron" / "replacement-risk-monitor.md",
@@ -42,6 +55,9 @@ REQUIRED_REFERENCES = [
     "objection-response.md",
     "compliance-check.md",
     "policy-review.md",
+    "replacement-suitability.md",
+    "claims-triage.md",
+    "annuity-investment-linked-review.md",
     "renewal-review.md",
     "stakeholder-summary.md",
     "compliance-starter.md",
@@ -51,11 +67,24 @@ REQUIRED_REFERENCES = [
 REQUIRED_TEMPLATES = [
     "practice-profile.md",
     "client-intake.md",
+    "coverage-gap-analysis.md",
     "compliance-check.md",
     "product-fit-review.md",
     "policy-review.md",
+    "replacement-suitability.md",
+    "claims-triage.md",
+    "annuity-investment-linked-review.md",
     "renewal-review.md",
     "stakeholder-summary.md",
+    "objection-response.md",
+]
+
+REQUIRED_MCP_CONTRACTS = [
+    "crm-customer-facts.md",
+    "policy-document-kb.md",
+    "product-library.md",
+    "compliance-script-library.md",
+    "renewal-register.md",
 ]
 
 FORBIDDEN_PATHS = [
@@ -70,17 +99,29 @@ BAD_TERMS = [
     "." + "claude-plugin",
 ]
 
+BAD_OPERATIONAL_TERMS_IN_SKILL = [
+    "configured plugin profile path",
+    "Claude plugin",
+    "slash command plugin",
+]
+
 REQUIRED_SAFETY_PHRASES = [
     "draft for licensed",
     "guarantee",
     "conceal, minimize, or omit",
     "replacement",
     "[verify]",
+    "Do not persist sensitive customer data",
 ]
 
-REFERENCE_REQUIRED_SECTIONS = [
-    "Output Format",
-]
+REFERENCE_REQUIRED_SECTIONS = ["Output Format", "Guardrails"]
+
+CORE_REFERENCE_MIN_BYTES = 900
+
+PII_PATTERNS = {
+    "ssn-like": re.compile(r"\b\d{3}-\d{2}-\d{4}\b"),
+    "credit-card-like": re.compile(r"\b(?:\d[ -]*?){13,16}\b"),
+}
 
 
 def fail(msg: str) -> int:
@@ -115,10 +156,22 @@ def markdown_files() -> list[Path]:
     return [p for p in ROOT.rglob("*.md") if not any(part in ignored for part in p.parts)]
 
 
+def text_files_for_pii() -> list[Path]:
+    ignored = {".git", ".venv", ".pytest_cache"}
+    suffixes = {".md", ".json", ".csv", ".txt"}
+    return [p for p in ROOT.rglob("*") if p.is_file() and p.suffix in suffixes and not any(part in ignored for part in p.parts)]
+
+
+def run_script(args: list[str]) -> tuple[int, str]:
+    proc = subprocess.run(args, cwd=ROOT, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    return proc.returncode, proc.stdout.strip()
+
+
 def main() -> int:
     missing = [str(p.relative_to(ROOT)) for p in REQUIRED if not p.exists()]
     missing += [str((REF_DIR / name).relative_to(ROOT)) for name in REQUIRED_REFERENCES if not (REF_DIR / name).exists()]
     missing += [str((TEMPLATE_DIR / name).relative_to(ROOT)) for name in REQUIRED_TEMPLATES if not (TEMPLATE_DIR / name).exists()]
+    missing += [str((ROOT / "mcp" / "contracts" / name).relative_to(ROOT)) for name in REQUIRED_MCP_CONTRACTS if not (ROOT / "mcp" / "contracts" / name).exists()]
     if missing:
         return fail("missing required files: " + ", ".join(missing))
 
@@ -137,53 +190,94 @@ def main() -> int:
         return fail("SKILL.md exceeds Hermes skill size limit")
     if not body.strip():
         return fail("skill body is empty")
-
     for phrase in REQUIRED_SAFETY_PHRASES:
         if phrase not in text:
             return fail(f"SKILL.md missing required safety phrase: {phrase}")
+    for term in BAD_OPERATIONAL_TERMS_IN_SKILL:
+        if term in text:
+            return fail(f"operational plugin wording in SKILL.md: {term}")
 
     refs = sorted(REF_DIR.glob("*.md"))
     if len(refs) < len(REQUIRED_REFERENCES):
         return fail(f"expected at least {len(REQUIRED_REFERENCES)} workflow references, found {len(refs)}")
-
     for ref in refs:
         rtext = ref.read_text()
-        if len(rtext.strip()) < 500:
+        if len(rtext.strip()) < CORE_REFERENCE_MIN_BYTES:
             return fail(f"reference too thin: {ref.relative_to(ROOT)}")
         if ref.name not in {"compliance-starter.md", "default-practice-profile.md", "cold-start-interview.md"}:
             for section in REFERENCE_REQUIRED_SECTIONS:
                 if f"## {section}" not in rtext:
                     return fail(f"{ref.relative_to(ROOT)} missing section: {section}")
-        if ref.name not in {"compliance-starter.md", "default-practice-profile.md", "cold-start-interview.md"}:
-            if "## Guardrails" not in rtext:
-                return fail(f"{ref.relative_to(ROOT)} missing section: Guardrails")
         if ref.name == "cold-start-interview.md" and "## Completion Criteria" not in rtext:
             return fail("cold-start-interview.md missing Completion Criteria")
+        for term in BAD_OPERATIONAL_TERMS_IN_SKILL:
+            if term in rtext:
+                return fail(f"operational plugin wording in {ref.relative_to(ROOT)}: {term}")
+
+    # Ensure SKILL references required workflow files.
+    for name in REQUIRED_REFERENCES:
+        rel = f"references/{name}"
+        if rel not in text:
+            return fail(f"SKILL.md does not mention required reference: {rel}")
 
     all_text = "\n".join(p.read_text(errors="ignore") for p in markdown_files())
     found = [term for term in BAD_TERMS if term in all_text]
     if found:
         return fail("Claude-specific install/command terms remain: " + ", ".join(found))
 
+    readme = (ROOT / "README.md").read_text()
+    for snippet in [
+        "mkdir -p ~/.hermes/skills/insurance/insurance-copilot",
+        "python3 scripts/validate_repo.py",
+        "python3 scripts/package_skill.py --check",
+        "python3 scripts/run_evals.py",
+        "full skill directory",
+    ]:
+        if snippet not in readme:
+            return fail(f"README missing required install/validation snippet: {snippet}")
+
+    workflow = (ROOT / ".github" / "workflows" / "validate.yml").read_text()
+    for cmd in ["python3 scripts/validate_repo.py", "python3 scripts/package_skill.py --check", "python3 scripts/run_evals.py"]:
+        if cmd not in workflow:
+            return fail(f"CI workflow missing command: {cmd}")
+
+    # Eval JSON + expected outputs.
     eval_cases = sorted((ROOT / "evals" / "cases").glob("*.json"))
-    if len(eval_cases) < 3:
-        return fail("expected at least 3 eval cases")
+    if len(eval_cases) < 10:
+        return fail("expected at least 10 eval cases")
     for case in eval_cases:
         try:
             data = json.loads(case.read_text())
         except json.JSONDecodeError as exc:
             return fail(f"invalid eval JSON {case.relative_to(ROOT)}: {exc}")
-        for key in ["id", "workflow", "input_summary", "must_include", "must_not_include", "escalation_expected"]:
+        for key in ["id", "workflow", "input_summary", "must_include", "must_not_include", "escalation_expected", "expected_output"]:
             if key not in data:
                 return fail(f"eval case {case.relative_to(ROOT)} missing key: {key}")
         if not isinstance(data["must_include"], list) or not isinstance(data["must_not_include"], list):
             return fail(f"eval case {case.relative_to(ROOT)} must_include/must_not_include must be lists")
+        expected_path = ROOT / data["expected_output"]
+        if not expected_path.exists():
+            return fail(f"eval case {case.relative_to(ROOT)} expected output missing: {data['expected_output']}")
 
-    readme = (ROOT / "README.md").read_text()
-    if "mkdir -p ~/.hermes/skills/insurance/insurance-copilot" not in readme:
-        return fail("README missing local Hermes install command")
-    if "python3 scripts/validate_repo.py" not in readme:
-        return fail("README missing validation command")
+    # Examples should include at least one CSV renewal register and it should parse.
+    register = ROOT / "examples" / "renewal-registers" / "synthetic-renewal-register.csv"
+    with register.open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    if not rows or "policy_ref" not in rows[0]:
+        return fail("synthetic renewal register missing parseable policy_ref data")
+
+    # Basic PII scan in committed examples/evals/docs.
+    for path in text_files_for_pii():
+        if any(part in {"examples", "evals"} for part in path.parts):
+            ptext = path.read_text(errors="ignore")
+            for label, pattern in PII_PATTERNS.items():
+                if pattern.search(ptext):
+                    return fail(f"possible {label} PII in {path.relative_to(ROOT)}")
+
+    for cmd in [[sys.executable, "scripts/package_skill.py", "--check"], [sys.executable, "scripts/run_evals.py"]]:
+        code, output = run_script(cmd)
+        if code != 0:
+            return fail(f"command failed {' '.join(cmd)}:\n{output}")
 
     print("insurance-copilot Hermes-first repo ok")
     print(f"references: {len(refs)}")

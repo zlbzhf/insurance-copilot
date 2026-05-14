@@ -15,5 +15,6 @@
     "definitely better",
     "guaranteed savings"
   ],
-  "escalation_expected": true
+  "escalation_expected": true,
+  "expected_output": "evals/expected/replacement-risk.md"
 }

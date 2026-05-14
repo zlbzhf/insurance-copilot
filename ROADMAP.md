@@ -2,33 +2,44 @@
 
 This roadmap is durable project direction. Use it instead of relying on compressed chat history.
 
-## Current Phase: Hermes Skill Hardening
+## Current Phase: Productized Hermes Skill Beta
 
-Goal: make `insurance-copilot` a reliable Hermes skill package that can be installed, loaded, validated, and extended safely.
+Goal: make `insurance-copilot` directly usable as a Hermes skill package for licensed insurance professionals, with safety boundaries, references, templates, examples, static evals, packaging checks, and CI.
 
-### Priority 1 — Skill Quality
+## Completed Foundation
 
-- Expand each workflow reference into a complete playbook.
-- Add more templates for product-fit review, policy review, renewal review, and stakeholder summary.
-- Add explicit escalation criteria for replacement/surrender, vulnerable customers, and investment-linked products.
+- Hermes-first standalone skill layout.
+- Umbrella skill with workflow router.
+- Core references for intake, gap analysis, product fit, compliance, policy review, replacement, claims, annuity/investment-linked review, renewal, and summaries.
+- Templates for core outputs.
+- Synthetic examples and expected output sketches.
+- Static eval fixtures and runner.
+- Packaging check and CI.
+- Continuity, privacy, action-safety, jurisdiction adaptation, and quality-gate docs.
 
-### Priority 2 — Examples and Regression Fixtures
+## Priority 1 — Practice-Specific Hardening
 
-- Add synthetic examples for family protection, policy replacement, renewal/lapse, product comparison, and unsafe marketing copy.
-- Add expected-output sketches that future contributors can compare against.
-- Keep examples non-sensitive and clearly synthetic.
+- Add a real agency-approved practice profile outside the public repo.
+- Encode jurisdiction/product-line specific disclaimers, replacement forms, advertising limits, and escalation roles.
+- Add agency-approved scripts and forbidden phrases as private references.
 
-### Priority 3 — Validation and CI
+## Priority 2 — Better Regression Testing
 
-- Keep `scripts/validate_repo.py` strict enough to prevent drift.
-- Add checks when new required files/workflows are introduced.
-- Keep GitHub Actions validator green.
+- Add model-in-the-loop eval harness when Hermes exposes a stable noninteractive skill execution path.
+- Add more golden outputs for product-line-specific cases.
+- Track regression results in release notes.
 
-### Priority 4 — Optional Integrations
+## Priority 3 — Optional Integrations
 
-- Document MCP connector patterns for CRM, policy knowledge base, product library, and approved scripts.
-- Add Hermes cron recipes for renewal watcher, compliance copy monitor, and replacement-risk monitor.
-- Do not connect production customer data until privacy, access control, audit logging, and compliance review are designed.
+- Implement MCP servers or adapters for CRM, policy document KB, product library, compliance script library, and renewal register only after privacy/security/compliance approval.
+- Keep connectors read-only by default.
+- Add audit logs and source timestamps.
+
+## Priority 4 — Release Management
+
+- Tag beta releases after validation.
+- Keep `CHANGELOG.md` current.
+- Use `docs/release-checklist.md` before release.
 
 ## Out of Scope Unless Explicitly Requested
 
@@ -37,3 +48,4 @@ Goal: make `insurance-copilot` a reliable Hermes skill package that can be insta
 - Carrier quote engine or policy admin integration.
 - Automated customer message sending.
 - Final regulated advice or compliance approval automation.
+- Production customer-data storage in this public repository.

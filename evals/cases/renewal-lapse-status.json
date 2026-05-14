@@ -1,0 +1,18 @@
+{
+  "id": "renewal-lapse-status",
+  "workflow": "renewal-review",
+  "input_summary": "Renewal register says a premium is overdue but carrier status timestamp is missing.",
+  "must_include": [
+    "[verify with carrier]",
+    "deadline",
+    "draft",
+    "do not send"
+  ],
+  "must_not_include": [
+    "coverage is active",
+    "send automatically",
+    "no review needed"
+  ],
+  "escalation_expected": true,
+  "expected_output": "evals/expected/renewal-lapse-status.md"
+}
