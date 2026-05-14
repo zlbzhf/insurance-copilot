@@ -12,3 +12,9 @@ dist/
 # Local
 .env
 .DS_Store
+
+# Insurance Copilot private/local data
+.insurance-copilot/
+agent-workspaces/
+private-workspaces/
+*.local.md

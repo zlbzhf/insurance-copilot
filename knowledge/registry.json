@@ -1,0 +1,23 @@
+{
+  "schema_version": "0.1.0",
+  "description": "Registry of public Insurance Copilot institution knowledge packs.",
+  "packs": [
+    {
+      "id": "aia",
+      "display_name": "AIA / 友邦保险",
+      "type": "public-institution-pack",
+      "location": "knowledge/institutions/aia",
+      "repo": "https://github.com/zlbzhf/insurance-copilot",
+      "index_path": "knowledge/institutions/aia/index.md",
+      "data_classification": "public",
+      "languages": [
+        "zh-Hans",
+        "zh-Hant",
+        "en"
+      ],
+      "jurisdictions": [],
+      "status": "seed-template",
+      "remote_ready": false
+    }
+  ]
+}

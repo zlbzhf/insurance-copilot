@@ -1,0 +1,15 @@
+id: institution-source-id
+institution: aia
+jurisdiction: []
+language: zh-Hans
+source_type: official-web # official-web | official-brochure | official-terms | regulator | public-article | community-summary
+source_url: https://example.com/public-source
+retrieved_at: 2026-05-14
+public_source: true
+redistribution:
+  mode: link-only # link-only | summary-allowed | full-text-allowed
+  notes: "Do not copy full copyrighted source unless explicitly allowed."
+product_lines: []
+status: queued
+submitted_by: github-username-or-unknown
+notes: "Short note about why this source matters."

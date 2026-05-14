@@ -65,6 +65,24 @@ For irreversible actions — sending customer communications, submitting applica
 - If the user supplies real customer data, keep outputs focused on the requested task and avoid copying unnecessary PII into summaries.
 - For production integrations, require least-privilege access, audit logging, retention rules, and compliance approval before use.
 
+
+## Layered Knowledge Architecture
+
+Insurance Copilot uses three knowledge layers:
+
+1. **General public workflow skill** — this skill directory: `skills/insurance-copilot/`.
+2. **Public institution knowledge packs** — public, collaboratively maintained LLM-wiki packs under `knowledge/institutions/` or remote pack repositories discovered through `knowledge/registry.json`.
+3. **Agent private knowledge workspace** — local/private workspace initialized from `agent-workspace-template/`, commonly stored under `~/.insurance-copilot/agents/<agent-id>/`.
+
+Public institution packs contain only public/shareable knowledge. Non-public institution materials and all customer-level data belong in the agent-private layer, not in public pack paths.
+
+When institution knowledge is needed, use this order:
+
+1. Check the user's specified institution pack or public registry entry.
+2. Read the pack `SCHEMA.md`, `index.md`, and recent `log.md` before using pages.
+3. Treat pack content as knowledge support, not final advice; mark product, underwriting, claims, renewal, and service facts as `[verify]` unless current official source evidence is supplied.
+4. If private customer or non-public materials are needed, ask the user to provide or point to their private workspace; do not write those materials into public repository paths.
+
 ## First Step: Practice Profile
 
 If the agency/practice context is unknown, start with `references/cold-start-interview.md` and produce or update a practice profile. Store it only in a user-approved location, commonly:
@@ -196,6 +214,8 @@ Escalate or require licensed/compliance review when any of these appear:
 
 - Load with `/skill insurance-copilot` or install the full `skills/insurance-copilot/` directory into `~/.hermes/skills/insurance/insurance-copilot`.
 - In repo development, keep skill-supporting files under `references/`, `templates/`, `scripts/`, or `assets/`.
+- Use public institution packs through `knowledge/registry.json` and `knowledge/institutions/<pack>/` when the task needs insurer-specific public knowledge.
+- Keep agent-private data in private workspaces, not public repo paths.
 - Do not rely on non-Hermes metadata, `CLAUDE.md`, or non-Hermes slash-command packaging; this repo is Hermes-first.
 - Use Hermes tools for file/source review when the user provides documents. Never invent policy details absent from sources.
 - If a new conversation starts, follow `docs/continuity.md` and run `python3 scripts/validate_repo.py` before substantive changes.

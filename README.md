@@ -1,8 +1,18 @@
 # Insurance Copilot
 
-Hermes-first insurance workflow copilot for licensed insurance professionals.
+Hermes-first insurance workflow copilot and layered insurance knowledge project for licensed insurance professionals.
 
-Insurance Copilot is inspired by the workflow discipline of `claude-for-legal`, but it is packaged for **Hermes Agent** as a full skill directory, not as a Claude plugin or web app.
+Insurance Copilot is inspired by the workflow discipline of `claude-for-legal`, but it is packaged for **Hermes Agent** as a full skill directory and public/private knowledge architecture, not as a Claude plugin or web app.
+
+## Architecture
+
+Insurance Copilot has three layers:
+
+1. **General public workflow skill** — `skills/insurance-copilot/`
+2. **Public institution knowledge packs** — `knowledge/institutions/`
+3. **Agent private knowledge workspace** — initialize from `agent-workspace-template/`, store privately outside this repo
+
+See `docs/architecture.md` for the full design.
 
 ## What It Does
 
@@ -19,7 +29,8 @@ Insurance Copilot helps licensed insurance professionals create structured draft
 - claims question triage;
 - annuity or investment-linked caution review;
 - renewal/lapse follow-up planning;
-- stakeholder summaries.
+- stakeholder summaries;
+- public institution knowledge-pack organization.
 
 ## What It Does Not Do
 
@@ -59,6 +70,41 @@ In Hermes, try:
 Help me run a cold-start interview for an insurance agency. Ask only the first few essential questions.
 ```
 
+## Public Institution Packs
+
+Public institution packs live under:
+
+```text
+knowledge/institutions/
+```
+
+They are public, collaboratively maintained, Karpathy-style LLM wiki knowledge bases. They may contain public source records, public product/service summaries, concepts, comparisons, and query pages.
+
+They must not contain customer data, non-public institution materials, private agent notes, secrets, or production exports.
+
+See:
+
+- `docs/public-knowledge-packs.md`
+- `docs/llm-wiki-method.md`
+- `knowledge/registry.json`
+
+## Agent Private Workspace
+
+Private customer knowledge and non-public institution materials belong outside the public repo. Start from:
+
+```text
+agent-workspace-template/
+```
+
+Suggested private location:
+
+```bash
+mkdir -p ~/.insurance-copilot/agents/<agent-id>
+cp -R agent-workspace-template/* ~/.insurance-copilot/agents/<agent-id>/
+```
+
+See `docs/agent-private-knowledge.md`.
+
 ## Quickstart
 
 See:
@@ -79,19 +125,18 @@ The quickstart walks through:
 ## Repository Layout
 
 ```text
-skills/insurance-copilot/
-  SKILL.md                 Umbrella Hermes skill
-  references/              Workflow playbooks
-  templates/               Reusable output templates
-  scripts/                 Skill-local helper scripts
-examples/                  Synthetic sample cases and expected outputs
-evals/                     Regression fixtures and expected outputs
-cron/                      Scheduled workflow recipes for Hermes cron
-mcp/                       Optional connector notes and contracts
-docs/                      Design, privacy, action safety, quality gates
-scripts/                   Repo validation, packaging, eval helpers
-AGENTS.md                  Hermes project instructions
-ROADMAP.md                 Durable project direction
+skills/insurance-copilot/     Umbrella Hermes skill package
+knowledge/institutions/       Public institution LLM wiki packs
+agent-workspace-template/     Template for private agent knowledge workspace
+contributions/                Public contribution templates and workflow docs
+examples/                     Synthetic sample cases and expected outputs
+evals/                        Regression fixtures and expected outputs
+cron/                         Scheduled workflow recipes for Hermes cron
+mcp/                          Optional connector notes and contracts
+docs/                         Architecture, privacy, action safety, quality gates
+scripts/                      Repo validation, packaging, eval, pack helpers
+AGENTS.md                     Hermes project instructions
+ROADMAP.md                    Durable project direction
 ```
 
 ## Validate
@@ -100,6 +145,8 @@ ROADMAP.md                 Durable project direction
 python3 scripts/validate_repo.py
 python3 scripts/package_skill.py --check
 python3 scripts/run_evals.py
+python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia
+python3 scripts/validate_agent_workspace.py agent-workspace-template --template
 ```
 
 CI runs these checks on push and pull request.
@@ -113,4 +160,4 @@ Before connecting production data or systems, read:
 - `docs/jurisdiction-adaptation.md`
 - `mcp/README.md`
 
-Production use requires agency-specific compliance/legal review, source-of-truth integrations, access control, audit logging, retention rules, and licensed human supervision.
+Production use requires institution/practice-specific compliance/legal review, source-of-truth integrations, access control, audit logging, retention rules, and licensed human supervision.

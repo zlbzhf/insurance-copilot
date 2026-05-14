@@ -37,14 +37,37 @@ REQUIRED = [
     ROOT / "docs" / "action-safety.md",
     ROOT / "docs" / "jurisdiction-adaptation.md",
     ROOT / "docs" / "release-checklist.md",
+    ROOT / "docs" / "architecture.md",
+    ROOT / "docs" / "public-knowledge-packs.md",
+    ROOT / "docs" / "agent-private-knowledge.md",
+    ROOT / "docs" / "llm-wiki-method.md",
+    ROOT / "docs" / "contribution-workflow.md",
     ROOT / ".github" / "workflows" / "validate.yml",
+    ROOT / ".github" / "PULL_REQUEST_TEMPLATE.md",
+    ROOT / ".github" / "ISSUE_TEMPLATE" / "source_contribution.yml",
     ROOT / "mcp" / "README.md",
     ROOT / "evals" / "README.md",
     ROOT / "scripts" / "package_skill.py",
     ROOT / "scripts" / "run_evals.py",
+    ROOT / "scripts" / "validate_knowledge_pack.py",
+    ROOT / "scripts" / "validate_agent_workspace.py",
+    ROOT / "scripts" / "create_source_record.py",
     ROOT / "cron" / "renewal-watcher.md",
     ROOT / "cron" / "compliance-copy-monitor.md",
     ROOT / "cron" / "replacement-risk-monitor.md",
+    ROOT / "knowledge" / "README.md",
+    ROOT / "knowledge" / "registry.json",
+    ROOT / "knowledge" / "institutions" / "README.md",
+    ROOT / "knowledge" / "institutions" / "_template" / "PACK.md",
+    ROOT / "knowledge" / "institutions" / "aia" / "PACK.md",
+    ROOT / "agent-workspace-template" / "README.md",
+    ROOT / "agent-workspace-template" / "AGENT.md",
+    ROOT / "agent-workspace-template" / "SCHEMA.md",
+    ROOT / "agent-workspace-template" / "index.md",
+    ROOT / "agent-workspace-template" / "log.md",
+    ROOT / "contributions" / "README.md",
+    ROOT / "contributions" / "templates" / "source-record.yaml",
+    ROOT / "contributions" / "templates" / "contribution.yaml",
 ]
 
 REQUIRED_REFERENCES = [
@@ -114,10 +137,15 @@ REQUIRED_SAFETY_PHRASES = [
     "Do not persist sensitive customer data",
 ]
 
+REQUIRED_ARCHITECTURE_PHRASES = [
+    "three-layer",
+    "Public institution knowledge",
+    "Agent private",
+    "knowledge/registry.json",
+]
+
 REFERENCE_REQUIRED_SECTIONS = ["Output Format", "Guardrails"]
-
 CORE_REFERENCE_MIN_BYTES = 900
-
 PII_PATTERNS = {
     "ssn-like": re.compile(r"\b\d{3}-\d{2}-\d{4}\b"),
     "credit-card-like": re.compile(r"\b(?:\d[ -]*?){13,16}\b"),
@@ -158,7 +186,7 @@ def markdown_files() -> list[Path]:
 
 def text_files_for_pii() -> list[Path]:
     ignored = {".git", ".venv", ".pytest_cache"}
-    suffixes = {".md", ".json", ".csv", ".txt"}
+    suffixes = {".md", ".json", ".csv", ".txt", ".yaml", ".yml"}
     return [p for p in ROOT.rglob("*") if p.is_file() and p.suffix in suffixes and not any(part in ignored for part in p.parts)]
 
 
@@ -197,6 +225,11 @@ def main() -> int:
         if term in text:
             return fail(f"operational plugin wording in SKILL.md: {term}")
 
+    arch_doc = (ROOT / "docs" / "architecture.md").read_text()
+    for phrase in REQUIRED_ARCHITECTURE_PHRASES:
+        if phrase not in arch_doc and phrase not in text:
+            return fail(f"architecture phrase missing from docs/skill: {phrase}")
+
     refs = sorted(REF_DIR.glob("*.md"))
     if len(refs) < len(REQUIRED_REFERENCES):
         return fail(f"expected at least {len(REQUIRED_REFERENCES)} workflow references, found {len(refs)}")
@@ -214,7 +247,6 @@ def main() -> int:
             if term in rtext:
                 return fail(f"operational plugin wording in {ref.relative_to(ROOT)}: {term}")
 
-    # Ensure SKILL references required workflow files.
     for name in REQUIRED_REFERENCES:
         rel = f"references/{name}"
         if rel not in text:
@@ -231,17 +263,30 @@ def main() -> int:
         "python3 scripts/validate_repo.py",
         "python3 scripts/package_skill.py --check",
         "python3 scripts/run_evals.py",
+        "python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia",
+        "python3 scripts/validate_agent_workspace.py agent-workspace-template --template",
         "full skill directory",
+        "knowledge/institutions/",
+        "agent-workspace-template/",
     ]:
         if snippet not in readme:
             return fail(f"README missing required install/validation snippet: {snippet}")
 
     workflow = (ROOT / ".github" / "workflows" / "validate.yml").read_text()
-    for cmd in ["python3 scripts/validate_repo.py", "python3 scripts/package_skill.py --check", "python3 scripts/run_evals.py"]:
+    for cmd in [
+        "python3 scripts/validate_repo.py",
+        "python3 scripts/package_skill.py --check",
+        "python3 scripts/run_evals.py",
+        "python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia",
+        "python3 scripts/validate_agent_workspace.py agent-workspace-template --template",
+    ]:
         if cmd not in workflow:
             return fail(f"CI workflow missing command: {cmd}")
 
-    # Eval JSON + expected outputs.
+    registry = json.loads((ROOT / "knowledge" / "registry.json").read_text())
+    if not registry.get("packs") or not any(p.get("id") == "aia" and p.get("data_classification") == "public" for p in registry["packs"]):
+        return fail("knowledge registry missing public aia pack")
+
     eval_cases = sorted((ROOT / "evals" / "cases").glob("*.json"))
     if len(eval_cases) < 10:
         return fail("expected at least 10 eval cases")
@@ -259,22 +304,27 @@ def main() -> int:
         if not expected_path.exists():
             return fail(f"eval case {case.relative_to(ROOT)} expected output missing: {data['expected_output']}")
 
-    # Examples should include at least one CSV renewal register and it should parse.
     register = ROOT / "examples" / "renewal-registers" / "synthetic-renewal-register.csv"
     with register.open(newline="") as f:
         rows = list(csv.DictReader(f))
     if not rows or "policy_ref" not in rows[0]:
         return fail("synthetic renewal register missing parseable policy_ref data")
 
-    # Basic PII scan in committed examples/evals/docs.
+    # Basic PII scan in committed examples/evals/public knowledge/template docs.
     for path in text_files_for_pii():
-        if any(part in {"examples", "evals"} for part in path.parts):
+        if any(part in {"examples", "evals", "knowledge", "agent-workspace-template"} for part in path.parts):
             ptext = path.read_text(errors="ignore")
             for label, pattern in PII_PATTERNS.items():
                 if pattern.search(ptext):
                     return fail(f"possible {label} PII in {path.relative_to(ROOT)}")
 
-    for cmd in [[sys.executable, "scripts/package_skill.py", "--check"], [sys.executable, "scripts/run_evals.py"]]:
+    for cmd in [
+        [sys.executable, "scripts/package_skill.py", "--check"],
+        [sys.executable, "scripts/run_evals.py"],
+        [sys.executable, "scripts/validate_knowledge_pack.py", "knowledge/institutions/aia"],
+        [sys.executable, "scripts/validate_knowledge_pack.py", "knowledge/institutions/_template", "--template"],
+        [sys.executable, "scripts/validate_agent_workspace.py", "agent-workspace-template", "--template"],
+    ]:
         code, output = run_script(cmd)
         if code != 0:
             return fail(f"command failed {' '.join(cmd)}:\n{output}")
@@ -283,6 +333,7 @@ def main() -> int:
     print(f"references: {len(refs)}")
     print(f"templates: {len(list(TEMPLATE_DIR.glob('*.md')))}")
     print(f"eval_cases: {len(eval_cases)}")
+    print("knowledge_packs: aia + template")
     print(f"skill: {SKILL.relative_to(ROOT)}")
     return 0
 

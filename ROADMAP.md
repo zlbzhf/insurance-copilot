@@ -2,9 +2,13 @@
 
 This roadmap is durable project direction. Use it instead of relying on compressed chat history.
 
-## Current Phase: Productized Hermes Skill Beta
+## Current Phase: Layered Knowledge Architecture Beta
 
-Goal: make `insurance-copilot` directly usable as a Hermes skill package for licensed insurance professionals, with safety boundaries, references, templates, examples, static evals, packaging checks, and CI.
+Goal: make `insurance-copilot` directly usable as a Hermes skill package and a three-layer insurance knowledge project:
+
+1. public general workflow skill;
+2. public, collaboratively maintained institution knowledge packs;
+3. private agent workspaces for customer and non-public materials.
 
 ## Completed Foundation
 
@@ -17,25 +21,35 @@ Goal: make `insurance-copilot` directly usable as a Hermes skill package for lic
 - Packaging check and CI.
 - Continuity, privacy, action-safety, jurisdiction adaptation, and quality-gate docs.
 
-## Priority 1 — Practice-Specific Hardening
+## Priority 1 — Public Institution Knowledge Packs
 
-- Add a real agency-approved practice profile outside the public repo.
-- Encode jurisdiction/product-line specific disclaimers, replacement forms, advertising limits, and escalation roles.
-- Add agency-approved scripts and forbidden phrases as private references.
+- Stabilize `knowledge/institutions/_template/` schema.
+- Maintain seed AIA/友邦 public pack without non-public claims.
+- Add source-first contribution workflow and provenance rules.
+- Support future remote pack registry and selective page retrieval.
+- Split mature institution packs into separate repos only when volume, maintainers, and release cadence justify it.
 
-## Priority 2 — Better Regression Testing
+## Priority 2 — Agent Private Workspace
+
+- Keep private customer data and non-public institution materials outside this public repo.
+- Improve `agent-workspace-template/` for private LLM-wiki organization.
+- Add private pack/workspace validation that agents can run locally.
+- Provide safe promotion path from private notes to public contribution bundles.
+
+## Priority 3 — Better Regression Testing
 
 - Add model-in-the-loop eval harness when Hermes exposes a stable noninteractive skill execution path.
 - Add more golden outputs for product-line-specific cases.
+- Add knowledge-pack validation cases for source records, wikilinks, frontmatter, and PII scans.
 - Track regression results in release notes.
 
-## Priority 3 — Optional Integrations
+## Priority 4 — Optional Integrations
 
 - Implement MCP servers or adapters for CRM, policy document KB, product library, compliance script library, and renewal register only after privacy/security/compliance approval.
 - Keep connectors read-only by default.
 - Add audit logs and source timestamps.
 
-## Priority 4 — Release Management
+## Priority 5 — Release Management
 
 - Tag beta releases after validation.
 - Keep `CHANGELOG.md` current.
@@ -49,3 +63,4 @@ Goal: make `insurance-copilot` directly usable as a Hermes skill package for lic
 - Automated customer message sending.
 - Final regulated advice or compliance approval automation.
 - Production customer-data storage in this public repository.
+- Public storage of non-public institution materials.

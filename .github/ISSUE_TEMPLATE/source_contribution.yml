@@ -1,0 +1,47 @@
+name: Public source contribution
+description: Suggest a public source for an institution knowledge pack
+title: "Source: <institution> - <short title>"
+labels: [knowledge-pack, source]
+body:
+  - type: input
+    id: institution
+    attributes:
+      label: Institution
+      description: e.g. aia, ping-an, pacific
+    validations:
+      required: true
+  - type: input
+    id: source_url
+    attributes:
+      label: Public source URL
+    validations:
+      required: true
+  - type: dropdown
+    id: source_type
+    attributes:
+      label: Source type
+      options:
+        - official-web
+        - official-brochure
+        - official-terms
+        - regulator
+        - public-article
+        - community-summary
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Public/private boundary
+      options:
+        - label: This source contains no customer data.
+          required: true
+        - label: This source is public/shareable or should be used as link-only metadata.
+          required: true
+        - label: This source is not non-public internal/confidential institution material.
+          required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Why this source matters and what should be extracted.

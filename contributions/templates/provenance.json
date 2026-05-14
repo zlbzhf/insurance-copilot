@@ -1,0 +1,14 @@
+{
+  "proposed-pages/products/example-product.md": {
+    "sources": [
+      "sources/example-source.yaml"
+    ],
+    "claims": [
+      {
+        "text": "Replace with a specific claim from the proposed page.",
+        "source": "sources/example-source.yaml",
+        "confidence": "low"
+      }
+    ]
+  }
+}

@@ -20,3 +20,9 @@ jobs:
         run: python3 scripts/package_skill.py --check
       - name: Run static eval fixtures
         run: python3 scripts/run_evals.py
+      - name: Validate public AIA knowledge pack
+        run: python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia
+      - name: Validate public institution pack template
+        run: python3 scripts/validate_knowledge_pack.py knowledge/institutions/_template --template
+      - name: Validate agent workspace template
+        run: python3 scripts/validate_agent_workspace.py agent-workspace-template --template

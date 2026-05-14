@@ -1,0 +1,12 @@
+institution: aia
+contributor: github-username-or-unknown
+data_classification: public
+contains_customer_data: false
+contains_internal_confidential_data: false
+source_count: 1
+source_records:
+  - sources/example-source.yaml
+proposed_pages:
+  - proposed-pages/products/example-product.md
+provenance: provenance.json
+review_notes: "What changed and what maintainers should verify."
