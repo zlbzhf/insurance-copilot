@@ -1,0 +1,84 @@
+version: 0.2.0
+updated: 2026-05-14
+
+source_hierarchy:
+  - id: regulator-guidance
+    authority_rank: 100
+    description: "Regulator, law, formal circular, or official consumer warning."
+  - id: official-terms
+    authority_rank: 90
+    description: "Policy contract, rider contract, endorsement, terms and conditions, or product specification."
+  - id: official-service-guide
+    authority_rank: 80
+    description: "Official claims, renewal, payment, policy servicing, or customer-service process."
+  - id: official-underwriting-guide
+    authority_rank: 75
+    description: "Public underwriting, application, or disclosure guidance. Non-public underwriting guides do not belong in public packs."
+  - id: official-product-page
+    authority_rank: 70
+    description: "Official public product page."
+  - id: official-brochure
+    authority_rank: 65
+    description: "Official public brochure, leaflet, product summary, or sales aid."
+  - id: official-faq
+    authority_rank: 60
+    description: "Official public FAQ or help-center answer."
+  - id: approved-marketing-material
+    authority_rank: 55
+    description: "Public marketing material that appears approved for public distribution."
+  - id: public-article
+    authority_rank: 40
+    description: "Public third-party article, media post, or analyst note."
+  - id: community-summary
+    authority_rank: 30
+    description: "Community-authored summary with public citations."
+  - id: unknown
+    authority_rank: 0
+    description: "Use only during intake before classification."
+
+source_types:
+  regulator-guidance:
+    allowed_page_types: [regulatory-guidance-summary, concept]
+    risk_flags: [jurisdiction-sensitive, compliance-sensitive]
+  official-terms:
+    aliases: [policy-contract, rider-contract, endorsement, terms-and-conditions]
+    allowed_page_types: [policy-contract-summary, product-summary, concept]
+    risk_flags: [legal-sensitive, coverage-definition, exclusion, claims-condition]
+  official-service-guide:
+    aliases: [claims-process, renewal-service, policy-change-process, premium-payment-guide, lapse-reinstatement-guide]
+    allowed_page_types: [claims-process-summary, renewal-service-process, service-process-summary, concept]
+    risk_flags: [deadline-sensitive, status-verification-required]
+  official-underwriting-guide:
+    aliases: [application-guide, disclosure-guide]
+    allowed_page_types: [underwriting-rule-summary, concept]
+    risk_flags: [disclosure-sensitive, do-not-coach-omission, medical-financial-sensitive]
+  official-product-page:
+    allowed_page_types: [product-summary, concept, comparison]
+    risk_flags: [product-version-needed, verify-against-contract]
+  official-brochure:
+    aliases: [product-brochure, leaflet, sales-aid]
+    allowed_page_types: [product-summary, concept, comparison]
+    risk_flags: [marketing-summary-not-contract, non-guaranteed-illustration, product-version-needed]
+  official-faq:
+    aliases: [faq, customer-service-page, help-center]
+    allowed_page_types: [faq-summary, service-process-summary, concept]
+    risk_flags: [summary-not-contract, verify-currentness]
+  approved-marketing-material:
+    aliases: [marketing-material, sales-script, social-post, campaign-copy, seminar-deck]
+    allowed_page_types: [marketing-compliance-review, concept]
+    risk_flags: [guarantee-language, missing-disclaimer, superlative-claim, performance-claim]
+  public-article:
+    allowed_page_types: [source-summary, concept]
+    risk_flags: [third-party-source, corroboration-needed]
+  community-summary:
+    allowed_page_types: [source-summary, concept]
+    risk_flags: [community-authored, corroboration-needed]
+  unknown:
+    allowed_page_types: []
+    risk_flags: [needs-classification]
+
+classification_rules:
+  - "If a document includes policy definitions, exclusions, coverage conditions, or contract clauses, classify at least one segment as official-terms when the source is official and public."
+  - "If a document uses persuasive customer-facing language or campaign framing, classify at least one segment as marketing material even if it also contains product facts."
+  - "If one source contains multiple material types, record secondary_types and produce multiple extraction segments instead of forcing one template."
+  - "Never classify non-public, confidential, internal, or customer-specific materials as public-pack sources."

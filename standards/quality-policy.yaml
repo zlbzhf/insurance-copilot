@@ -1,0 +1,39 @@
+version: 0.2.0
+updated: 2026-05-14
+
+merge_gates:
+  public_boundary:
+    required: true
+    checks:
+      - no_customer_data
+      - no_non_public_institution_material
+      - public_source_true
+      - redistribution_mode_set
+  provenance:
+    minimum_claim_source_coverage: 0.8
+    require_source_locator_for_contract_or_regulatory_claims: true
+    require_sources_for_all_wiki_pages: true
+  confidence:
+    default_for_llm_generated_pages: low
+    allow_high_only_after_human_review: true
+  schema:
+    unknown_fields_policy: warn
+    schema_gap_required_for_unmapped_material: true
+    canonical_schema_changes_require_proposal: true
+  review:
+    require_human_review_for_merge: true
+    require_domain_maintainer_for_institution_pack: true
+    require_schema_maintainer_for_standard_changes: true
+
+quality_scores:
+  pass_threshold: 0.75
+  review_threshold: 0.5
+  fail_below: 0.5
+
+red_flags:
+  - customer_identifier
+  - medical_detail_about_named_person
+  - private_or_internal_label
+  - guarantee_of_claim_or_return
+  - legal_or_tax_advice_without_escalation
+  - unsupported_contract_interpretation

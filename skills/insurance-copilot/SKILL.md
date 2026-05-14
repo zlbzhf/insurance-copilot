@@ -79,9 +79,13 @@ Public institution packs contain only public/shareable knowledge. Non-public ins
 When institution knowledge is needed, use this order:
 
 1. Check the user's specified institution pack or public registry entry.
-2. Read the pack `SCHEMA.md`, `index.md`, and recent `log.md` before using pages.
-3. Treat pack content as knowledge support, not final advice; mark product, underwriting, claims, renewal, and service facts as `[verify]` unless current official source evidence is supplied.
-4. If private customer or non-public materials are needed, ask the user to provide or point to their private workspace; do not write those materials into public repository paths.
+2. Read the active standard files (`standards/current.yaml`, `standards/source-taxonomy.yaml`, `standards/page-type-registry.yaml`) when creating or updating public knowledge.
+3. Read the pack `SCHEMA.md`, `index.md`, and recent `log.md` before using pages.
+4. Treat pack content as knowledge support, not final advice; mark product, underwriting, claims, renewal, and service facts as `[verify]` unless current official source evidence is supplied.
+5. If processing a new public source, stage it through `scripts/ingest_gateway.py` or equivalent reviewed gateway flow before moving content into `knowledge/institutions/`.
+6. If private customer or non-public materials are needed, ask the user to provide or point to their private workspace; do not write those materials into public repository paths.
+
+Do not create one-off public pack templates purely from intuition. When a real public source does not fit current standards, record a schema gap and follow `standards/schema-evolution.md`.
 
 ## First Step: Practice Profile
 

@@ -2,7 +2,7 @@ id: institution-source-id
 institution: aia
 jurisdiction: []
 language: zh-Hans
-source_type: official-web # official-web | official-brochure | official-terms | regulator | public-article | community-summary
+source_type: official-product-page # see standards/source-taxonomy.yaml: official-product-page | official-brochure | official-terms | regulator-guidance | official-service-guide | official-underwriting-guide | official-faq | approved-marketing-material | public-article | community-summary
 source_url: https://example.com/public-source
 retrieved_at: 2026-05-14
 public_source: true

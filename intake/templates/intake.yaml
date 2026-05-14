@@ -1,0 +1,9 @@
+schema_version: 0.2.0
+institution: aia
+contributor: github-username
+public_source: true
+contains_customer_data: false
+contains_internal_confidential_data: false
+sources:
+  - sources/example-source.yaml
+notes: "Briefly explain why this public source is useful."

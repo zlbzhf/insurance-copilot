@@ -11,6 +11,10 @@ Before substantive changes, read:
 - `README.md`
 - `skills/insurance-copilot/SKILL.md`
 - `docs/architecture.md`
+- `docs/evidence-driven-standards.md`
+- `standards/current.yaml`
+- `standards/source-taxonomy.yaml`
+- `standards/page-type-registry.yaml`
 - `docs/continuity.md`
 - `docs/quality-gates.md`
 - `ROADMAP.md`
@@ -29,6 +33,8 @@ python3 scripts/validate_repo.py
 3. `agent-workspace-template/` — template for private agent workspaces stored outside this repo.
 
 Non-public institution materials belong in the agent-private layer, not in public institution packs.
+
+Public institution pack standards evolve through `standards/`, `schemas/`, `prompts/`, `intake/`, `staging/`, and `scripts/ingest_gateway.py`. Do not add one-off templates solely from intuition; record schema gaps from real source processing and update standards through reviewed proposals.
 
 ## Development Rules
 
@@ -50,13 +56,20 @@ python3 scripts/validate_repo.py
 python3 scripts/package_skill.py --check
 python3 scripts/run_evals.py
 python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia
+python3 scripts/validate_knowledge_pack.py knowledge/institutions/_template --template
 python3 scripts/validate_agent_workspace.py agent-workspace-template --template
+python3 scripts/ingest_gateway.py --help
 ```
 
 ## Repository Layout
 
 ```text
 skills/insurance-copilot/   Hermes skill package
+standards/                   Evidence-driven public knowledge standard
+schemas/                     Machine-readable schemas
+prompts/                     Controlled LLM gateway prompt contracts
+intake/                      Source packages before normalization
+staging/                     Gateway output before review
 knowledge/institutions/     Public institution knowledge packs
 agent-workspace-template/   Template for private agent workspace
 contributions/              Public contribution templates and workflow

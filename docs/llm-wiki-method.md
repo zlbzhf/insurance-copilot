@@ -9,25 +9,42 @@ Insurance knowledge is document-heavy, versioned, jurisdiction-dependent, and ea
 ## Core Files
 
 ```text
-SCHEMA.md   conventions, page types, taxonomy, confidence rules
+SCHEMA.md   pack-local conventions and links to canonical standards
 index.md    catalog of pages and one-line summaries
 log.md      append-only maintenance history
-raw/        immutable source material when allowed
+raw/        immutable source material when redistribution allows
 sources/    source metadata records
-products/   product pages
-concepts/   reusable concept pages
 entities/   institution/entity pages
+products/   product summaries
+contracts/  contract/terms summaries
+marketing/  marketing compliance reviews
+underwriting/ public underwriting/disclosure guidance
+service-processes/ claims, renewal, payment, lapse, reinstatement processes
+regulatory/ regulator guidance summaries
+faqs/       public FAQ summaries
+concepts/   reusable concept pages
+comparisons/ side-by-side analyses
+queries/    filed reusable query answers
+templates/  source/page templates aligned with standards/
 ```
+
+Canonical source type and page type definitions live in `standards/source-taxonomy.yaml` and `standards/page-type-registry.yaml`.
 
 ## Operating Loop
 
-1. Orient: read `SCHEMA.md`, `index.md`, recent `log.md`.
+1. Orient: read `SCHEMA.md`, `index.md`, recent `log.md`, and the current standard in `standards/current.yaml`.
 2. Add or review source records.
-3. Create/update product, concept, entity, comparison, or query pages.
-4. Add wikilinks and confidence labels.
-5. Update `index.md`.
-6. Append to `log.md`.
-7. Run validators.
+3. Run the gateway for new public sources when appropriate.
+4. Review staging output, schema gaps, and proposed pages.
+5. Create/update product, contract, marketing, service, regulatory, FAQ, concept, entity, comparison, or query pages.
+6. Add wikilinks and confidence labels.
+7. Update `index.md`.
+8. Append to `log.md`.
+9. Run validators.
+
+## Evidence-Driven Standard Evolution
+
+The wiki schema should become more precise as real documents are processed. If a source does not fit current templates, record a schema gap rather than forcing the source into a generic page. See `docs/evidence-driven-standards.md` and `standards/schema-evolution.md`.
 
 ## Insurance-Specific Rules
 

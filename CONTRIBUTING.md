@@ -13,6 +13,8 @@ Thank you for improving Insurance Copilot.
 - Do not commit real customer PII, production policy documents, secrets, or credentials.
 - Keep every customer-facing output as draft language for licensed/compliance review.
 - Add or update eval fixtures for high-risk behavior changes.
+- Use evidence-driven schema evolution for public knowledge standards; do not add one-off templates without a real-source rationale.
+- Local agent drafts are hints only until normalized through source records, gateway staging, validators, and human review.
 
 ## Validate
 
@@ -23,7 +25,9 @@ python3 scripts/validate_repo.py
 python3 scripts/package_skill.py --check
 python3 scripts/run_evals.py
 python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia
+python3 scripts/validate_knowledge_pack.py knowledge/institutions/_template --template
 python3 scripts/validate_agent_workspace.py agent-workspace-template --template
+python3 scripts/ingest_gateway.py --help
 ```
 
 ## Pull Request Expectations

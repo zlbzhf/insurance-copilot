@@ -42,6 +42,8 @@ REQUIRED = [
     ROOT / "docs" / "agent-private-knowledge.md",
     ROOT / "docs" / "llm-wiki-method.md",
     ROOT / "docs" / "contribution-workflow.md",
+    ROOT / "docs" / "evidence-driven-standards.md",
+    ROOT / "docs" / "github-knowledge-governance.md",
     ROOT / ".github" / "workflows" / "validate.yml",
     ROOT / ".github" / "PULL_REQUEST_TEMPLATE.md",
     ROOT / ".github" / "ISSUE_TEMPLATE" / "source_contribution.yml",

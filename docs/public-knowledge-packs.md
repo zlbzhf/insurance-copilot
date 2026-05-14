@@ -29,16 +29,24 @@ Each pack should follow:
 
 ```text
 PACK.md                 Manifest and scope
-SCHEMA.md               Pack schema and taxonomy
+SCHEMA.md               Pack-local schema and links to canonical standards
 index.md                Content catalog
 log.md                  Append-only maintenance log
 sources/                Public source records
 raw/                    Optional allowed raw extracts
 entities/               Institution/entity pages
-products/               Product pages
+products/               Product summaries
+contracts/              Policy contract / terms summaries
+marketing/              Marketing compliance reviews
+underwriting/           Public underwriting/disclosure guidance
+service-processes/      Claims, renewal, payment, lapse, reinstatement processes
+regulatory/             Regulator guidance summaries
+faqs/                   Public FAQ summaries
+source-summaries/       Source summaries for third-party/community/unknown materials
 concepts/               Concepts such as underwriting disclosure
 comparisons/            Public sourced comparisons
 queries/                Filed answers worth preserving
+templates/              Pack-local source and page templates aligned with standards/
 contributions/          Reviewable contribution bundles
 ```
 

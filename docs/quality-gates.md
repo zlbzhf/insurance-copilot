@@ -47,11 +47,14 @@ Required:
 Required:
 
 - `knowledge/registry.json` exists and identifies public packs.
+- `standards/`, `schemas/`, and `prompts/` define the evidence-driven public knowledge standard.
 - `knowledge/institutions/_template/` defines pack structure.
 - Seed packs such as `knowledge/institutions/aia/` include `PACK.md`, `SCHEMA.md`, `index.md`, and `log.md`.
-- Pack pages use frontmatter, public-source flags, confidence labels, and `[verify]` where appropriate.
-- Pack validators reject obvious PII, missing source metadata, broken wikilinks, and private-data classifications.
+- Pack pages use frontmatter, public-source flags, confidence labels, schema versions, and `[verify]` where appropriate.
+- Pack validators reject obvious PII, missing source metadata, broken wikilinks, unknown page/source types, and private-data classifications.
 - Source-first contribution workflow exists.
+- `scripts/ingest_gateway.py` can stage source classification/extraction without merging generated output into `knowledge/`.
+- Schema gaps are recorded rather than forcing unmatched documents into generic templates.
 
 ## Gate 5 — Agent Private Workspace Template
 
@@ -106,7 +109,7 @@ Required:
 - `docs/architecture.md` defines the three-layer architecture.
 - `ROADMAP.md` captures durable project direction.
 - `scripts/validate_repo.py` checks structural invariants.
-- GitHub Actions runs validator, package check, eval runner, knowledge-pack validator, and agent-workspace validator on push/PR.
+- GitHub Actions runs validator, package check, eval runner, knowledge-pack validator, agent-workspace validator, and gateway smoke check on push/PR.
 
 ## Gate 9 — Examples and Evaluation Fixtures
 
@@ -124,7 +127,9 @@ python3 scripts/validate_repo.py
 python3 scripts/package_skill.py --check
 python3 scripts/run_evals.py
 python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia
+python3 scripts/validate_knowledge_pack.py knowledge/institutions/_template --template
 python3 scripts/validate_agent_workspace.py agent-workspace-template --template
+python3 scripts/ingest_gateway.py --help
 ```
 
 A change is not ready to commit if any command fails.

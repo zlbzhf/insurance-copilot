@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Source Classification",
+  "type": "object",
+  "required": [
+    "source_id",
+    "primary_type",
+    "confidence",
+    "public_boundary",
+    "recommended_page_types"
+  ],
+  "properties": {
+    "source_id": {
+      "type": "string"
+    },
+    "primary_type": {
+      "type": "string"
+    },
+    "secondary_types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "confidence": {
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ]
+    },
+    "public_boundary": {
+      "type": "object",
+      "required": [
+        "public_source",
+        "contains_customer_data",
+        "contains_internal_confidential_data"
+      ],
+      "properties": {
+        "public_source": {
+          "const": true
+        },
+        "contains_customer_data": {
+          "const": false
+        },
+        "contains_internal_confidential_data": {
+          "const": false
+        }
+      },
+      "additionalProperties": true
+    },
+    "recommended_page_types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "risk_flags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "schema_gaps": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "additionalProperties": true
+}

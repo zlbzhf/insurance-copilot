@@ -26,3 +26,5 @@ jobs:
         run: python3 scripts/validate_knowledge_pack.py knowledge/institutions/_template --template
       - name: Validate agent workspace template
         run: python3 scripts/validate_agent_workspace.py agent-workspace-template --template
+      - name: Smoke test ingestion gateway
+        run: python3 scripts/ingest_gateway.py --help

@@ -10,9 +10,13 @@ Read these files first in a fresh session:
 2. `README.md` — user-facing install/use docs.
 3. `skills/insurance-copilot/SKILL.md` — canonical Hermes skill entry point.
 4. `docs/architecture.md` — three-layer knowledge architecture.
-5. `docs/quality-gates.md` — acceptance criteria and validation gates.
-6. `ROADMAP.md` — current development priorities.
-7. `scripts/validate_repo.py` — executable structural quality gate.
+5. `docs/evidence-driven-standards.md` — public knowledge standard evolution model.
+6. `standards/current.yaml` — active standard version and component paths.
+7. `standards/source-taxonomy.yaml` — controlled source taxonomy and authority hierarchy.
+8. `standards/page-type-registry.yaml` — canonical page types and required sections.
+9. `docs/quality-gates.md` — acceptance criteria and validation gates.
+10. `ROADMAP.md` — current development priorities.
+11. `scripts/validate_repo.py` — executable structural quality gate.
 
 ## Fresh Session Resume Procedure
 
@@ -30,13 +34,18 @@ Then read the relevant workflow reference under:
 skills/insurance-copilot/references/
 ```
 
-For institution-pack work, orient like an LLM wiki:
+For institution-pack work, orient like an LLM wiki and standards-controlled ingestion project:
 
 ```text
+standards/current.yaml
+standards/source-taxonomy.yaml
+standards/page-type-registry.yaml
 knowledge/institutions/<pack>/SCHEMA.md
 knowledge/institutions/<pack>/index.md
 knowledge/institutions/<pack>/log.md
 ```
+
+If processing a new source, stage it through `scripts/ingest_gateway.py` and review `staging/` output before moving anything into `knowledge/`.
 
 For private workspace template work, read:
 
@@ -63,6 +72,11 @@ Insurance Copilot is a Hermes-first skill and layered insurance knowledge reposi
 
 ```text
 skills/insurance-copilot/SKILL.md
+standards/
+schemas/
+prompts/
+intake/
+staging/
 knowledge/institutions/
 agent-workspace-template/
 ```

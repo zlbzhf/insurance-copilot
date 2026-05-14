@@ -1,0 +1,26 @@
+standard_id: insurance-copilot-public-knowledge-standard
+status: beta
+current_schema_version: 0.2.0
+current_template_version: 0.2.0
+current_prompt_version: 0.2.0
+released_at: 2026-05-14
+minimum_gateway_version: 0.1.0
+
+components:
+  source_record_schema: schemas/source-record.schema.json
+  intake_package_schema: schemas/intake-package.schema.json
+  classification_schema: schemas/classification.schema.json
+  extraction_schema: schemas/extraction-record.schema.json
+  schema_gap_schema: schemas/schema-gap.schema.json
+  source_taxonomy: standards/source-taxonomy.yaml
+  page_type_registry: standards/page-type-registry.yaml
+  quality_policy: standards/quality-policy.yaml
+
+compatibility:
+  backward_compatible_with:
+    - 0.1.0
+  deprecated_versions: []
+  migration_required: false
+
+agent_sync:
+  instruction: "Agents should read this file before preparing public contribution bundles and should not invent fields outside the active schemas. If the standard is insufficient, create a schema gap instead."

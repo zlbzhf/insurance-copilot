@@ -1,0 +1,16 @@
+schema_version: 0.2.0
+id: example-product-brochure
+institution: institution-id
+jurisdiction: []
+language: zh-Hans
+source_type: official-brochure
+source_url: https://example.com/public-brochure
+retrieved_at: 2026-05-14
+public_source: true
+redistribution:
+  mode: link-only
+  notes: "Do not copy full copyrighted brochure unless redistribution is explicitly allowed."
+product_lines: []
+status: queued
+submitted_by: github-user
+risk_flags: [marketing-summary-not-contract, non-guaranteed-illustration, product-version-needed]

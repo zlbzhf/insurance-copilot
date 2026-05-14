@@ -22,7 +22,7 @@ def main() -> int:
     parser.add_argument("--institution", required=True)
     parser.add_argument("--url", required=True)
     parser.add_argument("--title", required=True)
-    parser.add_argument("--source-type", default="official-web")
+    parser.add_argument("--source-type", default="official-product-page")
     parser.add_argument("--jurisdiction", action="append", default=[])
     parser.add_argument("--language", default="zh-Hans")
     parser.add_argument("--product-line", action="append", default=[])

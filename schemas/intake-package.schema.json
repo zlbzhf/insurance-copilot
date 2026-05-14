@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Insurance Copilot Intake Package",
+  "type": "object",
+  "required": [
+    "institution",
+    "public_source",
+    "contains_customer_data",
+    "contains_internal_confidential_data",
+    "sources"
+  ],
+  "properties": {
+    "institution": {
+      "type": "string"
+    },
+    "contributor": {
+      "type": "string"
+    },
+    "public_source": {
+      "const": true
+    },
+    "contains_customer_data": {
+      "const": false
+    },
+    "contains_internal_confidential_data": {
+      "const": false
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    },
+    "schema_version": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

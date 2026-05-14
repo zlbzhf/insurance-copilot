@@ -1,0 +1,79 @@
+version: 0.2.0
+updated: 2026-05-14
+
+page_types:
+  entity:
+    status: active
+    directory: entities
+    required_sections: [Overview, Source Status, Related Pages, Open Questions / Verify]
+    allowed_source_types: [regulator-guidance, official-terms, official-service-guide, official-product-page, official-brochure, official-faq, approved-marketing-material, public-article, community-summary]
+  concept:
+    status: active
+    directory: concepts
+    required_sections: [Definition, Why It Matters, Institution-Specific Notes, Related Pages, Sources / Verify]
+    allowed_source_types: [regulator-guidance, official-terms, official-service-guide, official-underwriting-guide, official-product-page, official-brochure, official-faq, approved-marketing-material, public-article, community-summary]
+  product-summary:
+    status: beta
+    directory: products
+    required_sections: [Source Status, Product Positioning, Key Benefits, Important Limitations, Verify Against Contract, Customer-Facing Cautions, Related Concepts, Open Questions / Verify]
+    allowed_source_types: [official-product-page, official-brochure, official-terms, official-faq]
+  policy-contract-summary:
+    status: experimental
+    directory: contracts
+    required_sections: [Source Status, Definitions, Coverage / Benefits, Exclusions, Waiting Periods, Claims Conditions, Renewal / Termination, Customer-Facing Cautions]
+    allowed_source_types: [official-terms]
+  marketing-compliance-review:
+    status: experimental
+    directory: marketing
+    required_sections: [Source Status, Intended Message, Risky Claims, Guarantee / Superlative Check, Missing Limitations, Required Disclaimers, Safer Rewrite, Compliance Escalation]
+    allowed_source_types: [approved-marketing-material, official-brochure, official-product-page]
+  underwriting-rule-summary:
+    status: experimental
+    directory: underwriting
+    required_sections: [Source Status, Disclosure Requirements, Common Risk Factors, Required Questions / Evidence, Do Not Coach Around, Escalation Triggers, Verify]
+    allowed_source_types: [official-underwriting-guide, official-terms]
+  claims-process-summary:
+    status: experimental
+    directory: service-processes/claims
+    required_sections: [Source Status, When This Applies, Required Documents, Submission Steps, Deadlines / Time Windows, What Not To Promise, Escalation]
+    allowed_source_types: [official-service-guide, official-faq, official-terms]
+  renewal-service-process:
+    status: experimental
+    directory: service-processes/renewal
+    required_sections: [Source Status, Trigger, Required Inputs, Process Steps, Deadlines / Cutoffs, Verification Required, Do Not Say]
+    allowed_source_types: [official-service-guide, official-faq, official-terms]
+  service-process-summary:
+    status: experimental
+    directory: service-processes
+    required_sections: [Source Status, When This Applies, Process Steps, Verification Required, Escalation]
+    allowed_source_types: [official-service-guide, official-faq]
+  regulatory-guidance-summary:
+    status: experimental
+    directory: regulatory
+    required_sections: [Source Status, Scope, Key Requirements, Prohibited Practices, Required Disclosures, Impact on Workflows, Related Institution Pack Pages]
+    allowed_source_types: [regulator-guidance]
+  faq-summary:
+    status: experimental
+    directory: faqs
+    required_sections: [Source Status, Questions Covered, Answers Summary, Limits / Verify, Related Process Pages]
+    allowed_source_types: [official-faq]
+  comparison:
+    status: beta
+    directory: comparisons
+    required_sections: [Source Status, Scope, Comparison Dimensions, Summary, Limits / Verify, Related Pages]
+    allowed_source_types: [official-product-page, official-brochure, official-terms, community-summary]
+  query:
+    status: active
+    directory: queries
+    required_sections: [Question, Short Answer, Sources, Limits / Verify, Related Pages]
+    allowed_source_types: [regulator-guidance, official-terms, official-service-guide, official-product-page, official-brochure, official-faq, public-article, community-summary]
+  source-summary:
+    status: beta
+    directory: source-summaries
+    required_sections: [Source Status, Summary, Key Claims, Limitations, Schema Gaps, Related Pages]
+    allowed_source_types: [public-article, community-summary, unknown]
+
+rules:
+  - "Rendered wiki pages must use a page type in this registry."
+  - "A source type may render only into page types listed in both source-taxonomy allowed_page_types and this registry allowed_source_types."
+  - "Experimental page types are allowed, but the page must keep confidence low or medium until human reviewed."

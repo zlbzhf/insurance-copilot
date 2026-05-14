@@ -22,7 +22,7 @@ Public insurance institution knowledge for a single insurer or insurance institu
 title: Page Title
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
-type: entity | product | concept | comparison | query | source-summary
+type: entity | concept | product-summary | policy-contract-summary | marketing-compliance-review | underwriting-rule-summary | claims-process-summary | renewal-service-process | service-process-summary | regulatory-guidance-summary | faq-summary | comparison | query | source-summary
 institution: aia
 jurisdiction: []
 language: zh-Hans | zh-Hant | en | other
@@ -31,8 +31,36 @@ sources: []
 confidence: high | medium | low
 public_source: true
 needs_verification: true
+schema_version: 0.2.0
 ---
 ```
+
+## Source-to-Page Mapping
+
+This pack follows the canonical mapping in `standards/source-taxonomy.yaml` and `standards/page-type-registry.yaml`.
+
+Core principle: do not force every source into one generic product template. Product brochures, policy contracts, marketing material, underwriting guidance, claims processes, renewal service pages, regulatory guidance, FAQs, and community summaries can require different page types.
+
+Examples:
+
+- `official-brochure` -> `product-summary`, `concept`, `comparison`
+- `official-terms` -> `policy-contract-summary`, `product-summary`, `concept`
+- `approved-marketing-material` -> `marketing-compliance-review`, `concept`
+- `official-underwriting-guide` -> `underwriting-rule-summary`, `concept`
+- `official-service-guide` -> `claims-process-summary`, `renewal-service-process`, `service-process-summary`, `concept`
+- `regulator-guidance` -> `regulatory-guidance-summary`, `concept`
+
+If a real public source does not fit the current mapping, record a schema gap instead of inventing a one-off local template.
+
+## Schema Evolution
+
+Standards evolve through `standards/schema-evolution.md`:
+
+```text
+Observe -> Propose -> Validate -> Review -> Migrate -> Release
+```
+
+LLMs and local agents may suggest schema gaps, but canonical schema changes require reviewed proposals. Each page should include `schema_version` once generated or updated under versioned standards.
 
 ## Source Record Fields
 
@@ -43,7 +71,7 @@ id: source-id
 institution: aia
 jurisdiction: []
 language: zh-Hans
-source_type: official-web | official-brochure | official-terms | regulator | public-article | community-summary
+source_type: regulator-guidance | official-terms | official-service-guide | official-underwriting-guide | official-product-page | official-brochure | official-faq | approved-marketing-material | public-article | community-summary | unknown
 source_url: https://example.com
 retrieved_at: YYYY-MM-DD
 public_source: true
@@ -77,6 +105,10 @@ Use tags from this list unless the schema is updated first:
 - waiting-period
 - public-source
 - needs-verification
+
+## Specialized Page Types
+
+Required sections for specialized page types are maintained in `standards/page-type-registry.yaml`. Pack-local templates live under `templates/pages/`.
 
 ## Product Pages
 

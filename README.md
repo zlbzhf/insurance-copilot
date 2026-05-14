@@ -12,7 +12,13 @@ Insurance Copilot has three layers:
 2. **Public institution knowledge packs** — `knowledge/institutions/`
 3. **Agent private knowledge workspace** — initialize from `agent-workspace-template/`, store privately outside this repo
 
-See `docs/architecture.md` for the full design.
+Public knowledge maintenance also uses an evidence-driven standards loop:
+
+```text
+public source -> intake -> gateway staging -> schema gaps/proposed pages -> review -> knowledge pack
+```
+
+See `docs/architecture.md` and `docs/evidence-driven-standards.md` for the full design.
 
 ## What It Does
 
@@ -86,6 +92,8 @@ See:
 
 - `docs/public-knowledge-packs.md`
 - `docs/llm-wiki-method.md`
+- `docs/evidence-driven-standards.md`
+- `docs/github-knowledge-governance.md`
 - `knowledge/registry.json`
 
 ## Agent Private Workspace
@@ -126,6 +134,11 @@ The quickstart walks through:
 
 ```text
 skills/insurance-copilot/     Umbrella Hermes skill package
+standards/                     Versioned public-knowledge standard and schema evolution policy
+schemas/                       Machine-readable schemas for intake/classification/extraction/gaps
+prompts/                       Prompt contracts for future controlled LLM gateway runs
+intake/                        Source package templates before canonical processing
+staging/                       Gateway output before human-reviewed merge
 knowledge/institutions/       Public institution LLM wiki packs
 agent-workspace-template/     Template for private agent knowledge workspace
 contributions/                Public contribution templates and workflow docs
@@ -147,6 +160,7 @@ python3 scripts/package_skill.py --check
 python3 scripts/run_evals.py
 python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia
 python3 scripts/validate_agent_workspace.py agent-workspace-template --template
+python3 scripts/ingest_gateway.py --help
 ```
 
 CI runs these checks on push and pull request.

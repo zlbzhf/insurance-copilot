@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema Gap Record",
+  "type": "object",
+  "required": [
+    "gap_id",
+    "status",
+    "trigger_sources",
+    "problem",
+    "recommended_action"
+  ],
+  "properties": {
+    "gap_id": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "observed",
+        "proposed",
+        "accepted",
+        "rejected",
+        "deferred"
+      ]
+    },
+    "trigger_sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "problem": {
+      "type": "string"
+    },
+    "recommended_action": {
+      "type": "string"
+    },
+    "proposed_change": {
+      "type": "object"
+    },
+    "examples": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "migration": {
+      "type": "object"
+    },
+    "review_required_by": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

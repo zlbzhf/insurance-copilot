@@ -42,6 +42,30 @@ Purpose:
 
 Institution packs are public knowledge only. If a material is not public/shareable, it does not belong here.
 
+## Public Knowledge Maintenance Pipeline
+
+The public institution layer is maintained through evidence-driven schema evolution, not one-time template guessing.
+
+```text
+public source package
+  -> intake/
+  -> scripts/ingest_gateway.py
+  -> staging/<institution>/<source-id>/
+  -> schema gaps + proposed pages
+  -> validator + human review
+  -> knowledge/institutions/<institution>/
+```
+
+Canonical standards live in:
+
+```text
+standards/
+schemas/
+prompts/
+```
+
+Contributor local drafts may help, but the public repository treats them as hints. The gateway and maintainers re-check raw/source evidence before content becomes canonical.
+
 ## Layer 3 — Agent Private Knowledge Workspace
 
 Template:

@@ -21,10 +21,13 @@ If a material is not public/shareable, keep it in an agent-private workspace, ev
 
 Preferred flow:
 
-1. Submit a public source record under `sources/` or a contribution bundle under `contributions/`.
-2. Generate or propose wiki pages using the pack schema.
-3. Run validators.
-4. Open a PR.
-5. Institution maintainers review before merge.
+1. Submit a public source record or source package.
+2. Stage source classification and extraction through `scripts/ingest_gateway.py` when adding new public source material.
+3. Review `staging/<institution>/<source-id>/classification.yaml`, `extraction.yaml`, `schema-gaps.yaml`, proposed pages, provenance, and validation report.
+4. If the source does not fit the current standard, create a schema-gap/proposal instead of forcing it into a generic template.
+5. Move reviewed and approved content into the institution pack.
+6. Run validators.
+7. Open a PR.
+8. Institution maintainers and schema maintainers review before merge when applicable.
 
 Curated pages are allowed only when they follow `SCHEMA.md`, cite public sources, mark confidence, and pass validation.
