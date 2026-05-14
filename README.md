@@ -129,6 +129,19 @@ python3 scripts/renewal_watcher.py \
 
 It emits an internal alert only: `[verify]` carrier/payment status, no customer send, no CRM/calendar writes, and no coverage/lapse/reinstatement conclusions. See `docs/local-renewal-watcher.md` and `cron/renewal-watcher-cookbook.md`.
 
+## Script-only Renewal Watcher Cron Wrapper
+
+A script-only wrapper template is available for future Hermes `no_agent=True` watchdog deployment:
+
+```bash
+bash cron/scripts/renewal_watcher.sh \
+  --workspace examples/local-connectors/synthetic-agent-workspace \
+  --as-of 2026-05-14 \
+  --mode always
+```
+
+For cron use, `--mode alert-only` prints only review-worthy internal alerts. Empty stdout means silent/no-alert; non-zero exit means fail-loud error alert. This repository does not create a live job. See `docs/script-only-cron-wrapper.md` and `examples/cron/renewal-watcher-no-agent.md`.
+
 ## Public Institution Packs
 
 Public institution packs live under:
@@ -184,7 +197,8 @@ The quickstart walks through:
 6. compliance check;
 7. local file connector bundle;
 8. local renewal watcher internal alert;
-9. stakeholder summary.
+9. script-only renewal watcher cron wrapper dry run;
+10. stakeholder summary.
 
 ## Repository Layout
 
@@ -217,7 +231,7 @@ python3 scripts/run_evals.py
 python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia
 python3 scripts/validate_agent_workspace.py agent-workspace-template --template
 python3 scripts/ingest_gateway.py --help
-python3 -m pytest tests/test_ingest_gateway.py tests/test_local_file_connectors.py tests/test_renewal_watcher.py -q
+python3 -m pytest tests/test_ingest_gateway.py tests/test_local_file_connectors.py tests/test_renewal_watcher.py tests/test_renewal_watcher_cron_wrapper.py -q
 ```
 
 CI runs these checks on push and pull request.

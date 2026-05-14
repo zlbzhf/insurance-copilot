@@ -37,9 +37,11 @@ REQUIRED = [
     ROOT / "docs" / "workflow-surface.md",
     ROOT / "docs" / "local-file-connectors.md",
     ROOT / "docs" / "local-renewal-watcher.md",
+    ROOT / "docs" / "script-only-cron-wrapper.md",
     ROOT / "docs" / "plans" / "2026-05-14-practical-agent-workflow-beta.md",
     ROOT / "docs" / "plans" / "2026-05-14-local-file-connector-slice.md",
     ROOT / "docs" / "plans" / "2026-05-14-local-renewal-watcher.md",
+    ROOT / "docs" / "plans" / "2026-05-14-script-only-cron-wrapper.md",
     ROOT / "docs" / "privacy-and-data-handling.md",
     ROOT / "docs" / "action-safety.md",
     ROOT / "docs" / "jurisdiction-adaptation.md",
@@ -63,12 +65,15 @@ REQUIRED = [
     ROOT / "scripts" / "create_source_record.py",
     ROOT / "scripts" / "local_file_connectors.py",
     ROOT / "scripts" / "renewal_watcher.py",
+    ROOT / "cron" / "scripts" / "renewal_watcher.sh",
     ROOT / "tests" / "test_local_file_connectors.py",
     ROOT / "tests" / "test_renewal_watcher.py",
+    ROOT / "tests" / "test_renewal_watcher_cron_wrapper.py",
     ROOT / "examples" / "local-connectors" / "synthetic-agent-workspace" / "README.md",
     ROOT / "examples" / "local-connectors" / "expected-daily-workbench.md",
     ROOT / "examples" / "renewal-watcher" / "synthetic-renewal-alert.md",
     ROOT / "examples" / "renewal-watcher" / "synthetic-renewal-alert.json",
+    ROOT / "examples" / "cron" / "renewal-watcher-no-agent.md",
     ROOT / "cron" / "renewal-watcher.md",
     ROOT / "cron" / "compliance-copy-monitor.md",
     ROOT / "cron" / "replacement-risk-monitor.md",
@@ -300,9 +305,16 @@ def main() -> int:
         "docs/local-file-connectors.md",
         "scripts/renewal_watcher.py",
         "docs/local-renewal-watcher.md",
+        "docs/script-only-cron-wrapper.md",
+        "cron/scripts/renewal_watcher.sh",
     ]:
         if snippet not in readme:
             return fail(f"README missing required install/validation snippet: {snippet}")
+
+    cron_doc = (ROOT / "docs" / "script-only-cron-wrapper.md").read_text()
+    for phrase in ["no_agent=True", "empty stdout", "non-zero exit", "custom:fufu", "mimo-v2.5-pro", "No External Writes"]:
+        if phrase not in cron_doc:
+            return fail(f"script-only cron wrapper doc missing phrase: {phrase}")
 
     workflow_surface = (ROOT / "docs" / "workflow-surface.md").read_text()
     for name in [
@@ -326,6 +338,7 @@ def main() -> int:
         "python3 scripts/validate_agent_workspace.py agent-workspace-template --template",
         "python3 -m pytest tests/test_local_file_connectors.py -q",
         "python3 -m pytest tests/test_renewal_watcher.py -q",
+        "python3 -m pytest tests/test_renewal_watcher_cron_wrapper.py -q",
         "python3 -m pip install -r requirements-dev.txt",
     ]:
         if cmd not in workflow:
@@ -375,7 +388,9 @@ def main() -> int:
         [sys.executable, "scripts/local_file_connectors.py", "daily-workbench", "--workspace", "examples/local-connectors/synthetic-agent-workspace", "--format", "json"],
         [sys.executable, "-m", "pytest", "tests/test_local_file_connectors.py", "-q"],
         [sys.executable, "-m", "pytest", "tests/test_renewal_watcher.py", "-q"],
+        [sys.executable, "-m", "pytest", "tests/test_renewal_watcher_cron_wrapper.py", "-q"],
         [sys.executable, "scripts/renewal_watcher.py", "--csv", "examples/local-connectors/synthetic-agent-workspace/renewal-registers/synthetic-renewal-register.csv", "--as-of", "2026-05-14", "--format", "json"],
+        ["bash", "cron/scripts/renewal_watcher.sh", "--workspace", "examples/local-connectors/synthetic-agent-workspace", "--as-of", "2026-05-14", "--mode", "always"],
     ]:
         code, output = run_script(cmd)
         if code != 0:

@@ -34,3 +34,5 @@ jobs:
         run: python3 -m pytest tests/test_local_file_connectors.py -q
       - name: Test renewal watcher
         run: python3 -m pytest tests/test_renewal_watcher.py -q
+      - name: Test renewal watcher cron wrapper
+        run: python3 -m pytest tests/test_renewal_watcher_cron_wrapper.py -q

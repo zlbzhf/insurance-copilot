@@ -38,6 +38,28 @@ python3 scripts/renewal_watcher.py \
 
 Then have the licensed agent review `/tmp/insurance-renewal-alert.md`.
 
+## Script-only Wrapper Pattern
+
+For a script-only watchdog, use the checked wrapper:
+
+```bash
+bash cron/scripts/renewal_watcher.sh \
+  --workspace ~/.insurance-copilot/agents/<agent-id> \
+  --as-of "$(date +%F)" \
+  --mode alert-only
+```
+
+Wrapper behavior:
+
+- `--mode always`: print an internal alert for dry runs.
+- `--mode alert-only`: print only when non-monitor renewal rows require review.
+- empty stdout means silent/no-alert in Hermes `no_agent=True` cron.
+- non-zero exit means fail loudly so a broken watcher does not fail silently.
+- temp connector/report artifacts are outside the private workspace.
+- explicit `--output` must be outside the private workspace.
+
+See `docs/script-only-cron-wrapper.md` and `examples/cron/renewal-watcher-no-agent.md`.
+
 ## Hermes Cron Prompt Skeleton
 
 If using an LLM summary job later, create a per-job prompt that is self-contained:
@@ -67,3 +89,8 @@ Do not create this live job from repository docs. Confirm private workspace path
 ## Handoff Gate
 
 Before any external use, the servicing agent must verify carrier status, payment status, contact consent, approved script source, and whether compliance/supervisor escalation is required.
+
+
+Safety note: if `TMPDIR` is set for the wrapper, it must resolve outside the private workspace; broken child commands should fail loudly with stderr rather than silently exiting.
+
+Repo-root note: this wrapper resolves helper scripts relative to its repository location. For Hermes deployment, prefer using this repository as the job `workdir`, or copy the wrapper together with `scripts/local_file_connectors.py` and `scripts/renewal_watcher.py`; do not copy only `cron/scripts/renewal_watcher.sh` into `~/.hermes/scripts/` unless that relative helper-script access is preserved.

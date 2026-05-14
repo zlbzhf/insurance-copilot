@@ -86,6 +86,28 @@ Every alert includes:
 - `No External Writes` section;
 - neutral internal follow-up language only.
 
+## Checked Script-only Wrapper
+
+Use the checked wrapper for dry runs and future `no_agent=True` cron deployment:
+
+```bash
+bash cron/scripts/renewal_watcher.sh \
+  --workspace examples/local-connectors/synthetic-agent-workspace \
+  --as-of 2026-05-14 \
+  --mode always
+```
+
+For alert-only behavior:
+
+```bash
+bash cron/scripts/renewal_watcher.sh \
+  --workspace ~/.insurance-copilot/agents/<agent-id> \
+  --as-of "$(date +%F)" \
+  --mode alert-only
+```
+
+In Hermes `no_agent=True` cron, non-empty stdout is delivered, empty stdout is silent/no-alert, and non-zero exit is an error alert. See `docs/script-only-cron-wrapper.md`.
+
 ## Script-only Cron Pattern
 
 A future Hermes cron job can run this as a script-only watchdog. Do not create a live job until the private workspace path, schedule, reviewer, and compliance boundary are approved.
@@ -120,3 +142,6 @@ For scheduled summary jobs, the user may choose a per-job Hermes model override 
 - Verify official carrier/payment status before any customer statement.
 - Verify contact consent and approved scripts before outreach.
 - Escalate grace-period, grace-ended, complaint, vulnerable-customer, replacement, or ambiguous-status items.
+
+
+Safety note: if `TMPDIR` is set for the wrapper, it must resolve outside the private workspace; broken child commands should fail loudly with stderr rather than silently exiting.

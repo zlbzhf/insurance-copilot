@@ -91,7 +91,21 @@ Expected behavior:
 - includes `No External Writes`;
 - does not send customer messages or write CRM/calendar tasks.
 
-## 6. Client Intake
+
+## 6. Script-only Renewal Watcher Cron Wrapper Dry Run
+
+Run the wrapper in dry-run mode:
+
+```bash
+bash cron/scripts/renewal_watcher.sh \
+  --workspace examples/local-connectors/synthetic-agent-workspace \
+  --as-of 2026-05-14 \
+  --mode always
+```
+
+For future Hermes `no_agent=True` cron use, switch to `--mode alert-only` after approval. Empty stdout means silent/no-alert, and non-zero exit means Hermes should deliver an error alert. The wrapper never sends customer messages, never writes CRM/calendar tasks, and rejects report output inside the private workspace.
+
+## 7. Client Intake
 
 Use the synthetic case:
 
@@ -105,7 +119,7 @@ Expected behavior:
 - says product recommendation is premature;
 - asks budget, income, existing coverage, jurisdiction, and approved health-disclosure questions.
 
-## 7. Coverage Gap Drafter
+## 8. Coverage Gap Drafter
 
 Prompt:
 
@@ -119,7 +133,7 @@ Expected behavior:
 - separates facts from assumptions;
 - uses possible solution categories, not product names.
 
-## 8. Client Plan Draft
+## 9. Client Plan Draft
 
 Prompt:
 
@@ -133,7 +147,7 @@ Expected behavior:
 - does not call any product best;
 - does not guarantee approval, payout, returns, savings, or suitability.
 
-## 9. Compliance Copy Checker
+## 10. Compliance Copy Checker
 
 Prompt:
 
@@ -148,7 +162,7 @@ Expected behavior:
 - provides safer draft language;
 - requires compliance review.
 
-## 10. Chinese Talk Track / Referral Draft
+## 11. Chinese Talk Track / Referral Draft
 
 Prompt:
 
@@ -163,7 +177,7 @@ Expected behavior:
 - forbids promises, guarantees, pressure, unapproved incentives, and customer-list extraction;
 - requires review before use.
 
-## 11. Stakeholder Summary
+## 12. Stakeholder Summary
 
 Prompt:
 
