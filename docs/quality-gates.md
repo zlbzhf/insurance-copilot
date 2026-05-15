@@ -140,6 +140,7 @@ Required:
 - Source-first contribution workflow exists.
 - `scripts/ingest_gateway.py` can stage source classification/extraction without merging generated output into `knowledge/`.
 - Schema gaps are recorded rather than forcing unmatched documents into generic templates.
+- **Institution Knowledge Organizer** is required for an **AIA public pack** or other insurer **source-backed public pack update**: it must verify the source record, preserve the public/private boundary, mark `[verify]` items, require pack maintainer review, and keep public claims/service summaries from becoming final decisions.
 
 ## Gate 5 — Agent Private Workspace Template
 

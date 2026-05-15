@@ -486,6 +486,67 @@ def test_professional_review_gate_is_runtime_effective() -> None:
     assert "professional workflow/profile/review-gate" in landscape
     assert case["id"] == "professional-review-gate"
     assert case["workflow"] == "professional-review-gate"
+
+
+def test_aia_public_pack_source_backed_slice_is_runtime_effective() -> None:
+    skill = read("skills/insurance-copilot/SKILL.md")
+    reference = read("skills/insurance-copilot/references/institution-knowledge-organizer.md")
+    template = read("skills/insurance-copilot/templates/institution-knowledge-organizer.md")
+    quality = read("docs/quality-gates.md")
+    surface = read("docs/workflow-surface.md")
+    spec = read("docs/product-development-spec.md")
+    landscape = read("docs/reference-landscape.md")
+    roadmap = read("ROADMAP.md")
+    readme = read("README.md")
+    pack = ROOT / "knowledge/institutions/aia"
+    index = read("knowledge/institutions/aia/index.md")
+    claims_process = read("knowledge/institutions/aia/service-processes/claims/aia-hk-claims-process.md")
+    claims_faq = read("knowledge/institutions/aia/faqs/aia-hk-claims-faq.md")
+    case = json.loads((ROOT / "evals/cases/aia-public-pack-source-backed.json").read_text(encoding="utf-8"))
+    expected = read(case["expected_output"])
+
+    for source_id in ["aia-hk-claims-how-to-file-claim", "aia-hk-claims-faq"]:
+        source_path = pack / "sources" / f"{source_id}.yaml"
+        assert source_path.exists()
+        source_text = source_path.read_text(encoding="utf-8")
+        assert f"id: {source_id}" in source_text
+        assert "institution: aia" in source_text
+        assert "public_source: true" in source_text
+        assert "retrieved_at:" in source_text
+        assert "redistribution:" in source_text
+        assert "link-only" in source_text
+        assert "example.com" not in source_text
+
+    for text in [skill, reference, template, quality, surface, spec, landscape, roadmap, readme, expected]:
+        assert "Institution Knowledge Organizer" in text
+        assert "AIA public pack" in text
+        assert "source-backed public pack update" in text
+        assert "source record" in text.lower()
+        assert "public/private boundary" in text.lower()
+        assert "pack maintainer review" in text.lower()
+        assert "[verify]" in text
+
+    for phrase in [
+        "references/institution-knowledge-organizer.md",
+        "templates/institution-knowledge-organizer.md",
+    ]:
+        assert phrase in skill
+        assert phrase in reference
+        assert phrase in template
+
+    for page in [claims_process, claims_faq]:
+        assert "Source-backed status" in page
+        assert "sources/aia-hk-claims" in page
+        assert "[verify]" in page
+        assert "No customer data" in page
+        assert "pack maintainer review" in page
+        assert "not a final claims decision" in page.lower()
+        assert "guaranteed payout" not in page.lower()
+
+    assert "[[aia-hk-claims-process]]" in index
+    assert "[[aia-hk-claims-faq]]" in index
+    assert case["id"] == "aia-public-pack-source-backed"
+    assert case["workflow"] == "institution-knowledge-organizer"
     for phrase in case["must_include"]:
         assert phrase in expected
     for phrase in case["must_not_include"]:

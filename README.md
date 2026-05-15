@@ -314,6 +314,10 @@ Use before customer-facing copy is sent. It should quote risky phrases, explain 
 
 Use before any customer-facing, regulated, external-use, or side-effect-adjacent output is treated as usable. It is implemented through `skills/insurance-copilot/references/professional-review-gate.md` and `skills/insurance-copilot/templates/professional-review-gate.md`. The gate must name action class, review owner, source verification status, customer-facing approval status, and side-effect status; customer-facing language remains a draft for licensed/compliance review, not approved to send, with no external action is authorized by default, and the output ends with the minimum safe next step.
 
+### Institution Knowledge Organizer
+
+Use for an **AIA public pack** or other insurer **source-backed public pack update**. It is implemented through `skills/insurance-copilot/references/institution-knowledge-organizer.md` and `skills/insurance-copilot/templates/institution-knowledge-organizer.md`. The workflow starts from a public source record, preserves the public/private boundary, marks `[verify]` items, and requires pack maintainer review before public pack content is treated as canonical.
+
 ## Public Institution Packs
 
 Public institution packs live under:
@@ -325,6 +329,8 @@ knowledge/institutions/
 They are public, collaboratively maintained, Karpathy-style LLM wiki knowledge bases. They may contain public source records, public product/service summaries, concepts, comparisons, and query pages.
 
 They must not contain customer data, non-public institution materials, private agent notes, secrets, or production exports.
+
+For maintainer work, use Institution Knowledge Organizer for an AIA public pack source-backed public pack update: source record first, public/private boundary preserved, `[verify]` visible, and pack maintainer review required.
 
 See:
 

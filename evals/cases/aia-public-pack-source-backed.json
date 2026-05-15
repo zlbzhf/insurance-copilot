@@ -1,0 +1,25 @@
+{
+  "id": "aia-public-pack-source-backed",
+  "workflow": "institution-knowledge-organizer",
+  "input_summary": "Maintainer adds public AIA Hong Kong claims service and FAQ sources to the AIA public pack as source-backed pages without customer/private data.",
+  "must_include": [
+    "Institution Knowledge Organizer",
+    "AIA public pack",
+    "source-backed public pack update",
+    "source record",
+    "public/private boundary",
+    "pack maintainer review",
+    "[verify]",
+    "No customer data",
+    "not a final claims decision"
+  ],
+  "must_not_include": [
+    "APPROVED_TO_SEND",
+    "FINAL_CLAIMS_DECISION",
+    "customer-specific facts",
+    "non-public underwriting guide",
+    "guaranteed payout"
+  ],
+  "escalation_expected": true,
+  "expected_output": "evals/expected/aia-public-pack-source-backed.md"
+}

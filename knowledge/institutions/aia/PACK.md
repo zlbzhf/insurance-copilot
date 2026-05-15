@@ -3,23 +3,23 @@ id: aia
 display_name: AIA / 友邦保险
 type: public-institution-pack
 data_classification: public
-version: 0.1.0
+version: 0.2.0
 languages: [zh-Hans, zh-Hant, en]
-jurisdictions: []
+jurisdictions: [HK]
 source_policy:
   public_sources_only: true
   require_source_records: true
   allow_full_text_copy: false
   require_retrieved_at: true
 maintainers: []
-status: seed-template
+status: source-backed-seed
 ---
 
 # AIA / 友邦保险 Public Institution Pack
 
-This is a seed public knowledge pack for AIA/友邦保险.
+This is a seed public knowledge pack for AIA/友邦保险 with an initial source-backed AIA Hong Kong public claims slice.
 
-It currently contains structure and public-knowledge conventions only. Do not add non-public internal materials or customer data.
+It contains public source records and public-knowledge conventions only. Do not add non-public internal materials or customer data.
 
 ## Scope
 

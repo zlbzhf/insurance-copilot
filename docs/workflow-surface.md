@@ -232,13 +232,14 @@ Use Stakeholder Summary Writer. Summarize this analysis for the specified audien
 
 ## Workflow 15: Institution Knowledge Organizer
 
-- **When to use:** The user wants to organize public insurer/institution knowledge, create contribution bundles, or route a public source through the evidence-driven knowledge process.
-- **Required inputs:** Public source metadata/URL or source package, institution/pack ID, source type if known, source date/version, allowed excerpts, target page or schema gap question.
-- **Output:** Source-first contribution plan, staging checklist, possible page type, schema-gap note if needed, and reminders for public-only content and human review.
-- **Review owner:** Pack maintainer or public knowledge reviewer; compliance/legal reviewer if source rights or regulated language are unclear.
-- **Forbidden actions:** Adding non-public/customer/confidential materials to public packs, inventing schema fields from intuition, treating draft gateway output as canonical without validation and human review.
+- **When to use:** The user wants to organize public insurer/institution knowledge, create contribution bundles, route a public source through the evidence-driven knowledge process, or complete an **AIA public pack** **source-backed public pack update**.
+- **Required inputs:** Public source metadata/URL or source package, institution/pack ID, source type if known, source date/version, allowed excerpts, target page or schema gap question, and whether a source record already exists.
+- **Runtime files:** `references/institution-knowledge-organizer.md` and `templates/institution-knowledge-organizer.md`.
+- **Output:** Source-first contribution plan, source record checklist, staging checklist, possible page type, schema-gap note if needed, `[verify]` items, public/private boundary note, and pack maintainer review handoff.
+- **Review owner:** Pack maintainer review or public knowledge reviewer; compliance/legal reviewer if source rights, customer-facing usage, or regulated language are unclear.
+- **Forbidden actions:** Adding non-public/customer/confidential materials to public packs, inventing schema fields from intuition, treating draft gateway output as canonical without validation and human review, or using a public claims page as a final claims decision.
 - **Standard prompt:**
 
 ```text
-Use Institution Knowledge Organizer. Help me organize this public insurance source for a public institution knowledge pack. Keep it source-first, identify the source type/page type, note schema gaps instead of inventing fields, and do not include customer or non-public material.
+Use Institution Knowledge Organizer. Help me organize this public insurance source for the AIA public pack as a source-backed public pack update. Keep it source-first, create or verify the source record, identify the source type/page type, preserve the public/private boundary, mark [verify] items, require pack maintainer review, and do not include customer or non-public material.
 ```

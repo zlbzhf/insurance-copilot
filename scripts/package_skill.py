@@ -42,6 +42,8 @@ def check_bundle(bundle_dir: Path) -> list[str]:
         "references/replacement-suitability.md",
         "templates/practice-profile.md",
         "templates/customer-advocacy-memo.md",
+        "references/institution-knowledge-organizer.md",
+        "templates/institution-knowledge-organizer.md",
     ]:
         if not (bundle_dir / rel).exists():
             errors.append(f"missing referenced bundle file: {rel}")

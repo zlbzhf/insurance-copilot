@@ -304,6 +304,7 @@ The project becomes generic if it copies only:
 ### Near-term / P1
 
 - Add more source-backed public insurer pack coverage.
+- Operationalize **Institution Knowledge Organizer** for an **AIA public pack** **source-backed public pack update**: source record first, public/private boundary preserved, `[verify]` markers visible, and pack maintainer review required.
 - Add routing/eval coverage inspired by insurance intent categories.
 - Add more Chinese talk tracks, referral, claims, renewal, and complaint examples.
 - Improve policy/source freshness and `[verify]` visibility.

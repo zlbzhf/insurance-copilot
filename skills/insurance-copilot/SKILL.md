@@ -263,7 +263,7 @@ Choose the linked reference that matches the task:
 - **Annuity / investment-linked caution review:** `references/annuity-investment-linked-review.md`
 - **Stakeholder Summary Writer:** `references/stakeholder-summary.md`
 - **Professional Review Gate:** `references/professional-review-gate.md` with `templates/professional-review-gate.md`
-- **Institution Knowledge Organizer:** use public pack docs plus `docs/workflow-surface.md`
+- **Institution Knowledge Organizer:** `references/institution-knowledge-organizer.md` with `templates/institution-knowledge-organizer.md` for an AIA public pack or other insurer source-backed public pack update; require a source record, preserve the public/private boundary, mark `[verify]` items, and require pack maintainer review.
 - **Baseline compliance vocabulary:** `references/compliance-starter.md`
 - **Default conservative profile:** `references/default-practice-profile.md`
 

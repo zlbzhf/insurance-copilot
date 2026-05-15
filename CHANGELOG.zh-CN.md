@@ -14,6 +14,7 @@
 - 新增 `docs/product-development-spec.md`，作为持久的产品开发事实来源和可用状态定义。
 - 新增 `docs/reference-landscape.md`，用于把外部/参考项目映射到 project significance、implementation form、non-goals 和 priority。
 - 新增 Professional Review Gate 工作流 reference、template、eval、example 和 validator 覆盖，使客户可见、受监管、外部使用或接近副作用的输出必须标明 action class、review owner、source verification status、customer-facing approval status、side-effect status、draft for licensed/compliance review、not approved to send、no external action is authorized 和 minimum safe next step。
+- 新增 Institution Knowledge Organizer 运行时 reference/template/eval/validator 覆盖，并补强 AIA public pack 的 source-backed public pack update：source record、public/private boundary、`[verify]`、No customer data、not a final claims decision 和 pack maintainer review 均可验证。
 
 ### 变更
 

@@ -138,6 +138,7 @@ REQUIRED_REFERENCES = [
     "chinese-talk-tracks.md",
     "referral-ask.md",
     "professional-review-gate.md",
+    "institution-knowledge-organizer.md",
 ]
 
 REQUIRED_TEMPLATES = [
@@ -159,6 +160,7 @@ REQUIRED_TEMPLATES = [
     "referral-ask.md",
     "customer-advocacy-memo.md",
     "professional-review-gate.md",
+    "institution-knowledge-organizer.md",
 ]
 
 REQUIRED_MCP_CONTRACTS = [
@@ -415,6 +417,70 @@ def main() -> int:
     professional_case = json.loads((ROOT / "evals" / "cases" / "professional-review-gate.json").read_text())
     if professional_case.get("id") != "professional-review-gate" or professional_case.get("workflow") != "professional-review-gate":
         return fail("professional review gate eval case has wrong id/workflow")
+
+    institution_required = [
+        "Institution Knowledge Organizer",
+        "AIA public pack",
+        "source-backed public pack update",
+        "source record",
+        "public/private boundary",
+        "pack maintainer review",
+        "[verify]",
+    ]
+    institution_docs = {
+        "SKILL.md": text,
+        "institution knowledge reference": (REF_DIR / "institution-knowledge-organizer.md").read_text(),
+        "institution knowledge template": (TEMPLATE_DIR / "institution-knowledge-organizer.md").read_text(),
+        "quality gates": quality_gates,
+        "workflow surface": (ROOT / "docs" / "workflow-surface.md").read_text(),
+        "product development SPEC": product_spec,
+        "reference landscape": reference_landscape,
+        "ROADMAP": (ROOT / "ROADMAP.md").read_text(),
+        "README": (ROOT / "README.md").read_text(),
+        "aia public pack eval expected": (ROOT / "evals" / "expected" / "aia-public-pack-source-backed.md").read_text(),
+    }
+    for label, doc in institution_docs.items():
+        lowered_doc = doc.lower()
+        for phrase in institution_required:
+            if phrase in {"Institution Knowledge Organizer", "AIA public pack", "[verify]"}:
+                if phrase not in doc:
+                    return fail(f"{label} missing Institution Knowledge Organizer phrase: {phrase}")
+            elif phrase not in lowered_doc:
+                return fail(f"{label} missing Institution Knowledge Organizer phrase: {phrase}")
+        for rel in ["references/institution-knowledge-organizer.md", "templates/institution-knowledge-organizer.md"]:
+            if label in {"SKILL.md", "institution knowledge reference", "institution knowledge template"} and rel not in doc:
+                return fail(f"{label} missing Institution Knowledge Organizer runtime path: {rel}")
+
+    aia_pack = ROOT / "knowledge" / "institutions" / "aia"
+    for source_id in ["aia-hk-claims-how-to-file-claim", "aia-hk-claims-faq"]:
+        source_path = aia_pack / "sources" / f"{source_id}.yaml"
+        if not source_path.exists():
+            return fail(f"AIA public pack missing source record: {source_path.relative_to(ROOT)}")
+        source_text = source_path.read_text()
+        for phrase in [f"id: {source_id}", "institution: aia", "public_source: true", "retrieved_at:", "redistribution:", "link-only"]:
+            if phrase not in source_text:
+                return fail(f"AIA source record {source_id} missing phrase: {phrase}")
+        if "example.com" in source_text:
+            return fail(f"AIA source record {source_id} still uses example.com")
+
+    aia_index = (aia_pack / "index.md").read_text()
+    for wikilink in ["[[aia-hk-claims-process]]", "[[aia-hk-claims-faq]]"]:
+        if wikilink not in aia_index:
+            return fail(f"AIA public pack index missing {wikilink}")
+    for page_rel in ["service-processes/claims/aia-hk-claims-process.md", "faqs/aia-hk-claims-faq.md"]:
+        page_text = (aia_pack / page_rel).read_text()
+        for phrase in ["Source-backed status", "sources/aia-hk-claims", "[verify]", "No customer data", "pack maintainer review"]:
+            if phrase not in page_text:
+                return fail(f"AIA public pack page {page_rel} missing phrase: {phrase}")
+        if "not a final claims decision" not in page_text.lower():
+            return fail(f"AIA public pack page {page_rel} must say not a final claims decision")
+        if "guaranteed payout" in page_text.lower():
+            return fail(f"AIA public pack page {page_rel} contains forbidden payout wording")
+
+    aia_case = json.loads((ROOT / "evals" / "cases" / "aia-public-pack-source-backed.json").read_text())
+    if aia_case.get("id") != "aia-public-pack-source-backed" or aia_case.get("workflow") != "institution-knowledge-organizer":
+        return fail("AIA public pack eval case has wrong id/workflow")
+
     advocacy_template = (TEMPLATE_DIR / "customer-advocacy-memo.md").read_text()
     for phrase in [
         "Customer Advocacy Memo Template",

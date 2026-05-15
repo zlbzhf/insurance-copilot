@@ -333,6 +333,10 @@ Use Professional Review Gate before treating this workflow output as customer-fa
 
 适用于任何客户可见、受监管、外部使用或接近副作用的输出被视为可用之前。运行时文件是 `skills/insurance-copilot/references/professional-review-gate.md` 和 `skills/insurance-copilot/templates/professional-review-gate.md`。输出必须标明 action class、review owner、source verification status、customer-facing approval status、side-effect status；客户可见内容默认是 draft for licensed/compliance review、not approved to send，并声明 no external action is authorized，最后给出 minimum safe next step。
 
+### Institution Knowledge Organizer
+
+用于 **AIA public pack** 或其他保险机构的 **source-backed public pack update**。运行时文件是 `skills/insurance-copilot/references/institution-knowledge-organizer.md` 和 `skills/insurance-copilot/templates/institution-knowledge-organizer.md`。该流程从公开 source record 开始，保留 public/private boundary，标记 `[verify]` 项，并要求 pack maintainer review 后才能把公共知识包内容视为稳定。
+
 ## 公共保险机构知识包
 
 公共知识包路径：

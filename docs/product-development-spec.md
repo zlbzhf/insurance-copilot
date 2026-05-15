@@ -205,6 +205,8 @@ public source -> intake/source record -> deterministic gateway staging -> schema
 
 No non-public institution materials or customer data may enter public packs.
 
+Runtime slice: **Institution Knowledge Organizer** is the manual-first workflow for an **AIA public pack** or other insurer **source-backed public pack update**. It must create or verify a source record, preserve the public/private boundary, mark `[verify]` items, and require pack maintainer review before canonical pack use.
+
 ### P1 — Private workspace loop
 
 Goal: let agents ground work in private local facts without polluting public repo paths.

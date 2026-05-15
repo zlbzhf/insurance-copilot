@@ -14,6 +14,7 @@ This project is currently pre-1.0 and milestone-based. The changelog follows a h
 - Added `docs/product-development-spec.md` as the durable product-development source of truth and usable-state definition.
 - Added `docs/reference-landscape.md` to map external/reference projects to project significance, implementation form, non-goals, and priority.
 - Added the Professional Review Gate workflow reference, template, eval, example, and validator coverage so customer-facing, regulated, external-use, and side-effect-adjacent outputs classify action class, review owner, source verification status, customer-facing approval status, side-effect status, draft for licensed/compliance review, not approved to send, no external action is authorized, and minimum safe next step.
+- Added Institution Knowledge Organizer runtime reference/template/eval/validator coverage plus an AIA public pack source-backed public pack update with source record, public/private boundary, `[verify]`, No customer data, not a final claims decision, and pack maintainer review markers.
 
 ### Changed
 

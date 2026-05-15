@@ -66,6 +66,7 @@ Knowledge architecture:
 - Use `standards/source-taxonomy.yaml` and `standards/page-type-registry.yaml` as canonical mappings.
 - Evolve templates only through real-source schema gaps and reviewed proposals.
 - Support future remote pack registry and selective page retrieval.
+- Maintain Institution Knowledge Organizer as the runtime path for an AIA public pack or other insurer source-backed public pack update: every update needs a source record, public/private boundary check, `[verify]` markers, and pack maintainer review.
 - Split mature institution packs into separate repos only when volume, maintainers, and release cadence justify it.
 
 ## Priority 3 — Agent Private Workspace

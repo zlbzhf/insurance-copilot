@@ -1,0 +1,21 @@
+id: aia-hk-claims-faq
+institution: aia
+jurisdiction: [HK]
+language: en
+source_type: official-faq
+source_url: https://www.aia.com.hk/en/help-and-support/health-care-and-claims/how-to-file-a-claim/claims-faq
+title: AIA Hong Kong - Claims FAQ
+retrieved_at: 2026-05-15
+public_source: true
+redistribution:
+  mode: link-only
+  notes: Link and short summary only; do not copy the full page unless rights are confirmed.
+product_lines: [claims, medical, accident, disability, critical-illness, death]
+status: processed
+submitted_by: hermes-agent
+source_backed_use:
+  target_pages:
+    - service-processes/claims/aia-hk-claims-process.md
+    - faqs/aia-hk-claims-faq.md
+  verification_notes:
+    - "[verify] deadlines, payee rules, receipt requirements, and claim-type exceptions against the current official FAQ before customer-facing use."
