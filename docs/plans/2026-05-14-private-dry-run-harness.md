@@ -211,7 +211,7 @@ Run before commit:
 python3 scripts/validate_repo.py
 python3 scripts/package_skill.py --check
 python3 scripts/run_evals.py
-python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia
+python3 scripts/validate_all_knowledge_packs.py
 python3 scripts/validate_knowledge_pack.py knowledge/institutions/_template --template
 python3 scripts/validate_agent_workspace.py agent-workspace-template --template
 python3 scripts/ingest_gateway.py --help >/tmp/ingest_help.txt

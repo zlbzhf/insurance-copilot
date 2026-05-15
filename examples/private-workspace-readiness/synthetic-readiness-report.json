@@ -56,6 +56,6 @@
     "max_stale_days": 7,
     "synthetic_mode": false,
     "warnings": 0,
-    "workspace": "/root/insurance-agent-assistant/examples/local-connectors/synthetic-agent-workspace"
+    "workspace": "<repo-root>/examples/local-connectors/synthetic-agent-workspace"
   }
 }

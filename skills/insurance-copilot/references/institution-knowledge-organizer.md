@@ -1,6 +1,6 @@
 # Institution Knowledge Organizer
 
-Use this reference when a maintainer or agent wants to organize public insurer/institution knowledge, especially an **AIA public pack** update, without mixing public sources with private customer or agent materials. This is the runtime playbook for a **source-backed public pack update**.
+Use this reference when a maintainer or agent wants to organize public insurer/institution knowledge for any **public institution pack** under `knowledge/institutions/<pack_id>/`, without mixing public sources with private customer or agent materials. This is the runtime playbook for a **source-backed public pack update**. Seed packs are examples; the runtime Institution Knowledge Organizer applies to any public institution pack. AIA/友邦 is the current seed example, not the generic runtime definition.
 
 Runtime files:
 
@@ -13,7 +13,7 @@ The workflow translates insurance RAG/policy-assistant grounding ideas into a ma
 
 Use **Institution Knowledge Organizer** when:
 
-- a user provides a public AIA/友邦, carrier, regulator, or insurer-service source;
+- a user provides a public insurer, carrier, regulator, or insurer-service source;
 - a maintainer wants to add a source record or page to `knowledge/institutions/<pack>/`;
 - a workflow needs public insurer facts but must keep customer documents in the agent-private workspace;
 - a source suggests a schema gap rather than fitting a current template;
@@ -25,7 +25,7 @@ Do not use this workflow to process real customer files, CRM exports, claim file
 
 Minimum useful inputs:
 
-1. Pack ID, for example `aia` for the AIA public pack.
+1. Pack ID from `knowledge/registry.json` or the user's source context, for example `<pack_id>`; do not assume a pack ID unless the source or user provides one.
 2. Public source URL/title and retrieval date.
 3. Source type if known: `official-service-guide`, `official-faq`, `official-product-page`, `official-terms`, `regulator-guidance`, or another type from `standards/source-taxonomy.yaml`.
 4. Target page type if known, or the schema gap to investigate.
@@ -40,18 +40,8 @@ Minimum useful inputs:
 4. **Draft the page as source-backed summary, not copied source text.** Use short facts, links, and `[verify]` markers. Do not paste full copyrighted pages unless redistribution is explicit.
 5. **Preserve the public/private boundary.** No customer data, private agent notes, secrets, production exports, or non-public institution materials in `knowledge/institutions/`.
 6. **Mark review status.** Every proposed page should state Source-backed status, verification gaps, and pack maintainer review requirement.
-7. **Run validators.** At minimum run `python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia` for the AIA public pack and include the result in the handoff.
+7. **Run validators.** At minimum run `python3 scripts/validate_knowledge_pack.py knowledge/institutions/<pack_id>` for the selected public institution pack and include the result in the handoff. Maintainers may also run `python3 scripts/validate_all_knowledge_packs.py` to check every registered public pack.
 8. **Use Professional Review Gate if output becomes customer-facing or regulated.** Public pack pages support service, but they are not final claims, underwriting, product, or compliance decisions.
-
-## AIA Public Pack Defaults
-
-For the AIA public pack:
-
-- Keep public AIA Hong Kong / AIA official pages as public sources only.
-- Use `sources/*.yaml` records with `redistribution.mode: link-only` unless usage rights are clear.
-- Claims-process pages must say they are not a final claims decision and must not promise payment, timing, approval, coverage, or policy interpretation.
-- FAQ pages should summarize questions covered and keep customer-facing usage under `[verify]` plus pack maintainer review.
-- If a source conflicts with policy contract language, regulator guidance, or updated carrier notices, mark the conflict and escalate to a maintainer.
 
 ## Output Format
 
@@ -75,7 +65,7 @@ Use this structure for a source-backed public pack update:
 - Schema gaps:
 
 ## Validation Plan
-- `python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia`
+- `python3 scripts/validate_knowledge_pack.py knowledge/institutions/<pack_id>`
 - `python3 scripts/run_evals.py`
 - `python3 scripts/validate_repo.py`
 

@@ -314,7 +314,7 @@ The project becomes generic if it copies only:
 ### Near-term / P1
 
 - Add more source-backed public insurer pack coverage.
-- Operationalize **Institution Knowledge Organizer** for an **AIA public pack** **source-backed public pack update**: source record first, public/private boundary preserved, `[verify]` markers visible, and pack maintainer review required.
+- Operationalize **Institution Knowledge Organizer** for any **public institution pack** **source-backed public pack update** under `knowledge/institutions/<pack_id>/`: source record first, public/private boundary preserved, `[verify]` markers visible, and pack maintainer review required. AIA/友邦 is the current seed example, not the generic runtime definition.
 - Add routing/eval coverage inspired by insurance intent categories.
 - Add more Chinese talk tracks, referral, claims, renewal, and complaint examples.
 - Improve policy/source freshness and `[verify]` visibility.

@@ -229,7 +229,7 @@ Required:
 - Source-first contribution workflow exists.
 - `scripts/ingest_gateway.py` can stage source classification/extraction without merging generated output into `knowledge/`.
 - Schema gaps are recorded rather than forcing unmatched documents into generic templates.
-- **Institution Knowledge Organizer** is required for an **AIA public pack** or other insurer **source-backed public pack update**: it must verify the source record, preserve the public/private boundary, mark `[verify]` items, require pack maintainer review, and keep public claims/service summaries from becoming final decisions.
+- **Institution Knowledge Organizer** is required for any **public institution pack** **source-backed public pack update** under `knowledge/institutions/<pack_id>/`: it must verify the source record, preserve the public/private boundary, mark `[verify]` items, require pack maintainer review, and keep public claims/service summaries from becoming final decisions. Seed packs are examples; the runtime Institution Knowledge Organizer applies to any public institution pack.
 
 ## Gate 5 — Agent Private Workspace Template
 
@@ -302,7 +302,7 @@ Required:
 python3 scripts/validate_repo.py
 python3 scripts/package_skill.py --check
 python3 scripts/run_evals.py
-python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia
+python3 scripts/validate_all_knowledge_packs.py
 python3 scripts/validate_knowledge_pack.py knowledge/institutions/_template --template
 python3 scripts/validate_agent_workspace.py agent-workspace-template --template
 python3 scripts/private_workspace_readiness.py --workspace examples/local-connectors/synthetic-agent-workspace --as-of 2026-05-14 --format json || test $? -eq 1

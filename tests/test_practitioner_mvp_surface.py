@@ -488,7 +488,7 @@ def test_professional_review_gate_is_runtime_effective() -> None:
     assert case["workflow"] == "professional-review-gate"
 
 
-def test_aia_public_pack_source_backed_slice_is_runtime_effective() -> None:
+def test_institution_knowledge_organizer_generic_runtime_and_aia_seed_are_separate() -> None:
     skill = read("skills/insurance-copilot/SKILL.md")
     reference = read("skills/insurance-copilot/references/institution-knowledge-organizer.md")
     template = read("skills/insurance-copilot/templates/institution-knowledge-organizer.md")
@@ -498,6 +498,37 @@ def test_aia_public_pack_source_backed_slice_is_runtime_effective() -> None:
     landscape = read("docs/reference-landscape.md")
     roadmap = read("ROADMAP.md")
     readme = read("README.md")
+    generic_case = json.loads((ROOT / "evals/cases/institution-public-pack-source-backed-generic.json").read_text(encoding="utf-8"))
+    generic_expected = read(generic_case["expected_output"])
+
+    for text in [skill, reference, template, quality, surface, spec, landscape, roadmap, readme, generic_expected]:
+        assert "Institution Knowledge Organizer" in text
+        assert "public institution pack" in text.lower()
+        assert "source-backed public pack update" in text
+        assert "source record" in text.lower()
+        assert "public/private boundary" in text.lower()
+        assert "pack maintainer review" in text.lower()
+        assert "[verify]" in text
+        assert "AIA public pack or other insurer" not in text
+        assert "AIA/public pack preference" not in text
+
+    for phrase in [
+        "references/institution-knowledge-organizer.md",
+        "templates/institution-knowledge-organizer.md",
+    ]:
+        assert phrase in skill
+        assert phrase in reference
+        assert phrase in template
+
+    assert generic_case["id"] == "institution-public-pack-source-backed-generic"
+    assert generic_case["workflow"] == "institution-knowledge-organizer"
+    for phrase in generic_case["must_include"]:
+        assert phrase in generic_expected
+    for phrase in generic_case["must_not_include"]:
+        assert phrase not in generic_expected
+
+
+def test_aia_public_pack_seed_slice_remains_runtime_effective() -> None:
     pack = ROOT / "knowledge/institutions/aia"
     index = read("knowledge/institutions/aia/index.md")
     claims_process = read("knowledge/institutions/aia/service-processes/claims/aia-hk-claims-process.md")
@@ -516,23 +547,6 @@ def test_aia_public_pack_source_backed_slice_is_runtime_effective() -> None:
         assert "redistribution:" in source_text
         assert "link-only" in source_text
         assert "example.com" not in source_text
-
-    for text in [skill, reference, template, quality, surface, spec, landscape, roadmap, readme, expected]:
-        assert "Institution Knowledge Organizer" in text
-        assert "AIA public pack" in text
-        assert "source-backed public pack update" in text
-        assert "source record" in text.lower()
-        assert "public/private boundary" in text.lower()
-        assert "pack maintainer review" in text.lower()
-        assert "[verify]" in text
-
-    for phrase in [
-        "references/institution-knowledge-organizer.md",
-        "templates/institution-knowledge-organizer.md",
-    ]:
-        assert phrase in skill
-        assert phrase in reference
-        assert phrase in template
 
     for page in [claims_process, claims_faq]:
         assert "Source-backed status" in page

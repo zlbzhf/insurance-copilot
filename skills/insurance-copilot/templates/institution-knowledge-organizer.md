@@ -1,6 +1,6 @@
 # Institution Knowledge Organizer Template
 
-Use with `templates/institution-knowledge-organizer.md` and source workflow reference `references/institution-knowledge-organizer.md` for an **AIA public pack** or other insurer **source-backed public pack update**.
+Use with `templates/institution-knowledge-organizer.md` and source workflow reference `references/institution-knowledge-organizer.md` for any **public institution pack** **source-backed public pack update** under `knowledge/institutions/<pack_id>/`. Seed packs are examples; the runtime Institution Knowledge Organizer applies to any public institution pack.
 
 ## Institution Knowledge Organizer
 - Pack:

@@ -5,7 +5,7 @@ This synthetic example shows the intended low-burden experience for a new or uns
 ## Input 1 — New Agent Starts Without a Clear Positioning
 
 ```text
-Use Agency Playbook Builder in New Agent Default Mode. I am a new AIA/友邦 agent serving Chinese-speaking clients. I don't know yet how to define my full profile. Help me start safely.
+Use Agency Playbook Builder in New Agent Default Mode. I am a new insurance agent serving retail clients. I don't know yet how to define my full profile. Help me start safely, and ask me to confirm any institution/public pack instead of assuming one.
 ```
 
 Expected assistant behavior:
@@ -29,7 +29,7 @@ Expected assistant behavior:
 - Unknowns: jurisdiction, exact license scope, approved script source, compliance reviewer [verify]
 
 ## Working Assumptions
-- Institution: AIA/友邦 [verify]
+- Institution/public pack: [verify with agent; do not assume]
 - Primary customer language: Chinese [verify]
 - Communication style: warm, low-pressure, plain-language
 - Product posture: education, fact-find, policy organization, and review-ready drafts before product recommendations

@@ -83,7 +83,7 @@ practice profile -> task-specific workflow -> source/private facts -> review-rea
 4. **审阅保单或保障场景** — 总结已知事实、潜在缺口、替换/断缴/理赔风险和需要核查的资料。
 5. **起草客户消息** — 生成低压力、合规敏感的微信/邮件/话术草稿。
 6. **检查高风险文案** — 标记保证性、最优性、零风险、施压、替换、理赔或投资相关风险语言。
-7. **整理公共保险公司知识** — 将公开的 AIA/友邦或其他保险机构资料纳入公共知识包流程。
+7. **整理公共保险公司知识** — 将公开的保险公司/机构资料纳入公共机构知识包流程。
 
 如果用户已经说明任务，助手不应该列出全部工作流，而应该直接路由，最多追问三个必要问题，并输出清晰标注的草稿。
 
@@ -177,7 +177,7 @@ knowledge/institutions/
 - 公开、可协作维护的保险公司/机构知识包；
 - 公开来源记录和有来源支撑的摘要；
 - Karpathy-style LLM wiki 页面；
-- AIA/友邦 seed pack 和模板 pack；
+- 通用公共机构知识包模板，以及当前 AIA/友邦 seed 示例；
 - 通过 `knowledge/registry.json` 建立公共 registry。
 
 公共知识包不得包含客户数据、非公开机构材料、代理人私有 notes、密钥或生产导出数据。
@@ -339,7 +339,7 @@ Use Professional Review Gate before treating this workflow output as customer-fa
 
 ### Institution Knowledge Organizer
 
-用于 **AIA public pack** 或其他保险机构的 **source-backed public pack update**。运行时文件是 `skills/insurance-copilot/references/institution-knowledge-organizer.md` 和 `skills/insurance-copilot/templates/institution-knowledge-organizer.md`。该流程从公开 source record 开始，保留 public/private boundary，标记 `[verify]` 项，并要求 pack maintainer review 后才能把公共知识包内容视为稳定。
+用于 `knowledge/institutions/<pack_id>/` 下任何 **public institution pack** 的 **source-backed public pack update**。运行时文件是 `skills/insurance-copilot/references/institution-knowledge-organizer.md` 和 `skills/insurance-copilot/templates/institution-knowledge-organizer.md`。该流程从公开 source record 开始，保留 public/private boundary，标记 `[verify]` 项，并要求 pack maintainer review 后才能把公共知识包内容视为稳定。Seed packs are examples; the runtime Institution Knowledge Organizer applies to any public institution pack. AIA/友邦 是当前 seed 示例，不是通用运行时定义。
 
 ### Source Grounding and Data Boundary Gate
 
@@ -482,11 +482,12 @@ CHANGELOG.md                  英文更新日志
 python3 scripts/validate_repo.py
 python3 scripts/package_skill.py --check
 python3 scripts/run_evals.py
-python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia
+python3 scripts/validate_all_knowledge_packs.py
+python3 scripts/validate_knowledge_pack.py knowledge/institutions/_template --template
 python3 scripts/validate_agent_workspace.py agent-workspace-template --template
 python3 scripts/ingest_gateway.py --help
 python3 scripts/private_dry_run.py --workspace examples/local-connectors/synthetic-agent-workspace --as-of 2026-05-14 --out /tmp/insurance-copilot-dry-run --force || test $? -eq 1
-python3 -m pytest tests/test_ingest_gateway.py tests/test_local_file_connectors.py tests/test_renewal_watcher.py tests/test_renewal_watcher_cron_wrapper.py tests/test_private_workspace_readiness.py tests/test_private_dry_run.py tests/test_practitioner_mvp_surface.py -q
+python3 -m pytest tests/test_ingest_gateway.py tests/test_local_file_connectors.py tests/test_renewal_watcher.py tests/test_renewal_watcher_cron_wrapper.py tests/test_private_workspace_readiness.py tests/test_private_dry_run.py tests/test_practitioner_mvp_surface.py tests/test_generic_first_architecture.py -q
 ```
 
 CI 会在 push 和 pull request 上运行这些检查。

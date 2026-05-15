@@ -1,4 +1,4 @@
-institution: aia
+institution: <institution-pack-id>
 contributor: github-username-or-unknown
 data_classification: public
 contains_customer_data: false

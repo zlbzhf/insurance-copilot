@@ -1,5 +1,5 @@
 schema_version: 0.2.0
-institution: aia
+institution: <institution-pack-id>
 contributor: github-username
 public_source: true
 contains_customer_data: false

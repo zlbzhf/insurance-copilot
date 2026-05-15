@@ -52,7 +52,7 @@ When resuming after interruption:
 python3 scripts/validate_repo.py
 python3 scripts/package_skill.py --check
 python3 scripts/run_evals.py
-python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia
+python3 scripts/validate_all_knowledge_packs.py
 python3 scripts/validate_knowledge_pack.py knowledge/institutions/_template --template
 python3 scripts/validate_agent_workspace.py agent-workspace-template --template
 python3 scripts/ingest_gateway.py --help
@@ -121,7 +121,7 @@ python3 -m pytest tests/test_ingest_gateway.py -q
 - Gate allows only generic education, intake, missing-info checklists, and profile creation before a profile exists.
 - Gate blocks specific product-fit conclusions, replacement suggestions, customer-facing scripts, and external action drafts unless profile/context is supplied or output is clearly provisional.
 - Cold-start reference supports Quick Start and Full Setup modes.
-- Practice profile template includes: role/license scope, jurisdictions, carrier/product lines, approved script sources, compliance reviewer, escalation path, customer data policy, CRM/tool status, AIA/public pack preference, output style.
+- Practice profile template includes: role/license scope, jurisdictions, carrier/product lines, approved script sources, compliance reviewer, escalation path, customer data policy, CRM/tool status, institution/public pack preference, output style.
 
 ---
 

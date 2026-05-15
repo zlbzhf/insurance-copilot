@@ -22,7 +22,7 @@ created: YYYY-MM-DD
 updated: YYYY-MM-DD
 type: agent-profile | client | policy-summary | followup | segment | private-institution-note | private-script | private-eval | query
 data_classification: private-agent-knowledge | private-customer-data | private-institution-note
-institution: aia | ping-an | pacific | unknown
+institution: <institution-pack-id> | unknown
 customer_id: optional-pseudonymous-id
 sensitivity: low | medium | high
 sources: []

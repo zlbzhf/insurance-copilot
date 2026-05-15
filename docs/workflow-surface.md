@@ -66,7 +66,7 @@ Use Source Grounding and Data Boundary Gate. Build a Source Ledger and Citation 
 ## Workflow 1: Agency Playbook Builder
 
 - **When to use:** The agency/practice context is unknown, outdated, too thin, or the agent is new and needs a safe starting point.
-- **Required inputs:** New Agent Default Mode can start from one sentence plus up to three questions. Quick Start asks for role/license scope, jurisdictions, carrier/product lines, approved script sources, compliance reviewer, escalation path, customer data policy, CRM/tool status, AIA/public pack preference, and output style only when needed.
+- **Required inputs:** New Agent Default Mode can start from one sentence plus up to three questions. Quick Start asks for role/license scope, jurisdictions, carrier/product lines, approved script sources, compliance reviewer, escalation path, customer data policy, CRM/tool status, institution/public pack preference, and output style only when needed.
 - **Output:** Provisional or reviewed practice profile draft/update using `skills/insurance-copilot/templates/practice-profile.md` as internal storage format, plus `Next Useful Jobs`.
 - **Review owner:** Agency principal, licensed supervisor, compliance reviewer, or legal/compliance contact named in the profile.
 - **Forbidden actions:** Inventing agency rules, storing sensitive customer data in the profile, treating starter language as jurisdiction-specific legal advice, forcing a new agent to define a mature positioning statement before any useful work.
@@ -260,7 +260,7 @@ Use Stakeholder Summary Writer. Summarize this analysis for the specified audien
 
 ## Workflow 15: Institution Knowledge Organizer
 
-- **When to use:** The user wants to organize public insurer/institution knowledge, create contribution bundles, route a public source through the evidence-driven knowledge process, or complete an **AIA public pack** **source-backed public pack update**.
+- **When to use:** The user wants to organize public insurer/institution knowledge, create contribution bundles, route a public source through the evidence-driven knowledge process, or complete any **public institution pack** **source-backed public pack update** under `knowledge/institutions/<pack_id>/`. Seed packs are examples; the runtime Institution Knowledge Organizer applies to any public institution pack.
 - **Required inputs:** Public source metadata/URL or source package, institution/pack ID, source type if known, source date/version, allowed excerpts, target page or schema gap question, and whether a source record already exists.
 - **Runtime files:** `references/institution-knowledge-organizer.md` and `templates/institution-knowledge-organizer.md`.
 - **Output:** Source-first contribution plan, source record checklist, staging checklist, possible page type, schema-gap note if needed, `[verify]` items, public/private boundary note, and pack maintainer review handoff.
@@ -269,7 +269,7 @@ Use Stakeholder Summary Writer. Summarize this analysis for the specified audien
 - **Standard prompt:**
 
 ```text
-Use Institution Knowledge Organizer. Help me organize this public insurance source for the AIA public pack as a source-backed public pack update. Keep it source-first, create or verify the source record, identify the source type/page type, preserve the public/private boundary, mark [verify] items, require pack maintainer review, and do not include customer or non-public material.
+Use Institution Knowledge Organizer. Help me organize this public insurance source for the `<pack_id>` public institution pack as a source-backed public pack update. Keep it source-first, create or verify the source record, identify the source type/page type, preserve the public/private boundary, mark [verify] items, require pack maintainer review, and do not include customer or non-public material.
 ```
 
 ## Cross-Workflow Gate: Private Workspace Trace and Readiness Gate

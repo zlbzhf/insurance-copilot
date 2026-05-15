@@ -66,12 +66,12 @@ Knowledge architecture:
 ## Priority 2 — Public Institution Knowledge Packs and Standards
 
 - Stabilize `knowledge/institutions/_template/` schema.
-- Maintain seed AIA/友邦 public pack without non-public claims.
+- Maintain the generic public institution pack template and current seed examples such as the AIA/友邦 public pack without non-public claims.
 - Add source-first contribution workflow and provenance rules.
 - Use `standards/source-taxonomy.yaml` and `standards/page-type-registry.yaml` as canonical mappings.
 - Evolve templates only through real-source schema gaps and reviewed proposals.
 - Support future remote pack registry and selective page retrieval.
-- Maintain Institution Knowledge Organizer as the runtime path for an AIA public pack or other insurer source-backed public pack update: every update needs a source record, public/private boundary check, `[verify]` markers, and pack maintainer review.
+- Maintain Institution Knowledge Organizer as the runtime path for any public institution pack source-backed public pack update under `knowledge/institutions/<pack_id>/`: every update needs a source record, public/private boundary check, `[verify]` markers, and pack maintainer review. Seed packs are examples; the runtime Institution Knowledge Organizer applies to any public institution pack.
 - Split mature institution packs into separate repos only when volume, maintainers, and release cadence justify it.
 
 ## Priority 3 — Agent Private Workspace

@@ -74,6 +74,7 @@ REQUIRED = [
     ROOT / "scripts" / "package_skill.py",
     ROOT / "scripts" / "run_evals.py",
     ROOT / "scripts" / "validate_knowledge_pack.py",
+    ROOT / "scripts" / "validate_all_knowledge_packs.py",
     ROOT / "scripts" / "validate_agent_workspace.py",
     ROOT / "scripts" / "create_source_record.py",
     ROOT / "scripts" / "local_file_connectors.py",
@@ -87,6 +88,7 @@ REQUIRED = [
     ROOT / "tests" / "test_private_workspace_readiness.py",
     ROOT / "tests" / "test_private_dry_run.py",
     ROOT / "tests" / "test_practitioner_mvp_surface.py",
+    ROOT / "tests" / "test_generic_first_architecture.py",
     ROOT / "examples" / "practical-mvp" / "agent-first-session.md",
     ROOT / "examples" / "practical-mvp" / "agent-friendly-onboarding.md",
     ROOT / "examples" / "practical-mvp" / "customer-first-advocacy.md",
@@ -699,7 +701,7 @@ def main() -> int:
 
     institution_required = [
         "Institution Knowledge Organizer",
-        "AIA public pack",
+        "public institution pack",
         "source-backed public pack update",
         "source record",
         "public/private boundary",
@@ -714,21 +716,66 @@ def main() -> int:
         "workflow surface": (ROOT / "docs" / "workflow-surface.md").read_text(),
         "product development SPEC": product_spec,
         "reference landscape": reference_landscape,
+        "documentation map": documentation_map,
         "ROADMAP": (ROOT / "ROADMAP.md").read_text(),
         "README": (ROOT / "README.md").read_text(),
-        "aia public pack eval expected": (ROOT / "evals" / "expected" / "aia-public-pack-source-backed.md").read_text(),
+        "Chinese README": (ROOT / "README.zh-CN.md").read_text(),
+        "evals README": (ROOT / "evals" / "README.md").read_text(),
     }
+    institution_aia_first_forbidden = [
+        "AIA public pack or other insurer",
+        "AIA public pack or other public institution",
+        "AIA/友邦, carrier, regulator",
+        "especially an **AIA public pack** update",
+        "Use for an **AIA public pack**",
+        "Use Institution Knowledge Organizer. Help me organize this public insurance source for the AIA public pack",
+        "AIA/public pack preference",
+    ]
     for label, doc in institution_docs.items():
         lowered_doc = doc.lower()
         for phrase in institution_required:
-            if phrase in {"Institution Knowledge Organizer", "AIA public pack", "[verify]"}:
+            if phrase in {"Institution Knowledge Organizer", "[verify]"}:
                 if phrase not in doc:
                     return fail(f"{label} missing Institution Knowledge Organizer phrase: {phrase}")
-            elif phrase not in lowered_doc:
+            elif phrase.lower() not in lowered_doc:
                 return fail(f"{label} missing Institution Knowledge Organizer phrase: {phrase}")
+        for forbidden_phrase in institution_aia_first_forbidden:
+            if forbidden_phrase in doc:
+                return fail(f"{label} still frames Institution Knowledge Organizer as AIA-first: {forbidden_phrase}")
         for rel in ["references/institution-knowledge-organizer.md", "templates/institution-knowledge-organizer.md"]:
             if label in {"SKILL.md", "institution knowledge reference", "institution knowledge template"} and rel not in doc:
                 return fail(f"{label} missing Institution Knowledge Organizer runtime path: {rel}")
+
+    generic_institution_case = json.loads((ROOT / "evals" / "cases" / "institution-public-pack-source-backed-generic.json").read_text())
+    generic_institution_expected = (ROOT / generic_institution_case["expected_output"]).read_text()
+    if generic_institution_case.get("id") != "institution-public-pack-source-backed-generic" or generic_institution_case.get("workflow") != "institution-knowledge-organizer" or not generic_institution_case.get("escalation_expected"):
+        return fail("generic Institution Knowledge Organizer eval case has wrong id/workflow/escalation flag")
+    for phrase in institution_required + generic_institution_case["must_include"]:
+        if phrase not in generic_institution_expected:
+            return fail(f"generic Institution Knowledge Organizer eval expected output missing phrase: {phrase}")
+    for phrase in generic_institution_case["must_not_include"]:
+        if phrase in generic_institution_expected:
+            return fail(f"generic Institution Knowledge Organizer eval expected output contains forbidden phrase: {phrase}")
+
+    generic_template_docs = {
+        "agent workspace AGENT": (ROOT / "agent-workspace-template" / "AGENT.md").read_text(),
+        "agent workspace SCHEMA": (ROOT / "agent-workspace-template" / "SCHEMA.md").read_text(),
+        "source record template": (ROOT / "contributions" / "templates" / "source-record.yaml").read_text(),
+        "contribution template": (ROOT / "contributions" / "templates" / "contribution.yaml").read_text(),
+        "proposed product page template": (ROOT / "contributions" / "templates" / "proposed-product-page.md").read_text(),
+        "intake template": (ROOT / "intake" / "templates" / "intake.yaml").read_text(),
+        "practice profile template": (TEMPLATE_DIR / "practice-profile.md").read_text(),
+        "cold start reference": (REF_DIR / "cold-start-interview.md").read_text(),
+    }
+    for label, doc in generic_template_docs.items():
+        for forbidden_phrase in ["default_institution_pack: aia", "institution: aia", "AIA/public pack preference"]:
+            if forbidden_phrase in doc:
+                return fail(f"{label} still uses AIA as a generic default: {forbidden_phrase}")
+    if "default_institution_pack: unknown" not in generic_template_docs["agent workspace AGENT"]:
+        return fail("agent workspace AGENT must default institution pack to unknown")
+    for label in ["source record template", "contribution template", "intake template"]:
+        if "institution: <institution-pack-id>" not in generic_template_docs[label]:
+            return fail(f"{label} must use institution: <institution-pack-id>")
 
     aia_pack = ROOT / "knowledge" / "institutions" / "aia"
     for source_id in ["aia-hk-claims-how-to-file-claim", "aia-hk-claims-faq"]:
@@ -757,8 +804,15 @@ def main() -> int:
             return fail(f"AIA public pack page {page_rel} contains forbidden payout wording")
 
     aia_case = json.loads((ROOT / "evals" / "cases" / "aia-public-pack-source-backed.json").read_text())
+    aia_expected = (ROOT / aia_case["expected_output"]).read_text()
     if aia_case.get("id") != "aia-public-pack-source-backed" or aia_case.get("workflow") != "institution-knowledge-organizer":
         return fail("AIA public pack eval case has wrong id/workflow")
+    for phrase in aia_case["must_include"]:
+        if phrase not in aia_expected:
+            return fail(f"AIA public pack eval expected output missing phrase: {phrase}")
+    for phrase in aia_case["must_not_include"]:
+        if phrase in aia_expected:
+            return fail(f"AIA public pack eval expected output contains forbidden phrase: {phrase}")
 
     advocacy_template = (TEMPLATE_DIR / "customer-advocacy-memo.md").read_text()
     for phrase in [
@@ -852,7 +906,8 @@ def main() -> int:
         "python3 scripts/validate_repo.py",
         "python3 scripts/package_skill.py --check",
         "python3 scripts/run_evals.py",
-        "python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia",
+        "python3 scripts/validate_all_knowledge_packs.py",
+        "python3 scripts/validate_knowledge_pack.py knowledge/institutions/_template --template",
         "python3 scripts/validate_agent_workspace.py agent-workspace-template --template",
         "full skill directory",
         "knowledge/institutions/",
@@ -924,6 +979,8 @@ def main() -> int:
         "README.zh-CN.md",
         "docs/product-development-spec.md",
         "docs/reference-landscape.md",
+        "scripts/validate_all_knowledge_packs.py",
+        "generic-first architecture safeguards",
     ]:
         if snippet not in changelog:
             return fail(f"CHANGELOG missing required snippet: {snippet}")
@@ -943,6 +1000,8 @@ def main() -> int:
         "README.zh-CN.md",
         "docs/product-development-spec.md",
         "docs/reference-landscape.md",
+        "scripts/validate_all_knowledge_packs.py",
+        "generic-first 架构保护",
     ]:
         if snippet not in zh_changelog:
             return fail(f"Chinese CHANGELOG missing required snippet: {snippet}")
@@ -1093,7 +1152,8 @@ def main() -> int:
         "python3 scripts/validate_repo.py",
         "python3 scripts/package_skill.py --check",
         "python3 scripts/run_evals.py",
-        "python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia",
+        "python3 scripts/validate_all_knowledge_packs.py",
+        "python3 scripts/validate_knowledge_pack.py knowledge/institutions/_template --template",
         "python3 scripts/validate_agent_workspace.py agent-workspace-template --template",
         "python3 -m pytest tests/test_local_file_connectors.py -q",
         "python3 -m pytest tests/test_renewal_watcher.py -q",
@@ -1101,6 +1161,7 @@ def main() -> int:
         "python3 -m pytest tests/test_private_workspace_readiness.py -q",
         "python3 -m pytest tests/test_private_dry_run.py -q",
         "python3 -m pytest tests/test_practitioner_mvp_surface.py -q",
+        "python3 -m pytest tests/test_generic_first_architecture.py -q",
         "python3 -m pip install -r requirements-dev.txt",
     ]:
         if cmd not in workflow:
@@ -1162,7 +1223,7 @@ def main() -> int:
     for cmd in [
         [sys.executable, "scripts/package_skill.py", "--check"],
         [sys.executable, "scripts/run_evals.py"],
-        [sys.executable, "scripts/validate_knowledge_pack.py", "knowledge/institutions/aia"],
+        [sys.executable, "scripts/validate_all_knowledge_packs.py"],
         [sys.executable, "scripts/validate_knowledge_pack.py", "knowledge/institutions/_template", "--template"],
         [sys.executable, "scripts/validate_agent_workspace.py", "agent-workspace-template", "--template"],
         [sys.executable, "scripts/local_file_connectors.py", "daily-workbench", "--workspace", "examples/local-connectors/synthetic-agent-workspace", "--format", "json"],
@@ -1172,6 +1233,7 @@ def main() -> int:
         [sys.executable, "-m", "pytest", "tests/test_private_workspace_readiness.py", "-q"],
         [sys.executable, "-m", "pytest", "tests/test_private_dry_run.py", "-q"],
         [sys.executable, "-m", "pytest", "tests/test_practitioner_mvp_surface.py", "-q"],
+        [sys.executable, "-m", "pytest", "tests/test_generic_first_architecture.py", "-q"],
         [sys.executable, "scripts/renewal_watcher.py", "--csv", "examples/local-connectors/synthetic-agent-workspace/renewal-registers/synthetic-renewal-register.csv", "--as-of", "2026-05-14", "--format", "json"],
         ["bash", "cron/scripts/renewal_watcher.sh", "--workspace", "examples/local-connectors/synthetic-agent-workspace", "--as-of", "2026-05-14", "--mode", "always"],
     ]:
@@ -1230,7 +1292,7 @@ def main() -> int:
     print(f"references: {len(refs)}")
     print(f"templates: {len(list(TEMPLATE_DIR.glob('*.md')))}")
     print(f"eval_cases: {len(eval_cases)}")
-    print("knowledge_packs: aia + template")
+    print("knowledge_packs: registry public packs + template")
     print(f"skill: {SKILL.relative_to(ROOT)}")
     return 0
 

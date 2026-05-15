@@ -3,11 +3,11 @@ title: Example Product
 created: 2026-05-14
 updated: 2026-05-14
 type: product
-institution: aia
+institution: <institution-pack-id>
 jurisdiction: []
 language: zh-Hans
 tags: [product, public-source, needs-verification]
-sources: [sources/example-source.yaml]
+sources: [sources/<source-record-id>.yaml]
 confidence: low
 public_source: true
 needs_verification: true

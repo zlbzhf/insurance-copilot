@@ -108,7 +108,7 @@ Role:
 
 - public-source-only insurer/institution knowledge;
 - public source records and source-backed summaries;
-- AIA/友邦 seed pack and template pack;
+- a generic public institution pack template plus the current AIA/友邦 seed example;
 - evidence-driven standards via `standards/`, `schemas/`, `prompts/`, `intake/`, `staging/`, and `scripts/ingest_gateway.py`.
 
 Public packs must never contain customer data, private agent notes, non-public institution documents, secrets, or production exports.
@@ -216,7 +216,7 @@ public source -> intake/source record -> deterministic gateway staging -> schema
 
 No non-public institution materials or customer data may enter public packs.
 
-Runtime slice: **Institution Knowledge Organizer** is the manual-first workflow for an **AIA public pack** or other insurer **source-backed public pack update**. It must create or verify a source record, preserve the public/private boundary, mark `[verify]` items, and require pack maintainer review before canonical pack use.
+Runtime slice: **Institution Knowledge Organizer** is the manual-first workflow for any **public institution pack** **source-backed public pack update** under `knowledge/institutions/<pack_id>/`. It must create or verify a source record, preserve the public/private boundary, mark `[verify]` items, and require pack maintainer review before canonical pack use. Seed packs are examples; the runtime Institution Knowledge Organizer applies to any public institution pack. AIA/友邦 is the current seed example, not the generic runtime definition.
 
 ### P1 — Private workspace loop
 

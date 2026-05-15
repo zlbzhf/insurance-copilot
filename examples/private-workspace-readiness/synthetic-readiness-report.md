@@ -4,7 +4,7 @@ Draft for licensed/compliance/operations review.
 
 ## Readiness Verdict
 - Verdict: **NOT READY for scheduled watcher deployment**
-- Workspace: `/root/insurance-agent-assistant/examples/local-connectors/synthetic-agent-workspace`
+- Workspace: `<repo-root>/examples/local-connectors/synthetic-agent-workspace`
 - As of: `2026-05-14`
 - Blockers: 2
 - Warnings: 0

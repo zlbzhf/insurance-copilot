@@ -88,6 +88,6 @@ If the source does not fit current source types or page types, do not force it i
 ## Commands
 
 ```bash
-python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia
+python3 scripts/validate_all_knowledge_packs.py
 python3 scripts/validate_repo.py
 ```

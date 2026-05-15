@@ -51,7 +51,7 @@ Use `templates/source-grounding-guardrails.md` when the user needs a reusable so
 
 ## Public Pack Rules
 
-For AIA public pack or other public institution updates:
+For public institution pack updates:
 
 - start from public source records and source metadata;
 - keep **no customer data in public packs** visible in the contribution;

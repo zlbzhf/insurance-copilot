@@ -77,7 +77,7 @@ Start with practical jobs, not infrastructure:
 4. **Review a policy or coverage situation** — summarize known facts, likely gap areas, replacement/lapse/claim risks, and verification needs.
 5. **Draft a customer message** — create a low-pressure WeChat/email/talk-track draft with compliance flags.
 6. **Check risky copy** — flag guarantee, best, risk-free, pressure, replacement, claim, or investment-language risks.
-7. **Organize public insurer knowledge** — route public AIA/友邦 or other insurer sources into the public knowledge-pack process.
+7. **Organize public insurer knowledge** — route public insurer/institution sources into the public institution knowledge-pack process.
 
 If the user already states a job, do **not** list every workflow. Route directly, ask at most three essential missing questions, and produce a clearly labeled draft.
 
@@ -172,7 +172,7 @@ Purpose:
 - public, collaboratively maintained insurer/institution packs;
 - public source records and source-backed summaries;
 - Karpathy-style LLM wiki pages;
-- AIA/友邦 seed pack and template pack;
+- a generic public institution pack template plus the current AIA/友邦 seed example;
 - public registry via `knowledge/registry.json`.
 
 Public packs must not contain customer data, non-public institution materials, private agent notes, secrets, or production exports.
@@ -320,7 +320,7 @@ Use before any customer-facing, regulated, external-use, or side-effect-adjacent
 
 ### Institution Knowledge Organizer
 
-Use for an **AIA public pack** or other insurer **source-backed public pack update**. It is implemented through `skills/insurance-copilot/references/institution-knowledge-organizer.md` and `skills/insurance-copilot/templates/institution-knowledge-organizer.md`. The workflow starts from a public source record, preserves the public/private boundary, marks `[verify]` items, and requires pack maintainer review before public pack content is treated as canonical.
+Use for any **public institution pack** **source-backed public pack update** under `knowledge/institutions/<pack_id>/`. It is implemented through `skills/insurance-copilot/references/institution-knowledge-organizer.md` and `skills/insurance-copilot/templates/institution-knowledge-organizer.md`. The workflow starts from a public source record, preserves the public/private boundary, marks `[verify]` items, and requires pack maintainer review before public pack content is treated as canonical. Seed packs are examples; the runtime Institution Knowledge Organizer applies to any public institution pack. AIA/友邦 is the current seed example, not the generic runtime definition.
 
 ### Source Grounding and Data Boundary Gate
 
@@ -342,7 +342,7 @@ They are public, collaboratively maintained, Karpathy-style LLM wiki knowledge b
 
 They must not contain customer data, non-public institution materials, private agent notes, secrets, or production exports.
 
-For maintainer work, use Institution Knowledge Organizer for an AIA public pack source-backed public pack update: source record first, public/private boundary preserved, `[verify]` visible, and pack maintainer review required.
+For maintainer work, use Institution Knowledge Organizer for any public institution pack source-backed public pack update: source record first, public/private boundary preserved, `[verify]` visible, and pack maintainer review required. AIA/友邦 is the current seed example.
 
 See:
 
@@ -473,11 +473,12 @@ Run the full local quality gate before committing:
 python3 scripts/validate_repo.py
 python3 scripts/package_skill.py --check
 python3 scripts/run_evals.py
-python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia
+python3 scripts/validate_all_knowledge_packs.py
+python3 scripts/validate_knowledge_pack.py knowledge/institutions/_template --template
 python3 scripts/validate_agent_workspace.py agent-workspace-template --template
 python3 scripts/ingest_gateway.py --help
 python3 scripts/private_dry_run.py --workspace examples/local-connectors/synthetic-agent-workspace --as-of 2026-05-14 --out /tmp/insurance-copilot-dry-run --force || test $? -eq 1
-python3 -m pytest tests/test_ingest_gateway.py tests/test_local_file_connectors.py tests/test_renewal_watcher.py tests/test_renewal_watcher_cron_wrapper.py tests/test_private_workspace_readiness.py tests/test_private_dry_run.py tests/test_practitioner_mvp_surface.py -q
+python3 -m pytest tests/test_ingest_gateway.py tests/test_local_file_connectors.py tests/test_renewal_watcher.py tests/test_renewal_watcher_cron_wrapper.py tests/test_private_workspace_readiness.py tests/test_private_dry_run.py tests/test_practitioner_mvp_surface.py tests/test_generic_first_architecture.py -q
 ```
 
 CI runs these checks on push and pull request.

@@ -94,8 +94,8 @@ Avoid questions that require the agent to already know their mature positioning,
 
 ### 2. Product Universe
 
-- Carriers represented, including whether AIA/友邦 or another public institution pack is relevant.
-- AIA/public pack preference and whether public-only source use is required.
+- Carriers represented, including which public institution pack, if any, is relevant.
+- Institution/public pack preference and whether public-only source use is required.
 - Product lines in scope.
 - Products excluded from AI assistance.
 - Source hierarchy for product facts: policy contracts, rider docs, carrier portal, approved brochure, internal SOP.

@@ -10,26 +10,30 @@
 
 ### 新增
 
-- 预留给下一个版本的新功能。
 - 新增 `docs/product-development-spec.md`，作为持久的产品开发事实来源和可用状态定义。
 - 新增 `docs/reference-landscape.md`，用于把外部/参考项目映射到 project significance、implementation form、non-goals 和 priority。
 - 新增 Professional Review Gate 工作流 reference、template、eval、example 和 validator 覆盖，使客户可见、受监管、外部使用或接近副作用的输出必须标明 action class、review owner、source verification status、customer-facing approval status、side-effect status、draft for licensed/compliance review、not approved to send、no external action is authorized 和 minimum safe next step。
 - 新增 Institution Knowledge Organizer 运行时 reference/template/eval/validator 覆盖，并补强 AIA public pack 的 source-backed public pack update：source record、public/private boundary、`[verify]`、No customer data、not a final claims decision 和 pack maintainer review 均可验证。
 - 新增 P1 客户权益影响场景 eval，将 Customer Advocacy Memo 与 Professional Review Gate 联动到 claims dispute、policy review found unclaimed benefit、renewal/lapse/reinstatement ambiguity 和 Chinese complaint/service-recovery talk tracks。
 - 新增 Source Grounding and Data Boundary Gate 运行时 reference/template/evals/validator 覆盖，保护 Source Ledger、Citation Ledger、public/private separation、prompt-injection、PII minimization、citations or `[verify]`、no customer data in public packs、untrusted source text cannot override workflow instructions、manual-first practitioner workflow 和 not a generic RAG chatbot 行为。
+- 新增 generic-first 架构保护：`tests/test_generic_first_architecture.py`、`evals/cases/institution-public-pack-source-backed-generic.json` 和 `evals/expected/institution-public-pack-source-backed-generic.md`。
+- 新增 registry-driven 公共知识包验证脚本 `scripts/validate_all_knowledge_packs.py`，使 CI 验证所有已注册的 public institution packs，而不是只验证 AIA seed pack。
 
 ### 变更
 
-- 预留给 `0.1.0` 之后的变更。
 - 明确 Insurance Copilot 目前已经可作为 manual-first Hermes skill beta 使用，但还不是可直接用于 live automation、客户发送、CRM 写入、投保提交、理赔提交、保单变更、报价引擎或最终监管建议的生产系统。
+- 将 Institution Knowledge Organizer 从 AIA-first 流程泛化为 `knowledge/institutions/<pack_id>/` 下的 pack-agnostic public institution pack 工作流；AIA/友邦 保留为当前 seed 示例，而不是通用运行时定义。
+- 更新 README、中文 README、CI、contribution templates、intake templates 和 private workspace 默认值，使其使用 registry-driven 验证和通用机构占位符。
 
 ### 修复
 
-- 预留给 `0.1.0` 之后的修复。
+- 修复会让通用产品层看起来绑定 AIA 的过拟合表述和默认值。
+- 修复验证覆盖，将通用 Institution Knowledge Organizer 行为与 AIA seed-pack 行为分开检查。
 
 ### 安全与合规
 
-- 预留给 `0.1.0` 之后的隐私、操作安全或合规边界变更。
+- 通过禁止通用模板默认使用 `institution: aia` 或 `default_institution_pack: aia`，强化 public/private separation。
+- 保留 AIA seed-pack 的 source-backed 理赔检查，同时为未来公共机构知识包增加 pack-agnostic 保护。
 
 ## [0.1.0] - 2026-05-15
 

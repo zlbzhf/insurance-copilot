@@ -5,7 +5,7 @@ Draft for licensed/compliance/operations review.
 ## Verdict
 - Blocked before scheduled watcher deployment
 - As of: `2026-05-14`
-- Workspace: `/root/insurance-agent-assistant/examples/local-connectors/synthetic-agent-workspace`
+- Workspace: `<repo-root>/examples/local-connectors/synthetic-agent-workspace`
 - Read-only: true
 - No External Writes: true
 - Live Hermes cron created: false

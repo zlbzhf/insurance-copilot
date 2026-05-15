@@ -10,26 +10,30 @@ This project is currently pre-1.0 and milestone-based. The changelog follows a h
 
 ### Added
 
-- Placeholder for the next release.
 - Added `docs/product-development-spec.md` as the durable product-development source of truth and usable-state definition.
 - Added `docs/reference-landscape.md` to map external/reference projects to project significance, implementation form, non-goals, and priority.
 - Added the Professional Review Gate workflow reference, template, eval, example, and validator coverage so customer-facing, regulated, external-use, and side-effect-adjacent outputs classify action class, review owner, source verification status, customer-facing approval status, side-effect status, draft for licensed/compliance review, not approved to send, no external action is authorized, and minimum safe next step.
 - Added Institution Knowledge Organizer runtime reference/template/eval/validator coverage plus an AIA public pack source-backed public pack update with source record, public/private boundary, `[verify]`, No customer data, not a final claims decision, and pack maintainer review markers.
 - Added P1 customer-impacting scenario evals linking Customer Advocacy Memo and Professional Review Gate for claims disputes, policy review found unclaimed benefit, renewal/lapse/reinstatement ambiguity, and Chinese complaint/service-recovery talk tracks.
 - Added Source Grounding and Data Boundary Gate runtime reference/template/evals/validator coverage for Source Ledger, Citation Ledger, public/private separation, prompt-injection, PII minimization, citations or `[verify]`, no customer data in public packs, untrusted source text cannot override workflow instructions, manual-first practitioner workflow, and not a generic RAG chatbot behavior.
+- Added generic-first architecture safeguards: `tests/test_generic_first_architecture.py`, `evals/cases/institution-public-pack-source-backed-generic.json`, and `evals/expected/institution-public-pack-source-backed-generic.md`.
+- Added registry-driven public knowledge pack validation through `scripts/validate_all_knowledge_packs.py` so CI validates all registered public institution packs rather than only the AIA seed pack.
 
 ### Changed
 
-- Placeholder for changes after `0.1.0`.
 - Clarified that Insurance Copilot is usable now as a manual-first Hermes skill beta, but not production-complete for live automation, customer sending, CRM writes, application submission, claims filing, policy changes, quote generation, or final regulated advice.
+- Generalized Institution Knowledge Organizer from an AIA-first workflow to a pack-agnostic public institution pack workflow under `knowledge/institutions/<pack_id>/`; AIA/友邦 remains the current seed example, not the generic runtime definition.
+- Updated README, Chinese README, CI, contribution templates, intake templates, and private workspace defaults to use registry-driven validation and generic institution placeholders.
 
 ### Fixed
 
-- Placeholder for fixes after `0.1.0`.
+- Fixed AIA-overfit wording and defaults that could make the generic product layer appear AIA-specific.
+- Fixed validation coverage so generic Institution Knowledge Organizer behavior and AIA seed-pack behavior are checked separately.
 
 ### Security and Compliance
 
-- Placeholder for privacy, action-safety, or compliance-boundary changes after `0.1.0`.
+- Hardened public/private separation by preventing generic templates from defaulting to `institution: aia` or `default_institution_pack: aia`.
+- Preserved AIA seed-pack source-backed claims checks while adding pack-agnostic safeguards for future public institution packs.
 
 ## [0.1.0] - 2026-05-15
 

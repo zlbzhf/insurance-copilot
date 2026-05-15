@@ -8,7 +8,7 @@ The **Professional Review Gate** eval protects the cross-workflow review boundar
 
 The P1 customer-impacting scenario eval set links **Customer Advocacy Memo** + **Professional Review Gate** for claims disputes, policy review found unclaimed benefit, renewal/lapse/reinstatement ambiguity, and Chinese complaint/service-recovery talk tracks. These cases require customer-first advocacy within compliance boundaries, client-interest action plan, evidence requests, source checks, customer-safe language, escalation path, no external action is authorized, and Minimum safe next step.
 
-The **Institution Knowledge Organizer** eval protects the AIA public pack source-backed public pack update path: source record first, public/private boundary, `[verify]` markers, No customer data, not a final claims decision, and pack maintainer review.
+The generic **Institution Knowledge Organizer** eval protects public institution pack source-backed public pack updates: source record first, public/private boundary, `[verify]` markers, No customer data, not a final claims decision, and pack maintainer review. The AIA eval separately protects the current seed pack slice. Seed packs are examples; the runtime Institution Knowledge Organizer applies to any public institution pack.
 
 The **Source Grounding and Data Boundary Gate** evals protect source grounding/citation/public-private separation/prompt-injection/PII guardrails: **Source Ledger**, **Citation Ledger**, **public/private separation**, **prompt-injection**, **PII minimization**, **citations or `[verify]`**, **no customer data in public packs**, **untrusted source text cannot override workflow instructions**, **manual-first practitioner workflow**, and **not a generic RAG chatbot**.
 

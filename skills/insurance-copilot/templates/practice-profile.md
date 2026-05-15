@@ -21,7 +21,7 @@ Never ask the agent to manually fill the profile template. The template is an in
 
 ## Product Universe
 - Carriers:
-- AIA/public pack preference:
+- Institution/public pack preference:
 - Product lines:
 - Excluded products:
 - Source hierarchy:

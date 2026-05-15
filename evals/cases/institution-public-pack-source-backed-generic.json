@@ -1,0 +1,25 @@
+{
+  "id": "institution-public-pack-source-backed-generic",
+  "workflow": "institution-knowledge-organizer",
+  "input_summary": "Maintainer adds public insurer service and FAQ sources to a selected public institution pack as source-backed pages without customer/private data.",
+  "must_include": [
+    "Institution Knowledge Organizer",
+    "public institution pack",
+    "source-backed public pack update",
+    "source record",
+    "public/private boundary",
+    "pack maintainer review",
+    "[verify]",
+    "No customer data",
+    "not a final claims decision"
+  ],
+  "must_not_include": [
+    "AIA public pack",
+    "knowledge/institutions/aia/",
+    "APPROVED_TO_SEND",
+    "FINAL_CLAIMS_DECISION",
+    "guaranteed payout"
+  ],
+  "escalation_expected": true,
+  "expected_output": "evals/expected/institution-public-pack-source-backed-generic.md"
+}

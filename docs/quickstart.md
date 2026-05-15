@@ -24,7 +24,7 @@ Never ask the agent to manually fill the profile template. The template is an in
 Prompt:
 
 ```text
-Use Agency Playbook Builder in New Agent Default Mode. I am a new AIA/友邦 agent serving Chinese-speaking clients. I don't know yet how to define my full positioning. Ask at most three simple questions, use conservative defaults where I am unsure, then generate a provisional practice profile and show what I can do next.
+Use Agency Playbook Builder in New Agent Default Mode. I am a new insurance agent serving retail clients. I don't know yet how to define my full positioning. Ask at most three simple questions, use conservative defaults where I am unsure, then generate a provisional practice profile and show what I can do next. If an institution is relevant, ask me to confirm the institution/public pack instead of assuming one.
 ```
 
 Expected behavior:

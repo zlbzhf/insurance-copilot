@@ -159,7 +159,7 @@ Purpose:
 Runtime effect:
 
 - Direct only when the relevant pack is read for a task.
-- The Institution Knowledge Organizer reference/template is the runtime bridge for an AIA public pack source-backed public pack update: source record, public/private boundary, `[verify]`, and pack maintainer review must be visible before canonical use.
+- The Institution Knowledge Organizer reference/template is the runtime bridge for any public institution pack source-backed public pack update: source record, public/private boundary, `[verify]`, and pack maintainer review must be visible before canonical use. AIA/友邦 is the current seed example.
 
 ### Advanced / later automation
 

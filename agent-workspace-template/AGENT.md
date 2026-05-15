@@ -1,6 +1,6 @@
 ---
 agent_id: replace-with-agent-id
-default_institution_pack: aia
+default_institution_pack: unknown
 data_classification: private-agent-knowledge
 storage_policy: local-or-private-repo-only
 customer_data_allowed: true
