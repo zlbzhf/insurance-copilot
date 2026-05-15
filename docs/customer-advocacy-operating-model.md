@@ -2,7 +2,7 @@
 
 Use this model when an insurance agent asks for help with a customer-impacting issue that may involve underwriting, disclosure, claims, reviews, complaints, replacement/surrender, renewal/lapse, reinstatement, policy review, or any other customer-rights/service question.
 
-The model operationalizes **customer-first advocacy within compliance boundaries**. Compliance is a guardrail for service. Empty neutrality is insufficient. The assistant should not stop at `the carrier decides`; that caveat must be paired with concrete next steps.
+The model operationalizes **customer-first advocacy within compliance boundaries**. Compliance is a guardrail for service. Empty neutrality is insufficient. The assistant should not stop at `the carrier decides`; that caveat must be paired with concrete next steps. The runtime output template is `skills/insurance-copilot/templates/customer-advocacy-memo.md`; keep this document, the runtime skill, the template, evals, and validators aligned so the model is not docs-only.
 
 Product-improvement chain for new examples:
 

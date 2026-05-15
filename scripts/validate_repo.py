@@ -33,6 +33,7 @@ REQUIRED = [
     ROOT / "docs" / "continuity.md",
     ROOT / "docs" / "quality-gates.md",
     ROOT / "docs" / "hermes-first-design.md",
+    ROOT / "docs" / "documentation-map.md",
     ROOT / "docs" / "quickstart.md",
     ROOT / "docs" / "workflow-surface.md",
     ROOT / "docs" / "customer-first-service-philosophy.md",
@@ -150,6 +151,7 @@ REQUIRED_TEMPLATES = [
     "daily-agent-workbench.md",
     "chinese-talk-tracks.md",
     "referral-ask.md",
+    "customer-advocacy-memo.md",
 ]
 
 REQUIRED_MCP_CONTRACTS = [
@@ -275,6 +277,64 @@ def main() -> int:
         if term in text:
             return fail(f"operational plugin wording in SKILL.md: {term}")
 
+    runtime_constraints = [
+        "For substantive workflow work, load the matching reference before drafting",
+        "docs/ is not the runtime source by itself",
+        "runtime-effective constraints must live in SKILL.md, references, templates, evals, or validators",
+        "templates/customer-advocacy-memo.md",
+    ]
+    for phrase in runtime_constraints:
+        if phrase not in text:
+            return fail(f"SKILL.md missing runtime constraint phrase: {phrase}")
+    for phrase in [
+        "customer-first advocacy within compliance boundaries",
+        "Empty neutrality is insufficient",
+        "New Agent Coach Mode",
+        "draft for licensed/compliance review",
+        "[verify]",
+        "Do not persist sensitive customer data",
+    ]:
+        if phrase not in text:
+            return fail(f"P0 runtime principle missing from SKILL.md: {phrase}")
+    documentation_map = (ROOT / "docs" / "documentation-map.md").read_text()
+    for phrase in [
+        "runtime-effective",
+        "User-facing",
+        "Runtime skill",
+        "Workflow references",
+        "Output templates",
+        "Maintainer governance",
+        "Executable gates",
+        "not every document is end-user reading",
+    ]:
+        if phrase not in documentation_map:
+            return fail(f"documentation map missing phrase: {phrase}")
+    quality_gates = (ROOT / "docs" / "quality-gates.md").read_text()
+    for phrase in runtime_constraints[1:]:
+        if phrase not in quality_gates:
+            return fail(f"quality gates missing runtime constraint phrase: {phrase}")
+    advocacy_template = (TEMPLATE_DIR / "customer-advocacy-memo.md").read_text()
+    for phrase in [
+        "Customer Advocacy Memo Template",
+        "Empty neutrality is insufficient",
+        "draft for licensed/compliance review",
+        "Facts and Timeline",
+        "Customer Goal",
+        "Favorable Facts",
+        "Risks and Weak Points",
+        "Good-Faith Arguments to Preserve",
+        "Evidence and Materials Checklist",
+        "Compliance Boundary",
+        "Next Actions",
+        "Customer-Safe Language",
+        "Agent Internal Notes",
+        "Forbidden Moves",
+        "Escalation Path",
+        "do not send",
+    ]:
+        if phrase not in advocacy_template:
+            return fail(f"customer advocacy memo template missing phrase: {phrase}")
+
     arch_doc = (ROOT / "docs" / "architecture.md").read_text()
     for phrase in REQUIRED_ARCHITECTURE_PHRASES:
         if phrase not in arch_doc and phrase not in text:
@@ -338,6 +398,8 @@ def main() -> int:
         "knowledge/institutions/",
         "agent-workspace-template/",
         "docs/workflow-surface.md",
+        "docs/documentation-map.md",
+        "skills/insurance-copilot/templates/customer-advocacy-memo.md",
         "Daily Agent Workbench",
         "Client Plan Draft",
         "scripts/local_file_connectors.py",

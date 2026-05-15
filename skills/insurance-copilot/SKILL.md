@@ -39,6 +39,9 @@ When an agent shares a product idea or real-world example, first confirm the pro
 - Every customer-facing draft must remain a draft for licensed/compliance review; customer-facing drafts remain drafts and must not imply approval to send.
 - Use `[verify]` for missing carrier, policy, payment, claim, underwriting, product, jurisdiction, or compliance facts.
 - Separate internal agent notes from customer-safe language.
+- For substantive workflow work, load the matching reference before drafting; if a user asks for claims triage, policy review, replacement analysis, compliance checking, or another named workflow, use the router below and consult that `references/*.md` playbook before producing the draft.
+- docs/ is not the runtime source by itself. runtime-effective constraints must live in SKILL.md, references, templates, evals, or validators.
+- For customer-impacting advocacy matters, use `templates/customer-advocacy-memo.md` as the concrete output structure when a full memo is needed.
 
 ### Agent-Friendly Product Principle
 

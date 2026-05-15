@@ -11,9 +11,23 @@ Required:
 - Empty neutrality is insufficient: `以保险公司审核为准`, `the carrier decides`, `consult a professional`, or similar caveats must be paired with evidence requests, source checks, customer-safe language, agent internal notes, and an escalation path.
 - Convert new practitioner examples from idea to product principle to operating model to workflow to scenario matrix to eval.
 - New Agent Coach Mode explains what this situation is, what to do first, what not to do, what to collect, what to say to the customer, and who to escalate to.
-- The Customer Advocacy Operating Model remains the standard output for sensitive service matters.
+- For customer-impacting advocacy matters, use `templates/customer-advocacy-memo.md` as the concrete output structure when a full memo is needed.
+- Runtime note: docs/ is not the runtime source by itself; runtime-effective constraints must live in SKILL.md, references, templates, evals, or validators.
 
 Reject changes that only add isolated examples without updating a reusable rule, workflow, matrix, or eval when the example reveals a broader product principle.
+
+## Runtime Constraint Gate
+
+Documentation is allowed only when the same behavioral rule is made runtime-effective.
+
+Required:
+
+- docs/ is not the runtime source by itself; runtime-effective constraints must live in SKILL.md, references, templates, evals, or validators.
+- For substantive workflow work, the skill instructs Hermes to load the matching reference before drafting.
+- Sensitive customer-service matters have a concrete runtime template: `templates/customer-advocacy-memo.md`.
+- `docs/documentation-map.md` explains which files are user-facing, runtime skill, workflow references, output templates, maintainer governance, or executable gates.
+
+Reject changes that add only explanatory docs for a behavior-changing rule without also updating the runtime skill/reference/template and an executable gate.
 
 ## Agent-Friendly Onboarding Gate
 

@@ -35,7 +35,14 @@ def check_bundle(bundle_dir: Path) -> list[str]:
         elif not list(p.glob("*.md")):
             errors.append(f"{subdir}/ has no markdown files")
     text = (bundle_dir / "SKILL.md").read_text(errors="ignore") if (bundle_dir / "SKILL.md").exists() else ""
-    for rel in ["references/client-needs-intake.md", "references/daily-agent-workbench.md", "references/compliance-check.md", "references/replacement-suitability.md", "templates/practice-profile.md"]:
+    for rel in [
+        "references/client-needs-intake.md",
+        "references/daily-agent-workbench.md",
+        "references/compliance-check.md",
+        "references/replacement-suitability.md",
+        "templates/practice-profile.md",
+        "templates/customer-advocacy-memo.md",
+    ]:
         if not (bundle_dir / rel).exists():
             errors.append(f"missing referenced bundle file: {rel}")
     if "name: insurance-copilot" not in text:

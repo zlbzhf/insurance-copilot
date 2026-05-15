@@ -262,6 +262,52 @@ def test_empty_neutrality_gate_requires_action_plan() -> None:
         assert "customer-safe language" in lowered
 
 
+def test_runtime_constraints_are_not_docs_only() -> None:
+    doc_map = read("docs/documentation-map.md")
+    skill = read("skills/insurance-copilot/SKILL.md")
+    quality = read("docs/quality-gates.md")
+    template = read("skills/insurance-copilot/templates/customer-advocacy-memo.md")
+
+    for phrase in [
+        "runtime-effective",
+        "User-facing",
+        "Runtime skill",
+        "Maintainer governance",
+        "Executable gates",
+        "not every document is end-user reading",
+    ]:
+        assert phrase in doc_map
+
+    for phrase in [
+        "For substantive workflow work, load the matching reference before drafting",
+        "docs/ is not the runtime source by itself",
+        "runtime-effective constraints must live in SKILL.md, references, templates, evals, or validators",
+        "templates/customer-advocacy-memo.md",
+    ]:
+        assert phrase in skill
+        assert phrase in quality or phrase == "For substantive workflow work, load the matching reference before drafting"
+
+    required_sections = [
+        "Facts and Timeline",
+        "Customer Goal",
+        "Favorable Facts",
+        "Risks and Weak Points",
+        "Good-Faith Arguments to Preserve",
+        "Evidence and Materials Checklist",
+        "Compliance Boundary",
+        "Next Actions",
+        "Customer-Safe Language",
+        "Agent Internal Notes",
+        "Forbidden Moves",
+        "Escalation Path",
+    ]
+    for section in required_sections:
+        assert section in template
+
+    assert "Empty neutrality is insufficient" in template
+    assert "draft for licensed/compliance review" in template
+    assert "do not send" in template.lower()
+
 def test_systemic_eval_cases_cover_beyond_two_examples() -> None:
     required_cases = {
         "empty-neutrality-is-insufficient": "advocacy-operating-model",

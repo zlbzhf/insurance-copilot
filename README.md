@@ -53,7 +53,7 @@ Use Client Needs Intake. Turn these client notes into a structured fact-find. Se
 Use Compliance Copy Checker. Review this WeChat draft before customer use. Quote risky phrases, suggest safer language, and say who must review it.
 ```
 
-See `docs/quickstart.md`, `docs/workflow-surface.md`, `examples/practical-mvp/agent-first-session.md`, `examples/practical-mvp/agent-friendly-onboarding.md`, and `examples/practical-mvp/customer-first-advocacy.md` for the complete workflow surface, practical loop, low-burden new-agent onboarding example, and customer-first advocacy examples.
+See `docs/quickstart.md`, `docs/workflow-surface.md`, `docs/documentation-map.md`, `examples/practical-mvp/agent-first-session.md`, `examples/practical-mvp/agent-friendly-onboarding.md`, and `examples/practical-mvp/customer-first-advocacy.md` for the complete workflow surface, practical loop, low-burden new-agent onboarding example, documentation purpose map, and customer-first advocacy examples. Customer-impacting advocacy memos use `skills/insurance-copilot/templates/customer-advocacy-memo.md` as the runtime output structure; the documentation map explains which files are user-facing, runtime-effective, maintainer-only, or executable gates.
 
 ## What It Does
 

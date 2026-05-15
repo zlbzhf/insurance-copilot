@@ -17,6 +17,7 @@ Before substantive changes, read:
 - `standards/page-type-registry.yaml`
 - `docs/continuity.md`
 - `docs/quality-gates.md`
+- `docs/documentation-map.md`
 - `ROADMAP.md`
 
 Then run:
