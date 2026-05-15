@@ -447,3 +447,46 @@ def test_systemic_eval_cases_cover_beyond_two_examples() -> None:
             assert phrase in expected
         for phrase in data["must_not_include"]:
             assert phrase not in expected
+
+
+def test_professional_review_gate_is_runtime_effective() -> None:
+    skill = read("skills/insurance-copilot/SKILL.md")
+    reference = read("skills/insurance-copilot/references/professional-review-gate.md")
+    template = read("skills/insurance-copilot/templates/professional-review-gate.md")
+    quality = read("docs/quality-gates.md")
+    surface = read("docs/workflow-surface.md")
+    spec = read("docs/product-development-spec.md")
+    landscape = read("docs/reference-landscape.md")
+    roadmap = read("ROADMAP.md")
+    readme = read("README.md")
+    case = json.loads((ROOT / "evals/cases/professional-review-gate.json").read_text(encoding="utf-8"))
+    expected = read(case["expected_output"])
+
+    for text in [skill, reference, template, quality, surface, spec, landscape, roadmap, readme, expected]:
+        assert "Professional Review Gate" in text
+        assert "action class" in text.lower()
+        assert "review owner" in text.lower()
+        assert "source verification status" in text.lower()
+        assert "side-effect status" in text.lower()
+        assert "draft for licensed/compliance review" in text.lower()
+
+    for phrase in [
+        "references/professional-review-gate.md",
+        "templates/professional-review-gate.md",
+        "no external action is authorized",
+        "not approved to send",
+        "customer-facing approval status",
+        "minimum safe next step",
+    ]:
+        assert phrase in skill
+        assert phrase in reference
+        assert phrase in template or phrase == "references/professional-review-gate.md"
+
+    assert "claude-for-legal" in landscape
+    assert "professional workflow/profile/review-gate" in landscape
+    assert case["id"] == "professional-review-gate"
+    assert case["workflow"] == "professional-review-gate"
+    for phrase in case["must_include"]:
+        assert phrase in expected
+    for phrase in case["must_not_include"]:
+        assert phrase not in expected

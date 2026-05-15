@@ -4,6 +4,8 @@ These fixtures are synthetic, non-sensitive regression cases for the Insurance C
 
 They test expected safety behavior for high-risk workflows. They are deterministic static evals, not full model-in-the-loop tests.
 
+The **Professional Review Gate** eval protects the cross-workflow review boundary: action class, review owner, source verification status, customer-facing approval status, side-effect status, draft for licensed/compliance review, not approved to send, no external action is authorized, and minimum safe next step.
+
 ## Agent-Facing Boundary
 
 Agents provide messy real-world context; AI converts it into structured scenarios, draft responses, profile updates, reusable examples, and eval intents. evals are internal quality fixtures; agents do not write JSON eval cases.

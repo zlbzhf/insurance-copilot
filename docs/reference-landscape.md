@@ -37,6 +37,7 @@ Useful patterns:
 - Run setup first; downstream workflows read the practice profile.
 - Job-style workflow surface rather than generic chat.
 - Every output is a draft for professional review.
+- Professional workflow/profile/review-gate discipline: classify the kind of work, name the human reviewer, make source status explicit, and prevent side effects before review.
 - Connectors add authoritative source grounding; unverified citations are marked for verification.
 - Trust layer concepts for community skills: security review, allowlist, freshness, install logs.
 
@@ -49,6 +50,7 @@ Implementation form in this repo:
 
 - `skills/insurance-copilot/SKILL.md` contains the workflow router, draft-only posture, practice-profile gate, and New Agent modes.
 - `skills/insurance-copilot/references/cold-start-interview.md` replaces legal cold-start with insurance practice onboarding.
+- **Professional Review Gate** translates `claude-for-legal` professional workflow/profile/review-gate discipline into insurance action safety through `skills/insurance-copilot/references/professional-review-gate.md`, `skills/insurance-copilot/templates/professional-review-gate.md`, evals, tests, and validators. It must name action class, review owner, source verification status, customer-facing approval status, side-effect status, draft for licensed/compliance review, not approved to send, no external action is authorized, and minimum safe next step.
 - `docs/workflow-surface.md` lists insurance agent jobs.
 - `docs/quality-gates.md`, `evals/`, and `scripts/validate_repo.py` enforce regression gates.
 

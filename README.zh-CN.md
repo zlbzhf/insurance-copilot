@@ -289,6 +289,10 @@ Use Client Needs Intake. Turn these client notes into a structured fact-find. Se
 Use Compliance Copy Checker. Review this WeChat draft before customer use. Quote risky phrases, suggest safer language, and say who must review it.
 ```
 
+```text
+Use Professional Review Gate before treating this workflow output as customer-facing or external-use. Classify action class, name review owner, state source verification status, customer-facing approval status, side-effect status, and minimum safe next step. Customer-facing language must be draft for licensed/compliance review, not approved to send, and no external action is authorized.
+```
+
 建议阅读：
 
 - `docs/quickstart.md`
@@ -297,6 +301,7 @@ Use Compliance Copy Checker. Review this WeChat draft before customer use. Quote
 - `examples/practical-mvp/agent-first-session.md`
 - `examples/practical-mvp/agent-friendly-onboarding.md`
 - `examples/practical-mvp/customer-first-advocacy.md`
+- `examples/practical-mvp/professional-review-gate.md`
 
 ## 示例工作流
 
@@ -323,6 +328,10 @@ Use Compliance Copy Checker. Review this WeChat draft before customer use. Quote
 ### Compliance Copy Checker
 
 适用于客户文案发送前检查。它应引用风险短语、解释风险、给出更安全表达，并指出需要谁复核。
+
+### Professional Review Gate
+
+适用于任何客户可见、受监管、外部使用或接近副作用的输出被视为可用之前。运行时文件是 `skills/insurance-copilot/references/professional-review-gate.md` 和 `skills/insurance-copilot/templates/professional-review-gate.md`。输出必须标明 action class、review owner、source verification status、customer-facing approval status、side-effect status；客户可见内容默认是 draft for licensed/compliance review、not approved to send，并声明 no external action is authorized，最后给出 minimum safe next step。
 
 ## 公共保险机构知识包
 

@@ -90,6 +90,7 @@ REQUIRED = [
     ROOT / "examples" / "practical-mvp" / "agent-first-session.md",
     ROOT / "examples" / "practical-mvp" / "agent-friendly-onboarding.md",
     ROOT / "examples" / "practical-mvp" / "customer-first-advocacy.md",
+    ROOT / "examples" / "practical-mvp" / "professional-review-gate.md",
     ROOT / "examples" / "local-connectors" / "synthetic-agent-workspace" / "README.md",
     ROOT / "examples" / "local-connectors" / "expected-daily-workbench.md",
     ROOT / "examples" / "renewal-watcher" / "synthetic-renewal-alert.md",
@@ -136,6 +137,7 @@ REQUIRED_REFERENCES = [
     "client-plan-draft.md",
     "chinese-talk-tracks.md",
     "referral-ask.md",
+    "professional-review-gate.md",
 ]
 
 REQUIRED_TEMPLATES = [
@@ -156,6 +158,7 @@ REQUIRED_TEMPLATES = [
     "chinese-talk-tracks.md",
     "referral-ask.md",
     "customer-advocacy-memo.md",
+    "professional-review-gate.md",
 ]
 
 REQUIRED_MCP_CONTRACTS = [
@@ -377,6 +380,41 @@ def main() -> int:
     ]:
         if phrase not in quality_gates:
             return fail(f"quality gates missing product SPEC/reference landscape phrase: {phrase}")
+    professional_review_required = [
+        "Professional Review Gate",
+        "action class",
+        "review owner",
+        "source verification status",
+        "customer-facing approval status",
+        "side-effect status",
+        "draft for licensed/compliance review",
+        "not approved to send",
+        "no external action is authorized",
+        "minimum safe next step",
+    ]
+    professional_review_docs = {
+        "SKILL.md": text,
+        "professional review reference": (REF_DIR / "professional-review-gate.md").read_text(),
+        "professional review template": (TEMPLATE_DIR / "professional-review-gate.md").read_text(),
+        "quality gates": quality_gates,
+        "workflow surface": (ROOT / "docs" / "workflow-surface.md").read_text(),
+        "product development SPEC": product_spec,
+        "reference landscape": reference_landscape,
+        "ROADMAP": (ROOT / "ROADMAP.md").read_text(),
+        "README": (ROOT / "README.md").read_text(),
+        "professional review eval expected": (ROOT / "evals" / "expected" / "professional-review-gate.md").read_text(),
+    }
+    for label, doc in professional_review_docs.items():
+        lowered_doc = doc.lower()
+        for phrase in professional_review_required:
+            if phrase == "Professional Review Gate":
+                if phrase not in doc:
+                    return fail(f"{label} missing Professional Review Gate phrase: {phrase}")
+            elif phrase not in lowered_doc:
+                return fail(f"{label} missing Professional Review Gate phrase: {phrase}")
+    professional_case = json.loads((ROOT / "evals" / "cases" / "professional-review-gate.json").read_text())
+    if professional_case.get("id") != "professional-review-gate" or professional_case.get("workflow") != "professional-review-gate":
+        return fail("professional review gate eval case has wrong id/workflow")
     advocacy_template = (TEMPLATE_DIR / "customer-advocacy-memo.md").read_text()
     for phrase in [
         "Customer Advocacy Memo Template",
@@ -602,6 +640,7 @@ def main() -> int:
         "New Agent Coach Mode",
         "from idea to product principle to operating model to workflow to scenario matrix to eval",
         "docs/customer-advocacy-operating-model.md",
+        "Professional Review Gate",
     ]:
         if name not in workflow_surface:
             return fail(f"workflow surface missing workflow: {name}")
@@ -693,6 +732,14 @@ def main() -> int:
         if phrase not in advocacy_example:
             return fail(f"customer-first advocacy example missing phrase: {phrase}")
 
+    professional_example = (ROOT / "examples" / "practical-mvp" / "professional-review-gate.md").read_text()
+    for phrase in professional_review_required:
+        if phrase == "Professional Review Gate":
+            if phrase not in professional_example:
+                return fail(f"professional review gate example missing phrase: {phrase}")
+        elif phrase not in professional_example.lower():
+            return fail(f"professional review gate example missing phrase: {phrase}")
+
     workflow = (ROOT / ".github" / "workflows" / "validate.yml").read_text()
     for cmd in [
         "python3 scripts/validate_repo.py",
@@ -725,6 +772,7 @@ def main() -> int:
         "claim-denial-appeal-path",
         "policy-review-found-unclaimed-benefit",
         "replacement-customer-interest-protection",
+        "professional-review-gate",
     }
     found_eval_ids = {case.stem for case in eval_cases}
     missing_eval_ids = sorted(required_eval_ids - found_eval_ids)

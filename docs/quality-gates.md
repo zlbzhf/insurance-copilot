@@ -29,6 +29,32 @@ Required:
 
 Reject changes that add only explanatory docs for a behavior-changing rule without also updating the runtime skill/reference/template and an executable gate.
 
+## Professional Review Gate
+
+Every professional-service borrowed pattern must become an insurance-specific runtime gate rather than a copied plugin shape. The **Professional Review Gate** is the cross-workflow review block for customer-facing, regulated, external-use, or side-effect-adjacent work.
+
+Required runtime surfaces:
+
+- `skills/insurance-copilot/SKILL.md` routes to `references/professional-review-gate.md`.
+- `skills/insurance-copilot/references/professional-review-gate.md` defines the review method.
+- `skills/insurance-copilot/templates/professional-review-gate.md` defines the output block.
+- `evals/cases/professional-review-gate.json`, `evals/expected/professional-review-gate.md`, `tests/test_practitioner_mvp_surface.py`, and `scripts/validate_repo.py` keep it executable.
+
+Required phrases and fields:
+
+- Professional Review Gate;
+- action class;
+- review owner;
+- source verification status;
+- customer-facing approval status;
+- side-effect status;
+- draft for licensed/compliance review;
+- not approved to send;
+- no external action is authorized;
+- minimum safe next step.
+
+Reject changes that treat the gate as a generic disclaimer, omit review owner/source verification status/side-effect status, mark a draft approved to send by default, or perform an external action before exact human authorization and licensed/compliance review.
+
 ## Product SPEC and Reference-Landscape Gate
 
 Product direction must survive context compression and must not depend on chat memory.

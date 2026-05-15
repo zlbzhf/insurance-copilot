@@ -13,6 +13,7 @@
 - 预留给下一个版本的新功能。
 - 新增 `docs/product-development-spec.md`，作为持久的产品开发事实来源和可用状态定义。
 - 新增 `docs/reference-landscape.md`，用于把外部/参考项目映射到 project significance、implementation form、non-goals 和 priority。
+- 新增 Professional Review Gate 工作流 reference、template、eval、example 和 validator 覆盖，使客户可见、受监管、外部使用或接近副作用的输出必须标明 action class、review owner、source verification status、customer-facing approval status、side-effect status、draft for licensed/compliance review、not approved to send、no external action is authorized 和 minimum safe next step。
 
 ### 变更
 

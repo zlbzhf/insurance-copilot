@@ -104,6 +104,7 @@ Insurance Copilot helps licensed insurance professionals create structured draft
 - product-fit review from source-backed facts;
 - customer message, objection, and referral drafts;
 - compliance language screening;
+- Professional Review Gate for customer-facing, regulated, external-use, and side-effect-adjacent outputs;
 - existing policy review;
 - replacement/surrender suitability triage;
 - claims support triage;
@@ -308,6 +309,10 @@ Use for underwriting/disclosure, claim/review, servicing, complaint, replacement
 ### Compliance Copy Checker
 
 Use before customer-facing copy is sent. It should quote risky phrases, explain why they are risky, suggest safer alternatives, and identify who must review the draft.
+
+### Professional Review Gate
+
+Use before any customer-facing, regulated, external-use, or side-effect-adjacent output is treated as usable. It is implemented through `skills/insurance-copilot/references/professional-review-gate.md` and `skills/insurance-copilot/templates/professional-review-gate.md`. The gate must name action class, review owner, source verification status, customer-facing approval status, and side-effect status; customer-facing language remains a draft for licensed/compliance review, not approved to send, with no external action is authorized by default, and the output ends with the minimum safe next step.
 
 ## Public Institution Packs
 

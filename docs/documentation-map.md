@@ -206,6 +206,7 @@ These constraints must not be docs-only:
 - customer-first advocacy within compliance boundaries;
 - Empty neutrality is insufficient;
 - New Agent Coach Mode;
+- Professional Review Gate with action class, review owner, source verification status, customer-facing approval status, side-effect status, draft for licensed/compliance review, not approved to send, no external action is authorized, and minimum safe next step;
 - draft-only customer-facing language;
 - `[verify]` markers for missing sources;
 - private/customer data stays outside public repo paths;

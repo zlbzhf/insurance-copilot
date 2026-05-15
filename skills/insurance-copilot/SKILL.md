@@ -42,6 +42,7 @@ When an agent shares a product idea or real-world example, first confirm the pro
 - For substantive workflow work, load the matching reference before drafting; if a user asks for claims triage, policy review, replacement analysis, compliance checking, or another named workflow, use the router below and consult that `references/*.md` playbook before producing the draft.
 - docs/ is not the runtime source by itself. runtime-effective constraints must live in SKILL.md, references, templates, evals, or validators.
 - For customer-impacting advocacy matters, use `templates/customer-advocacy-memo.md` as the concrete output structure when a full memo is needed.
+- For any customer-facing, regulated, external-use, or side-effect-adjacent output, apply the **Professional Review Gate** from `references/professional-review-gate.md` and shape the review block with `templates/professional-review-gate.md`. The gate must name action class, review owner, source verification status, customer-facing approval status, side-effect status, state `draft for licensed/compliance review`, state `not approved to send`, state `no external action is authorized`, and end with the minimum safe next step.
 
 ### Agent-Friendly Product Principle
 
@@ -112,6 +113,44 @@ Every output must be framed as a **draft for licensed human review**. Do not say
 - claims will be paid, coverage is active, or underwriting will approve unless verified by authoritative source and still framed appropriately.
 
 For irreversible actions — sending customer communications, submitting applications, changing coverage, cancelling, surrendering, replacing, filing claims, or making binding representations — require explicit human confirmation and licensed/compliance review. If tools are available that could send or change something, prepare drafts only unless the user explicitly confirms the exact side effect and required review is complete.
+
+## Professional Review Gate
+
+Use **Professional Review Gate** as the cross-workflow professional review boundary translated from `claude-for-legal` professional workflow/profile/review-gate discipline into insurance-agent work.
+
+Runtime files:
+
+- `references/professional-review-gate.md`
+- `templates/professional-review-gate.md`
+
+Apply it before any output is treated as customer-facing, externally usable, regulated decision-support, or ready for a tool/integration side effect. The gate is not a generic disclaimer; it is an operational block that must include:
+
+- action class;
+- review owner;
+- source verification status;
+- customer-facing approval status;
+- side-effect status;
+- `draft for licensed/compliance review`;
+- `not approved to send`;
+- `no external action is authorized` unless exact side-effect prerequisites are satisfied after human review;
+- minimum safe next step.
+
+Default status for customer-facing drafts:
+
+```markdown
+## Professional Review Gate
+- Workflow:
+- Action class:
+- Review owner:
+- Source verification status:
+- Customer-facing approval status: draft for licensed/compliance review; not approved to send
+- Side-effect status: no external action is authorized
+- Customer-first advocacy status:
+- Escalation path:
+- Minimum safe next step:
+```
+
+For customer-first advocacy matters, the gate must preserve service: evidence requests, source checks, favorable facts, escalation path, and customer-safe language. For requested side effects, do not act unless the exact recipient/system, final content/data, authority to act, licensed/compliance review status, and user confirmation are all present.
 
 ## Privacy and Data Minimization
 
@@ -223,6 +262,7 @@ Choose the linked reference that matches the task:
 - **Chinese Talk Tracks:** `references/chinese-talk-tracks.md`
 - **Annuity / investment-linked caution review:** `references/annuity-investment-linked-review.md`
 - **Stakeholder Summary Writer:** `references/stakeholder-summary.md`
+- **Professional Review Gate:** `references/professional-review-gate.md` with `templates/professional-review-gate.md`
 - **Institution Knowledge Organizer:** use public pack docs plus `docs/workflow-surface.md`
 - **Baseline compliance vocabulary:** `references/compliance-starter.md`
 - **Default conservative profile:** `references/default-practice-profile.md`

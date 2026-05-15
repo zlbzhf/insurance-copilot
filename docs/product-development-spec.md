@@ -142,6 +142,8 @@ If a product rule changes assistant behavior, the change must be reflected in at
 
 docs/ alone is not runtime-effective.
 
+Current cross-workflow runtime gate: **Professional Review Gate**. It translates professional workflow/profile/review-gate discipline into the insurance-agent surface through `skills/insurance-copilot/SKILL.md`, `references/professional-review-gate.md`, `templates/professional-review-gate.md`, evals, tests, and validators. Any customer-facing, regulated, external-use, or side-effect-adjacent output must name action class, review owner, source verification status, customer-facing approval status, side-effect status, mark customer copy as draft for licensed/compliance review and not approved to send, state no external action is authorized by default, and end with the minimum safe next step.
+
 ## Current Usable State
 
 The manual-first beta is considered usable when all of the following hold:
@@ -153,6 +155,7 @@ The manual-first beta is considered usable when all of the following hold:
 - New Agent Coach Mode explains first steps and forbidden moves;
 - daily agent workflows have references and templates;
 - customer-facing drafts are labeled for licensed/compliance review;
+- Professional Review Gate is available for customer-facing, regulated, external-use, and side-effect-adjacent work, with action class, review owner, source verification status, customer-facing approval status, side-effect status, draft for licensed/compliance review, not approved to send, no external action is authorized, and minimum safe next step;
 - customer-first advocacy is available for underwriting/disclosure, claims/review, policy review found unclaimed benefit, replacement/surrender, complaints, renewal/lapse/reinstatement, and new-agent coaching;
 - public institution packs are separated from private customer/agent data;
 - examples and evals use synthetic or de-identified data;

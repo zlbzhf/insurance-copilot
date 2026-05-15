@@ -18,8 +18,22 @@ All public examples must be synthetic or de-identified. Every customer-facing ou
 6. Ask only for missing facts needed for that workflow.
 7. Produce a review-ready draft with `[verify]` markers where source facts are incomplete.
 8. Name the human review owner before any customer-facing or external-use draft.
+9. Apply **Professional Review Gate** for customer-facing, regulated, external-use, or side-effect-adjacent outputs: name action class, review owner, source verification status, customer-facing approval status, side-effect status, mark customer copy as draft for licensed/compliance review and not approved to send, state no external action is authorized, and give the minimum safe next step.
 
 Agents provide messy real-world context; AI converts it into structured scenarios, draft responses, profile updates, reusable examples, and eval intents. evals are internal quality fixtures; agents do not write JSON eval cases.
+
+## Cross-Workflow Gate: Professional Review Gate
+
+- **When to use:** Before any customer-facing draft, regulated decision-support memo, CRM/calendar/task export draft, claims/replacement/lapse/complaint/customer-advocacy output, public institution pack update, or requested side effect is treated as usable.
+- **Required inputs:** Active workflow, intended audience/use, source status, review owner or `[verify review owner]`, and any requested external action details.
+- **Output:** A **Professional Review Gate** block using `skills/insurance-copilot/templates/professional-review-gate.md`, with action class, review owner, source verification status, customer-facing approval status, side-effect status, customer-first advocacy status, escalation path, and minimum safe next step.
+- **Review owner:** Licensed agent, supervisor, compliance reviewer, claims specialist, pack maintainer, legal/tax/investment professional, or other role appropriate to the routed workflow.
+- **Forbidden actions:** Marking a draft approved to send by default, omitting source verification status, performing a CRM/calendar/customer-send/policy/claim/application side effect, or replacing service with a disclaimer-only answer.
+- **Standard prompt:**
+
+```text
+Use Professional Review Gate on this workflow output before any customer-facing or external use. Classify action class, name review owner, state source verification status, customer-facing approval status, side-effect status, and minimum safe next step. Customer-facing language must be draft for licensed/compliance review, not approved to send, and no external action is authorized.
+```
 
 ## Workflow 1: Agency Playbook Builder
 
