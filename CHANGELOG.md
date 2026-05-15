@@ -11,10 +11,13 @@ This project is currently pre-1.0 and milestone-based. The changelog follows a h
 ### Added
 
 - Placeholder for the next release.
+- Added `docs/product-development-spec.md` as the durable product-development source of truth and usable-state definition.
+- Added `docs/reference-landscape.md` to map external/reference projects to project significance, implementation form, non-goals, and priority.
 
 ### Changed
 
 - Placeholder for changes after `0.1.0`.
+- Clarified that Insurance Copilot is usable now as a manual-first Hermes skill beta, but not production-complete for live automation, customer sending, CRM writes, application submission, claims filing, policy changes, quote generation, or final regulated advice.
 
 ### Fixed
 

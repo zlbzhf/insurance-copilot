@@ -10,6 +10,8 @@ Before substantive changes, read:
 
 - `README.md`
 - `skills/insurance-copilot/SKILL.md`
+- `docs/product-development-spec.md`
+- `docs/reference-landscape.md`
 - `docs/architecture.md`
 - `docs/evidence-driven-standards.md`
 - `standards/current.yaml`
@@ -36,6 +38,12 @@ python3 scripts/validate_repo.py
 Non-public institution materials belong in the agent-private layer, not in public institution packs.
 
 Public institution pack standards evolve through `standards/`, `schemas/`, `prompts/`, `intake/`, `staging/`, and `scripts/ingest_gateway.py`. Do not add one-off templates solely from intuition; record schema gaps from real source processing and update standards through reviewed proposals.
+
+## Product Development SPEC
+
+`docs/product-development-spec.md` is the durable product-development source of truth. Treat the project as usable now as a manual-first Hermes skill beta, but not production-complete for live automation, customer sending, CRM writes, application submission, claims filing, policy changes, quote generation, or final regulated advice.
+
+When borrowing from external/reference projects, use `docs/reference-landscape.md`. Every borrowed pattern must be mapped to project significance, implementation form, non-goals, and priority. Do not chase feature parity or drift into a generic RAG chatbot, web app, CRM, cloud deployment sample, or Claude plugin.
 
 ## Development Rules
 

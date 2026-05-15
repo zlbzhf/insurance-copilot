@@ -9,14 +9,16 @@ Read these files first in a fresh session:
 1. `AGENTS.md` — project rules and non-negotiables.
 2. `README.md` — user-facing install/use docs.
 3. `skills/insurance-copilot/SKILL.md` — canonical Hermes skill entry point.
-4. `docs/architecture.md` — three-layer knowledge architecture.
-5. `docs/evidence-driven-standards.md` — public knowledge standard evolution model.
-6. `standards/current.yaml` — active standard version and component paths.
-7. `standards/source-taxonomy.yaml` — controlled source taxonomy and authority hierarchy.
-8. `standards/page-type-registry.yaml` — canonical page types and required sections.
-9. `docs/quality-gates.md` — acceptance criteria and validation gates.
-10. `ROADMAP.md` — current development priorities.
-11. `scripts/validate_repo.py` — executable structural quality gate.
+4. `docs/product-development-spec.md` — product-development source of truth and usable-state definition.
+5. `docs/reference-landscape.md` — external/reference-project borrow/avoid mapping.
+6. `docs/architecture.md` — three-layer knowledge architecture.
+7. `docs/evidence-driven-standards.md` — public knowledge standard evolution model.
+8. `standards/current.yaml` — active standard version and component paths.
+9. `standards/source-taxonomy.yaml` — controlled source taxonomy and authority hierarchy.
+10. `standards/page-type-registry.yaml` — canonical page types and required sections.
+11. `docs/quality-gates.md` — acceptance criteria and validation gates.
+12. `ROADMAP.md` — current development priorities.
+13. `scripts/validate_repo.py` — executable structural quality gate.
 
 ## Fresh Session Resume Procedure
 
@@ -61,6 +63,7 @@ Do not infer project state from an old conversation summary. If chat context and
 
 - Keep project intent in committed docs, not only in chat.
 - Every structural decision should be reflected in `AGENTS.md`, `README.md`, `docs/`, or `skills/insurance-copilot/SKILL.md`.
+- Product direction belongs in `docs/product-development-spec.md` and `ROADMAP.md`; external inspiration and competitor/reference analysis belong in `docs/reference-landscape.md`.
 - Every new workflow should have at least one reference file, one template or example if practical, and validator coverage if it affects structure.
 - Every new institution pack should include `PACK.md`, `SCHEMA.md`, `index.md`, `log.md`, and validation coverage.
 - Before finalizing any development turn, run `python3 scripts/validate_repo.py` and commit/push unless the user explicitly asks not to.

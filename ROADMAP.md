@@ -10,9 +10,15 @@ Product direction: **customer-first advocacy within compliance boundaries**. Com
 
 Durable product documents:
 
+- `docs/product-development-spec.md`
+- `docs/reference-landscape.md`
 - `docs/customer-first-service-philosophy.md`
 - `docs/customer-advocacy-operating-model.md`
 - `docs/customer-service-scenario-matrix.md`
+
+Product SPEC status: Insurance Copilot is usable now as a manual-first Hermes skill beta for licensed insurance professionals. It is not production-complete for live automation, customer sending, CRM writes, application submission, claims filing, policy changes, quote generation, or final regulated advice.
+
+Reference-landscape rule: external patterns are useful only when mapped to project significance, implementation form, non-goals, and priority. Preserve Hermes-first, manual-first, practitioner-facing, customer-first, public/private-separated, runtime-effective differentiation instead of chasing feature parity.
 
 Knowledge architecture:
 

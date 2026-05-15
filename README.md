@@ -43,9 +43,15 @@ from idea to product principle to operating model to workflow to scenario matrix
 
 The durable service model is documented in:
 
+- `docs/product-development-spec.md`
+- `docs/reference-landscape.md`
 - `docs/customer-first-service-philosophy.md`
 - `docs/customer-advocacy-operating-model.md`
 - `docs/customer-service-scenario-matrix.md`
+
+Product Development SPEC: `docs/product-development-spec.md` is the product-development source of truth: Insurance Copilot is usable now as a manual-first Hermes skill beta, but it is not production-complete for live automation, customer sending, CRM writes, application submission, claims filing, policy changes, quote generation, or final regulated advice.
+
+`docs/reference-landscape.md` records external/reference-project analysis. Borrowed patterns must be mapped to project significance, implementation form, non-goals, and priority before they become roadmap direction.
 
 Customer-impacting advocacy memos use `skills/insurance-copilot/templates/customer-advocacy-memo.md` as the runtime output structure.
 
@@ -422,7 +428,7 @@ examples/                     Synthetic sample cases and expected outputs
 evals/                        Static regression fixtures and expected outputs
 cron/                         Scheduled workflow recipes for Hermes cron
 mcp/                          Optional connector notes and contracts
-docs/                         Architecture, privacy, action safety, quality gates
+docs/                         Architecture, product SPEC, reference landscape, privacy, action safety, quality gates
 scripts/                      Repo validation, packaging, eval, connector, watcher helpers
 AGENTS.md                     Hermes project instructions
 ROADMAP.md                    Durable project direction

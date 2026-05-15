@@ -45,9 +45,15 @@ from idea to product principle to operating model to workflow to scenario matrix
 
 相关文档：
 
+- `docs/product-development-spec.md`
+- `docs/reference-landscape.md`
 - `docs/customer-first-service-philosophy.md`
 - `docs/customer-advocacy-operating-model.md`
 - `docs/customer-service-scenario-matrix.md`
+
+`docs/product-development-spec.md` 是产品开发的事实来源：Insurance Copilot 目前已经可以作为 manual-first Hermes skill beta 给持牌保险专业人士使用，但还不是可直接用于 live automation、客户发送、CRM 写入、投保提交、理赔提交、保单变更、报价引擎或最终监管建议的生产系统。
+
+`docs/reference-landscape.md` 记录外部/参考项目分析。任何借鉴模式都必须说明 project significance、implementation form、non-goals 和 priority，才能进入路线图。
 
 涉及客户权益影响的 advocacy memo 使用运行时模板：
 
@@ -437,7 +443,7 @@ examples/                     合成样例和期望输出
 evals/                        静态回归 fixtures 和 expected outputs
 cron/                         Hermes cron 的计划工作流 recipes
 mcp/                          可选 connector notes 和 contracts
-docs/                         架构、隐私、操作安全、质量门
+docs/                         架构、Product SPEC、reference landscape、隐私、操作安全、质量门
 scripts/                      仓库验证、打包、评测、连接器、watcher helpers
 AGENTS.md                     Hermes 项目指令
 ROADMAP.md                    持久项目方向

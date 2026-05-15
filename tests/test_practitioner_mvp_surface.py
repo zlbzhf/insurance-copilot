@@ -23,6 +23,10 @@ def test_readme_leads_with_manual_practitioner_mvp_not_cron_or_ci() -> None:
     assert "workflow router, not a menu bot" in text
     assert "manual-first" in text
     assert "## Runtime-Effective Constraint Model" in text
+    assert "docs/product-development-spec.md" in text
+    assert "docs/reference-landscape.md" in text
+    assert "usable now as a manual-first Hermes skill beta" in text
+    assert "not production-complete" in text
     assert "not the runtime source by itself" in text
 
     mvp_pos = text.index("## Practical MVP: How an Agent Uses It")
@@ -49,6 +53,9 @@ def test_chinese_readme_and_changelogs_are_first_class_project_surfaces() -> Non
         "客户优先",
         "合规边界",
         "运行时约束链",
+        "docs/product-development-spec.md",
+        "docs/reference-landscape.md",
+        "manual-first Hermes skill beta",
         "本身不是运行时来源",
         "公共保险机构知识包",
         "代理人私有工作区",
@@ -65,6 +72,8 @@ def test_chinese_readme_and_changelogs_are_first_class_project_surfaces() -> Non
         "### Security and Compliance",
         "customer-first advocacy within compliance boundaries",
         "runtime-effective",
+        "docs/product-development-spec.md",
+        "docs/reference-landscape.md",
     ]:
         assert phrase in changelog
 
@@ -77,6 +86,8 @@ def test_chinese_readme_and_changelogs_are_first_class_project_surfaces() -> Non
         "### 安全与合规",
         "customer-first advocacy within compliance boundaries",
         "runtime-effective constraints",
+        "docs/product-development-spec.md",
+        "docs/reference-landscape.md",
     ]:
         assert phrase in zh_changelog
 
@@ -250,6 +261,12 @@ def test_service_philosophy_is_systemic_not_case_patch() -> None:
         assert "empty neutrality is insufficient" in lowered
         assert "from idea to product principle to operating model to workflow to scenario matrix to eval" in lowered
 
+    assert "docs/product-development-spec.md" in roadmap
+    assert "docs/reference-landscape.md" in roadmap
+    assert "usable now as a manual-first Hermes skill beta" in roadmap
+    assert "not production-complete for live automation" in roadmap
+    assert "project significance, implementation form, non-goals, and priority" in roadmap
+
     for phrase in [
         "underwriting / disclosure",
         "claims / review",
@@ -326,6 +343,10 @@ def test_runtime_constraints_are_not_docs_only() -> None:
         "Maintainer governance",
         "Executable gates",
         "not every document is end-user reading",
+        "docs/product-development-spec.md",
+        "docs/reference-landscape.md",
+        "product-development source of truth",
+        "reference-project borrow/avoid decisions",
     ]:
         assert phrase in doc_map
 
@@ -358,6 +379,54 @@ def test_runtime_constraints_are_not_docs_only() -> None:
     assert "Empty neutrality is insufficient" in template
     assert "draft for licensed/compliance review" in template
     assert "do not send" in template.lower()
+
+
+def test_product_development_spec_and_reference_landscape_are_gated() -> None:
+    spec = read("docs/product-development-spec.md")
+    landscape = read("docs/reference-landscape.md")
+    quality = read("docs/quality-gates.md")
+    agents = read("AGENTS.md")
+    continuity = read("docs/continuity.md")
+
+    for text in [spec, quality, agents, continuity]:
+        assert "docs/product-development-spec.md" in text
+
+    for phrase in [
+        "usable now as a manual-first Hermes skill beta",
+        "not production-complete",
+        "live automation, customer sending, CRM writes, application submission, claims filing, policy changes, quote generation, or final regulated advice",
+        "customer-first advocacy within compliance boundaries",
+        "workflow router, not a menu bot",
+        "Runtime-Effective Constraint Model",
+        "docs/ alone is not runtime-effective",
+        "Reference-Landscape Requirement",
+        "Definition of Done for Product Changes",
+    ]:
+        assert phrase in spec
+
+    for text in [landscape, quality, agents, continuity]:
+        assert "docs/reference-landscape.md" in text
+
+    for phrase in [
+        "not reinventing a fully solved open-source product",
+        "Hermes-first skill packaging",
+        "customer-first advocacy within compliance boundaries",
+        "project significance",
+        "implementation form",
+        "non-goals",
+        "priority",
+        "anthropics/claude-for-legal",
+        "Skypoint / Insurance Copilot commercial case study",
+        "AWS sample agentic insurance claims processing on EKS",
+        "AWS sample insurance policy AI assistant",
+        "suleyman-celik/LLM-RAG-Insurance-Assistant",
+        "Borrow / Avoid Matrix",
+        "Do Not Do Yet",
+    ]:
+        assert phrase in landscape
+
+    assert "Hermes-first, manual-first, practitioner-facing, customer-first, public/private-separated, runtime-effective differentiation" in quality
+
 
 def test_systemic_eval_cases_cover_beyond_two_examples() -> None:
     required_cases = {

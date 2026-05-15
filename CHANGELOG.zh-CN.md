@@ -11,10 +11,13 @@
 ### 新增
 
 - 预留给下一个版本的新功能。
+- 新增 `docs/product-development-spec.md`，作为持久的产品开发事实来源和可用状态定义。
+- 新增 `docs/reference-landscape.md`，用于把外部/参考项目映射到 project significance、implementation form、non-goals 和 priority。
 
 ### 变更
 
 - 预留给 `0.1.0` 之后的变更。
+- 明确 Insurance Copilot 目前已经可作为 manual-first Hermes skill beta 使用，但还不是可直接用于 live automation、客户发送、CRM 写入、投保提交、理赔提交、保单变更、报价引擎或最终监管建议的生产系统。
 
 ### 修复
 

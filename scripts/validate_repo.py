@@ -38,6 +38,8 @@ REQUIRED = [
     ROOT / "docs" / "documentation-map.md",
     ROOT / "docs" / "quickstart.md",
     ROOT / "docs" / "workflow-surface.md",
+    ROOT / "docs" / "product-development-spec.md",
+    ROOT / "docs" / "reference-landscape.md",
     ROOT / "docs" / "customer-first-service-philosophy.md",
     ROOT / "docs" / "customer-advocacy-operating-model.md",
     ROOT / "docs" / "customer-service-scenario-matrix.md",
@@ -308,13 +310,73 @@ def main() -> int:
         "Maintainer governance",
         "Executable gates",
         "not every document is end-user reading",
+        "docs/product-development-spec.md",
+        "docs/reference-landscape.md",
+        "product-development source of truth",
+        "reference-project borrow/avoid decisions",
     ]:
         if phrase not in documentation_map:
             return fail(f"documentation map missing phrase: {phrase}")
+    product_spec = (ROOT / "docs" / "product-development-spec.md").read_text()
+    for phrase in [
+        "Product Development SPEC",
+        "usable now as a manual-first Hermes skill beta",
+        "not production-complete",
+        "live automation, customer sending, CRM writes, application submission, claims filing, policy changes, quote generation, or final regulated advice",
+        "customer-first advocacy within compliance boundaries",
+        "workflow router, not a menu bot",
+        "Three-Layer Product Architecture",
+        "Runtime-Effective Constraint Model",
+        "docs/ alone is not runtime-effective",
+        "Reference-Landscape Requirement",
+        "project significance",
+        "implementation form",
+        "non-goals",
+        "priority",
+        "Definition of Done for Product Changes",
+        "First-session practitioner loop",
+    ]:
+        if phrase not in product_spec:
+            return fail(f"product development SPEC missing phrase: {phrase}")
+    reference_landscape = (ROOT / "docs" / "reference-landscape.md").read_text()
+    for phrase in [
+        "Reference Landscape",
+        "not reinventing a fully solved open-source product",
+        "Hermes-first skill packaging",
+        "customer-first advocacy within compliance boundaries",
+        "public/private data separation",
+        "project significance",
+        "implementation form",
+        "non-goals",
+        "priority",
+        "anthropics/claude-for-legal",
+        "Skypoint / Insurance Copilot commercial case study",
+        "AWS sample agentic insurance claims processing on EKS",
+        "AWS sample insurance policy AI assistant",
+        "suleyman-celik/LLM-RAG-Insurance-Assistant",
+        "Borrow / Avoid Matrix",
+        "Do Not Do Yet",
+    ]:
+        if phrase not in reference_landscape:
+            return fail(f"reference landscape missing phrase: {phrase}")
     quality_gates = (ROOT / "docs" / "quality-gates.md").read_text()
     for phrase in runtime_constraints[1:]:
         if phrase not in quality_gates:
             return fail(f"quality gates missing runtime constraint phrase: {phrase}")
+    for phrase in [
+        "Product SPEC and Reference-Landscape Gate",
+        "docs/product-development-spec.md",
+        "usable now as a manual-first Hermes skill beta",
+        "not production-complete for live automation",
+        "docs/reference-landscape.md",
+        "project significance",
+        "implementation form",
+        "non-goals",
+        "priority",
+        "Hermes-first, manual-first, practitioner-facing, customer-first, public/private-separated, runtime-effective differentiation",
+    ]:
+        if phrase not in quality_gates:
+            return fail(f"quality gates missing product SPEC/reference landscape phrase: {phrase}")
     advocacy_template = (TEMPLATE_DIR / "customer-advocacy-memo.md").read_text()
     for phrase in [
         "Customer Advocacy Memo Template",
@@ -381,6 +443,9 @@ def main() -> int:
         "Who It Is For",
         "What It Does Not Do",
         "Runtime-Effective Constraint Model",
+        "Product Development SPEC",
+        "docs/product-development-spec.md",
+        "docs/reference-landscape.md",
         "not the runtime source by itself",
         "runtime-effective constraints must live",
         "Contributing",
@@ -445,6 +510,9 @@ def main() -> int:
         "Agents provide messy real-world context",
         "evals are internal quality fixtures",
         "运行时约束链",
+        "docs/product-development-spec.md",
+        "docs/reference-landscape.md",
+        "manual-first Hermes skill beta",
         "本身不是运行时来源",
         "skills/insurance-copilot/templates/customer-advocacy-memo.md",
         "公共保险机构知识包",
@@ -470,6 +538,8 @@ def main() -> int:
         "customer-first advocacy within compliance boundaries",
         "runtime-effective",
         "README.zh-CN.md",
+        "docs/product-development-spec.md",
+        "docs/reference-landscape.md",
     ]:
         if snippet not in changelog:
             return fail(f"CHANGELOG missing required snippet: {snippet}")
@@ -487,6 +557,8 @@ def main() -> int:
         "customer-first advocacy within compliance boundaries",
         "runtime-effective constraints",
         "README.zh-CN.md",
+        "docs/product-development-spec.md",
+        "docs/reference-landscape.md",
     ]:
         if snippet not in zh_changelog:
             return fail(f"Chinese CHANGELOG missing required snippet: {snippet}")
@@ -577,6 +649,17 @@ def main() -> int:
     philosophy_doc = (ROOT / "docs" / "customer-first-service-philosophy.md").read_text()
     operating_doc = (ROOT / "docs" / "customer-advocacy-operating-model.md").read_text()
     matrix_doc = (ROOT / "docs" / "customer-service-scenario-matrix.md").read_text()
+    roadmap = (ROOT / "ROADMAP.md").read_text()
+    for phrase in [
+        "docs/product-development-spec.md",
+        "docs/reference-landscape.md",
+        "usable now as a manual-first Hermes skill beta",
+        "not production-complete for live automation",
+        "project significance, implementation form, non-goals, and priority",
+        "Hermes-first, manual-first, practitioner-facing, customer-first, public/private-separated, runtime-effective differentiation",
+    ]:
+        if phrase not in roadmap:
+            return fail(f"ROADMAP missing product SPEC/reference landscape phrase: {phrase}")
     for label, doc in [
         ("customer-first service philosophy", philosophy_doc),
         ("customer advocacy operating model", operating_doc),

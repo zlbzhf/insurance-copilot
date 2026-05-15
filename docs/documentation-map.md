@@ -100,6 +100,8 @@ Files:
 - `docs/continuity.md`
 - `docs/quality-gates.md`
 - `ROADMAP.md`
+- `docs/product-development-spec.md`
+- `docs/reference-landscape.md`
 - `docs/architecture.md`
 - `docs/evidence-driven-standards.md`
 
@@ -107,6 +109,7 @@ Purpose:
 
 - Preserve project direction after context compression or handoff.
 - Define non-negotiables, validation commands, and architecture boundaries.
+- Record product-development source of truth, usable-state definition, and reference-project borrow/avoid decisions.
 - Explain why public knowledge, private workspace data, and runtime skill behavior are separate.
 
 Runtime effect:
@@ -194,6 +197,7 @@ Minimum rule:
 
 - If a principle changes assistant behavior, add or update `SKILL.md`, the relevant reference, and at least one template/eval/validator check.
 - If it is only explanation for maintainers, keep it in `docs/` and label the reader clearly.
+- If a feature is borrowed from an external/reference project, document project significance, implementation form, non-goals, and priority in `docs/reference-landscape.md` before treating it as roadmap direction.
 
 ## Current P0 Runtime Constraints
 

@@ -29,6 +29,20 @@ Required:
 
 Reject changes that add only explanatory docs for a behavior-changing rule without also updating the runtime skill/reference/template and an executable gate.
 
+## Product SPEC and Reference-Landscape Gate
+
+Product direction must survive context compression and must not depend on chat memory.
+
+Required:
+
+- `docs/product-development-spec.md` states that Insurance Copilot is usable now as a manual-first Hermes skill beta.
+- `docs/product-development-spec.md` also states it is not production-complete for live automation, customer sending, CRM writes, application submission, claims filing, policy changes, quote generation, or final regulated advice.
+- `docs/reference-landscape.md` maps external/reference patterns to project significance, implementation form, non-goals, and priority.
+- Borrowed patterns must preserve Hermes-first, manual-first, practitioner-facing, customer-first, public/private-separated, runtime-effective differentiation.
+- README, ROADMAP, AGENTS, continuity, documentation map, tests, and validator point to the SPEC and reference landscape.
+
+Reject changes that copy competitor/reference features without mapping what to borrow, what not to copy, and where the pattern belongs in this repository.
+
 ## Agent-Friendly Onboarding Gate
 
 The practice profile template is an internal storage format, not a user-facing form.
