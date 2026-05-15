@@ -151,6 +151,10 @@ Current source/citation/data-boundary runtime gate: **Source Grounding and Data 
 
 Runtime-effective P2 safeguard: **Private Workspace Trace and Readiness Gate** reviews the **Private Workspace Audit Trace** for a **read-only local/private workspace connector** and **readiness gate dry-run**. The review must include the **audit-style trace**, `source_trace`, `read_only_verified`, `workspace_unchanged`, **metadata/checksums only**, **No External Writes**, `live_cron_created: false`, and **no live automation** before any future scheduled-watcher discussion.
 
+## External Write Action Boundary Gate
+
+Runtime-effective P3 safeguard: **External Write Action Boundary Gate** reviews requests for **write-capable integrations** including **CRM writes**, **customer sending**, **claims filing**, **application submission**, **policy changes**, **quote generation**, **carrier contact**, and **publication**. The default product state is **design-only**, **out of scope unless explicitly approved**, **no write-capable integration is enabled**, **no external write tool is authorized**, **dry-run/read-only**, **manual-first**, and closed with **Professional Review Gate** before any customer-facing, regulated, external-use, or side-effect-adjacent output.
+
 ## Current Usable State
 
 The manual-first beta is considered usable when all of the following hold:

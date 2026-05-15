@@ -51,3 +51,7 @@ python3 scripts/local_file_connectors.py daily-workbench   --workspace examples/
 ```
 
 This is not an MCP server and does not call external systems. It provides a safe bridge between private workspace files and the Daily Agent Workbench workflow while preserving the same safety posture expected from future production connectors: read-only by default, source-aware, `[verify]` on uncertain facts, and no external side effects.
+
+## External Write Action Boundary Gate
+
+MCP connector notes are **manual-first** and **dry-run/read-only** unless separately approved. Any **write-capable integrations** request involving **CRM writes**, **customer sending**, **claims filing**, **application submission**, **policy changes**, **quote generation**, **carrier contact**, **publication**, webhook dispatch, or live scheduler creation must use **External Write Action Boundary Gate**: **design-only**, **out of scope unless explicitly approved**, **no write-capable integration is enabled**, **no external write tool is authorized**, and **Professional Review Gate** handoff before any customer-facing, regulated, external-use, or side-effect-adjacent output.

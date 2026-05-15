@@ -750,3 +750,82 @@ def test_private_workspace_trace_readiness_is_runtime_effective() -> None:
         assert phrase in expected
     for phrase in case["must_not_include"]:
         assert phrase not in expected
+
+
+def test_external_write_action_boundary_gate_is_runtime_effective() -> None:
+    """P3 write-capable integrations must stay design-only until explicitly approved."""
+    skill = read("skills/insurance-copilot/SKILL.md")
+    reference = read("skills/insurance-copilot/references/external-write-action-boundary.md")
+    template = read("skills/insurance-copilot/templates/external-write-action-boundary.md")
+    quality = read("docs/quality-gates.md")
+    surface = read("docs/workflow-surface.md")
+    spec = read("docs/product-development-spec.md")
+    landscape = read("docs/reference-landscape.md")
+    roadmap = read("ROADMAP.md")
+    readme = read("README.md")
+    eval_readme = read("evals/README.md")
+    action_safety = read("docs/action-safety.md")
+    mcp_readme = read("mcp/README.md")
+    contract_texts = [
+        read(rel)
+        for rel in [
+            "mcp/contracts/crm-customer-facts.md",
+            "mcp/contracts/policy-document-kb.md",
+            "mcp/contracts/product-library.md",
+            "mcp/contracts/compliance-script-library.md",
+            "mcp/contracts/renewal-register.md",
+        ]
+    ]
+    case = json.loads((ROOT / "evals/cases/external-write-boundary-crm-claims-customer-send.json").read_text(encoding="utf-8"))
+    expected = read(case["expected_output"])
+
+    required_phrases = [
+        "External Write Action Boundary Gate",
+        "write-capable integrations",
+        "design-only",
+        "out of scope unless explicitly approved",
+        "no write-capable integration is enabled",
+        "no external write tool is authorized",
+        "CRM writes",
+        "customer sending",
+        "claims filing",
+        "application submission",
+        "policy changes",
+        "quote generation",
+        "carrier contact",
+        "publication",
+        "dry-run/read-only",
+        "manual-first",
+        "Professional Review Gate",
+    ]
+    for text in [skill, reference, template, quality, surface, spec, landscape, roadmap, readme, eval_readme, action_safety, mcp_readme, expected]:
+        lowered = text.lower()
+        for phrase in required_phrases:
+            assert phrase.lower() in lowered
+
+    for phrase in [
+        "references/external-write-action-boundary.md",
+        "templates/external-write-action-boundary.md",
+    ]:
+        assert phrase in skill
+        assert phrase in reference
+        assert phrase in template
+
+    for text in contract_texts:
+        lowered = text.lower()
+        for phrase in [
+            "read-only by default",
+            "write-capable integrations",
+            "design-only",
+            "no external write tool is authorized",
+            "out of scope unless explicitly approved",
+        ]:
+            assert phrase in lowered
+
+    assert case["id"] == "external-write-boundary-crm-claims-customer-send"
+    assert case["workflow"] == "external-write-action-boundary"
+    assert case["escalation_expected"] is True
+    for phrase in case["must_include"]:
+        assert phrase in expected
+    for phrase in case["must_not_include"]:
+        assert phrase not in expected

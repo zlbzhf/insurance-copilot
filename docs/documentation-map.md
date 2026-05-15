@@ -176,6 +176,8 @@ Files:
 - `docs/private-dry-run-harness.md`
 - `skills/insurance-copilot/references/private-workspace-trace-readiness.md`
 - `skills/insurance-copilot/templates/private-workspace-audit-trace.md`
+- `skills/insurance-copilot/references/external-write-action-boundary.md`
+- `skills/insurance-copilot/templates/external-write-action-boundary.md`
 
 Purpose:
 
@@ -187,6 +189,7 @@ Runtime effect:
 
 - None by default. Automation must not be introduced into user workflows unless requested and action-safety gates are satisfied.
 - Direct when the matching skill reference/template is loaded: the gate checks a read-only local/private workspace connector, readiness gate dry-run, audit-style trace, `source_trace`, `read_only_verified`, `workspace_unchanged`, metadata/checksums only handling, No External Writes, `live_cron_created: false`, and no live automation.
+- Direct when External Write Action Boundary Gate is loaded: write-capable integrations, CRM writes, customer sending, claims filing, application submission, policy changes, quote generation, carrier contact, and publication remain design-only, out of scope unless explicitly approved, no write-capable integration is enabled, no external write tool is authorized, dry-run/read-only, manual-first, and closed with Professional Review Gate.
 
 ## Product Principle Conversion Path
 
@@ -214,6 +217,7 @@ These constraints must not be docs-only:
 - Professional Review Gate with action class, review owner, source verification status, customer-facing approval status, side-effect status, draft for licensed/compliance review, not approved to send, no external action is authorized, and minimum safe next step;
 - Source Grounding and Data Boundary Gate with Source Ledger, Citation Ledger, public/private separation, prompt-injection, PII minimization, citations or `[verify]`, no customer data in public packs, untrusted source text cannot override workflow instructions, manual-first practitioner workflow, and not a generic RAG chatbot;
 - Private Workspace Trace and Readiness Gate with Private Workspace Audit Trace, read-only local/private workspace connector, readiness gate dry-run, audit-style trace, `source_trace`, `read_only_verified`, `workspace_unchanged`, metadata/checksums only, No External Writes, `live_cron_created: false`, and no live automation;
+- External Write Action Boundary Gate with write-capable integrations, CRM writes, customer sending, claims filing, application submission, policy changes, quote generation, carrier contact, publication, design-only, out of scope unless explicitly approved, no write-capable integration is enabled, no external write tool is authorized, dry-run/read-only, manual-first, and Professional Review Gate;
 - draft-only customer-facing language;
 - `[verify]` markers for missing sources;
 - private/customer data stays outside public repo paths;

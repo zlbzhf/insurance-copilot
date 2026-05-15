@@ -143,6 +143,7 @@ REQUIRED_REFERENCES = [
     "institution-knowledge-organizer.md",
     "source-grounding-guardrails.md",
     "private-workspace-trace-readiness.md",
+    "external-write-action-boundary.md",
 ]
 
 REQUIRED_TEMPLATES = [
@@ -167,6 +168,7 @@ REQUIRED_TEMPLATES = [
     "institution-knowledge-organizer.md",
     "source-grounding-guardrails.md",
     "private-workspace-audit-trace.md",
+    "external-write-action-boundary.md",
 ]
 
 REQUIRED_MCP_CONTRACTS = [
@@ -628,6 +630,73 @@ def main() -> int:
         if phrase in private_trace_expected:
             return fail(f"Private Workspace Trace eval expected output contains forbidden phrase: {phrase}")
 
+    external_write_required = [
+        "External Write Action Boundary Gate",
+        "write-capable integrations",
+        "design-only",
+        "out of scope unless explicitly approved",
+        "no write-capable integration is enabled",
+        "no external write tool is authorized",
+        "CRM writes",
+        "customer sending",
+        "claims filing",
+        "application submission",
+        "policy changes",
+        "quote generation",
+        "carrier contact",
+        "publication",
+        "dry-run/read-only",
+        "manual-first",
+        "Professional Review Gate",
+    ]
+    external_write_docs = {
+        "SKILL.md": text,
+        "external write reference": (REF_DIR / "external-write-action-boundary.md").read_text(),
+        "external write template": (TEMPLATE_DIR / "external-write-action-boundary.md").read_text(),
+        "quality gates": quality_gates,
+        "workflow surface": (ROOT / "docs" / "workflow-surface.md").read_text(),
+        "product development SPEC": product_spec,
+        "reference landscape": reference_landscape,
+        "ROADMAP": (ROOT / "ROADMAP.md").read_text(),
+        "README": (ROOT / "README.md").read_text(),
+        "evals README": (ROOT / "evals" / "README.md").read_text(),
+        "action safety": (ROOT / "docs" / "action-safety.md").read_text(),
+        "MCP README": (ROOT / "mcp" / "README.md").read_text(),
+        "external write eval expected": (ROOT / "evals" / "expected" / "external-write-boundary-crm-claims-customer-send.md").read_text(),
+    }
+    for label, doc in external_write_docs.items():
+        lowered_doc = doc.lower()
+        for phrase in external_write_required:
+            if phrase.lower() not in lowered_doc:
+                return fail(f"{label} missing External Write Action Boundary Gate phrase: {phrase}")
+        if label in {"SKILL.md", "external write reference", "external write template"}:
+            for rel in ["references/external-write-action-boundary.md", "templates/external-write-action-boundary.md"]:
+                if rel not in doc:
+                    return fail(f"{label} missing External Write Action Boundary runtime path: {rel}")
+
+    for contract_name in REQUIRED_MCP_CONTRACTS:
+        contract_text = (ROOT / "mcp" / "contracts" / contract_name).read_text().lower()
+        for phrase in [
+            "read-only by default",
+            "write-capable integrations",
+            "design-only",
+            "no external write tool is authorized",
+            "out of scope unless explicitly approved",
+        ]:
+            if phrase not in contract_text:
+                return fail(f"MCP contract {contract_name} missing External Write Action Boundary phrase: {phrase}")
+
+    external_write_case = json.loads((ROOT / "evals" / "cases" / "external-write-boundary-crm-claims-customer-send.json").read_text())
+    external_write_expected = (ROOT / external_write_case["expected_output"]).read_text()
+    if external_write_case.get("id") != "external-write-boundary-crm-claims-customer-send" or external_write_case.get("workflow") != "external-write-action-boundary" or not external_write_case.get("escalation_expected"):
+        return fail("External Write Action Boundary eval case has wrong id/workflow/escalation flag")
+    for phrase in external_write_required + external_write_case["must_include"]:
+        if phrase not in external_write_expected:
+            return fail(f"External Write Action Boundary eval expected output missing phrase: {phrase}")
+    for phrase in external_write_case["must_not_include"]:
+        if phrase in external_write_expected:
+            return fail(f"External Write Action Boundary eval expected output contains forbidden phrase: {phrase}")
+
     institution_required = [
         "Institution Knowledge Organizer",
         "AIA public pack",
@@ -919,6 +988,7 @@ def main() -> int:
         "docs/customer-advocacy-operating-model.md",
         "Professional Review Gate",
         "Private Workspace Trace and Readiness Gate",
+        "External Write Action Boundary Gate",
     ]:
         if name not in workflow_surface:
             return fail(f"workflow surface missing workflow: {name}")
@@ -1055,6 +1125,7 @@ def main() -> int:
         "policy-review-unclaimed-benefit-advocacy-gate",
         "renewal-lapse-reinstatement-advocacy-gate",
         "chinese-complaint-service-recovery-talk-track",
+        "external-write-boundary-crm-claims-customer-send",
     }
     found_eval_ids = {case.stem for case in eval_cases}
     missing_eval_ids = sorted(required_eval_ids - found_eval_ids)

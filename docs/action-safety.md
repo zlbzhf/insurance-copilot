@@ -35,3 +35,7 @@ Before any side effect, require:
 - acknowledgment of remaining `[verify]` items.
 
 If any element is missing, do not perform the side effect.
+
+## External Write Action Boundary Gate
+
+Use **External Write Action Boundary Gate** for any **write-capable integrations** request, including **CRM writes**, **customer sending**, **claims filing**, **application submission**, **policy changes**, **quote generation**, **carrier contact**, and **publication**. These are **design-only** and **out of scope unless explicitly approved**; **no write-capable integration is enabled** and **no external write tool is authorized** by default. Allowed work is **manual-first** **dry-run/read-only** planning, manual checklist, task export draft, or pseudocode, followed by **Professional Review Gate** before any customer-facing, regulated, external-use, or side-effect-adjacent step.

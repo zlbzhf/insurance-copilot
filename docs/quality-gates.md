@@ -30,6 +30,39 @@ Required:
 
 Reject changes that add only explanatory docs for a behavior-changing rule without also updating the runtime skill/reference/template and an executable gate.
 
+## External Write Action Boundary Gate
+
+Write-capable integration patterns must become an insurance-specific runtime action boundary, not a hidden external-write path. The **External Write Action Boundary Gate** is the cross-workflow block for **write-capable integrations**, **CRM writes**, **customer sending**, **claims filing**, **application submission**, **policy changes**, **quote generation**, **carrier contact**, **publication**, webhook dispatch, live scheduler creation, and other external system mutations.
+
+Required runtime surfaces:
+
+- `skills/insurance-copilot/SKILL.md` routes to `references/external-write-action-boundary.md`.
+- `skills/insurance-copilot/references/external-write-action-boundary.md` defines the method.
+- `skills/insurance-copilot/templates/external-write-action-boundary.md` defines the output block.
+- `evals/cases/external-write-boundary-crm-claims-customer-send.json`, `evals/expected/external-write-boundary-crm-claims-customer-send.md`, `tests/test_practitioner_mvp_surface.py`, and `scripts/validate_repo.py` keep it executable.
+
+Required phrases and fields:
+
+- External Write Action Boundary Gate;
+- write-capable integrations;
+- design-only;
+- out of scope unless explicitly approved;
+- no write-capable integration is enabled;
+- no external write tool is authorized;
+- CRM writes;
+- customer sending;
+- claims filing;
+- application submission;
+- policy changes;
+- quote generation;
+- carrier contact;
+- publication;
+- dry-run/read-only;
+- manual-first;
+- Professional Review Gate.
+
+Reject changes that create live CRM writes, customer sending, claims filing, application submission, policy changes, quote generation, carrier contact, publication, webhooks, live schedulers, or write-capable MCP/API tools from a default workflow. A design-only memo, manual checklist, task export draft, or pseudocode is acceptable only when it remains dry-run/read-only and no external write tool is authorized.
+
 ## Private Workspace Trace and Readiness Gate
 
 Private connector and readiness patterns must become an insurance-specific runtime gate, not a hidden automation path. The **Private Workspace Trace and Readiness Gate** is the cross-workflow audit block for local/private workspace connector bundles, private dry-run outputs, readiness gate dry-run results, and scheduled-watcher readiness discussions.
@@ -272,12 +305,12 @@ python3 scripts/run_evals.py
 python3 scripts/validate_knowledge_pack.py knowledge/institutions/aia
 python3 scripts/validate_knowledge_pack.py knowledge/institutions/_template --template
 python3 scripts/validate_agent_workspace.py agent-workspace-template --template
-python3 scripts/private_workspace_readiness.py --workspace examples/local-connectors/synthetic-agent-workspace --as-of 2026-05-14 --format json
+python3 scripts/private_workspace_readiness.py --workspace examples/local-connectors/synthetic-agent-workspace --as-of 2026-05-14 --format json || test $? -eq 1
 python3 scripts/private_dry_run.py --workspace examples/local-connectors/synthetic-agent-workspace --as-of 2026-05-14 --out /tmp/insurance-copilot-dry-run --force || test $? -eq 1
 python3 scripts/ingest_gateway.py --help
 ```
 
-A change is not ready to commit if any command fails.
+A change is not ready to commit if any command fails unexpectedly. The synthetic private workspace readiness command is intentionally a negative gate and should exit `1` until blocker fixtures are resolved; the required shell form asserts that blocked status explicitly with `|| test $? -eq 1`.
 
 
 ## Practical Workflow Beta Gates

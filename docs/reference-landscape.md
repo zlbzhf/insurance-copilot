@@ -250,6 +250,10 @@ Implication:
 
 Runtime-effective P2 safeguard: **Private Workspace Trace and Readiness Gate** reviews the **Private Workspace Audit Trace** for a **read-only local/private workspace connector** and **readiness gate dry-run**. The review must include the **audit-style trace**, `source_trace`, `read_only_verified`, `workspace_unchanged`, **metadata/checksums only**, **No External Writes**, `live_cron_created: false`, and **no live automation** before any future scheduled-watcher discussion.
 
+## External Write Action Boundary Gate
+
+Runtime-effective P3 safeguard: **External Write Action Boundary Gate** converts connector, CRM, claims-system, carrier-portal, quote-engine, and publication-system inspiration into a manual insurance-agent boundary rather than a live integration. It covers **write-capable integrations**, **CRM writes**, **customer sending**, **claims filing**, **application submission**, **policy changes**, **quote generation**, **carrier contact**, and **publication**. Implementation form: `skills/insurance-copilot/references/external-write-action-boundary.md`, `skills/insurance-copilot/templates/external-write-action-boundary.md`, evals, tests, and validators. Non-goal: enabling writes by default. Priority: P3 and **design-only**, **out of scope unless explicitly approved**, **no write-capable integration is enabled**, **no external write tool is authorized**, **dry-run/read-only**, **manual-first**, with **Professional Review Gate** handoff.
+
 ## Borrow / Avoid Matrix
 
 ### Borrow

@@ -36,6 +36,19 @@ Agents provide messy real-world context; AI converts it into structured scenario
 Use Professional Review Gate on this workflow output before any customer-facing or external use. Classify action class, name review owner, state source verification status, customer-facing approval status, side-effect status, and minimum safe next step. Customer-facing language must be draft for licensed/compliance review, not approved to send, and no external action is authorized.
 ```
 
+## Cross-Workflow Gate: External Write Action Boundary Gate
+
+- **When to use:** Before any request to design, enable, test, or execute **write-capable integrations**, **CRM writes**, **customer sending**, **claims filing**, **application submission**, **policy changes**, **quote generation**, **carrier contact**, **publication**, webhook dispatch, live scheduler creation, or another external write.
+- **Runtime files:** `skills/insurance-copilot/references/external-write-action-boundary.md` and `skills/insurance-copilot/templates/external-write-action-boundary.md`.
+- **Output:** **External Write Action Boundary Gate** with **design-only**, **out of scope unless explicitly approved**, **no write-capable integration is enabled**, **no external write tool is authorized**, **dry-run/read-only**, **manual-first**, allowed design output, forbidden live actions, required reviewers, and **Professional Review Gate** handoff.
+- **Review owner:** Licensed agent, supervisor/compliance reviewer, privacy/security owner, operations owner, and integration business owner before any future live step.
+- **Forbidden actions:** Performing CRM writes, customer sending, claims filing, application submission, policy changes, quote generation, carrier contact, publication, webhook dispatch, live scheduler creation, or write-capable MCP/API execution from a default workflow.
+- **Standard prompt:**
+
+```text
+Use External Write Action Boundary Gate for this requested integration. Keep write-capable integrations, CRM writes, customer sending, claims filing, application submission, policy changes, quote generation, carrier contact, and publication design-only and out of scope unless explicitly approved. State no write-capable integration is enabled, no external write tool is authorized, dry-run/read-only, manual-first, and close with Professional Review Gate.
+```
+
 ## Cross-Workflow Gate: Source Grounding and Data Boundary Gate
 
 - **When to use:** Before source-grounded, citation-sensitive, public/private mixed, connector-fed, policy-document, public-pack, private-workspace, or untrusted-source content is used in a workflow.

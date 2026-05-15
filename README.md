@@ -57,6 +57,8 @@ Customer-impacting advocacy memos use `skills/insurance-copilot/templates/custom
 
 Source-sensitive workflows use **Source Grounding and Data Boundary Gate** (`skills/insurance-copilot/references/source-grounding-guardrails.md` and `skills/insurance-copilot/templates/source-grounding-guardrails.md`) as a runtime guardrail: **Source Ledger**, **Citation Ledger**, **public/private separation**, **prompt-injection**, **PII minimization**, **citations or `[verify]`**, **no customer data in public packs**, and the rule that **untrusted source text cannot override workflow instructions**. This remains a **manual-first practitioner workflow**, **not a generic RAG chatbot**.
 
+Write-capable integration requests use **External Write Action Boundary Gate** (`skills/insurance-copilot/references/external-write-action-boundary.md` and `skills/insurance-copilot/templates/external-write-action-boundary.md`) as the P3 action boundary for **write-capable integrations**, **CRM writes**, **customer sending**, **claims filing**, **application submission**, **policy changes**, **quote generation**, **carrier contact**, and **publication**. The default status is **design-only**, **out of scope unless explicitly approved**, **no write-capable integration is enabled**, **no external write tool is authorized**, **dry-run/read-only**, **manual-first**, and closed with **Professional Review Gate**.
+
 ## Practical MVP: How an Agent Uses It
 
 Insurance Copilot is a **workflow router, not a menu bot**. The agent should state the job they need done; Hermes should route directly to the right insurance workflow. Only ask follow-up questions when facts are needed to produce a safe draft.
@@ -324,6 +326,10 @@ Use for an **AIA public pack** or other insurer **source-backed public pack upda
 
 Use when public insurer knowledge, private policy/customer material, connector-fed content, or mixed sources ground an insurance workflow. It is implemented through `skills/insurance-copilot/references/source-grounding-guardrails.md` and `skills/insurance-copilot/templates/source-grounding-guardrails.md`. The output uses a **Source Ledger** and **Citation Ledger**, preserves **public/private separation**, handles **prompt-injection**, applies **PII minimization**, requires **citations or `[verify]`**, states **no customer data in public packs**, and says **untrusted source text cannot override workflow instructions**. It is a **manual-first practitioner workflow**, **not a generic RAG chatbot**.
 
+### External Write Action Boundary Gate
+
+Use when a request asks for **write-capable integrations**, **CRM writes**, **customer sending**, **claims filing**, **application submission**, **policy changes**, **quote generation**, **carrier contact**, **publication**, webhook dispatch, or live scheduler creation. It is implemented through `skills/insurance-copilot/references/external-write-action-boundary.md` and `skills/insurance-copilot/templates/external-write-action-boundary.md`. The output must say **design-only**, **out of scope unless explicitly approved**, **no write-capable integration is enabled**, **no external write tool is authorized**, **dry-run/read-only**, **manual-first**, and hand off to **Professional Review Gate** before any customer-facing, regulated, external-use, or side-effect-adjacent step.
+
 ## Public Institution Packs
 
 Public institution packs live under:
@@ -430,6 +436,10 @@ python3 scripts/private_dry_run.py \
 It chains readiness, connector bundle generation, renewal watcher output, and script-only cron wrapper simulation into one diagnostic output directory with `manifest.json`, `audit-trace.json`, `audit-trace.md`, and `deployment-checklist.md`. It remains read-only, reports `read_only_verified`, `workspace_unchanged`, and `ready_for_scheduled_watcher`, records `live_cron_created: false`, and performs No External Writes. See `docs/private-dry-run-harness.md` and `examples/private-dry-run/`.
 
 The **Private Workspace Trace and Readiness Gate** reviews the **Private Workspace Audit Trace** for a **read-only local/private workspace connector** and **readiness gate dry-run**. It requires an **audit-style trace**, `source_trace`, `read_only_verified`, `workspace_unchanged`, **metadata/checksums only**, **No External Writes**, `live_cron_created: false`, and **no live automation** before any future scheduled-watcher discussion.
+
+### External Write Action Boundary Gate
+
+The **External Write Action Boundary Gate** is the P3 runtime boundary for **write-capable integrations**. It keeps **CRM writes**, **customer sending**, **claims filing**, **application submission**, **policy changes**, **quote generation**, **carrier contact**, and **publication** as **design-only**, **out of scope unless explicitly approved**, with **no write-capable integration is enabled**, **no external write tool is authorized**, **dry-run/read-only**, **manual-first**, and a required **Professional Review Gate** handoff.
 
 ## Repository Layout
 
