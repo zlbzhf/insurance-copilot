@@ -14,10 +14,16 @@ def read(rel: str) -> str:
 
 def test_readme_leads_with_manual_practitioner_mvp_not_cron_or_ci() -> None:
     text = read("README.md")
+    assert "[简体中文](README.zh-CN.md)" in text
+    assert "standalone Hermes skill repository" in text
+    assert "## Product Philosophy" in text
+    assert "customer-first advocacy within compliance boundaries" in text
     assert "## Practical MVP: How an Agent Uses It" in text
     assert "## Recommended First Session" in text
     assert "workflow router, not a menu bot" in text
     assert "manual-first" in text
+    assert "## Runtime-Effective Constraint Model" in text
+    assert "not the runtime source by itself" in text
 
     mvp_pos = text.index("## Practical MVP: How an Agent Uses It")
     cron_pos = text.index("## Advanced / Later: Local Connectors and Watchers")
@@ -28,6 +34,51 @@ def test_readme_leads_with_manual_practitioner_mvp_not_cron_or_ci() -> None:
     assert "cronjob(" not in early
     assert "Private Dry-Run Deployment Harness" not in early
     assert "Scheduled Watcher" not in early
+
+
+def test_chinese_readme_and_changelogs_are_first_class_project_surfaces() -> None:
+    zh_readme = read("README.zh-CN.md")
+    changelog = read("CHANGELOG.md")
+    zh_changelog = read("CHANGELOG.zh-CN.md")
+
+    for phrase in [
+        "保险代理人工作流助手",
+        "独立的 Hermes 技能型产品仓库",
+        "产品理念",
+        "在合规边界内，以客户利益为先",
+        "客户优先",
+        "合规边界",
+        "运行时约束链",
+        "本身不是运行时来源",
+        "公共保险机构知识包",
+        "代理人私有工作区",
+        "开发验证",
+    ]:
+        assert phrase in zh_readme
+
+    for phrase in [
+        "## [Unreleased]",
+        "## [0.1.0] - 2026-05-15",
+        "### Added",
+        "### Changed",
+        "### Fixed",
+        "### Security and Compliance",
+        "customer-first advocacy within compliance boundaries",
+        "runtime-effective",
+    ]:
+        assert phrase in changelog
+
+    for phrase in [
+        "## [未发布]",
+        "## [0.1.0] - 2026-05-15",
+        "### 新增",
+        "### 变更",
+        "### 修复",
+        "### 安全与合规",
+        "customer-first advocacy within compliance boundaries",
+        "runtime-effective constraints",
+    ]:
+        assert phrase in zh_changelog
 
 
 def test_quickstart_is_short_practitioner_loop_before_advanced_appendix() -> None:

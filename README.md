@@ -1,24 +1,67 @@
 # Insurance Copilot
 
-Hermes-first insurance workflow copilot for licensed insurance professionals. It is inspired by the workflow discipline of `claude-for-legal`, but the usable surface is a **Hermes skill** for practical insurance-agent work, not a Claude plugin, web app, or deployment platform.
+> Hermes-first insurance workflow copilot for licensed insurance professionals.
+
+[简体中文](README.zh-CN.md) · [Changelog](CHANGELOG.md) · [中文更新日志](CHANGELOG.zh-CN.md)
+
+---
+
+## Overview
+
+Insurance Copilot is a **standalone Hermes skill repository** for insurance-agent work. Its runtime surface is the installable `insurance-copilot` skill, supported by workflow references, output templates, static eval fixtures, deterministic validators, public institution knowledge packs, and a private agent workspace template.
+
+It is inspired by the workflow discipline of `claude-for-legal`, but the usable product is **not** a Claude plugin, web app, CRM, or deployment platform. The first useful experience is a Hermes skill that helps a licensed insurance professional turn messy real-world notes into structured, review-ready work.
+
+Core positioning:
+
+- **Runtime:** Hermes skill package at `skills/insurance-copilot/`.
+- **Audience:** licensed insurance agents, agency managers, trainers, and maintainers of public insurance knowledge packs.
+- **Mode:** manual-first professional assistant; optional automation stays behind explicit review gates.
+- **Data posture:** public knowledge and private customer/agent data are strictly separated.
+- **Quality model:** product principles must become runtime-effective through skill instructions, references, templates, evals, tests, and validators.
+
+## Product Philosophy
+
+Insurance Copilot is built around **customer-first advocacy within compliance boundaries**.
+
+That means the assistant should help agents provide maximum lawful support to customers, rather than hiding behind empty disclaimers. Compliance is a guardrail for service, not an excuse to stop serving the customer.
+
+Non-negotiable product principles:
+
+- **Customer-first service:** identify customer goals, favorable facts, missing evidence, review channels, and next steps.
+- **No empty neutrality:** phrases such as `the carrier decides`, `以保险公司审核为准`, `subject to review`, or `actual results may vary` are insufficient unless paired with concrete evidence requests, source checks, customer-safe language, and escalation paths.
+- **Draft-only outputs:** customer-facing text is always a draft for licensed/compliance review.
+- **No misrepresentation:** never help conceal, minimize, omit, fabricate, or reframe material facts.
+- **No binding decisions:** the assistant does not make final insurance, legal, tax, investment, underwriting, claims, actuarial, or compliance decisions.
+- **Agent-friendly operation:** the agent provides natural language, notes, documents, or scenarios; the AI converts them into structured profiles, workflow drafts, scenario cards, and eval intents.
+
+Systemic service rule:
+
+```text
+from idea to product principle to operating model to workflow to scenario matrix to eval
+```
+
+The durable service model is documented in:
+
+- `docs/customer-first-service-philosophy.md`
+- `docs/customer-advocacy-operating-model.md`
+- `docs/customer-service-scenario-matrix.md`
+
+Customer-impacting advocacy memos use `skills/insurance-copilot/templates/customer-advocacy-memo.md` as the runtime output structure.
 
 ## Practical MVP: How an Agent Uses It
 
-Insurance Copilot is a **workflow router, not a menu bot**. The agent should describe the job they want done, and Hermes should route directly to the right insurance workflow. Only ask follow-up questions when facts are needed to produce a safe draft.
+Insurance Copilot is a **workflow router, not a menu bot**. The agent should state the job they need done; Hermes should route directly to the right insurance workflow. Only ask follow-up questions when facts are needed to produce a safe draft.
 
-Product posture: **customer-first advocacy within compliance boundaries**. The assistant should provide maximum lawful support, build client-interest action plans and advocacy memos, and not use neutral caveats as a substitute for service. It still must refuse concealment, misrepresentation, fabricated evidence, unauthorized legal advice, or outcome guarantees.
-
-Systemic service rule: do not reduce user stories to isolated examples. Convert them **from idea to product principle to operating model to workflow to scenario matrix to eval**. The durable service model is documented in `docs/customer-first-service-philosophy.md`, `docs/customer-advocacy-operating-model.md`, and `docs/customer-service-scenario-matrix.md`.
-
-manual-first MVP loop:
+The practical MVP is intentionally **manual-first**:
 
 ```text
 practice profile -> task-specific workflow -> source/private facts -> review-ready draft -> licensed/compliance review
 ```
 
-Start with these practical jobs:
+Start with practical jobs, not infrastructure:
 
-1. **Set my practice profile** — answer a few guided questions or use New Agent Default Mode; the assistant generates the profile, the agent confirms/corrects it.
+1. **Set my practice profile** — answer a few guided questions or use New Agent Default Mode; the assistant generates the profile, then the agent confirms or corrects it.
 2. **Plan my day** — meetings, renewals, claim-support items, referrals, objections, and follow-up messages.
 3. **Organize client notes** — turn messy notes or transcripts into a structured fact-find and missing-question list.
 4. **Review a policy or coverage situation** — summarize known facts, likely gap areas, replacement/lapse/claim risks, and verification needs.
@@ -26,34 +69,22 @@ Start with these practical jobs:
 6. **Check risky copy** — flag guarantee, best, risk-free, pressure, replacement, claim, or investment-language risks.
 7. **Organize public insurer knowledge** — route public AIA/友邦 or other insurer sources into the public knowledge-pack process.
 
-If the user already states a job, do **not** list all workflows. Route directly, ask at most three essential missing questions, and produce a clearly labeled draft.
-
-## Recommended First Session
-
-After installing the skill, use this prompt:
-
-```text
-/skill insurance-copilot
-Use Agency Playbook Builder in New Agent Default Mode. I am a new or busy insurance agent and I don't know yet how to define my full profile. Ask at most three simple questions, allow conservative defaults, generate a provisional practice profile, then show how I can use it for daily workbench, client intake, policy review, customer message drafting, and compliance copy checking. Manual-first only; do not discuss cron, deployment, or automation unless I ask.
-```
+If the user already states a job, do **not** list every workflow. Route directly, ask at most three essential missing questions, and produce a clearly labeled draft.
 
 Never ask the agent to manually fill the profile template. The template is an internal storage format, not a user-facing form. Agents provide messy real-world context; AI converts it into structured scenarios, profile updates, reusable examples, and eval intents. evals are internal quality fixtures; agents do not write JSON eval cases.
 
-Then use one of these task-first prompts:
+## Who It Is For
 
-```text
-Use Daily Agent Workbench. Here are today's notes: [paste meetings, renewals, claims, referrals, objections]. Prioritize my day, draft internal next actions, and provide customer-message drafts only for review.
-```
+Insurance Copilot is designed for:
 
-```text
-Use Client Needs Intake. Turn these client notes into a structured fact-find. Separate known facts, missing facts, preliminary need areas, and product-discussion blockers.
-```
+- licensed insurance agents who need help organizing client work;
+- agency leaders building repeatable service playbooks;
+- trainers supporting new or busy agents;
+- compliance-aware teams drafting safer customer communications;
+- maintainers curating public insurer knowledge packs;
+- developers productizing Hermes-first domain copilots.
 
-```text
-Use Compliance Copy Checker. Review this WeChat draft before customer use. Quote risky phrases, suggest safer language, and say who must review it.
-```
-
-See `docs/quickstart.md`, `docs/workflow-surface.md`, `docs/documentation-map.md`, `examples/practical-mvp/agent-first-session.md`, `examples/practical-mvp/agent-friendly-onboarding.md`, and `examples/practical-mvp/customer-first-advocacy.md` for the complete workflow surface, practical loop, low-burden new-agent onboarding example, documentation purpose map, and customer-first advocacy examples. Customer-impacting advocacy memos use `skills/insurance-copilot/templates/customer-advocacy-memo.md` as the runtime output structure; the documentation map explains which files are user-facing, runtime-effective, maintainer-only, or executable gates.
+It is **not** a direct-to-consumer insurance advice product and should not be used as a substitute for licensed professional judgment.
 
 ## What It Does
 
@@ -65,28 +96,100 @@ Insurance Copilot helps licensed insurance professionals create structured draft
 - coverage-gap drafting;
 - Client Plan Draft / client plan drafting;
 - product-fit review from source-backed facts;
-- customer message / objection / referral drafts;
+- customer message, objection, and referral drafts;
 - compliance language screening;
 - existing policy review;
 - replacement/surrender suitability triage;
 - claims support triage;
 - renewal/lapse follow-up planning;
+- Chinese talk tracks for customer communication;
 - stakeholder summaries;
 - public institution knowledge-pack organization.
 
 ## What It Does Not Do
 
-It does not provide binding insurance, legal, tax, investment, underwriting, claims, actuarial, or compliance decisions. It does not automatically send customer messages, submit applications, file claims, cancel/replace coverage, create live scheduled jobs, or make binding representations.
+Insurance Copilot does **not**:
+
+- provide binding insurance, legal, tax, investment, underwriting, claims, actuarial, or compliance decisions;
+- guarantee approval, payout, return, savings, suitability, or coverage outcomes;
+- automatically send customer messages;
+- submit applications;
+- file claims;
+- cancel, surrender, replace, reinstate, or change coverage;
+- create live scheduled jobs without explicit user approval;
+- store private customer data in public repository paths;
+- bypass carrier, regulator, supervisor, suitability, replacement, or compliance review.
 
 Every customer-facing output is a draft for licensed/compliance review.
 
 ## Architecture
 
-Insurance Copilot has three layers:
+Insurance Copilot has a three-layer architecture.
 
-1. **General public workflow skill** — `skills/insurance-copilot/`
-2. **Public institution knowledge packs** — `knowledge/institutions/`
-3. **Agent private knowledge workspace** — initialize from `agent-workspace-template/`, store privately outside this repo
+```text
+Layer 1: General Public Workflow Skill
+Layer 2: Public Institution Knowledge Packs
+Layer 3: Agent Private Knowledge Workspace
+```
+
+### Layer 1 — General Public Workflow Skill
+
+Path:
+
+```text
+skills/insurance-copilot/
+```
+
+Purpose:
+
+- umbrella Hermes skill;
+- workflow router;
+- safety, privacy, and action-safety boundaries;
+- reusable references and templates;
+- runtime instructions for practical insurance-agent work.
+
+### Layer 2 — Public Institution Knowledge Packs
+
+Path:
+
+```text
+knowledge/institutions/
+```
+
+Purpose:
+
+- public, collaboratively maintained insurer/institution packs;
+- public source records and source-backed summaries;
+- Karpathy-style LLM wiki pages;
+- AIA/友邦 seed pack and template pack;
+- public registry via `knowledge/registry.json`.
+
+Public packs must not contain customer data, non-public institution materials, private agent notes, secrets, or production exports.
+
+### Layer 3 — Agent Private Knowledge Workspace
+
+Template:
+
+```text
+agent-workspace-template/
+```
+
+Suggested private location:
+
+```text
+~/.insurance-copilot/agents/<agent-id>/
+```
+
+Purpose:
+
+- customer data;
+- private agent notes;
+- non-public institution materials held by the agent;
+- renewal registers;
+- private follow-up plans;
+- local-only readiness checks.
+
+Private workspace content is local/private and must not be committed to the public repository.
 
 Public knowledge maintenance uses an evidence-driven standards loop:
 
@@ -95,6 +198,20 @@ public source -> intake -> gateway staging -> schema gaps/proposed pages -> revi
 ```
 
 See `docs/architecture.md` and `docs/evidence-driven-standards.md` for the full design.
+
+## Runtime-Effective Constraint Model
+
+This repository intentionally avoids docs-only behavior changes.
+
+`docs/` is useful for explanation and maintenance, but `docs/` is not the runtime source by itself; runtime-effective constraints must live in one or more of these surfaces:
+
+1. `skills/insurance-copilot/SKILL.md` — loaded by Hermes as the canonical runtime skill.
+2. `skills/insurance-copilot/references/*.md` — workflow-specific playbooks loaded before substantive drafting.
+3. `skills/insurance-copilot/templates/*.md` — concrete output structures that shape responses.
+4. `evals/cases/*.json` and `evals/expected/*.md` — regression fixtures.
+5. `scripts/validate_repo.py` and `tests/*.py` — executable gates that fail on drift.
+
+The documentation purpose map lives at `docs/documentation-map.md`. It explains which files are user-facing, runtime-effective, maintainer-only, or executable gates.
 
 ## Install into Hermes
 
@@ -128,6 +245,64 @@ In Hermes, try:
 Use Agency Playbook Builder in New Agent Default Mode. Ask no more than three onboarding questions needed to create a practical provisional profile. If I answer `I don't know yet`, use conservative defaults.
 ```
 
+## Recommended First Session
+
+After installing the skill, use this prompt:
+
+```text
+/skill insurance-copilot
+Use Agency Playbook Builder in New Agent Default Mode. I am a new or busy insurance agent and I don't know yet how to define my full profile. Ask at most three simple questions, allow conservative defaults, generate a provisional practice profile, then show how I can use it for daily workbench, client intake, policy review, customer message drafting, and compliance copy checking. Manual-first only; do not discuss cron, deployment, or automation unless I ask.
+```
+
+Then use one of these task-first prompts:
+
+```text
+Use Daily Agent Workbench. Here are today's notes: [paste meetings, renewals, claims, referrals, objections]. Prioritize my day, draft internal next actions, and provide customer-message drafts only for review.
+```
+
+```text
+Use Client Needs Intake. Turn these client notes into a structured fact-find. Separate known facts, missing facts, preliminary need areas, and product-discussion blockers.
+```
+
+```text
+Use Compliance Copy Checker. Review this WeChat draft before customer use. Quote risky phrases, suggest safer language, and say who must review it.
+```
+
+Useful starting points:
+
+- `docs/quickstart.md`
+- `docs/workflow-surface.md`
+- `docs/documentation-map.md`
+- `examples/practical-mvp/agent-first-session.md`
+- `examples/practical-mvp/agent-friendly-onboarding.md`
+- `examples/practical-mvp/customer-first-advocacy.md`
+
+## Example Workflows
+
+### New Agent Default Mode
+
+Use when the agent is new, busy, or unsure. The assistant asks only a few essential questions, accepts `I don't know yet`, applies conservative defaults, marks uncertain facts with `[verify]`, and creates a provisional practice profile.
+
+### Daily Agent Workbench
+
+Use when the agent has meetings, renewals, objections, referrals, or claim-support work to prioritize. Output should separate internal next actions from customer-safe drafts.
+
+### Client Needs Intake
+
+Use when notes, transcripts, or customer messages need to become a structured fact-find. Output should separate known facts, missing facts, preliminary need areas, product-discussion blockers, and next questions.
+
+### Client Plan Draft
+
+Use after intake and source-backed product facts are available. Output should remain a review-ready draft, not a binding recommendation.
+
+### Customer Advocacy Memo
+
+Use for underwriting/disclosure, claim/review, servicing, complaint, replacement, lapse, or other customer-impacting matters where empty neutrality is insufficient. The runtime template is `skills/insurance-copilot/templates/customer-advocacy-memo.md`.
+
+### Compliance Copy Checker
+
+Use before customer-facing copy is sent. It should quote risky phrases, explain why they are risky, suggest safer alternatives, and identify who must review the draft.
+
 ## Public Institution Packs
 
 Public institution packs live under:
@@ -156,7 +331,7 @@ Private customer knowledge and non-public institution materials belong outside t
 agent-workspace-template/
 ```
 
-Suggested private location:
+Suggested private setup:
 
 ```bash
 mkdir -p ~/.insurance-copilot/agents/<agent-id>
@@ -172,7 +347,9 @@ These tools are intentionally not the practical MVP entrypoint. Use them only af
 ### Local File Connector Slice
 
 ```bash
-python3 scripts/local_file_connectors.py daily-workbench   --workspace examples/local-connectors/synthetic-agent-workspace   --format markdown
+python3 scripts/local_file_connectors.py daily-workbench \
+  --workspace examples/local-connectors/synthetic-agent-workspace \
+  --format markdown
 ```
 
 It reads local Markdown/CSV files and emits a Daily Agent Workbench bundle. Symlinked inputs are skipped and explicit output files must be outside the workspace. It does **not** send messages, update CRM/calendar systems, contact carriers, file claims, submit applications, or change policies. See `docs/local-file-connectors.md`.
@@ -180,8 +357,14 @@ It reads local Markdown/CSV files and emits a Daily Agent Workbench bundle. Syml
 ### Local Renewal Watcher Slice
 
 ```bash
-python3 scripts/local_file_connectors.py daily-workbench   --workspace examples/local-connectors/synthetic-agent-workspace   --format json > /tmp/insurance-workbench-bundle.json
-python3 scripts/renewal_watcher.py   --bundle /tmp/insurance-workbench-bundle.json   --as-of 2026-05-14   --format markdown
+python3 scripts/local_file_connectors.py daily-workbench \
+  --workspace examples/local-connectors/synthetic-agent-workspace \
+  --format json > /tmp/insurance-workbench-bundle.json
+
+python3 scripts/renewal_watcher.py \
+  --bundle /tmp/insurance-workbench-bundle.json \
+  --as-of 2026-05-14 \
+  --format markdown
 ```
 
 It emits an internal alert only: `[verify]` carrier/payment status, no customer send, no CRM/calendar writes, and no coverage/lapse/reinstatement conclusions. See `docs/local-renewal-watcher.md` and `cron/renewal-watcher-cookbook.md`.
@@ -191,7 +374,10 @@ It emits an internal alert only: `[verify]` carrier/payment status, no customer 
 A script-only wrapper template is available for future Hermes `no_agent=True` watchdog deployment:
 
 ```bash
-bash cron/scripts/renewal_watcher.sh   --workspace examples/local-connectors/synthetic-agent-workspace   --as-of 2026-05-14   --mode always
+bash cron/scripts/renewal_watcher.sh \
+  --workspace examples/local-connectors/synthetic-agent-workspace \
+  --as-of 2026-05-14 \
+  --mode always
 ```
 
 For cron use, `--mode alert-only` prints only review-worthy internal alerts. Empty stdout means silent/no-alert; non-zero exit means fail-loud error alert. This repository does not create a live job. See `docs/script-only-cron-wrapper.md` and `examples/cron/renewal-watcher-no-agent.md`.
@@ -199,7 +385,10 @@ For cron use, `--mode alert-only` prints only review-worthy internal alerts. Emp
 ### Private Workspace Readiness Gate
 
 ```bash
-python3 scripts/private_workspace_readiness.py   --workspace examples/local-connectors/synthetic-agent-workspace   --as-of 2026-05-14   --format markdown
+python3 scripts/private_workspace_readiness.py \
+  --workspace examples/local-connectors/synthetic-agent-workspace \
+  --as-of 2026-05-14 \
+  --format markdown
 ```
 
 It checks structure, renewal register freshness, PII-like fixture risks, output boundaries, and retention/audit readiness. It is read-only, internal-only, and creates no live cron job. See `docs/private-workspace-readiness.md`.
@@ -209,7 +398,10 @@ It checks structure, renewal register freshness, PII-like fixture risks, output 
 Before creating any live Hermes scheduled watcher, run the full private dry-run harness:
 
 ```bash
-python3 scripts/private_dry_run.py   --workspace examples/local-connectors/synthetic-agent-workspace   --as-of 2026-05-14   --out /tmp/insurance-copilot-dry-run
+python3 scripts/private_dry_run.py \
+  --workspace examples/local-connectors/synthetic-agent-workspace \
+  --as-of 2026-05-14 \
+  --out /tmp/insurance-copilot-dry-run
 ```
 
 It chains readiness, connector bundle generation, renewal watcher output, and script-only cron wrapper simulation into one diagnostic output directory with `manifest.json` and `deployment-checklist.md`. It remains read-only, reports `ready_for_scheduled_watcher`, records `live_cron_created: false`, and performs No External Writes. See `docs/private-dry-run-harness.md` and `examples/private-dry-run/`.
@@ -218,11 +410,11 @@ It chains readiness, connector bundle generation, renewal watcher output, and sc
 
 ```text
 skills/insurance-copilot/     Umbrella Hermes skill package
-standards/                     Versioned public-knowledge standard and schema evolution policy
-schemas/                       Machine-readable schemas for intake/classification/extraction/gaps
-prompts/                       Prompt contracts for future controlled LLM gateway runs
-intake/                        Source package templates before canonical processing
-staging/                       Gateway output before human-reviewed merge
+standards/                    Versioned public-knowledge standard and schema evolution policy
+schemas/                      Machine-readable schemas for intake/classification/extraction/gaps
+prompts/                      Prompt contracts for future controlled LLM gateway runs
+intake/                       Source package templates before canonical processing
+staging/                      Gateway output before human-reviewed merge
 knowledge/institutions/       Public institution LLM wiki packs
 agent-workspace-template/     Template for private agent knowledge workspace
 contributions/                Public contribution templates and workflow docs
@@ -234,9 +426,13 @@ docs/                         Architecture, privacy, action safety, quality gate
 scripts/                      Repo validation, packaging, eval, connector, watcher helpers
 AGENTS.md                     Hermes project instructions
 ROADMAP.md                    Durable project direction
+README.zh-CN.md               Chinese README
+CHANGELOG.zh-CN.md            Chinese changelog
 ```
 
 ## Developer Validation
+
+Run the full local quality gate before committing:
 
 ```bash
 python3 scripts/validate_repo.py
@@ -261,3 +457,21 @@ Before connecting production data or systems, read:
 - `mcp/README.md`
 
 Production use requires institution/practice-specific compliance/legal review, source-of-truth integrations, access control, audit logging, retention rules, and licensed human supervision.
+
+## Contributing
+
+Contributions should preserve the Hermes-first architecture and practical agent surface.
+
+Before opening a change:
+
+- keep private customer or non-public institution data out of the repository;
+- make behavior-changing rules runtime-effective, not docs-only;
+- update relevant references, templates, evals, tests, and validators together;
+- preserve the manual-first MVP unless automation is explicitly requested;
+- run the developer validation commands.
+
+See `CONTRIBUTING.md`, `SECURITY.md`, `docs/quality-gates.md`, and `docs/release-checklist.md`.
+
+## License
+
+MIT. See `LICENSE`.

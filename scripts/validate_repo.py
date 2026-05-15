@@ -24,11 +24,13 @@ REQUIRED = [
     SKILL,
     ROOT / "AGENTS.md",
     ROOT / "README.md",
+    ROOT / "README.zh-CN.md",
     ROOT / "ROADMAP.md",
     ROOT / "LICENSE",
     ROOT / "CONTRIBUTING.md",
     ROOT / "SECURITY.md",
     ROOT / "CHANGELOG.md",
+    ROOT / "CHANGELOG.zh-CN.md",
     ROOT / "requirements-dev.txt",
     ROOT / "docs" / "continuity.md",
     ROOT / "docs" / "quality-gates.md",
@@ -369,9 +371,19 @@ def main() -> int:
 
     readme = (ROOT / "README.md").read_text()
     for snippet in [
+        "[简体中文](README.zh-CN.md)",
+        "standalone Hermes skill repository",
+        "Product Philosophy",
+        "customer-first advocacy within compliance boundaries",
         "Practical MVP: How an Agent Uses It",
         "workflow router, not a menu bot",
         "manual-first",
+        "Who It Is For",
+        "What It Does Not Do",
+        "Runtime-Effective Constraint Model",
+        "not the runtime source by itself",
+        "runtime-effective constraints must live",
+        "Contributing",
         "Recommended First Session",
         "New Agent Default Mode",
         "I don't know yet",
@@ -415,6 +427,69 @@ def main() -> int:
     ]:
         if snippet not in readme:
             return fail(f"README missing required install/validation snippet: {snippet}")
+
+    zh_readme = (ROOT / "README.zh-CN.md").read_text()
+    for snippet in [
+        "[English](README.md)",
+        "保险代理人工作流助手",
+        "独立的 Hermes 技能型产品仓库",
+        "产品理念",
+        "在合规边界内，以客户利益为先",
+        "客户优先",
+        "合规边界",
+        "workflow router，不是 menu bot",
+        "manual-first",
+        "New Agent Default Mode",
+        "I don't know yet",
+        "不要要求代理人手动填写 profile 模板",
+        "Agents provide messy real-world context",
+        "evals are internal quality fixtures",
+        "运行时约束链",
+        "本身不是运行时来源",
+        "skills/insurance-copilot/templates/customer-advocacy-memo.md",
+        "公共保险机构知识包",
+        "代理人私有工作区",
+        "开发验证",
+        "python3 scripts/validate_repo.py",
+        "python3 scripts/package_skill.py --check",
+        "python3 scripts/run_evals.py",
+    ]:
+        if snippet not in zh_readme:
+            return fail(f"Chinese README missing required snippet: {snippet}")
+
+    changelog = (ROOT / "CHANGELOG.md").read_text()
+    for snippet in [
+        "[简体中文](CHANGELOG.zh-CN.md)",
+        "## [Unreleased]",
+        "## [0.1.0] - 2026-05-15",
+        "### Added",
+        "### Changed",
+        "### Fixed",
+        "### Security and Compliance",
+        "Hermes-first `insurance-copilot` skill package",
+        "customer-first advocacy within compliance boundaries",
+        "runtime-effective",
+        "README.zh-CN.md",
+    ]:
+        if snippet not in changelog:
+            return fail(f"CHANGELOG missing required snippet: {snippet}")
+
+    zh_changelog = (ROOT / "CHANGELOG.zh-CN.md").read_text()
+    for snippet in [
+        "[English](CHANGELOG.md)",
+        "## [未发布]",
+        "## [0.1.0] - 2026-05-15",
+        "### 新增",
+        "### 变更",
+        "### 修复",
+        "### 安全与合规",
+        "Hermes-first `insurance-copilot` skill package",
+        "customer-first advocacy within compliance boundaries",
+        "runtime-effective constraints",
+        "README.zh-CN.md",
+    ]:
+        if snippet not in zh_changelog:
+            return fail(f"Chinese CHANGELOG missing required snippet: {snippet}")
 
     cron_doc = (ROOT / "docs" / "script-only-cron-wrapper.md").read_text()
     for phrase in ["no_agent=True", "empty stdout", "non-zero exit", "custom:fufu", "mimo-v2.5-pro", "No External Writes"]:
