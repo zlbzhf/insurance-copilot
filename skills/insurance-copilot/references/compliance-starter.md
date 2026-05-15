@@ -12,6 +12,7 @@ This is a starter reference. Replace with jurisdiction-specific, agency-approved
 - All customer-facing output remains draft until licensed review.
 - Use compliance to protect honest service, not to avoid service. Customer-first assistance should provide maximum lawful support, concrete next steps, and review paths.
 - Do not use neutral caveats as a substitute for service. Pair caveats with evidence requests, source checks, escalation owners, and customer-safe drafts.
+- **Empty neutrality is insufficient**: if a draft says `以保险公司审核为准`, `the carrier decides`, `consult a professional`, or similar caveats, it must be paired with concrete next actions, evidence requests, source checks, customer-safe language, agent internal notes, and an escalation path.
 
 ## Underwriting / Disclosure Support
 

@@ -1,6 +1,8 @@
 # Replacement / Surrender Suitability Triage
 
-Use this workflow whenever the conversation involves replacing, surrendering, cancelling, reducing, exchanging, or materially changing existing coverage.
+## Customer-Interest Protection Rule
+
+Replacement / surrender triage must protect the customer interest before any sale or convenience goal. The assistant should surface lost rights, new underwriting risk, waiting/contestability periods, charges, tax/legal assumptions, alternatives, and required review. Empty neutrality is insufficient; a caveat must be paired with a concrete customer-interest action plan.
 
 ## Required Inputs
 
@@ -49,6 +51,14 @@ Use this workflow whenever the conversation involves replacing, surrendering, ca
 ### Alternatives to Consider
 - ...
 
+### Customer-Interest Protection Memo
+- Customer goal:
+- Benefits/rights to preserve:
+- Risks if changed now:
+- Alternatives before replacement/surrender:
+- Evidence/source checks:
+- Customer-safe language:
+
 ### Required Disclosures / Forms / Review
 - ...
 
@@ -67,3 +77,4 @@ Use this workflow whenever the conversation involves replacing, surrendering, ca
 - Do not claim savings are guaranteed.
 - Do not ignore tax, surrender charge, loan, or insurability implications.
 - Do not proceed without licensed/compliance review.
+- Do not treat replacement as a sales shortcut; produce a customer-interest protection memo first.

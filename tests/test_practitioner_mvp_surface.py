@@ -184,3 +184,100 @@ def test_claims_triage_preserves_customer_claim_arguments() -> None:
 
     assert "dead-end disposition" in expected
     assert "giving up without reviewing" in expected
+
+
+def test_service_philosophy_is_systemic_not_case_patch() -> None:
+    philosophy = read("docs/customer-first-service-philosophy.md")
+    operating_model = read("docs/customer-advocacy-operating-model.md")
+    scenario_matrix = read("docs/customer-service-scenario-matrix.md")
+    roadmap = read("ROADMAP.md")
+
+    for text in [philosophy, operating_model, scenario_matrix, roadmap]:
+        lowered = text.lower()
+        assert "customer-first advocacy within compliance boundaries" in lowered
+        assert "compliance is a guardrail for service" in lowered
+        assert "empty neutrality is insufficient" in lowered
+        assert "from idea to product principle to operating model to workflow to scenario matrix to eval" in lowered
+
+    for phrase in [
+        "underwriting / disclosure",
+        "claims / review",
+        "policy review found unclaimed benefit",
+        "replacement / surrender",
+        "complaint or mis-selling concern",
+        "renewal / lapse / reinstatement",
+        "new agent coach mode",
+    ]:
+        assert phrase in scenario_matrix.lower()
+
+
+def test_advocacy_operating_model_defines_standard_output() -> None:
+    model = read("docs/customer-advocacy-operating-model.md")
+    required_sections = [
+        "Facts and Timeline",
+        "Customer Goal",
+        "Favorable Facts",
+        "Risks and Weak Points",
+        "Good-Faith Arguments to Preserve",
+        "Evidence and Materials Checklist",
+        "Compliance Boundary",
+        "Next Actions",
+        "Customer-Safe Language",
+        "Agent Internal Notes",
+        "Forbidden Moves",
+        "Escalation Path",
+    ]
+    for section in required_sections:
+        assert section in model
+
+    assert "the carrier decides" in model
+    assert "must be paired with concrete next steps" in model
+
+
+def test_new_agent_coach_mode_is_first_class_service_pattern() -> None:
+    skill = read("skills/insurance-copilot/SKILL.md")
+    workflow = read("docs/workflow-surface.md")
+    quickstart = read("docs/quickstart.md")
+
+    for text in [skill, workflow, quickstart]:
+        assert "New Agent Coach Mode" in text
+        assert "what this situation is" in text
+        assert "what to do first" in text
+        assert "what not to do" in text
+        assert "who to escalate to" in text
+
+
+def test_empty_neutrality_gate_requires_action_plan() -> None:
+    quality = read("docs/quality-gates.md")
+    compliance = read("skills/insurance-copilot/references/compliance-starter.md")
+
+    for text in [quality, compliance]:
+        lowered = text.lower()
+        assert "empty neutrality is insufficient" in lowered
+        assert "以保险公司审核为准" in text
+        assert "must be paired with" in lowered
+        assert "evidence requests" in lowered
+        assert "source checks" in lowered
+        assert "escalation path" in lowered
+        assert "customer-safe language" in lowered
+
+
+def test_systemic_eval_cases_cover_beyond_two_examples() -> None:
+    required_cases = {
+        "empty-neutrality-is-insufficient": "advocacy-operating-model",
+        "new-agent-needs-coach-mode": "new-agent-coach-mode",
+        "underwriting-postpone-reconsideration": "client-needs-intake",
+        "claim-denial-appeal-path": "claims-triage",
+        "policy-review-found-unclaimed-benefit": "policy-review",
+        "replacement-customer-interest-protection": "replacement-suitability",
+    }
+    for case_id, workflow in required_cases.items():
+        case_path = ROOT / "evals" / "cases" / f"{case_id}.json"
+        data = json.loads(case_path.read_text(encoding="utf-8"))
+        assert data["id"] == case_id
+        assert data["workflow"] == workflow
+        expected = read(data["expected_output"])
+        for phrase in data["must_include"]:
+            assert phrase in expected
+        for phrase in data["must_not_include"]:
+            assert phrase not in expected

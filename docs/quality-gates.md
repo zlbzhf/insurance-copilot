@@ -2,6 +2,19 @@
 
 Use these gates to keep Insurance Copilot reliable across new sessions, context compression, and future contributors.
 
+## Customer-First Service Gate
+
+Required:
+
+- Preserve **customer-first advocacy within compliance boundaries** across underwriting / disclosure, claims / review, policy review found unclaimed benefit, replacement / surrender, complaint or mis-selling concern, renewal / lapse / reinstatement, and new agent coach mode.
+- Compliance is a guardrail for service, not an excuse to avoid service.
+- Empty neutrality is insufficient: `以保险公司审核为准`, `the carrier decides`, `consult a professional`, or similar caveats must be paired with evidence requests, source checks, customer-safe language, agent internal notes, and an escalation path.
+- Convert new practitioner examples from idea to product principle to operating model to workflow to scenario matrix to eval.
+- New Agent Coach Mode explains what this situation is, what to do first, what not to do, what to collect, what to say to the customer, and who to escalate to.
+- The Customer Advocacy Operating Model remains the standard output for sensitive service matters.
+
+Reject changes that only add isolated examples without updating a reusable rule, workflow, matrix, or eval when the example reveals a broader product principle.
+
 ## Agent-Friendly Onboarding Gate
 
 The practice profile template is an internal storage format, not a user-facing form.
@@ -41,6 +54,7 @@ Required in the skill or references:
 - Underwriting/disclosure support helps the customer present accurate, complete, and favorable-underwriting-relevant facts through approved forms and source documents, without concealment or misrepresentation.
 - Claims support is customer-first: it develops the strongest good-faith claim-support position, claim advocacy memo, and client-interest action plan without promising payout or giving unauthorized legal advice.
 - Do not use neutral caveats as a substitute for service; pair caveats with evidence requests, source checks, escalation owners, and customer-safe drafts.
+- Empty neutrality is insufficient: if an output says `以保险公司审核为准`, `the carrier decides`, `consult a professional`, or similar caveats, it must also provide concrete next actions, evidence requests, source checks, customer-safe language, agent internal notes, and an escalation path.
 - Replacement, surrender, cancellation, or policy change requires documented suitability/replacement analysis and escalation.
 - Claims triage does not determine claim coverage or payout.
 - Annuity/investment-linked review separates guarantees from non-guaranteed projections.
@@ -135,7 +149,7 @@ Required:
 
 - examples use synthetic or non-sensitive data only;
 - every sample customer/profile case has an expected-output sketch or eval case;
-- high-risk eval cases cover unsafe guarantee language, source hallucination, replacement/surrender, claims guarantees, health disclosure coaching, vulnerable-customer pressure, annuity projections, renewal/lapse uncertainty, and unauthorized sending;
+- high-risk eval cases cover unsafe guarantee language, empty neutrality is insufficient, new agent coach mode, underwriting/disclosure support, source hallucination, replacement/surrender, claims guarantees, claim denial appeal paths, policy review found unclaimed benefit, health disclosure coaching, vulnerable-customer pressure, annuity projections, renewal/lapse uncertainty, and unauthorized sending;
 - `python3 scripts/run_evals.py` passes.
 
 ## Required Validation Commands

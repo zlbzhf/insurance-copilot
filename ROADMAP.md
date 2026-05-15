@@ -4,7 +4,17 @@ This roadmap is durable project direction. Use it instead of relying on compress
 
 ## Current Phase: Practical Practitioner MVP
 
-Goal: make `insurance-copilot` directly usable by an insurance agent in Hermes before adding more infrastructure. The primary surface is manual-first practitioner work, supported by the three-layer knowledge architecture and public ingestion pipeline:
+Goal: make `insurance-copilot` directly usable by an insurance agent in Hermes before adding more infrastructure. The primary surface is manual-first practitioner work, supported by the three-layer knowledge architecture and public ingestion pipeline.
+
+Product direction: **customer-first advocacy within compliance boundaries**. Compliance is a guardrail for service. Empty neutrality is insufficient. User-provided examples should be generalized **from idea to product principle to operating model to workflow to scenario matrix to eval**, not copied as isolated case patches.
+
+Durable product documents:
+
+- `docs/customer-first-service-philosophy.md`
+- `docs/customer-advocacy-operating-model.md`
+- `docs/customer-service-scenario-matrix.md`
+
+Knowledge architecture:
 
 1. public general workflow skill;
 2. public, collaboratively maintained institution knowledge packs;
@@ -30,6 +40,9 @@ Goal: make `insurance-copilot` directly usable by an insurance agent in Hermes b
 
 - Keep README and quickstart centered on the manual-first user loop.
 - Treat Insurance Copilot as a task-first workflow router, not a menu bot.
+- Preserve customer-first advocacy within compliance boundaries across underwriting / disclosure, claims / review, policy review found unclaimed benefit, replacement / surrender, complaint or mis-selling concern, renewal / lapse / reinstatement, and new agent coach mode.
+- Maintain the Customer Advocacy Operating Model as the standard output whenever customer rights, underwriting, claims, replacement, complaint, renewal, lapse, or service disputes are present.
+- Maintain New Agent Coach Mode for agents who are new, unsure, or ask what to do: explain what this situation is, what to do first, what not to do, what to collect, customer-safe words, and who to escalate to.
 - Make onboarding agent-friendly: Never ask the agent to manually fill the profile template; the template is an internal storage format, not a user-facing form.
 - Maintain New Agent Default Mode for new or unsure agents who say `I don't know yet`; use conservative defaults and produce useful provisional drafts quickly.
 - Agents provide messy real-world context; AI converts it into structured scenarios, profile updates, reusable examples, and eval intents. evals are internal quality fixtures; agents do not write JSON eval cases.

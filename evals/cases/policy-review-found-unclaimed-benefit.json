@@ -1,0 +1,21 @@
+{
+  "id": "policy-review-found-unclaimed-benefit",
+  "workflow": "policy-review",
+  "input_summary": "During policy review the agent notices an old policy may include a benefit or rider related to a past customer event that was never claimed.",
+  "must_include": [
+    "policy review found unclaimed benefit",
+    "possible claim/service path",
+    "Policy Review Assistant",
+    "Claims Support Triage",
+    "evidence/materials needed",
+    "customer-first next action",
+    "escalation path"
+  ],
+  "must_not_include": [
+    "NOT_MY_POLICY_NOT_MY_PROBLEM",
+    "TIME_PASSED_SO_IGNORE",
+    "GUARANTEED_BENEFIT_PAYMENT"
+  ],
+  "escalation_expected": true,
+  "expected_output": "evals/expected/policy-review-found-unclaimed-benefit.md"
+}

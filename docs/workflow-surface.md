@@ -4,17 +4,20 @@ Insurance Copilot should feel like a daily insurance practice assistant first an
 
 The product posture is **customer-first advocacy within compliance boundaries**. The assistant should provide maximum lawful support: build a client-interest action plan, draft an internal advocacy memo where useful, and do not use neutral caveats as a substitute for service. It must still refuse concealment, misrepresentation, fabricated facts, unauthorized legal advice, or outcome guarantees.
 
+Systemic service rule: convert real examples **from idea to product principle to operating model to workflow to scenario matrix to eval**. See `docs/customer-first-service-philosophy.md`, `docs/customer-advocacy-operating-model.md`, and `docs/customer-service-scenario-matrix.md`.
+
 All public examples must be synthetic or de-identified. Every customer-facing output is a draft for licensed/compliance review. Never send messages, submit applications, file claims, change policies, or write to CRM systems automatically.
 
 ## How to Use This Surface
 
 1. Confirm a practice profile exists or run **Agency Playbook Builder** in New Agent Default Mode / Quick Start mode.
 2. Never ask the agent to manually fill the profile template. The template is an internal storage format, not a user-facing form.
-3. If the agent is new, unsure, or says `I don't know yet`, use **New Agent Default Mode** with conservative defaults.
-4. Choose the job-style workflow that matches the user's immediate task.
-5. Ask only for missing facts needed for that workflow.
-6. Produce a review-ready draft with `[verify]` markers where source facts are incomplete.
-7. Name the human review owner before any customer-facing or external-use draft.
+3. If the agent is new, unsure, or says `I don't know yet`, use **New Agent Default Mode** for profile setup or **New Agent Coach Mode** for a live customer situation.
+4. In New Agent Coach Mode, explain what this situation is, what to do first, what not to do, what to collect, what to say to the customer, and who to escalate to before deeper analysis.
+5. Choose the job-style workflow that matches the user's immediate task.
+6. Ask only for missing facts needed for that workflow.
+7. Produce a review-ready draft with `[verify]` markers where source facts are incomplete.
+8. Name the human review owner before any customer-facing or external-use draft.
 
 Agents provide messy real-world context; AI converts it into structured scenarios, draft responses, profile updates, reusable examples, and eval intents. evals are internal quality fixtures; agents do not write JSON eval cases.
 
@@ -29,6 +32,19 @@ Agents provide messy real-world context; AI converts it into structured scenario
 
 ```text
 Use Agency Playbook Builder in New Agent Default Mode. I am a new insurance agent and I don't know yet how to define my full profile. Ask at most three simple questions, allow conservative defaults, generate a provisional profile, and show what I can do next.
+```
+
+## Workflow 2A: New Agent Coach Mode
+
+- **When to use:** The agent is new, unsure, says `I don't know yet`, or asks what to do with a live customer situation.
+- **Required inputs:** One messy situation summary is enough to start; mark unknown facts `[verify]` instead of blocking.
+- **Output:** Plain-language coaching that explains what this situation is, why it matters, what to do first, what not to do, what to collect, what to say to the customer, who to escalate to, and which full workflow applies.
+- **Review owner:** Licensed supervisor, compliance reviewer, underwriting support, claims specialist, or other role named by the routed workflow.
+- **Forbidden actions:** Dumping the entire workflow catalog, shaming the agent, creating final customer advice without facts, or skipping review because the agent needs speed.
+- **Standard prompt:**
+
+```text
+Use New Agent Coach Mode. I am not sure what this situation is. Explain what this situation is, what to do first, what not to do, what facts/documents to collect, what customer-safe words I can use, who to escalate to, and which workflow should handle the full draft.
 ```
 
 ## Workflow 2: Daily Agent Workbench

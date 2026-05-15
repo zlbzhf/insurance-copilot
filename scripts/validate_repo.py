@@ -35,6 +35,9 @@ REQUIRED = [
     ROOT / "docs" / "hermes-first-design.md",
     ROOT / "docs" / "quickstart.md",
     ROOT / "docs" / "workflow-surface.md",
+    ROOT / "docs" / "customer-first-service-philosophy.md",
+    ROOT / "docs" / "customer-advocacy-operating-model.md",
+    ROOT / "docs" / "customer-service-scenario-matrix.md",
     ROOT / "docs" / "local-file-connectors.md",
     ROOT / "docs" / "local-renewal-watcher.md",
     ROOT / "docs" / "script-only-cron-wrapper.md",
@@ -319,6 +322,10 @@ def main() -> int:
         "agents do not write JSON eval cases",
         "examples/practical-mvp/agent-first-session.md",
         "examples/practical-mvp/customer-first-advocacy.md",
+        "docs/customer-first-service-philosophy.md",
+        "docs/customer-advocacy-operating-model.md",
+        "docs/customer-service-scenario-matrix.md",
+        "from idea to product principle to operating model to workflow to scenario matrix to eval",
         "Advanced / Later: Local Connectors and Watchers",
         "Developer Validation",
         "mkdir -p ~/.hermes/skills/insurance/insurance-copilot",
@@ -383,6 +390,9 @@ def main() -> int:
         "Referral Ask Drafter",
         "Renewal/Lapse Follow-up Planner",
         "Institution Knowledge Organizer",
+        "New Agent Coach Mode",
+        "from idea to product principle to operating model to workflow to scenario matrix to eval",
+        "docs/customer-advocacy-operating-model.md",
     ]:
         if name not in workflow_surface:
             return fail(f"workflow surface missing workflow: {name}")
@@ -397,6 +407,8 @@ def main() -> int:
         "I don't know yet",
         "Never ask the agent to manually fill the profile template",
         "template is an internal storage format",
+        "New Agent Coach Mode",
+        "what this situation is",
     ]:
         if phrase not in quickstart:
             return fail(f"quickstart missing practical MVP phrase: {phrase}")
@@ -424,6 +436,29 @@ def main() -> int:
     ]:
         if phrase not in agent_friendly_example:
             return fail(f"agent-friendly onboarding example missing phrase: {phrase}")
+
+    philosophy_doc = (ROOT / "docs" / "customer-first-service-philosophy.md").read_text()
+    operating_doc = (ROOT / "docs" / "customer-advocacy-operating-model.md").read_text()
+    matrix_doc = (ROOT / "docs" / "customer-service-scenario-matrix.md").read_text()
+    for label, doc in [
+        ("customer-first service philosophy", philosophy_doc),
+        ("customer advocacy operating model", operating_doc),
+        ("customer service scenario matrix", matrix_doc),
+    ]:
+        for phrase in [
+            "customer-first advocacy within compliance boundaries",
+            "Compliance is a guardrail for service",
+            "Empty neutrality is insufficient",
+            "from idea to product principle to operating model to workflow to scenario matrix to eval",
+        ]:
+            if phrase not in doc:
+                return fail(f"{label} missing phrase: {phrase}")
+    for phrase in ["Facts and Timeline", "Customer Goal", "Good-Faith Arguments to Preserve", "Forbidden Moves", "Escalation Path"]:
+        if phrase not in operating_doc:
+            return fail(f"customer advocacy operating model missing section: {phrase}")
+    for phrase in ["underwriting / disclosure", "claims / review", "policy review found unclaimed benefit", "replacement / surrender", "complaint or mis-selling concern", "renewal / lapse / reinstatement", "new agent coach mode"]:
+        if phrase not in matrix_doc.lower():
+            return fail(f"customer service scenario matrix missing scenario: {phrase}")
 
     advocacy_example = (ROOT / "examples" / "practical-mvp" / "customer-first-advocacy.md").read_text()
     for phrase in [
@@ -461,8 +496,20 @@ def main() -> int:
         return fail("knowledge registry missing public aia pack")
 
     eval_cases = sorted((ROOT / "evals" / "cases").glob("*.json"))
-    if len(eval_cases) < 21:
-        return fail("expected at least 21 eval cases")
+    if len(eval_cases) < 28:
+        return fail("expected at least 28 eval cases")
+    required_eval_ids = {
+        "empty-neutrality-is-insufficient",
+        "new-agent-needs-coach-mode",
+        "underwriting-postpone-reconsideration",
+        "claim-denial-appeal-path",
+        "policy-review-found-unclaimed-benefit",
+        "replacement-customer-interest-protection",
+    }
+    found_eval_ids = {case.stem for case in eval_cases}
+    missing_eval_ids = sorted(required_eval_ids - found_eval_ids)
+    if missing_eval_ids:
+        return fail("missing systemic eval cases: " + ", ".join(missing_eval_ids))
     for case in eval_cases:
         try:
             data = json.loads(case.read_text())

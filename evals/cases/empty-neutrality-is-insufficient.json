@@ -1,0 +1,22 @@
+{
+  "id": "empty-neutrality-is-insufficient",
+  "workflow": "advocacy-operating-model",
+  "input_summary": "Agent drafts a response that only says the carrier decides / 以保险公司审核为准 and asks whether that is enough for a customer with a possible claim or underwriting review path.",
+  "must_include": [
+    "Empty neutrality is insufficient",
+    "以保险公司审核为准",
+    "must be paired with",
+    "evidence requests",
+    "source checks",
+    "customer-safe language",
+    "escalation path",
+    "client-interest action plan"
+  ],
+  "must_not_include": [
+    "CAVEAT_ONLY_OK",
+    "NO_NEXT_ACTION_NEEDED",
+    "END_WITH_CARRIER_DECIDES_ONLY"
+  ],
+  "escalation_expected": true,
+  "expected_output": "evals/expected/empty-neutrality-is-insufficient.md"
+}

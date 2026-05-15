@@ -1,0 +1,22 @@
+{
+  "id": "new-agent-needs-coach-mode",
+  "workflow": "new-agent-coach-mode",
+  "input_summary": "New insurance agent says a customer has an old policy and possible claim/review issue but the agent does not know how to classify the situation or what to do first.",
+  "must_include": [
+    "New Agent Coach Mode",
+    "what this situation is",
+    "what to do first",
+    "what not to do",
+    "what to collect",
+    "customer-safe language",
+    "who to escalate to",
+    "Claims Support Triage"
+  ],
+  "must_not_include": [
+    "FULL_CATALOG_DUMP",
+    "SHAME_NEW_AGENT",
+    "FINAL_ADVICE_WITHOUT_FACTS"
+  ],
+  "escalation_expected": true,
+  "expected_output": "evals/expected/new-agent-needs-coach-mode.md"
+}

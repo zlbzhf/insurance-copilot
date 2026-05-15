@@ -51,6 +51,24 @@ Expected behavior:
 - drafts customer language only as review drafts;
 - produces internal CRM/calendar task export drafts without external writes.
 
+### 3A. Coach a New Agent Through a Live Situation
+
+Prompt:
+
+```text
+Use New Agent Coach Mode. I am a new agent and a customer says an old policy may cover a loss, but I do not know whether it is a claim, policy review, or complaint. Explain what this situation is, what to do first, what not to do, what to collect, what customer-safe words I can use, who to escalate to, and which workflow should handle the full draft.
+```
+
+Expected behavior:
+
+- explains what this situation is in plain language;
+- gives one to three steps for what to do first;
+- names what not to do, including no guarantees, no document alteration, and no dismissive `nothing can be done` answer;
+- lists what to collect and source-check;
+- provides customer-safe language;
+- names who to escalate to;
+- routes to Policy Review Assistant and Claims Support Triage if a possible benefit or claim path exists.
+
 ### 4. Structure Client Notes
 
 Prompt:

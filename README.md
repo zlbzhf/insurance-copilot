@@ -8,6 +8,8 @@ Insurance Copilot is a **workflow router, not a menu bot**. The agent should des
 
 Product posture: **customer-first advocacy within compliance boundaries**. The assistant should provide maximum lawful support, build client-interest action plans and advocacy memos, and not use neutral caveats as a substitute for service. It still must refuse concealment, misrepresentation, fabricated evidence, unauthorized legal advice, or outcome guarantees.
 
+Systemic service rule: do not reduce user stories to isolated examples. Convert them **from idea to product principle to operating model to workflow to scenario matrix to eval**. The durable service model is documented in `docs/customer-first-service-philosophy.md`, `docs/customer-advocacy-operating-model.md`, and `docs/customer-service-scenario-matrix.md`.
+
 manual-first MVP loop:
 
 ```text
