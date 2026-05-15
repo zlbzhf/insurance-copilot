@@ -137,3 +137,50 @@ def test_scenarios_and_evals_are_ai_assisted_not_agent_homework() -> None:
     assert "customer says: I already have insurance" in example
     assert "AI-generated scenario card" in example
     assert "AI-generated eval intent" in example
+
+
+def test_skill_customer_first_advocacy_not_empty_neutrality() -> None:
+    text = read("skills/insurance-copilot/SKILL.md")
+    workflow_surface = read("docs/workflow-surface.md")
+
+    for phrase in [
+        "customer-first advocacy within compliance boundaries",
+        "do not use neutral caveats as a substitute for service",
+        "maximum lawful support",
+        "advocacy memo",
+        "client-interest action plan",
+    ]:
+        assert phrase in text.lower()
+        assert phrase in workflow_surface.lower()
+
+
+def test_underwriting_disclosure_supports_approval_without_misrepresentation() -> None:
+    intake = read("skills/insurance-copilot/references/client-needs-intake.md")
+    compliance = read("skills/insurance-copilot/references/compliance-starter.md")
+    expected = read("evals/expected/underwriting-disclosure-advocacy.md")
+
+    for text in [intake, compliance, expected]:
+        lowered = text.lower()
+        assert "help the customer present accurate, complete, and favorable-underwriting-relevant facts" in lowered
+        assert "do not conceal, minimize, omit, or reframe material facts" in lowered
+        assert "disclosure support memo" in lowered
+        assert "customer-first" in lowered
+
+    assert "make it sound minor" not in expected
+    assert "leave it out" not in expected
+
+
+def test_claims_triage_preserves_customer_claim_arguments() -> None:
+    claims = read("skills/insurance-copilot/references/claims-triage.md")
+    expected = read("evals/expected/property-claim-late-notice-advocacy.md")
+
+    for text in [claims, expected]:
+        lowered = text.lower()
+        assert "develop the strongest good-faith claim-support position" in lowered
+        assert "do not stop at `the carrier decides`" in lowered
+        assert "knew or should have known" in lowered
+        assert "claim advocacy memo" in lowered
+        assert "customer-first" in lowered
+
+    assert "dead-end disposition" in expected
+    assert "giving up without reviewing" in expected

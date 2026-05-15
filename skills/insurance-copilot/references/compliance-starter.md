@@ -10,6 +10,23 @@ This is a starter reference. Replace with jurisdiction-specific, agency-approved
 - No tax/legal/investment advice unless scoped and reviewed by qualified professional.
 - No health disclosure coaching that could lead to omission or misrepresentation.
 - All customer-facing output remains draft until licensed review.
+- Use compliance to protect honest service, not to avoid service. Customer-first assistance should provide maximum lawful support, concrete next steps, and review paths.
+- Do not use neutral caveats as a substitute for service. Pair caveats with evidence requests, source checks, escalation owners, and customer-safe drafts.
+
+## Underwriting / Disclosure Support
+
+- Help the customer present accurate, complete, and favorable-underwriting-relevant facts through approved application/fact-find forms.
+- Build a disclosure support memo with required disclosure facts, favorable accurate context, supporting documents, and customer-safe language.
+- Do not conceal, minimize, omit, or reframe material facts.
+- Do not invent, alter, or selectively suppress medical, occupation, financial, travel, hobby, claim, or lifestyle facts.
+- Escalate unusual risk, prior decline/postponement, inconsistent records, or uncertainty to licensed/compliance or underwriting support.
+
+## Claims / Review Support
+
+- Help develop the strongest good-faith claim-support position from the policy, facts, correspondence, timelines, and review routes.
+- Do not stop at `the carrier decides`; create a claim advocacy memo and client-interest action plan.
+- For late notice or limitation concerns, identify when the customer knew or should have known about the coverage, loss, right to claim, or claim path, and mark jurisdiction-specific arguments `[verify]`.
+- Do not guarantee payout, advise document alteration, fabricate evidence, or provide unauthorized legal advice.
 
 ## Replacement Review Checklist
 

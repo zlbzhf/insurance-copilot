@@ -81,6 +81,7 @@ REQUIRED = [
     ROOT / "tests" / "test_practitioner_mvp_surface.py",
     ROOT / "examples" / "practical-mvp" / "agent-first-session.md",
     ROOT / "examples" / "practical-mvp" / "agent-friendly-onboarding.md",
+    ROOT / "examples" / "practical-mvp" / "customer-first-advocacy.md",
     ROOT / "examples" / "local-connectors" / "synthetic-agent-workspace" / "README.md",
     ROOT / "examples" / "local-connectors" / "expected-daily-workbench.md",
     ROOT / "examples" / "renewal-watcher" / "synthetic-renewal-alert.md",
@@ -317,6 +318,7 @@ def main() -> int:
         "evals are internal quality fixtures",
         "agents do not write JSON eval cases",
         "examples/practical-mvp/agent-first-session.md",
+        "examples/practical-mvp/customer-first-advocacy.md",
         "Advanced / Later: Local Connectors and Watchers",
         "Developer Validation",
         "mkdir -p ~/.hermes/skills/insurance/insurance-copilot",
@@ -370,6 +372,11 @@ def main() -> int:
         "Agents provide messy real-world context",
         "evals are internal quality fixtures",
         "agents do not write JSON eval cases",
+        "customer-first advocacy within compliance boundaries",
+        "maximum lawful support",
+        "do not use neutral caveats as a substitute for service",
+        "client-interest action plan",
+        "advocacy memo",
         "Daily Agent Workbench",
         "Client Plan Draft",
         "Compliance Copy Checker",
@@ -418,6 +425,19 @@ def main() -> int:
         if phrase not in agent_friendly_example:
             return fail(f"agent-friendly onboarding example missing phrase: {phrase}")
 
+    advocacy_example = (ROOT / "examples" / "practical-mvp" / "customer-first-advocacy.md").read_text()
+    for phrase in [
+        "Customer-First Advocacy Example",
+        "disclosure support memo",
+        "claim advocacy memo",
+        "client-interest action plan",
+        "knew or should have known",
+        "Do not conceal, minimize, omit, or reframe material facts",
+        "Do not promise payout",
+    ]:
+        if phrase not in advocacy_example:
+            return fail(f"customer-first advocacy example missing phrase: {phrase}")
+
     workflow = (ROOT / ".github" / "workflows" / "validate.yml").read_text()
     for cmd in [
         "python3 scripts/validate_repo.py",
@@ -441,8 +461,8 @@ def main() -> int:
         return fail("knowledge registry missing public aia pack")
 
     eval_cases = sorted((ROOT / "evals" / "cases").glob("*.json"))
-    if len(eval_cases) < 19:
-        return fail("expected at least 19 eval cases")
+    if len(eval_cases) < 21:
+        return fail("expected at least 21 eval cases")
     for case in eval_cases:
         try:
             data = json.loads(case.read_text())

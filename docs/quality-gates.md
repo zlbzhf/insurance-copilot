@@ -38,6 +38,9 @@ Required in the skill or references:
 - No final insurance, legal, tax, investment, underwriting, claims, actuarial, or compliance decision.
 - No guaranteed approval, payout, returns, savings, or coverage outcomes.
 - No advice to conceal, minimize, or omit required disclosures.
+- Underwriting/disclosure support helps the customer present accurate, complete, and favorable-underwriting-relevant facts through approved forms and source documents, without concealment or misrepresentation.
+- Claims support is customer-first: it develops the strongest good-faith claim-support position, claim advocacy memo, and client-interest action plan without promising payout or giving unauthorized legal advice.
+- Do not use neutral caveats as a substitute for service; pair caveats with evidence requests, source checks, escalation owners, and customer-safe drafts.
 - Replacement, surrender, cancellation, or policy change requires documented suitability/replacement analysis and escalation.
 - Claims triage does not determine claim coverage or payout.
 - Annuity/investment-linked review separates guarantees from non-guaranteed projections.

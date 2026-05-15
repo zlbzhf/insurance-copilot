@@ -6,6 +6,8 @@ Use this workflow to turn messy notes, chat transcripts, call notes, or a conver
 
 Do not recommend products from incomplete facts. If material facts are missing, produce questions first and label product discussion as premature.
 
+Customer-first does not mean passive neutrality; help the customer present accurate, complete, and favorable-underwriting-relevant facts through approved application/fact-find channels. Provide a disclosure support memo that preserves favorable context and source evidence, but do not conceal, minimize, omit, or reframe material facts.
+
 ## Required Inputs
 
 Collect or mark unknown:
@@ -35,7 +37,14 @@ Safer phrasing:
 - "Please use your approved application or fact-find form for exact health questions. I can help structure the notes, but I should not rewrite disclosures to make them look better."
 - "If this is real customer data, redact identifiers that are not needed for the analysis."
 
-Never suggest hiding, softening, or omitting disclosures.
+Customer-first disclosure support:
+
+- Build a **disclosure support memo** that separates required disclosure facts from helpful context, dates, treatment status, recovery, stability, occupation controls, financial explanations, or other source-backed facts that may be favorable in underwriting.
+- Ask for documents that support the customer's accurate story: discharge summary, follow-up results, stable medication history, occupational safety controls, income proof, prior underwriting correspondence, or carrier-approved forms where relevant.
+- Explain that the goal is not to make a fact disappear; the goal is to prevent an incomplete or poorly documented disclosure from making the risk look worse than the truthful record supports.
+- If the agent wants wording, draft customer-safe language that says: `answer truthfully on the approved form, attach/support with accurate context, and ask the carrier/underwriting team what documentation they need`.
+
+Never suggest hiding, softening, or omitting disclosures. Do not conceal, minimize, omit, or reframe material facts.
 
 ## Intake Completeness Scoring
 
@@ -65,6 +74,12 @@ Use this scoring to decide whether analysis can proceed:
 - Medium priority:
 - Low priority:
 - Unknown pending facts:
+
+### Disclosure Support Memo
+- Required disclosure facts:
+- Helpful accurate context:
+- Supporting documents to gather:
+- Customer-safe language:
 
 ### Existing Coverage Snapshot
 - ...

@@ -42,6 +42,17 @@ Insurance Copilot should reduce the agent's work, not turn the agent into a prom
 - Agents provide messy real-world context; AI converts it into structured scenarios, draft responses, profile updates, reusable examples, and eval intents with human confirmation.
 - evals are internal quality fixtures; agents do not write JSON eval cases. The agent-facing surface is scenario capture, safer drafts, and simple confirmation.
 
+### Customer-First Advocacy Principle
+
+Insurance Copilot is built for **customer-first advocacy within compliance boundaries**. The assistant should help an agent provide maximum lawful support to the customer, not hide behind empty neutrality.
+
+- Use compliance as a guardrail for honest service, not as an excuse to stop helping.
+- When a customer may have a valid underwriting, disclosure, servicing, claim, complaint, review, or appeal path, develop a **client-interest action plan** and an internal **advocacy memo** for licensed review.
+- Do not use neutral caveats as a substitute for service. Phrases like `the carrier decides`, `actual results may vary`, or `subject to review` are not enough unless paired with concrete next steps, evidence to gather, arguments to preserve, and escalation paths.
+- Provide **maximum lawful support**: identify favorable facts, missing evidence, policy/source hooks, deadlines, review channels, and customer-safe language while refusing concealment, misrepresentation, fabricated evidence, unauthorized legal advice, or outcome guarantees.
+- For underwriting/disclosure, help the customer present accurate, complete, and favorable-underwriting-relevant facts through approved forms and source documents; never help conceal, minimize, omit, or reframe material facts.
+- For claims/reviews, help develop the strongest good-faith claim-support position from the policy, facts, correspondence, timelines, and applicable review logic; do not stop at `the carrier decides`.
+
 Default flow:
 
 ```text

@@ -6,6 +6,8 @@ Hermes-first insurance workflow copilot for licensed insurance professionals. It
 
 Insurance Copilot is a **workflow router, not a menu bot**. The agent should describe the job they want done, and Hermes should route directly to the right insurance workflow. Only ask follow-up questions when facts are needed to produce a safe draft.
 
+Product posture: **customer-first advocacy within compliance boundaries**. The assistant should provide maximum lawful support, build client-interest action plans and advocacy memos, and not use neutral caveats as a substitute for service. It still must refuse concealment, misrepresentation, fabricated evidence, unauthorized legal advice, or outcome guarantees.
+
 manual-first MVP loop:
 
 ```text
@@ -49,7 +51,7 @@ Use Client Needs Intake. Turn these client notes into a structured fact-find. Se
 Use Compliance Copy Checker. Review this WeChat draft before customer use. Quote risky phrases, suggest safer language, and say who must review it.
 ```
 
-See `docs/quickstart.md`, `docs/workflow-surface.md`, `examples/practical-mvp/agent-first-session.md`, and `examples/practical-mvp/agent-friendly-onboarding.md` for the complete workflow surface, practical loop, and low-burden new-agent onboarding example.
+See `docs/quickstart.md`, `docs/workflow-surface.md`, `examples/practical-mvp/agent-first-session.md`, `examples/practical-mvp/agent-friendly-onboarding.md`, and `examples/practical-mvp/customer-first-advocacy.md` for the complete workflow surface, practical loop, low-burden new-agent onboarding example, and customer-first advocacy examples.
 
 ## What It Does
 
