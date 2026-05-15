@@ -1,0 +1,286 @@
+{
+  "as_of": "2026-05-14",
+  "boundary_ledger": [
+    "read-only local/private workspace connector only; source files are read, not mutated.",
+    "readiness gate dry-run only; no live Hermes cron job is created.",
+    "No External Writes: no customer sending, CRM writes, carrier contact, claims filing, application submission, or policy change.",
+    "Artifacts are written only to the explicit output directory outside the private workspace.",
+    "Trace records metadata and checksums only; private source content is not copied into audit-trace.json."
+  ],
+  "connector_source_trace": [
+    {
+      "boundary": "regular in-workspace file",
+      "operation": "read",
+      "path": "renewal-registers/synthetic-renewal-register.csv",
+      "sha256": "f30dae15d3a3671fb08c0fa4b08ca2c7946b37016e3a45ee24a86355d626a0e8",
+      "size_bytes": 284
+    },
+    {
+      "boundary": "regular in-workspace file",
+      "operation": "read",
+      "path": "clients/SYN-CUSTOMER-001.md",
+      "sha256": "90b3ff33bef1a21bd7ff7d8fa3f729be6983cdef51beb7759ae9d3584b9548fe",
+      "size_bytes": 239
+    },
+    {
+      "boundary": "regular in-workspace file",
+      "operation": "read",
+      "path": "meetings/SYN-MEETING-001.md",
+      "sha256": "411d43324fdb48c9f973fca9d3ba2e15daa8becde99c3045cd49c0ac464f6934",
+      "size_bytes": 219
+    },
+    {
+      "boundary": "regular in-workspace file",
+      "operation": "read",
+      "path": "policies/SYN-POLICY-001.md",
+      "sha256": "e48da8204a67e6b4f117d8e732e4cfc324e148eaf65a4c91d29abd8efd382ddf",
+      "size_bytes": 242
+    },
+    {
+      "boundary": "regular in-workspace file",
+      "operation": "read",
+      "path": "claims/SYN-CLAIM-001.md",
+      "sha256": "dee5f781d7fbb73fff44120198c4961989727cd5e95801923dacf345115b5020",
+      "size_bytes": 194
+    },
+    {
+      "boundary": "regular in-workspace file",
+      "operation": "read",
+      "path": "referrals/SYN-REFERRAL-001.md",
+      "sha256": "0ddc463dd362d6be88eb5e41c0f2436264ecde0ac1a1502afdeae1f98e27e61b",
+      "size_bytes": 167
+    },
+    {
+      "boundary": "regular in-workspace file",
+      "operation": "read",
+      "path": "tasks/SYN-TASKS.md",
+      "sha256": "57eac7fc3f331710813c17ab5616a75b0dc4ccc54d02977faa813e4700b50403",
+      "size_bytes": 138
+    }
+  ],
+  "internal_only": true,
+  "live_cron_created": false,
+  "no_external_writes": true,
+  "read_only": true,
+  "read_only_verified": true,
+  "readiness_gate": {
+    "mode": "readiness gate dry-run",
+    "ready_for_cron": false,
+    "risk_count": 2
+  },
+  "source_inventory": [
+    {
+      "boundary": "regular in-workspace file",
+      "operation": "read",
+      "path": "README.md",
+      "sha256_after": "2f4783331a91b718f91b8958004f2b809fface14d3955b593c0a3768696a1339",
+      "sha256_before": "2f4783331a91b718f91b8958004f2b809fface14d3955b593c0a3768696a1339",
+      "size_bytes_after": 377,
+      "size_bytes_before": 377,
+      "unchanged": true
+    },
+    {
+      "boundary": "regular in-workspace file",
+      "operation": "read",
+      "path": "claims/SYN-CLAIM-001.md",
+      "sha256_after": "dee5f781d7fbb73fff44120198c4961989727cd5e95801923dacf345115b5020",
+      "sha256_before": "dee5f781d7fbb73fff44120198c4961989727cd5e95801923dacf345115b5020",
+      "size_bytes_after": 194,
+      "size_bytes_before": 194,
+      "unchanged": true
+    },
+    {
+      "boundary": "regular in-workspace file",
+      "operation": "read",
+      "path": "clients/SYN-CUSTOMER-001.md",
+      "sha256_after": "90b3ff33bef1a21bd7ff7d8fa3f729be6983cdef51beb7759ae9d3584b9548fe",
+      "sha256_before": "90b3ff33bef1a21bd7ff7d8fa3f729be6983cdef51beb7759ae9d3584b9548fe",
+      "size_bytes_after": 239,
+      "size_bytes_before": 239,
+      "unchanged": true
+    },
+    {
+      "boundary": "regular in-workspace file",
+      "operation": "read",
+      "path": "meetings/SYN-MEETING-001.md",
+      "sha256_after": "411d43324fdb48c9f973fca9d3ba2e15daa8becde99c3045cd49c0ac464f6934",
+      "sha256_before": "411d43324fdb48c9f973fca9d3ba2e15daa8becde99c3045cd49c0ac464f6934",
+      "size_bytes_after": 219,
+      "size_bytes_before": 219,
+      "unchanged": true
+    },
+    {
+      "boundary": "regular in-workspace file",
+      "operation": "read",
+      "path": "policies/SYN-POLICY-001.md",
+      "sha256_after": "e48da8204a67e6b4f117d8e732e4cfc324e148eaf65a4c91d29abd8efd382ddf",
+      "sha256_before": "e48da8204a67e6b4f117d8e732e4cfc324e148eaf65a4c91d29abd8efd382ddf",
+      "size_bytes_after": 242,
+      "size_bytes_before": 242,
+      "unchanged": true
+    },
+    {
+      "boundary": "regular in-workspace file",
+      "operation": "read",
+      "path": "referrals/SYN-REFERRAL-001.md",
+      "sha256_after": "0ddc463dd362d6be88eb5e41c0f2436264ecde0ac1a1502afdeae1f98e27e61b",
+      "sha256_before": "0ddc463dd362d6be88eb5e41c0f2436264ecde0ac1a1502afdeae1f98e27e61b",
+      "size_bytes_after": 167,
+      "size_bytes_before": 167,
+      "unchanged": true
+    },
+    {
+      "boundary": "regular in-workspace file",
+      "operation": "read",
+      "path": "renewal-registers/synthetic-renewal-register.csv",
+      "sha256_after": "f30dae15d3a3671fb08c0fa4b08ca2c7946b37016e3a45ee24a86355d626a0e8",
+      "sha256_before": "f30dae15d3a3671fb08c0fa4b08ca2c7946b37016e3a45ee24a86355d626a0e8",
+      "size_bytes_after": 284,
+      "size_bytes_before": 284,
+      "unchanged": true
+    },
+    {
+      "boundary": "regular in-workspace file",
+      "operation": "read",
+      "path": "tasks/SYN-TASKS.md",
+      "sha256_after": "57eac7fc3f331710813c17ab5616a75b0dc4ccc54d02977faa813e4700b50403",
+      "sha256_before": "57eac7fc3f331710813c17ab5616a75b0dc4ccc54d02977faa813e4700b50403",
+      "size_bytes_after": 138,
+      "size_bytes_before": 138,
+      "unchanged": true
+    }
+  ],
+  "stage_ledger": {
+    "connector_json": {
+      "command": [
+        "python3",
+        "scripts/local_file_connectors.py",
+        "daily-workbench",
+        "--workspace",
+        "/root/insurance-agent-assistant/examples/local-connectors/synthetic-agent-workspace",
+        "--format",
+        "json",
+        "--output",
+        "/tmp/insurance-copilot-synthetic-dry-run/workbench-bundle.json"
+      ],
+      "exit_code": 0,
+      "status": "ok",
+      "stderr": ""
+    },
+    "connector_markdown": {
+      "command": [
+        "python3",
+        "scripts/local_file_connectors.py",
+        "daily-workbench",
+        "--workspace",
+        "/root/insurance-agent-assistant/examples/local-connectors/synthetic-agent-workspace",
+        "--format",
+        "markdown",
+        "--output",
+        "/tmp/insurance-copilot-synthetic-dry-run/workbench-bundle.md"
+      ],
+      "exit_code": 0,
+      "status": "ok",
+      "stderr": ""
+    },
+    "cron_simulation": {
+      "command": [
+        "bash",
+        "cron/scripts/renewal_watcher.sh",
+        "--workspace",
+        "/root/insurance-agent-assistant/examples/local-connectors/synthetic-agent-workspace",
+        "--as-of",
+        "2026-05-14",
+        "--mode",
+        "always",
+        "--format",
+        "markdown",
+        "--output",
+        "/tmp/insurance-copilot-synthetic-dry-run/cron-simulation.md"
+      ],
+      "exit_code": 0,
+      "status": "ok",
+      "stderr": ""
+    },
+    "readiness": {
+      "command": [
+        "python3",
+        "scripts/private_workspace_readiness.py",
+        "--workspace",
+        "/root/insurance-agent-assistant/examples/local-connectors/synthetic-agent-workspace",
+        "--as-of",
+        "2026-05-14",
+        "--max-stale-days",
+        "7",
+        "--format",
+        "json",
+        "--output",
+        "/tmp/insurance-copilot-synthetic-dry-run/readiness-report.json"
+      ],
+      "exit_code": 1,
+      "status": "blocked",
+      "stderr": ""
+    },
+    "readiness_markdown": {
+      "command": [
+        "python3",
+        "scripts/private_workspace_readiness.py",
+        "--workspace",
+        "/root/insurance-agent-assistant/examples/local-connectors/synthetic-agent-workspace",
+        "--as-of",
+        "2026-05-14",
+        "--max-stale-days",
+        "7",
+        "--format",
+        "markdown",
+        "--output",
+        "/tmp/insurance-copilot-synthetic-dry-run/readiness-report.md"
+      ],
+      "exit_code": 1,
+      "status": "blocked",
+      "stderr": ""
+    },
+    "renewal_json": {
+      "command": [
+        "python3",
+        "scripts/renewal_watcher.py",
+        "--bundle",
+        "/tmp/insurance-copilot-synthetic-dry-run/workbench-bundle.json",
+        "--workspace",
+        "/root/insurance-agent-assistant/examples/local-connectors/synthetic-agent-workspace",
+        "--as-of",
+        "2026-05-14",
+        "--format",
+        "json",
+        "--output",
+        "/tmp/insurance-copilot-synthetic-dry-run/renewal-alert.json"
+      ],
+      "exit_code": 0,
+      "status": "ok",
+      "stderr": ""
+    },
+    "renewal_markdown": {
+      "command": [
+        "python3",
+        "scripts/renewal_watcher.py",
+        "--bundle",
+        "/tmp/insurance-copilot-synthetic-dry-run/workbench-bundle.json",
+        "--workspace",
+        "/root/insurance-agent-assistant/examples/local-connectors/synthetic-agent-workspace",
+        "--as-of",
+        "2026-05-14",
+        "--format",
+        "markdown",
+        "--output",
+        "/tmp/insurance-copilot-synthetic-dry-run/renewal-alert.md"
+      ],
+      "exit_code": 0,
+      "status": "ok",
+      "stderr": ""
+    }
+  },
+  "trace_type": "audit-style trace",
+  "workflow": "Private Workspace Audit Trace",
+  "workspace": "/root/insurance-agent-assistant/examples/local-connectors/synthetic-agent-workspace",
+  "workspace_unchanged": true
+}

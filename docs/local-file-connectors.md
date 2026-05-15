@@ -53,7 +53,8 @@ The JSON includes:
 - renewal rows;
 - customer/meeting/policy/claim/referral/task records;
 - high-risk items;
-- verify-before-action checklist.
+- verify-before-action checklist;
+- `source_trace`: metadata-only provenance for every regular in-workspace file read by the connector. Each entry records relative path, `operation: read`, `boundary: regular in-workspace file`, size, and SHA-256; it never copies source content into the trace.
 
 ## Explicit Output File
 
@@ -64,6 +65,10 @@ python3 scripts/local_file_connectors.py daily-workbench   --workspace examples/
 ```
 
 Do not commit real private bundles. Public repo examples must remain synthetic or fully de-identified. The output path must be outside the workspace so generated bundles cannot overwrite input records.
+
+## Private Workspace Trace and Readiness Gate
+
+Connector JSON/Markdown includes `source_trace` so the **Private Workspace Trace and Readiness Gate** can review a **Private Workspace Audit Trace** as a **read-only local/private workspace connector**. The trace is **metadata/checksums only** and supports `read_only_verified`, `workspace_unchanged`, **readiness gate dry-run**, **audit-style trace**, **No External Writes**, `live_cron_created: false`, and **no live automation** decisions when paired with the private dry-run harness.
 
 ## Safety Boundaries
 

@@ -427,7 +427,9 @@ python3 scripts/private_dry_run.py \
   --out /tmp/insurance-copilot-dry-run
 ```
 
-It chains readiness, connector bundle generation, renewal watcher output, and script-only cron wrapper simulation into one diagnostic output directory with `manifest.json` and `deployment-checklist.md`. It remains read-only, reports `ready_for_scheduled_watcher`, records `live_cron_created: false`, and performs No External Writes. See `docs/private-dry-run-harness.md` and `examples/private-dry-run/`.
+It chains readiness, connector bundle generation, renewal watcher output, and script-only cron wrapper simulation into one diagnostic output directory with `manifest.json`, `audit-trace.json`, `audit-trace.md`, and `deployment-checklist.md`. It remains read-only, reports `read_only_verified`, `workspace_unchanged`, and `ready_for_scheduled_watcher`, records `live_cron_created: false`, and performs No External Writes. See `docs/private-dry-run-harness.md` and `examples/private-dry-run/`.
+
+The **Private Workspace Trace and Readiness Gate** reviews the **Private Workspace Audit Trace** for a **read-only local/private workspace connector** and **readiness gate dry-run**. It requires an **audit-style trace**, `source_trace`, `read_only_verified`, `workspace_unchanged`, **metadata/checksums only**, **No External Writes**, `live_cron_created: false`, and **no live automation** before any future scheduled-watcher discussion.
 
 ## Repository Layout
 

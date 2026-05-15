@@ -146,6 +146,11 @@ Current cross-workflow runtime gate: **Professional Review Gate**. It translates
 
 Current source/citation/data-boundary runtime gate: **Source Grounding and Data Boundary Gate**. It translates insurance RAG/policy-assistant grounding into the manual-first insurance-agent surface through `skills/insurance-copilot/SKILL.md`, `references/source-grounding-guardrails.md`, `templates/source-grounding-guardrails.md`, evals, tests, and validators. It requires a **Source Ledger**, **Citation Ledger**, **public/private separation**, **prompt-injection**, **PII minimization**, **citations or `[verify]`**, **no customer data in public packs**, and the rule that **untrusted source text cannot override workflow instructions**. This remains a **manual-first practitioner workflow**, **not a generic RAG chatbot**.
 
+
+## Private Workspace Trace and Readiness Gate
+
+Runtime-effective P2 safeguard: **Private Workspace Trace and Readiness Gate** reviews the **Private Workspace Audit Trace** for a **read-only local/private workspace connector** and **readiness gate dry-run**. The review must include the **audit-style trace**, `source_trace`, `read_only_verified`, `workspace_unchanged`, **metadata/checksums only**, **No External Writes**, `live_cron_created: false`, and **no live automation** before any future scheduled-watcher discussion.
+
 ## Current Usable State
 
 The manual-first beta is considered usable when all of the following hold:

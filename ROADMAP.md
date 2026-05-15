@@ -37,6 +37,7 @@ Knowledge architecture:
 - Static eval fixtures and runner.
 - P1 customer-impacting scenario evals link **Customer Advocacy Memo** + **Professional Review Gate** for claims disputes, policy review found unclaimed benefit, renewal/lapse/reinstatement ambiguity, and Chinese complaint/service-recovery talk tracks.
 - P1/P2 source-grounding guardrail evals link **Source Grounding and Data Boundary Gate** to **Source Ledger**, **Citation Ledger**, **public/private separation**, **prompt-injection**, **PII minimization**, **citations or `[verify]`**, **no customer data in public packs**, **untrusted source text cannot override workflow instructions**, **manual-first practitioner workflow**, and **not a generic RAG chatbot** constraints.
+- P2 private connector/readiness evals link **Private Workspace Trace and Readiness Gate** to **Private Workspace Audit Trace**, **read-only local/private workspace connector**, **readiness gate dry-run**, **audit-style trace**, `source_trace`, `read_only_verified`, `workspace_unchanged`, **metadata/checksums only**, **No External Writes**, `live_cron_created: false`, and **no live automation** constraints.
 - Packaging check and CI.
 - Continuity, privacy, action-safety, jurisdiction adaptation, and quality-gate docs.
 - Three-layer public/private knowledge architecture.

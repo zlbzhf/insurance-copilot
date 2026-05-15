@@ -175,6 +175,15 @@ def test_daily_workbench_json_normalizes_arrays(tmp_path: Path) -> None:
     assert data["renewals"][0]["policy_ref"] == "SYN-POLICY-001"
     assert data["renewals"][0]["status_source"] == "[verify]"
     assert data["high_risk_items"]
+    assert data["source_trace"]
+    trace_paths = {item["path"] for item in data["source_trace"]}
+    assert "clients/SYN-CUSTOMER-001.md" in trace_paths
+    assert "renewal-registers/synthetic-renewal-register.csv" in trace_paths
+    for item in data["source_trace"]:
+        assert item["operation"] == "read"
+        assert item["boundary"] == "regular in-workspace file"
+        assert item["sha256"]
+        assert "content" not in item
 
 
 def test_daily_workbench_can_write_explicit_output_without_mutating_sources(tmp_path: Path) -> None:
@@ -224,3 +233,16 @@ def test_output_inside_workspace_is_rejected_to_preserve_input_records(tmp_path:
     assert proc.returncode != 0
     assert "output path must be outside the workspace" in proc.stdout.lower()
     assert not output.exists()
+
+
+def test_output_hardlink_to_workspace_file_is_rejected(tmp_path: Path) -> None:
+    ws = make_workspace(tmp_path)
+    output = tmp_path / "hardlinked-output.md"
+    output.hardlink_to(ws / "clients" / "SYN-CUSTOMER-001.md")
+    before = (ws / "clients" / "SYN-CUSTOMER-001.md").read_text(encoding="utf-8")
+
+    proc = run_cli("daily-workbench", "--workspace", str(ws), "--format", "markdown", "--output", str(output))
+
+    assert proc.returncode != 0
+    assert "output path must not overwrite workspace file" in proc.stdout.lower()
+    assert (ws / "clients" / "SYN-CUSTOMER-001.md").read_text(encoding="utf-8") == before

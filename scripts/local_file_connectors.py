@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import sys
 from dataclasses import dataclass, asdict
@@ -36,6 +37,33 @@ def read_text(path: Path) -> str:
     return path.read_text(encoding="utf-8", errors="ignore")
 
 
+def sha256(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def trace_source_file(path: Path, workspace: Path) -> dict[str, str | int]:
+    """Return metadata-only provenance for a read input file; never include content."""
+    stat = path.stat()
+    return {
+        "path": str(path.relative_to(workspace)),
+        "operation": "read",
+        "boundary": "regular in-workspace file",
+        "size_bytes": stat.st_size,
+        "sha256": sha256(path),
+    }
+
+
+def add_trace_once(source_trace: list[dict[str, str | int]], path: Path, workspace: Path) -> None:
+    traced_path = str(path.relative_to(workspace))
+    if any(item.get("path") == traced_path for item in source_trace):
+        return
+    source_trace.append(trace_source_file(path, workspace))
+
+
 def is_relative_to(path: Path, parent: Path) -> bool:
     """Return True when path is inside parent after symlink resolution."""
     try:
@@ -55,6 +83,25 @@ def safe_input_file(path: Path, workspace: Path) -> bool:
     except OSError:
         return False
     return is_relative_to(resolved, workspace_resolved)
+
+
+def workspace_files(workspace: Path) -> list[Path]:
+    """List regular, non-symlink source files inside the resolved workspace."""
+    return sorted(p for p in workspace.rglob("*") if safe_input_file(p, workspace))
+
+
+def assert_output_file_safe(workspace: Path, out: Path) -> tuple[bool, str]:
+    out_abs = out.expanduser().resolve()
+    if is_relative_to(out_abs, workspace):
+        return False, f"output path must be outside the workspace: {out_abs}"
+    if out.exists():
+        for source in workspace_files(workspace):
+            try:
+                if out.samefile(source):
+                    return False, f"output path must not overwrite workspace file: {out_abs}"
+            except FileNotFoundError:
+                continue
+    return True, str(out_abs)
 
 
 def strip_frontmatter(text: str) -> tuple[dict[str, Any], str]:
@@ -88,7 +135,7 @@ def first_heading(body: str, fallback: str) -> str:
     return fallback
 
 
-def collect_markdown_records(workspace: Path, dirname: str, default_type: str) -> list[MarkdownRecord]:
+def collect_markdown_records(workspace: Path, dirname: str, default_type: str, source_trace: list[dict[str, str | int]] | None = None) -> list[MarkdownRecord]:
     directory = workspace / dirname
     if not directory.exists():
         return []
@@ -98,6 +145,8 @@ def collect_markdown_records(workspace: Path, dirname: str, default_type: str) -
             continue
         if not safe_input_file(path, workspace):
             continue
+        if source_trace is not None:
+            add_trace_once(source_trace, path, workspace)
         text = read_text(path)
         frontmatter, body = strip_frontmatter(text)
         record_type = str(frontmatter.get("type") or default_type)
@@ -128,7 +177,7 @@ def parse_date(value: str | None) -> date | None:
         return None
 
 
-def read_renewals(workspace: Path) -> list[dict[str, str]]:
+def read_renewals(workspace: Path, source_trace: list[dict[str, str | int]] | None = None) -> list[dict[str, str]]:
     directory = workspace / "renewal-registers"
     if not directory.exists():
         return []
@@ -136,6 +185,8 @@ def read_renewals(workspace: Path) -> list[dict[str, str]]:
     for path in sorted(directory.glob("*.csv")):
         if not safe_input_file(path, workspace):
             continue
+        if source_trace is not None:
+            add_trace_once(source_trace, path, workspace)
         with path.open(newline="", encoding="utf-8") as f:
             for row in csv.DictReader(f):
                 normalized = {key: normalize_cell(value) for key, value in row.items() if key is not None}
@@ -156,15 +207,16 @@ def contains_any(text: str, terms: list[str]) -> bool:
 
 
 def build_bundle(workspace: Path) -> dict[str, Any]:
-    renewals = read_renewals(workspace)
-    customers = collect_markdown_records(workspace, "clients", "customer")
+    source_trace: list[dict[str, str | int]] = []
+    renewals = read_renewals(workspace, source_trace)
+    customers = collect_markdown_records(workspace, "clients", "customer", source_trace)
     # Some teams prefer `customers/`; support it without requiring it.
-    customers += collect_markdown_records(workspace, "customers", "customer")
-    meetings = collect_markdown_records(workspace, "meetings", "meeting-note")
-    policies = collect_markdown_records(workspace, "policies", "policy-summary")
-    claims = collect_markdown_records(workspace, "claims", "claim-tracker")
-    referrals = collect_markdown_records(workspace, "referrals", "referral-tracker")
-    tasks = collect_markdown_records(workspace, "tasks", "task-list")
+    customers += collect_markdown_records(workspace, "customers", "customer", source_trace)
+    meetings = collect_markdown_records(workspace, "meetings", "meeting-note", source_trace)
+    policies = collect_markdown_records(workspace, "policies", "policy-summary", source_trace)
+    claims = collect_markdown_records(workspace, "claims", "claim-tracker", source_trace)
+    referrals = collect_markdown_records(workspace, "referrals", "referral-tracker", source_trace)
+    tasks = collect_markdown_records(workspace, "tasks", "task-list", source_trace)
 
     high_risk: list[str] = []
     for row in renewals:
@@ -221,6 +273,7 @@ def build_bundle(workspace: Path) -> dict[str, Any]:
             "[verify] approved script or practice profile before sending customer-facing copy.",
             "[verify] referral consent and incentive/anti-rebating rules before referral outreach.",
         ],
+        "source_trace": source_trace,
     }
 
 
@@ -291,12 +344,22 @@ def render_markdown(bundle: dict[str, Any]) -> str:
     for item in bundle["todays_priorities"]:
         lines.extend(["- Task:", "  - Owner: assigned agent", "  - Due: [verify]", f"  - Notes: {item}", "  - External write allowed: no, draft only."])
 
+    lines += ["", "## Source Trace", "- Trace type: metadata-only source_trace for read-only local/private workspace connector."]
+    if bundle.get("source_trace"):
+        for item in bundle["source_trace"]:
+            lines.append(f"- `{item['path']}` — {item['operation']}; {item['boundary']}; sha256: `{item['sha256']}`")
+    else:
+        lines.append("- No regular in-workspace source files were read.")
+
     lines += ["", "## No External Writes", "- This connector only reads local files and emits a bundle.", "- It does not send messages, update CRM/calendar, contact carriers, file claims, submit applications, or change policies."]
     return "\n".join(lines).rstrip() + "\n"
 
 
 def command_daily_workbench(args: argparse.Namespace) -> int:
-    workspace = args.workspace.resolve()
+    workspace_input = args.workspace.expanduser()
+    if workspace_input.is_symlink():
+        return fail(f"workspace path must not be a symlink: {workspace_input}")
+    workspace = workspace_input.resolve()
     if not workspace.exists() or not workspace.is_dir():
         return fail(f"workspace directory missing: {workspace}")
     workspace_resolved = workspace.resolve()
@@ -306,9 +369,10 @@ def command_daily_workbench(args: argparse.Namespace) -> int:
     else:
         output = render_markdown(bundle)
     if args.output:
-        out = args.output.resolve()
-        if is_relative_to(out, workspace_resolved):
-            return fail(f"output path must be outside the workspace: {out}")
+        ok, msg = assert_output_file_safe(workspace_resolved, args.output)
+        if not ok:
+            return fail(msg)
+        out = Path(msg)
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(output, encoding="utf-8")
         print(f"wrote {out}")

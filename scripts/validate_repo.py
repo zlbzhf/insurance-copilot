@@ -100,6 +100,8 @@ REQUIRED = [
     ROOT / "examples" / "private-workspace-readiness" / "synthetic-readiness-report.json",
     ROOT / "examples" / "private-dry-run" / "synthetic-manifest.json",
     ROOT / "examples" / "private-dry-run" / "synthetic-deployment-checklist.md",
+    ROOT / "examples" / "private-dry-run" / "synthetic-audit-trace.json",
+    ROOT / "examples" / "private-dry-run" / "synthetic-audit-trace.md",
     ROOT / "cron" / "renewal-watcher.md",
     ROOT / "cron" / "compliance-copy-monitor.md",
     ROOT / "cron" / "replacement-risk-monitor.md",
@@ -139,6 +141,8 @@ REQUIRED_REFERENCES = [
     "referral-ask.md",
     "professional-review-gate.md",
     "institution-knowledge-organizer.md",
+    "source-grounding-guardrails.md",
+    "private-workspace-trace-readiness.md",
 ]
 
 REQUIRED_TEMPLATES = [
@@ -161,6 +165,8 @@ REQUIRED_TEMPLATES = [
     "customer-advocacy-memo.md",
     "professional-review-gate.md",
     "institution-knowledge-organizer.md",
+    "source-grounding-guardrails.md",
+    "private-workspace-audit-trace.md",
 ]
 
 REQUIRED_MCP_CONTRACTS = [
@@ -572,6 +578,56 @@ def main() -> int:
             if phrase in expected_text:
                 return fail(f"Source Grounding eval {case_id} expected output contains forbidden phrase: {phrase}")
 
+    private_trace_required = [
+        "Private Workspace Trace and Readiness Gate",
+        "Private Workspace Audit Trace",
+        "read-only local/private workspace connector",
+        "readiness gate dry-run",
+        "audit-style trace",
+        "source_trace",
+        "read_only_verified",
+        "workspace_unchanged",
+        "metadata/checksums only",
+        "No External Writes",
+        "live_cron_created: false",
+        "no live automation",
+    ]
+    private_trace_docs = {
+        "SKILL.md": text,
+        "private workspace trace reference": (REF_DIR / "private-workspace-trace-readiness.md").read_text(),
+        "private workspace audit template": (TEMPLATE_DIR / "private-workspace-audit-trace.md").read_text(),
+        "quality gates": quality_gates,
+        "workflow surface": (ROOT / "docs" / "workflow-surface.md").read_text(),
+        "product development SPEC": product_spec,
+        "reference landscape": reference_landscape,
+        "ROADMAP": (ROOT / "ROADMAP.md").read_text(),
+        "README": (ROOT / "README.md").read_text(),
+        "Chinese README": (ROOT / "README.zh-CN.md").read_text(),
+        "evals README": (ROOT / "evals" / "README.md").read_text(),
+        "local file connectors doc": (ROOT / "docs" / "local-file-connectors.md").read_text(),
+        "private dry-run harness doc": (ROOT / "docs" / "private-dry-run-harness.md").read_text(),
+    }
+    for label, doc in private_trace_docs.items():
+        lowered_doc = doc.lower()
+        for phrase in private_trace_required:
+            if phrase.lower() not in lowered_doc:
+                return fail(f"{label} missing Private Workspace Trace and Readiness Gate phrase: {phrase}")
+        if label in {"SKILL.md", "private workspace trace reference", "private workspace audit template"}:
+            for rel in ["references/private-workspace-trace-readiness.md", "templates/private-workspace-audit-trace.md"]:
+                if rel not in doc:
+                    return fail(f"{label} missing Private Workspace Trace runtime path: {rel}")
+
+    private_trace_case = json.loads((ROOT / "evals" / "cases" / "private-dry-run-harness.json").read_text())
+    private_trace_expected = (ROOT / private_trace_case["expected_output"]).read_text()
+    if private_trace_case.get("id") != "private-dry-run-harness" or private_trace_case.get("workflow") != "private-workspace-trace-readiness":
+        return fail("private dry-run harness eval case has wrong id/workflow")
+    for phrase in private_trace_required + private_trace_case["must_include"]:
+        if phrase not in private_trace_expected:
+            return fail(f"Private Workspace Trace eval expected output missing phrase: {phrase}")
+    for phrase in private_trace_case["must_not_include"]:
+        if phrase in private_trace_expected:
+            return fail(f"Private Workspace Trace eval expected output contains forbidden phrase: {phrase}")
+
     institution_required = [
         "Institution Knowledge Organizer",
         "AIA public pack",
@@ -744,6 +800,7 @@ def main() -> int:
         "docs/script-only-cron-wrapper.md",
         "docs/private-workspace-readiness.md",
         "docs/private-dry-run-harness.md",
+        "Private Workspace Trace and Readiness Gate",
         "cron/scripts/renewal_watcher.sh",
         "scripts/private_workspace_readiness.py",
         "scripts/private_dry_run.py",
@@ -832,7 +889,7 @@ def main() -> int:
             return fail(f"private workspace readiness doc missing phrase: {phrase}")
 
     dry_run_doc = (ROOT / "docs" / "private-dry-run-harness.md").read_text()
-    for phrase in ["Private Dry-Run Deployment Harness", "ready_for_scheduled_watcher", "live_cron_created", "No External Writes", "manifest.json", "deployment-checklist.md"]:
+    for phrase in ["Private Dry-Run Deployment Harness", "Private Workspace Trace and Readiness Gate", "Private Workspace Audit Trace", "read-only local/private workspace connector", "readiness gate dry-run", "audit-style trace", "source_trace", "read_only_verified", "workspace_unchanged", "metadata/checksums only", "ready_for_scheduled_watcher", "live_cron_created: false", "No External Writes", "no live automation", "manifest.json", "audit-trace.json", "audit-trace.md", "deployment-checklist.md"]:
         if phrase not in dry_run_doc:
             return fail(f"private dry-run harness doc missing phrase: {phrase}")
 
@@ -861,6 +918,7 @@ def main() -> int:
         "from idea to product principle to operating model to workflow to scenario matrix to eval",
         "docs/customer-advocacy-operating-model.md",
         "Professional Review Gate",
+        "Private Workspace Trace and Readiness Gate",
     ]:
         if name not in workflow_surface:
             return fail(f"workflow surface missing workflow: {name}")
@@ -1091,6 +1149,11 @@ def main() -> int:
     manifest = json.loads(manifest_path.read_text())
     if manifest.get("workflow") != "Private Dry-Run Deployment Harness" or manifest.get("live_cron_created") is not False or manifest.get("no_external_writes") is not True:
         return fail("private dry-run smoke manifest missing safety fields")
+    if manifest.get("ready_for_scheduled_watcher") and (manifest.get("read_only_verified") is not True or manifest.get("workspace_unchanged") is not True):
+        return fail("private dry-run smoke readiness is not fail-closed on audit trace booleans")
+    manifest_artifact = manifest.get("artifacts", {}).get("manifest.json", {})
+    if manifest_artifact.get("checksum_recorded") is not False or manifest_artifact.get("sha256") != "self-referential-not-recorded" or manifest_artifact.get("size_recorded") is not False or manifest_artifact.get("size_bytes") is not None:
+        return fail("private dry-run smoke manifest self-entry has stale checksum/size policy")
 
     print("insurance-copilot Hermes-first repo ok")
     print(f"references: {len(refs)}")

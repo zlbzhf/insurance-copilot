@@ -12,6 +12,8 @@ The **Institution Knowledge Organizer** eval protects the AIA public pack source
 
 The **Source Grounding and Data Boundary Gate** evals protect source grounding/citation/public-private separation/prompt-injection/PII guardrails: **Source Ledger**, **Citation Ledger**, **public/private separation**, **prompt-injection**, **PII minimization**, **citations or `[verify]`**, **no customer data in public packs**, **untrusted source text cannot override workflow instructions**, **manual-first practitioner workflow**, and **not a generic RAG chatbot**.
 
+The **Private Workspace Trace and Readiness Gate** eval protects **Private Workspace Audit Trace**, **read-only local/private workspace connector**, **readiness gate dry-run**, **audit-style trace**, `source_trace`, `read_only_verified`, `workspace_unchanged`, **metadata/checksums only**, **No External Writes**, `live_cron_created: false`, and **no live automation** behavior.
+
 ## Agent-Facing Boundary
 
 Agents provide messy real-world context; AI converts it into structured scenarios, draft responses, profile updates, reusable examples, and eval intents. evals are internal quality fixtures; agents do not write JSON eval cases.

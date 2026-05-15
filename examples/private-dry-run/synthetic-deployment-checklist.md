@@ -18,8 +18,17 @@ Draft for licensed/compliance/operations review.
 - `renewal-alert.json`
 - `renewal-alert.md`
 - `cron-simulation.md`
+- `audit-trace.json`
+- `audit-trace.md`
 - `manifest.json`
 - `deployment-checklist.md`
+
+## Audit Trace
+- Audit trace: `audit-trace.json`
+- Audit trace summary: `audit-trace.md`
+- Source files checked: 8
+- Workspace unchanged: true
+- Read-only verified: true
 
 ## Gate Checks
 - Readiness: blocked (exit 1)

@@ -32,6 +32,8 @@ EXPECTED_ARTIFACTS = [
     "renewal-alert.json",
     "renewal-alert.md",
     "cron-simulation.md",
+    "audit-trace.json",
+    "audit-trace.md",
     "manifest.json",
     "deployment-checklist.md",
 ]
@@ -113,19 +115,27 @@ def test_synthetic_workspace_generates_complete_diagnostic_bundle(tmp_path: Path
     manifest = json.loads((out / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["workflow"] == "Private Dry-Run Deployment Harness"
     assert manifest["read_only"] is True
+    assert manifest["read_only_verified"] is True
+    assert manifest["workspace_unchanged"] is True
     assert manifest["no_external_writes"] is True
     assert manifest["live_cron_created"] is False
     assert manifest["ready_for_scheduled_watcher"] is False
     assert manifest["stages"]["readiness"]["exit_code"] == 1
     assert set(manifest["artifacts"]) >= set(EXPECTED_ARTIFACTS)
+    assert "audit_trace" in manifest
+    assert manifest["audit_trace"]["path"].endswith("audit-trace.json")
+    assert manifest["audit_trace"]["source_files_checked"] >= 1
     for name, item in manifest["artifacts"].items():
-        assert item["size_bytes"] >= 0
         artifact_path = Path(item["path"])
         assert artifact_path.is_file()
         if name == "manifest.json":
             assert item["checksum_recorded"] is False
             assert item["sha256"] == "self-referential-not-recorded"
+            assert item["size_recorded"] is False
+            assert item["size_bytes"] is None
         else:
+            assert item["size_bytes"] >= 0
+            assert item["size_recorded"] is True
             assert item["checksum_recorded"] is True
             assert hashlib.sha256(artifact_path.read_bytes()).hexdigest() == item["sha256"]
 
@@ -157,8 +167,13 @@ def test_ready_workspace_returns_zero_and_manifest_ready(tmp_path: Path) -> None
     assert proc.returncode == 0, proc.stderr + proc.stdout
     manifest = json.loads((out / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["ready_for_scheduled_watcher"] is True
+    assert manifest["read_only_verified"] is True
+    assert manifest["workspace_unchanged"] is True
     assert manifest["stages"]["readiness"]["exit_code"] == 0
-    assert "Ready for private dry-run gate" in (out / "deployment-checklist.md").read_text(encoding="utf-8")
+    checklist = (out / "deployment-checklist.md").read_text(encoding="utf-8")
+    assert "Ready for private dry-run gate" in checklist
+    assert "Audit trace: `audit-trace.json`" in checklist
+    assert "Source files checked" in checklist
 
 
 def test_dry_run_does_not_mutate_source_workspace(tmp_path: Path) -> None:
@@ -223,6 +238,24 @@ def test_symlinked_workspace_root_is_rejected(tmp_path: Path) -> None:
     assert "workspace path must not be a symlink" in proc.stderr.lower()
 
 
+def test_symlinked_directory_outside_workspace_is_not_in_audit_inventory(tmp_path: Path) -> None:
+    ws = write_workspace(tmp_path, fresh_actionable_rows())
+    outside = tmp_path / "outside-private"
+    outside.mkdir()
+    (outside / "SYN-OUTSIDE.md").write_text("# SHOULD_NOT_BE_IN_AUDIT_TRACE\n", encoding="utf-8")
+    (ws / "clients" / "linked-outside").symlink_to(outside, target_is_directory=True)
+    out = tmp_path / "dry-run"
+
+    proc = run_dry_run("--workspace", str(ws), "--as-of", "2026-05-14", "--out", str(out))
+
+    assert proc.returncode == 0, proc.stderr + proc.stdout
+    trace = json.loads((out / "audit-trace.json").read_text(encoding="utf-8"))
+    dumped = json.dumps(trace)
+    assert "SHOULD_NOT_BE_IN_AUDIT_TRACE" not in dumped
+    assert "linked-outside" not in dumped
+    assert all("linked-outside" not in item["path"] for item in trace["source_inventory"])
+
+
 def test_cron_simulation_contains_internal_alert_verify_and_no_external_writes(tmp_path: Path) -> None:
     ws = write_workspace(tmp_path, fresh_actionable_rows())
     out = tmp_path / "dry-run"
@@ -235,3 +268,70 @@ def test_cron_simulation_contains_internal_alert_verify_and_no_external_writes(t
     assert "[verify]" in text
     assert "No External Writes" in text
     assert "customer message sent" not in text.lower()
+
+
+def test_audit_trace_records_source_inventory_stage_ledger_and_read_only_boundary(tmp_path: Path) -> None:
+    ws = write_workspace(tmp_path, fresh_actionable_rows())
+    private_marker = "DO_NOT_LEAK_PRIVATE_AUDIT_MARKER_8C9F2A"
+    (ws / "clients" / "synthetic-private-note.md").write_text(
+        f"# Synthetic private note\n\nCustomer-sensitive body marker: {private_marker}\n",
+        encoding="utf-8",
+    )
+    out = tmp_path / "dry-run"
+
+    proc = run_dry_run("--workspace", str(ws), "--as-of", "2026-05-14", "--out", str(out))
+
+    assert proc.returncode == 0, proc.stderr + proc.stdout
+    trace = json.loads((out / "audit-trace.json").read_text(encoding="utf-8"))
+    trace_raw = (out / "audit-trace.json").read_text(encoding="utf-8")
+    trace_md = (out / "audit-trace.md").read_text(encoding="utf-8")
+    assert private_marker not in trace_raw
+    assert private_marker not in trace_md
+    assert trace["workflow"] == "Private Workspace Audit Trace"
+    assert trace["trace_type"] == "audit-style trace"
+    assert trace["read_only"] is True
+    assert trace["read_only_verified"] is True
+    assert trace["workspace_unchanged"] is True
+    assert trace["no_external_writes"] is True
+    assert trace["internal_only"] is True
+    assert trace["live_cron_created"] is False
+    assert trace["readiness_gate"]["mode"] == "readiness gate dry-run"
+    assert trace["stage_ledger"]["readiness"]["status"] == "ok"
+    assert trace["stage_ledger"]["connector_json"]["status"] == "ok"
+    assert trace["source_inventory"]
+    allowed_source_keys = {
+        "path",
+        "operation",
+        "boundary",
+        "size_bytes_before",
+        "size_bytes_after",
+        "sha256_before",
+        "sha256_after",
+        "unchanged",
+    }
+    for item in trace["source_inventory"]:
+        assert set(item) == allowed_source_keys
+        assert item["operation"] == "read"
+        assert item["boundary"] == "regular in-workspace file"
+        assert item["sha256_before"] == item["sha256_after"]
+        assert item["unchanged"] is True
+        for forbidden_key in {"content", "text", "snippet", "body", "markdown", "raw"}:
+            assert forbidden_key not in item
+    assert trace["connector_source_trace"]
+    allowed_connector_keys = {"path", "operation", "boundary", "size_bytes", "sha256"}
+    for item in trace["connector_source_trace"]:
+        assert set(item) == allowed_connector_keys
+        for forbidden_key in {"content", "text", "snippet", "body", "markdown", "raw"}:
+            assert forbidden_key not in item
+    boundary_text = "\n".join(trace["boundary_ledger"])
+    assert "read-only local/private workspace connector" in boundary_text
+    assert "readiness gate dry-run" in boundary_text
+    assert "No External Writes" in boundary_text
+    assert "customer sending" in boundary_text
+    assert "CRM writes" in boundary_text
+    assert "# Private Workspace Audit Trace" in trace_md
+    assert "audit-style trace" in trace_md
+    assert "read-only local/private workspace connector" in trace_md
+    assert "readiness gate dry-run" in trace_md
+    assert "No External Writes" in trace_md
+    assert "Live Hermes cron created: false" in trace_md

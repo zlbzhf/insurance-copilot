@@ -245,6 +245,11 @@ Implication:
 - Keep deterministic validators, eval fixtures, PII-like scans, forbidden-action rules, and runtime-effective documentation gates.
 - Future connector work needs least-privilege, read-only defaults, audit logging, retention rules, and explicit review.
 
+
+## Private Workspace Trace and Readiness Gate
+
+Runtime-effective P2 safeguard: **Private Workspace Trace and Readiness Gate** reviews the **Private Workspace Audit Trace** for a **read-only local/private workspace connector** and **readiness gate dry-run**. The review must include the **audit-style trace**, `source_trace`, `read_only_verified`, `workspace_unchanged`, **metadata/checksums only**, **No External Writes**, `live_cron_created: false`, and **no live automation** before any future scheduled-watcher discussion.
+
 ## Borrow / Avoid Matrix
 
 ### Borrow

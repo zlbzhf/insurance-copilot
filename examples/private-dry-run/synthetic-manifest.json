@@ -1,65 +1,95 @@
 {
   "artifacts": {
+    "audit-trace.json": {
+      "checksum_recorded": true,
+      "path": "/tmp/insurance-copilot-synthetic-dry-run/audit-trace.json",
+      "sha256": "98aba49d53333b023eaaceb0e0ba44ccfafec4d0d4559169ce143c827353372b",
+      "size_bytes": 9595,
+      "size_recorded": true
+    },
+    "audit-trace.md": {
+      "checksum_recorded": true,
+      "path": "/tmp/insurance-copilot-synthetic-dry-run/audit-trace.md",
+      "sha256": "43be3de528889887bcfad04c80ca7b77429d5ff937c51a0c81ddf0e670527e5a",
+      "size_bytes": 2838,
+      "size_recorded": true
+    },
     "cron-simulation.md": {
       "checksum_recorded": true,
       "path": "/tmp/insurance-copilot-synthetic-dry-run/cron-simulation.md",
       "sha256": "6e1157106c225a0cdfbe755d3cba0353b5f25061323a7ef0765d6f0cc124672e",
-      "size_bytes": 1801
+      "size_bytes": 1801,
+      "size_recorded": true
     },
     "deployment-checklist.md": {
       "checksum_recorded": true,
       "path": "/tmp/insurance-copilot-synthetic-dry-run/deployment-checklist.md",
-      "sha256": "a8e334a5ddfb92b96e31d9310286d7168abe52605762c2bce52b4b427c771c77",
-      "size_bytes": 1739
+      "sha256": "df1003d0b6656c5d27377de15945babe5f372e2804fc9a7ef745928c1e9c1f40",
+      "size_bytes": 1950,
+      "size_recorded": true
     },
     "manifest.json": {
       "checksum_recorded": false,
       "path": "/tmp/insurance-copilot-synthetic-dry-run/manifest.json",
       "sha256": "self-referential-not-recorded",
-      "size_bytes": 3
+      "size_bytes": null,
+      "size_recorded": false
     },
     "readiness-report.json": {
       "checksum_recorded": true,
       "path": "/tmp/insurance-copilot-synthetic-dry-run/readiness-report.json",
       "sha256": "0c7868ebfa1b6739c07ec77b888d0a5c7f8acd5330c9c02a33029765323596cb",
-      "size_bytes": 2071
+      "size_bytes": 2071,
+      "size_recorded": true
     },
     "readiness-report.md": {
       "checksum_recorded": true,
       "path": "/tmp/insurance-copilot-synthetic-dry-run/readiness-report.md",
       "sha256": "b526dfc42281ebde788ca0a0e6eab047091d68e47230c5854bbbad7bb8caab52",
-      "size_bytes": 2370
+      "size_bytes": 2370,
+      "size_recorded": true
     },
     "renewal-alert.json": {
       "checksum_recorded": true,
       "path": "/tmp/insurance-copilot-synthetic-dry-run/renewal-alert.json",
       "sha256": "b895d411d45870c9eeff1d3fadae867f9a4be86306b3bb77997f640a929b5eea",
-      "size_bytes": 1226
+      "size_bytes": 1226,
+      "size_recorded": true
     },
     "renewal-alert.md": {
       "checksum_recorded": true,
       "path": "/tmp/insurance-copilot-synthetic-dry-run/renewal-alert.md",
       "sha256": "6e1157106c225a0cdfbe755d3cba0353b5f25061323a7ef0765d6f0cc124672e",
-      "size_bytes": 1801
+      "size_bytes": 1801,
+      "size_recorded": true
     },
     "workbench-bundle.json": {
       "checksum_recorded": true,
       "path": "/tmp/insurance-copilot-synthetic-dry-run/workbench-bundle.json",
-      "sha256": "50f34b288d80db3259f2b19724a29551cfeee28d871818dc8648ac3af34ceeff",
-      "size_bytes": 4146
+      "sha256": "f859ef050d807d53fd57046a73745dbb7a2e1b5cf27590d57aeb77c96c6e63ce",
+      "size_bytes": 5859,
+      "size_recorded": true
     },
     "workbench-bundle.md": {
       "checksum_recorded": true,
       "path": "/tmp/insurance-copilot-synthetic-dry-run/workbench-bundle.md",
-      "sha256": "e32713beac2ed360c177786d30375c19d4f91038fd9ed843b278be094b022dd1",
-      "size_bytes": 3745
+      "sha256": "fe470c134a64971b1d3ffb0c3c5920185e303fe607120682fc9382f868641886",
+      "size_bytes": 4869,
+      "size_recorded": true
     }
   },
   "as_of": "2026-05-14",
+  "audit_trace": {
+    "connector_source_files_checked": 7,
+    "markdown_path": "/tmp/insurance-copilot-synthetic-dry-run/audit-trace.md",
+    "path": "/tmp/insurance-copilot-synthetic-dry-run/audit-trace.json",
+    "source_files_checked": 8
+  },
   "internal_only": true,
   "live_cron_created": false,
   "no_external_writes": true,
   "read_only": true,
+  "read_only_verified": true,
   "ready_for_scheduled_watcher": false,
   "review_notice": "Draft diagnostics for licensed/compliance/operations review; no live Hermes cron job was created.",
   "stages": {
@@ -192,5 +222,6 @@
     }
   },
   "workflow": "Private Dry-Run Deployment Harness",
-  "workspace": "/root/insurance-agent-assistant/examples/local-connectors/synthetic-agent-workspace"
+  "workspace": "/root/insurance-agent-assistant/examples/local-connectors/synthetic-agent-workspace",
+  "workspace_unchanged": true
 }

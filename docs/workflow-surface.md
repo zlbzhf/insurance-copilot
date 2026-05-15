@@ -259,6 +259,19 @@ Use Stakeholder Summary Writer. Summarize this analysis for the specified audien
 Use Institution Knowledge Organizer. Help me organize this public insurance source for the AIA public pack as a source-backed public pack update. Keep it source-first, create or verify the source record, identify the source type/page type, preserve the public/private boundary, mark [verify] items, require pack maintainer review, and do not include customer or non-public material.
 ```
 
+## Cross-Workflow Gate: Private Workspace Trace and Readiness Gate
+
+- **When to use:** Before relying on a local/private workspace connector bundle, Private Workspace Audit Trace, private dry-run harness output, readiness gate dry-run, scheduled-watcher readiness decision, or connector `source_trace`.
+- **Runtime files:** `skills/insurance-copilot/references/private-workspace-trace-readiness.md` and `skills/insurance-copilot/templates/private-workspace-audit-trace.md`.
+- **Output:** **Private Workspace Trace and Readiness Gate** with **Private Workspace Audit Trace**, **read-only local/private workspace connector** review, **readiness gate dry-run** summary, **audit-style trace** review, `source_trace`, `read_only_verified`, `workspace_unchanged`, **metadata/checksums only**, **No External Writes**, `live_cron_created: false`, and **no live automation** decision.
+- **Review owner:** Licensed agent, operations owner, compliance reviewer, or private workspace owner before any future scheduling discussion.
+- **Forbidden actions:** Creating a live cron job, sending a customer message, writing CRM/calendar records, contacting carriers, filing claims, submitting applications, changing policies, copying private source content into public artifacts, or treating readiness as deployment approval.
+- **Standard prompt:**
+
+```text
+Use Private Workspace Trace and Readiness Gate for this dry-run or connector bundle. Review the Private Workspace Audit Trace, source_trace, read_only_verified, workspace_unchanged, readiness gate dry-run, metadata/checksums only boundary, No External Writes, live_cron_created: false, and no live automation status. Produce a review-ready minimum safe next step; do not create a live cron job or external write.
+```
+
 ## Workflow 16: Source Grounding and Data Boundary Gate
 
 - **When to use:** The user asks for source grounding, citations, use of policy documents, public/private mixed source review, prompt-injection handling, PII minimization, or a source-backed draft that must not become a generic chatbot answer.

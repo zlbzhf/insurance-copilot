@@ -30,7 +30,34 @@ Required:
 
 Reject changes that add only explanatory docs for a behavior-changing rule without also updating the runtime skill/reference/template and an executable gate.
 
-## Professional Review Gate
+## Private Workspace Trace and Readiness Gate
+
+Private connector and readiness patterns must become an insurance-specific runtime gate, not a hidden automation path. The **Private Workspace Trace and Readiness Gate** is the cross-workflow audit block for local/private workspace connector bundles, private dry-run outputs, readiness gate dry-run results, and scheduled-watcher readiness discussions.
+
+Required runtime surfaces:
+
+- `skills/insurance-copilot/SKILL.md` routes to `references/private-workspace-trace-readiness.md`.
+- `skills/insurance-copilot/references/private-workspace-trace-readiness.md` defines the method.
+- `skills/insurance-copilot/templates/private-workspace-audit-trace.md` defines the output block.
+- `evals/cases/private-dry-run-harness.json`, `evals/expected/private-dry-run-harness.md`, `tests/test_private_dry_run.py`, `tests/test_local_file_connectors.py`, `tests/test_practitioner_mvp_surface.py`, `scripts/local_file_connectors.py`, `scripts/private_dry_run.py`, and `scripts/validate_repo.py` keep it executable.
+
+Required phrases and fields:
+
+- Private Workspace Trace and Readiness Gate;
+- Private Workspace Audit Trace;
+- read-only local/private workspace connector;
+- readiness gate dry-run;
+- audit-style trace;
+- source_trace;
+- read_only_verified;
+- workspace_unchanged;
+- metadata/checksums only;
+- No External Writes;
+- live_cron_created: false;
+- no live automation.
+
+Reject changes that create live automation, omit read-only verification, copy private source content into traces/public artifacts, write output inside the private workspace, treat readiness as deployment approval, or blur private workspace content into public packs/examples/evals.
+
 ## Source Grounding and Data Boundary Gate
 
 Insurance RAG and policy-assistant patterns must become an insurance-specific runtime source gate, not a generic chatbot or cloud-app clone. The **Source Grounding and Data Boundary Gate** is the cross-workflow source/citation/data-boundary block for public insurer knowledge, private policy/customer material, connector-fed content, mixed source bundles, and public-pack contributions.
@@ -269,4 +296,4 @@ These gates are intentionally closer to `claude-for-legal` usability discipline:
 
 - Private workspace readiness blocks symlinked required workspace paths, validates every renewal row freshness timestamp, rejects future dates, and prevents output hardlink aliases to workspace files.
 
-- Private dry-run deployment blocks live scheduled watcher creation until manifest `ready_for_scheduled_watcher` is true; it records `live_cron_created: false`, artifact checksums, and No External Writes.
+- Private dry-run deployment blocks live scheduled watcher creation until manifest `ready_for_scheduled_watcher` is true; this verdict must be computed after the audit trace and fail closed on `read_only_verified: false` or `workspace_unchanged: false`. It records `live_cron_created: false`, artifact checksums, explicit non-recorded self metadata for the manifest, and No External Writes.

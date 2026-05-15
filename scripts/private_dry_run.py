@@ -26,6 +26,8 @@ ARTIFACT_NAMES = [
     "renewal-alert.json",
     "renewal-alert.md",
     "cron-simulation.md",
+    "audit-trace.json",
+    "audit-trace.md",
     "manifest.json",
     "deployment-checklist.md",
 ]
@@ -52,8 +54,31 @@ def is_relative_to(path: Path, parent: Path) -> bool:
         return False
 
 
+def safe_workspace_file(path: Path, workspace: Path) -> bool:
+    """Accept only regular files whose resolved target remains inside workspace."""
+    if path.is_symlink() or not path.is_file():
+        return False
+    try:
+        resolved = path.resolve(strict=True)
+    except OSError:
+        return False
+    return is_relative_to(resolved, workspace.resolve())
+
+
 def workspace_files(workspace: Path) -> list[Path]:
-    return sorted(p for p in workspace.rglob("*") if p.is_file() and not p.is_symlink())
+    return sorted(p for p in workspace.rglob("*") if safe_workspace_file(p, workspace))
+
+
+def workspace_inventory(workspace: Path) -> dict[str, dict[str, str | int]]:
+    inventory: dict[str, dict[str, str | int]] = {}
+    for path in workspace_files(workspace):
+        rel = str(path.relative_to(workspace))
+        inventory[rel] = {
+            "path": rel,
+            "size_bytes": path.stat().st_size,
+            "sha256": sha256(path),
+        }
+    return inventory
 
 
 def assert_out_safe(workspace: Path, out: Path) -> tuple[bool, str]:
@@ -102,8 +127,8 @@ def sha256(path: Path) -> str:
     return h.hexdigest()
 
 
-def artifact_inventory(out: Path) -> dict[str, dict[str, str | int | bool]]:
-    artifacts: dict[str, dict[str, str | int | bool]] = {}
+def artifact_inventory(out: Path) -> dict[str, dict[str, str | int | bool | None]]:
+    artifacts: dict[str, dict[str, str | int | bool | None]] = {}
     for name in ARTIFACT_NAMES:
         path = out / name
         if not path.exists() or not path.is_file():
@@ -111,7 +136,8 @@ def artifact_inventory(out: Path) -> dict[str, dict[str, str | int | bool]]:
         if name == "manifest.json":
             artifacts[name] = {
                 "path": str(path),
-                "size_bytes": path.stat().st_size,
+                "size_bytes": None,
+                "size_recorded": False,
                 "sha256": "self-referential-not-recorded",
                 "checksum_recorded": False,
             }
@@ -119,10 +145,112 @@ def artifact_inventory(out: Path) -> dict[str, dict[str, str | int | bool]]:
         artifacts[name] = {
             "path": str(path),
             "size_bytes": path.stat().st_size,
+            "size_recorded": True,
             "sha256": sha256(path),
             "checksum_recorded": True,
         }
     return artifacts
+
+
+def source_inventory(before: dict[str, dict[str, str | int]], after: dict[str, dict[str, str | int]]) -> list[dict[str, str | int | bool]]:
+    inventory: list[dict[str, str | int | bool]] = []
+    for rel in sorted(set(before) | set(after)):
+        before_item = before.get(rel)
+        after_item = after.get(rel)
+        inventory.append(
+            {
+                "path": rel,
+                "operation": "read",
+                "boundary": "regular in-workspace file",
+                "size_bytes_before": before_item.get("size_bytes", 0) if before_item else 0,
+                "size_bytes_after": after_item.get("size_bytes", 0) if after_item else 0,
+                "sha256_before": before_item.get("sha256", "missing") if before_item else "missing",
+                "sha256_after": after_item.get("sha256", "missing") if after_item else "missing",
+                "unchanged": before_item == after_item,
+            }
+        )
+    return inventory
+
+
+def build_audit_trace(
+    *,
+    workspace: Path,
+    as_of: str,
+    readiness: dict,
+    stages: dict[str, StageResult],
+    workbench_bundle: dict,
+    before_inventory: dict[str, dict[str, str | int]],
+    after_inventory: dict[str, dict[str, str | int]],
+) -> dict:
+    inventory = source_inventory(before_inventory, after_inventory)
+    unchanged = before_inventory == after_inventory and all(item["unchanged"] for item in inventory)
+    return {
+        "workflow": "Private Workspace Audit Trace",
+        "trace_type": "audit-style trace",
+        "workspace": str(workspace),
+        "as_of": as_of,
+        "read_only": True,
+        "read_only_verified": unchanged,
+        "workspace_unchanged": unchanged,
+        "no_external_writes": True,
+        "internal_only": True,
+        "live_cron_created": False,
+        "readiness_gate": {
+            "mode": "readiness gate dry-run",
+            "ready_for_cron": bool(readiness.get("ready_for_cron")),
+            "risk_count": len(readiness.get("risks", [])) if isinstance(readiness.get("risks", []), list) else 0,
+        },
+        "stage_ledger": {name: stage_dict(stage) for name, stage in stages.items()},
+        "source_inventory": inventory,
+        "connector_source_trace": workbench_bundle.get("source_trace", []),
+        "boundary_ledger": [
+            "read-only local/private workspace connector only; source files are read, not mutated.",
+            "readiness gate dry-run only; no live Hermes cron job is created.",
+            "No External Writes: no customer sending, CRM writes, carrier contact, claims filing, application submission, or policy change.",
+            "Artifacts are written only to the explicit output directory outside the private workspace.",
+            "Trace records metadata and checksums only; private source content is not copied into audit-trace.json.",
+        ],
+    }
+
+
+def render_audit_trace(trace: dict) -> str:
+    lines = [
+        "# Private Workspace Audit Trace",
+        "",
+        "audit-style trace for a read-only local/private workspace connector and readiness gate dry-run.",
+        "",
+        "## Boundary",
+    ]
+    for item in trace["boundary_ledger"]:
+        lines.append(f"- {item}")
+    lines.extend(
+        [
+            "",
+            "## Read-Only Verification",
+            f"- Read-only verified: {str(trace['read_only_verified']).lower()}",
+            f"- Workspace unchanged: {str(trace['workspace_unchanged']).lower()}",
+            "- No External Writes: true",
+            "- Live Hermes cron created: false",
+            "",
+            "## Readiness Gate",
+            "- Mode: readiness gate dry-run",
+            f"- ready_for_cron: {str(trace['readiness_gate']['ready_for_cron']).lower()}",
+            f"- Risk count: {trace['readiness_gate']['risk_count']}",
+            "",
+            "## Stage Ledger",
+        ]
+    )
+    for name, stage in trace["stage_ledger"].items():
+        lines.append(f"- {name}: {stage['status']} (exit {stage['exit_code']})")
+    lines.extend(["", "## Source Files Checked"])
+    for item in trace["source_inventory"]:
+        lines.append(f"- `{item['path']}` — {item['operation']}; {item['boundary']}; unchanged: {str(item['unchanged']).lower()}")
+    lines.extend(["", "## Connector Source Trace"])
+    for item in trace["connector_source_trace"]:
+        lines.append(f"- `{item['path']}` — {item['operation']}; {item['boundary']}; sha256: `{item['sha256']}`")
+    if not trace["connector_source_trace"]:
+        lines.append("- None recorded by connector bundle.")
+    return "\n".join(lines).rstrip() + "\n"
 
 
 def render_checklist(manifest: dict, readiness: dict) -> str:
@@ -145,6 +273,19 @@ def render_checklist(manifest: dict, readiness: dict) -> str:
     for name in ARTIFACT_NAMES:
         if name in manifest["artifacts"]:
             lines.append(f"- `{name}`")
+    audit_trace = manifest.get("audit_trace", {})
+    if audit_trace:
+        lines.extend(
+            [
+                "",
+                "## Audit Trace",
+                "- Audit trace: `audit-trace.json`",
+                "- Audit trace summary: `audit-trace.md`",
+                f"- Source files checked: {audit_trace.get('source_files_checked', 0)}",
+                f"- Workspace unchanged: {str(manifest.get('workspace_unchanged', False)).lower()}",
+                f"- Read-only verified: {str(manifest.get('read_only_verified', False)).lower()}",
+            ]
+        )
     lines.extend([
         "",
         "## Gate Checks",
@@ -173,6 +314,19 @@ def render_checklist(manifest: dict, readiness: dict) -> str:
     return "\n".join(lines) + "\n"
 
 
+def compute_ready_for_scheduled_watcher(
+    *,
+    readiness: dict,
+    stages: dict[str, StageResult],
+    audit_trace: dict,
+) -> bool:
+    """Final scheduled-watcher readiness is fail-closed on audit trace evidence."""
+    required_stage_keys = ["connector_json", "connector_markdown", "renewal_json", "renewal_markdown", "cron_simulation"]
+    child_stages_ok = all(stages[key].exit_code == 0 for key in required_stage_keys)
+    audit_read_only_ok = audit_trace.get("read_only_verified") is True and audit_trace.get("workspace_unchanged") is True
+    return bool(readiness.get("ready_for_cron")) and child_stages_ok and audit_read_only_ok
+
+
 def stage_dict(stage: StageResult) -> dict:
     return {
         "status": stage.status,
@@ -198,6 +352,7 @@ def main() -> int:
     workspace = workspace_input.resolve()
     if not workspace.exists() or not workspace.is_dir():
         return fail(f"workspace missing: {workspace}")
+    before_inventory = workspace_inventory(workspace)
     ok, msg = assert_out_safe(workspace, args.out)
     if not ok:
         return fail(msg)
@@ -277,7 +432,20 @@ def main() -> int:
         print(stages["cron_simulation"].stderr or proc.stdout, file=sys.stderr, end="")
         return 2
 
-    ready = bool(readiness.get("ready_for_cron")) and all(stages[key].exit_code == 0 for key in ["connector_json", "connector_markdown", "renewal_json", "renewal_markdown", "cron_simulation"])
+    workbench_bundle = json.loads(workbench_json.read_text(encoding="utf-8"))
+    after_inventory = workspace_inventory(workspace)
+    audit_trace = build_audit_trace(
+        workspace=workspace,
+        as_of=args.as_of,
+        readiness=readiness,
+        stages=stages,
+        workbench_bundle=workbench_bundle,
+        before_inventory=before_inventory,
+        after_inventory=after_inventory,
+    )
+    write_text(out / "audit-trace.json", json.dumps(audit_trace, indent=2, sort_keys=True) + "\n")
+    write_text(out / "audit-trace.md", render_audit_trace(audit_trace))
+    ready = compute_ready_for_scheduled_watcher(readiness=readiness, stages=stages, audit_trace=audit_trace)
 
     manifest: dict = {
         "workflow": "Private Dry-Run Deployment Harness",
@@ -285,11 +453,19 @@ def main() -> int:
         "as_of": args.as_of,
         "ready_for_scheduled_watcher": ready,
         "read_only": True,
+        "read_only_verified": audit_trace["read_only_verified"],
+        "workspace_unchanged": audit_trace["workspace_unchanged"],
         "no_external_writes": True,
         "internal_only": True,
         "live_cron_created": False,
         "review_notice": "Draft diagnostics for licensed/compliance/operations review; no live Hermes cron job was created.",
         "stages": {name: stage_dict(stage) for name, stage in stages.items()},
+        "audit_trace": {
+            "path": str(out / "audit-trace.json"),
+            "markdown_path": str(out / "audit-trace.md"),
+            "source_files_checked": len(audit_trace["source_inventory"]),
+            "connector_source_files_checked": len(audit_trace["connector_source_trace"]),
+        },
         "artifacts": {},
     }
 
@@ -299,6 +475,9 @@ def main() -> int:
     # the file. Record every other artifact checksum and mark the manifest checksum as
     # intentionally not recorded.
     write_text(out / "manifest.json", "{}\n")
+    manifest["artifacts"] = artifact_inventory(out)
+    checklist = render_checklist(manifest, readiness)
+    write_text(out / "deployment-checklist.md", checklist)
     manifest["artifacts"] = artifact_inventory(out)
     write_text(out / "manifest.json", json.dumps(manifest, indent=2, sort_keys=True) + "\n")
 

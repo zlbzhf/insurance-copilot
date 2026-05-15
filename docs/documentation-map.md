@@ -174,15 +174,19 @@ Files:
 - `docs/script-only-cron-wrapper.md`
 - `docs/private-workspace-readiness.md`
 - `docs/private-dry-run-harness.md`
+- `skills/insurance-copilot/references/private-workspace-trace-readiness.md`
+- `skills/insurance-copilot/templates/private-workspace-audit-trace.md`
 
 Purpose:
 
 - Document optional future connectors, watcher recipes, and dry-run gates.
 - Keep automation out of the practical MVP unless explicitly requested.
+- Provide the Private Workspace Trace and Readiness Gate for Private Workspace Audit Trace review before any future scheduled-watcher discussion.
 
 Runtime effect:
 
 - None by default. Automation must not be introduced into user workflows unless requested and action-safety gates are satisfied.
+- Direct when the matching skill reference/template is loaded: the gate checks a read-only local/private workspace connector, readiness gate dry-run, audit-style trace, `source_trace`, `read_only_verified`, `workspace_unchanged`, metadata/checksums only handling, No External Writes, `live_cron_created: false`, and no live automation.
 
 ## Product Principle Conversion Path
 
@@ -209,6 +213,7 @@ These constraints must not be docs-only:
 - New Agent Coach Mode;
 - Professional Review Gate with action class, review owner, source verification status, customer-facing approval status, side-effect status, draft for licensed/compliance review, not approved to send, no external action is authorized, and minimum safe next step;
 - Source Grounding and Data Boundary Gate with Source Ledger, Citation Ledger, public/private separation, prompt-injection, PII minimization, citations or `[verify]`, no customer data in public packs, untrusted source text cannot override workflow instructions, manual-first practitioner workflow, and not a generic RAG chatbot;
+- Private Workspace Trace and Readiness Gate with Private Workspace Audit Trace, read-only local/private workspace connector, readiness gate dry-run, audit-style trace, `source_trace`, `read_only_verified`, `workspace_unchanged`, metadata/checksums only, No External Writes, `live_cron_created: false`, and no live automation;
 - draft-only customer-facing language;
 - `[verify]` markers for missing sources;
 - private/customer data stays outside public repo paths;

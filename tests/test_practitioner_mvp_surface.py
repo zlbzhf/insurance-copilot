@@ -699,3 +699,54 @@ def test_source_grounding_data_boundary_guardrails_are_runtime_effective() -> No
             assert phrase in expected
         for phrase in data["must_not_include"]:
             assert phrase not in expected
+
+
+def test_private_workspace_trace_readiness_is_runtime_effective() -> None:
+    """P2 private connector/readiness trace must be runtime-effective and read-only."""
+    skill = read("skills/insurance-copilot/SKILL.md")
+    reference = read("skills/insurance-copilot/references/private-workspace-trace-readiness.md")
+    template = read("skills/insurance-copilot/templates/private-workspace-audit-trace.md")
+    quality = read("docs/quality-gates.md")
+    surface = read("docs/workflow-surface.md")
+    spec = read("docs/product-development-spec.md")
+    landscape = read("docs/reference-landscape.md")
+    roadmap = read("ROADMAP.md")
+    readme = read("README.md")
+    eval_readme = read("evals/README.md")
+    local_connector_doc = read("docs/local-file-connectors.md")
+    dry_run_doc = read("docs/private-dry-run-harness.md")
+    case = json.loads((ROOT / "evals/cases/private-dry-run-harness.json").read_text(encoding="utf-8"))
+    expected = read(case["expected_output"])
+
+    required_phrases = [
+        "Private Workspace Trace and Readiness Gate",
+        "Private Workspace Audit Trace",
+        "read-only local/private workspace connector",
+        "readiness gate dry-run",
+        "audit-style trace",
+        "source_trace",
+        "read_only_verified",
+        "workspace_unchanged",
+        "metadata/checksums only",
+        "No External Writes",
+        "live_cron_created: false",
+        "no live automation",
+    ]
+    for text in [skill, reference, template, quality, surface, spec, landscape, roadmap, readme, eval_readme, local_connector_doc, dry_run_doc, expected]:
+        for phrase in required_phrases:
+            assert phrase in text
+
+    for phrase in [
+        "references/private-workspace-trace-readiness.md",
+        "templates/private-workspace-audit-trace.md",
+    ]:
+        assert phrase in skill
+        assert phrase in reference
+        assert phrase in template or phrase == "references/private-workspace-trace-readiness.md"
+
+    assert case["id"] == "private-dry-run-harness"
+    assert case["workflow"] == "private-workspace-trace-readiness"
+    for phrase in case["must_include"]:
+        assert phrase in expected
+    for phrase in case["must_not_include"]:
+        assert phrase not in expected

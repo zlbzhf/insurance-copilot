@@ -446,7 +446,9 @@ python3 scripts/private_dry_run.py \
   --out /tmp/insurance-copilot-dry-run
 ```
 
-它把 readiness、connector bundle、renewal watcher output 和 script-only cron wrapper simulation 串联成一个诊断输出目录，包含 `manifest.json` 和 `deployment-checklist.md`。它保持只读，报告 `ready_for_scheduled_watcher`，记录 `live_cron_created: false`，并执行 No External Writes。见 `docs/private-dry-run-harness.md` 和 `examples/private-dry-run/`。
+它把 readiness、connector bundle、renewal watcher output 和 script-only cron wrapper simulation 串联成一个诊断输出目录，包含 `manifest.json`、`audit-trace.json`、`audit-trace.md` 和 `deployment-checklist.md`。它保持只读，报告 `read_only_verified`、`workspace_unchanged` 和 `ready_for_scheduled_watcher`，记录 `live_cron_created: false`，并执行 No External Writes。见 `docs/private-dry-run-harness.md` 和 `examples/private-dry-run/`。
+
+**Private Workspace Trace and Readiness Gate** 会审阅 **Private Workspace Audit Trace**、**read-only local/private workspace connector** 和 **readiness gate dry-run**。它要求 **audit-style trace**、`source_trace`、`read_only_verified`、`workspace_unchanged`、**metadata/checksums only**、**No External Writes**、`live_cron_created: false` 和 **no live automation**，之后才可讨论未来 scheduled watcher。
 
 ## 仓库结构
 

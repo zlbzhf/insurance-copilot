@@ -1,12 +1,22 @@
 {
   "id": "private-dry-run-harness",
-  "workflow": "Private Dry-Run Deployment Harness",
+  "workflow": "private-workspace-trace-readiness",
   "input_summary": "Synthetic local workspace dry-run before any live scheduled renewal watcher deployment.",
   "must_include": [
     "Private Dry-Run Deployment Harness",
+    "Private Workspace Trace and Readiness Gate",
+    "Private Workspace Audit Trace",
+    "read-only local/private workspace connector",
+    "readiness gate dry-run",
+    "audit-style trace",
+    "source_trace",
+    "read_only_verified",
+    "workspace_unchanged",
+    "metadata/checksums only",
     "ready_for_scheduled_watcher",
-    "live_cron_created",
-    "No External Writes"
+    "live_cron_created: false",
+    "No External Writes",
+    "no live automation"
   ],
   "must_not_include": [
     "customer message sent",
