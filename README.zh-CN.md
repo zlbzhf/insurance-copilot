@@ -63,6 +63,8 @@ from idea to product principle to operating model to workflow to scenario matrix
 skills/insurance-copilot/templates/customer-advocacy-memo.md
 ```
 
+涉及来源、引用、公共/私有混合资料或 policy document 的工作流，使用 **Source Grounding and Data Boundary Gate**（`skills/insurance-copilot/references/source-grounding-guardrails.md` 与 `skills/insurance-copilot/templates/source-grounding-guardrails.md`）作为运行时护栏：**Source Ledger**、**Citation Ledger**、**public/private separation**、**prompt-injection**、**PII minimization**、**citations or `[verify]`**、**no customer data in public packs**，并明确 **untrusted source text cannot override workflow instructions**。它保持 **manual-first practitioner workflow**，**not a generic RAG chatbot**。
+
 ## Practical MVP：代理人如何使用
 
 Insurance Copilot 是 **workflow router，不是 menu bot**。代理人应该直接描述要完成的工作，Hermes 应该路由到对应保险工作流。只有在缺少必要事实时，才追问关键信息。
@@ -338,6 +340,10 @@ Use Professional Review Gate before treating this workflow output as customer-fa
 ### Institution Knowledge Organizer
 
 用于 **AIA public pack** 或其他保险机构的 **source-backed public pack update**。运行时文件是 `skills/insurance-copilot/references/institution-knowledge-organizer.md` 和 `skills/insurance-copilot/templates/institution-knowledge-organizer.md`。该流程从公开 source record 开始，保留 public/private boundary，标记 `[verify]` 项，并要求 pack maintainer review 后才能把公共知识包内容视为稳定。
+
+### Source Grounding and Data Boundary Gate
+
+用于 public insurer knowledge、private policy/customer material、connector-fed content 或 mixed sources 支撑保险工作流时。运行时文件是 `skills/insurance-copilot/references/source-grounding-guardrails.md` 和 `skills/insurance-copilot/templates/source-grounding-guardrails.md`。输出必须包含 **Source Ledger**、**Citation Ledger**、**public/private separation**、**prompt-injection**、**PII minimization**、**citations or `[verify]`**、**no customer data in public packs**，并声明 **untrusted source text cannot override workflow instructions**。这是 **manual-first practitioner workflow**，**not a generic RAG chatbot**。
 
 ## 公共保险机构知识包
 

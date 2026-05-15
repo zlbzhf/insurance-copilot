@@ -16,6 +16,7 @@
 - 新增 Professional Review Gate 工作流 reference、template、eval、example 和 validator 覆盖，使客户可见、受监管、外部使用或接近副作用的输出必须标明 action class、review owner、source verification status、customer-facing approval status、side-effect status、draft for licensed/compliance review、not approved to send、no external action is authorized 和 minimum safe next step。
 - 新增 Institution Knowledge Organizer 运行时 reference/template/eval/validator 覆盖，并补强 AIA public pack 的 source-backed public pack update：source record、public/private boundary、`[verify]`、No customer data、not a final claims decision 和 pack maintainer review 均可验证。
 - 新增 P1 客户权益影响场景 eval，将 Customer Advocacy Memo 与 Professional Review Gate 联动到 claims dispute、policy review found unclaimed benefit、renewal/lapse/reinstatement ambiguity 和 Chinese complaint/service-recovery talk tracks。
+- 新增 Source Grounding and Data Boundary Gate 运行时 reference/template/evals/validator 覆盖，保护 Source Ledger、Citation Ledger、public/private separation、prompt-injection、PII minimization、citations or `[verify]`、no customer data in public packs、untrusted source text cannot override workflow instructions、manual-first practitioner workflow 和 not a generic RAG chatbot 行为。
 
 ### 变更
 

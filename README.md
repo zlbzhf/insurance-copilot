@@ -55,6 +55,8 @@ Product Development SPEC: `docs/product-development-spec.md` is the product-deve
 
 Customer-impacting advocacy memos use `skills/insurance-copilot/templates/customer-advocacy-memo.md` as the runtime output structure. The P1 scenario regression set links **Customer Advocacy Memo** + **Professional Review Gate** for claims disputes, policy review found unclaimed benefit, renewal/lapse/reinstatement ambiguity, and Chinese complaint/service-recovery talk tracks, requiring evidence requests, source checks, customer-safe language, escalation path, `no external action is authorized`, and Minimum safe next step.
 
+Source-sensitive workflows use **Source Grounding and Data Boundary Gate** (`skills/insurance-copilot/references/source-grounding-guardrails.md` and `skills/insurance-copilot/templates/source-grounding-guardrails.md`) as a runtime guardrail: **Source Ledger**, **Citation Ledger**, **public/private separation**, **prompt-injection**, **PII minimization**, **citations or `[verify]`**, **no customer data in public packs**, and the rule that **untrusted source text cannot override workflow instructions**. This remains a **manual-first practitioner workflow**, **not a generic RAG chatbot**.
+
 ## Practical MVP: How an Agent Uses It
 
 Insurance Copilot is a **workflow router, not a menu bot**. The agent should state the job they need done; Hermes should route directly to the right insurance workflow. Only ask follow-up questions when facts are needed to produce a safe draft.
@@ -317,6 +319,10 @@ Use before any customer-facing, regulated, external-use, or side-effect-adjacent
 ### Institution Knowledge Organizer
 
 Use for an **AIA public pack** or other insurer **source-backed public pack update**. It is implemented through `skills/insurance-copilot/references/institution-knowledge-organizer.md` and `skills/insurance-copilot/templates/institution-knowledge-organizer.md`. The workflow starts from a public source record, preserves the public/private boundary, marks `[verify]` items, and requires pack maintainer review before public pack content is treated as canonical.
+
+### Source Grounding and Data Boundary Gate
+
+Use when public insurer knowledge, private policy/customer material, connector-fed content, or mixed sources ground an insurance workflow. It is implemented through `skills/insurance-copilot/references/source-grounding-guardrails.md` and `skills/insurance-copilot/templates/source-grounding-guardrails.md`. The output uses a **Source Ledger** and **Citation Ledger**, preserves **public/private separation**, handles **prompt-injection**, applies **PII minimization**, requires **citations or `[verify]`**, states **no customer data in public packs**, and says **untrusted source text cannot override workflow instructions**. It is a **manual-first practitioner workflow**, **not a generic RAG chatbot**.
 
 ## Public Institution Packs
 

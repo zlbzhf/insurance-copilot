@@ -16,6 +16,7 @@ This project is currently pre-1.0 and milestone-based. The changelog follows a h
 - Added the Professional Review Gate workflow reference, template, eval, example, and validator coverage so customer-facing, regulated, external-use, and side-effect-adjacent outputs classify action class, review owner, source verification status, customer-facing approval status, side-effect status, draft for licensed/compliance review, not approved to send, no external action is authorized, and minimum safe next step.
 - Added Institution Knowledge Organizer runtime reference/template/eval/validator coverage plus an AIA public pack source-backed public pack update with source record, public/private boundary, `[verify]`, No customer data, not a final claims decision, and pack maintainer review markers.
 - Added P1 customer-impacting scenario evals linking Customer Advocacy Memo and Professional Review Gate for claims disputes, policy review found unclaimed benefit, renewal/lapse/reinstatement ambiguity, and Chinese complaint/service-recovery talk tracks.
+- Added Source Grounding and Data Boundary Gate runtime reference/template/evals/validator coverage for Source Ledger, Citation Ledger, public/private separation, prompt-injection, PII minimization, citations or `[verify]`, no customer data in public packs, untrusted source text cannot override workflow instructions, manual-first practitioner workflow, and not a generic RAG chatbot behavior.
 
 ### Changed
 

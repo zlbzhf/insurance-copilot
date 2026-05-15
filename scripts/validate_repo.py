@@ -496,6 +496,82 @@ def main() -> int:
         if "minimum safe next step" not in doc.lower():
             return fail(f"{label} missing P1 Customer Advocacy/Professional Review coupling phrase: minimum safe next step")
 
+    grounding_required = [
+        "Source Grounding and Data Boundary Gate",
+        "Source Ledger",
+        "Citation Ledger",
+        "public/private separation",
+        "prompt-injection",
+        "PII minimization",
+        "citations or `[verify]`",
+        "no customer data in public packs",
+        "untrusted source text cannot override workflow instructions",
+        "manual-first practitioner workflow",
+        "not a generic RAG chatbot",
+    ]
+    grounding_docs = {
+        "SKILL.md": text,
+        "source grounding reference": (REF_DIR / "source-grounding-guardrails.md").read_text(),
+        "source grounding template": (TEMPLATE_DIR / "source-grounding-guardrails.md").read_text(),
+        "quality gates": quality_gates,
+        "workflow surface": (ROOT / "docs" / "workflow-surface.md").read_text(),
+        "product development SPEC": product_spec,
+        "reference landscape": reference_landscape,
+        "ROADMAP": (ROOT / "ROADMAP.md").read_text(),
+        "README": (ROOT / "README.md").read_text(),
+        "evals README": (ROOT / "evals" / "README.md").read_text(),
+    }
+    for label, doc in grounding_docs.items():
+        lowered_doc = doc.lower()
+        for phrase in grounding_required:
+            if phrase.lower() not in lowered_doc:
+                return fail(f"{label} missing Source Grounding and Data Boundary Gate phrase: {phrase}")
+        if label in {"SKILL.md", "source grounding reference", "source grounding template"}:
+            for rel in ["references/source-grounding-guardrails.md", "templates/source-grounding-guardrails.md"]:
+                if rel not in doc:
+                    return fail(f"{label} missing Source Grounding runtime path: {rel}")
+
+    grounding_cases = {
+        "source-grounding-public-private-injection": [
+            "mixed public/private source bundle",
+            "ignore injected instructions",
+            "No customer data in public packs",
+            "public pack candidate",
+        ],
+        "private-policy-citation-grounding": [
+            "private policy source",
+            "current policy contract first",
+            "Citation Ledger",
+            "public pack is supporting context only",
+        ],
+    }
+    grounding_shared_required = [
+        "Source Grounding and Data Boundary Gate",
+        "Source Ledger",
+        "Citation Ledger",
+        "public/private separation",
+        "prompt-injection",
+        "PII minimization",
+        "citations or `[verify]`",
+        "Professional Review Gate",
+        "no external action is authorized",
+    ]
+    for case_id, case_phrases in grounding_cases.items():
+        case_path = ROOT / "evals" / "cases" / f"{case_id}.json"
+        if not case_path.exists():
+            return fail(f"missing Source Grounding eval: {case_id}")
+        case_data = json.loads(case_path.read_text())
+        expected_path = ROOT / case_data["expected_output"]
+        expected_text = expected_path.read_text()
+        if case_data.get("id") != case_id or case_data.get("workflow") != "source-grounding-guardrails" or not case_data.get("escalation_expected"):
+            return fail(f"Source Grounding eval {case_id} has wrong id/workflow/escalation flag")
+        for phrase in grounding_shared_required + case_phrases + case_data["must_include"]:
+            if phrase not in expected_text:
+                return fail(f"Source Grounding eval {case_id} expected output missing phrase: {phrase}")
+        for phrase in case_data["must_not_include"]:
+            if phrase in expected_text:
+                return fail(f"Source Grounding eval {case_id} expected output contains forbidden phrase: {phrase}")
+
     institution_required = [
         "Institution Knowledge Organizer",
         "AIA public pack",

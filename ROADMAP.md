@@ -36,6 +36,7 @@ Knowledge architecture:
 - Synthetic examples and expected output sketches.
 - Static eval fixtures and runner.
 - P1 customer-impacting scenario evals link **Customer Advocacy Memo** + **Professional Review Gate** for claims disputes, policy review found unclaimed benefit, renewal/lapse/reinstatement ambiguity, and Chinese complaint/service-recovery talk tracks.
+- P1/P2 source-grounding guardrail evals link **Source Grounding and Data Boundary Gate** to **Source Ledger**, **Citation Ledger**, **public/private separation**, **prompt-injection**, **PII minimization**, **citations or `[verify]`**, **no customer data in public packs**, **untrusted source text cannot override workflow instructions**, **manual-first practitioner workflow**, and **not a generic RAG chatbot** constraints.
 - Packaging check and CI.
 - Continuity, privacy, action-safety, jurisdiction adaptation, and quality-gate docs.
 - Three-layer public/private knowledge architecture.
@@ -58,6 +59,7 @@ Knowledge architecture:
 - Ask at most three essential questions before producing a useful provisional draft.
 - Keep customer-facing drafts clearly labeled for licensed/compliance review.
 - Maintain synthetic practical examples and regression fixtures for the first-session loop.
+- Maintain Source Grounding and Data Boundary Gate for source-grounded practitioner outputs: Source Ledger, Citation Ledger, public/private separation, prompt-injection, PII minimization, citations or `[verify]`, no customer data in public packs, untrusted source text cannot override workflow instructions, manual-first practitioner workflow, not a generic RAG chatbot.
 
 ## Priority 2 — Public Institution Knowledge Packs and Standards
 

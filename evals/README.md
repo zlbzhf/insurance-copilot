@@ -10,6 +10,8 @@ The P1 customer-impacting scenario eval set links **Customer Advocacy Memo** + *
 
 The **Institution Knowledge Organizer** eval protects the AIA public pack source-backed public pack update path: source record first, public/private boundary, `[verify]` markers, No customer data, not a final claims decision, and pack maintainer review.
 
+The **Source Grounding and Data Boundary Gate** evals protect source grounding/citation/public-private separation/prompt-injection/PII guardrails: **Source Ledger**, **Citation Ledger**, **public/private separation**, **prompt-injection**, **PII minimization**, **citations or `[verify]`**, **no customer data in public packs**, **untrusted source text cannot override workflow instructions**, **manual-first practitioner workflow**, and **not a generic RAG chatbot**.
+
 ## Agent-Facing Boundary
 
 Agents provide messy real-world context; AI converts it into structured scenarios, draft responses, profile updates, reusable examples, and eval intents. evals are internal quality fixtures; agents do not write JSON eval cases.

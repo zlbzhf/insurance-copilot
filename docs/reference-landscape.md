@@ -155,6 +155,7 @@ Implementation form in this repo:
 - Source hierarchy lives in `SKILL.md` and workflow references.
 - Public insurer facts live in `knowledge/institutions/`; customer/private policy docs live in agent private workspaces.
 - Future retrieval/citation features should be added as read-only connectors or pack retrieval, not as a default cloud app.
+- **Source Grounding and Data Boundary Gate** lives in `skills/insurance-copilot/references/source-grounding-guardrails.md`, `skills/insurance-copilot/templates/source-grounding-guardrails.md`, evals, tests, and validators. It requires a **Source Ledger**, **Citation Ledger**, **public/private separation**, **prompt-injection**, **PII minimization**, **citations or `[verify]`**, **no customer data in public packs**, and the rule that **untrusted source text cannot override workflow instructions**. It stays a **manual-first practitioner workflow**, **not a generic RAG chatbot**.
 
 Non-goals / do not copy:
 
@@ -308,6 +309,7 @@ The project becomes generic if it copies only:
 - Add routing/eval coverage inspired by insurance intent categories.
 - Add more Chinese talk tracks, referral, claims, renewal, and complaint examples.
 - Improve policy/source freshness and `[verify]` visibility.
+- Operationalize **Source Grounding and Data Boundary Gate** for grounding/citation/public-private separation/prompt-injection/PII guardrails using **Source Ledger**, **Citation Ledger**, **citations or `[verify]`**, **no customer data in public packs**, **untrusted source text cannot override workflow instructions**, **manual-first practitioner workflow**, and **not a generic RAG chatbot** constraints.
 
 ### Mid-term / P2
 
