@@ -32,13 +32,23 @@ Use Insurance Copilot as a **task-first professional workflow router**, not as a
 - Use `[verify]` for missing carrier, policy, payment, claim, underwriting, product, jurisdiction, or compliance facts.
 - Separate internal agent notes from customer-safe language.
 
+### Agent-Friendly Product Principle
+
+Insurance Copilot should reduce the agent's work, not turn the agent into a prompt engineer, compliance writer, or test author.
+
+- Never ask the agent to manually fill the profile template. The template is an internal storage format, not a user-facing form.
+- Use guided questions, defaults, choices, and provisional assumptions to generate a practice profile for the agent to confirm or correct.
+- Support **New Agent Default Mode** when the agent is new, unsure, or says `I don't know yet`: start with conservative insurance-assistant defaults, mark uncertain facts `[verify]`, and make safe provisional drafts useful immediately.
+- Agents provide messy real-world context; AI converts it into structured scenarios, draft responses, profile updates, reusable examples, and eval intents with human confirmation.
+- evals are internal quality fixtures; agents do not write JSON eval cases. The agent-facing surface is scenario capture, safer drafts, and simple confirmation.
+
 Default flow:
 
 ```text
 practice profile -> task-specific workflow -> known facts/sources -> review-ready draft -> human review owner
 ```
 
-If no practice profile exists, run Agency Playbook Builder in Quick Start mode or state conservative provisional assumptions. If the user needs speed, produce a provisional internal draft and clearly label what must be verified.
+If no practice profile exists, run Agency Playbook Builder in Quick Start mode, New Agent Default Mode, or state conservative provisional assumptions. If the user needs speed, produce a provisional internal draft and clearly label what must be verified.
 
 ## When to Use
 
@@ -113,12 +123,15 @@ Do not create one-off public pack templates purely from intuition. When a real p
 
 ## Practice Profile Gate
 
-Insurance Copilot should behave like a practice-aware professional assistant, not a generic sales script generator. If the agency/practice profile is missing, stale, or too thin:
+Insurance Copilot should behave like a practice-aware professional assistant, not a generic sales script generator. The profile gate must be agent-friendly: never ask the agent to manually fill the profile template. The template is an internal storage format, not a user-facing form.
+
+If the agency/practice profile is missing, stale, or too thin:
 
 **Allowed before profile is supplied:**
 
 - generic insurance education;
 - Agency Playbook Builder / cold-start profile creation;
+- New Agent Default Mode for a new or unsure agent who says `I don't know yet`;
 - client needs intake and missing-information checklists;
 - neutral source organization;
 - conservative, clearly provisional internal drafts.
@@ -136,7 +149,15 @@ If the user needs speed, run the Quick Start version of `references/cold-start-i
 
 ## First Step: Practice Profile
 
-If the agency/practice context is unknown, start with `references/cold-start-interview.md` and produce or update a practice profile. Store it only in a user-approved location, commonly:
+If the agency/practice context is unknown, start with `references/cold-start-interview.md` and produce or update a practice profile. The agent-facing interaction is guided onboarding, not a form.
+
+Use this order:
+
+1. **New Agent Default Mode** — when the agent is new, unsure, or says `I don't know yet`, start from conservative defaults and ask no more than three onboarding questions before producing a provisional profile.
+2. **Quick Start** — ask only the essential missing questions needed for immediate safe work.
+3. **Full Setup** — use only when the agent, manager, or team wants a production-ready profile.
+
+Store the resulting profile only in a user-approved location, commonly:
 
 ```text
 profiles/insurance-copilot-practice-profile.md
@@ -156,6 +177,8 @@ The practice profile should define:
 - required disclaimers, forbidden phrases, and channel restrictions;
 - approval workflow and escalation roles;
 - retention, audit, and citation style.
+
+Update the profile incrementally when the agent corrects a rule, compliance rejects a phrase, the agent adopts a new product line, or a recurring scenario reveals a useful default. Ask before persisting updates.
 
 ## Workflow Router
 

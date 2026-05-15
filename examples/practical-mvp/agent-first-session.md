@@ -66,9 +66,14 @@ Expected assistant behavior:
 - preserve `[verify]` markers for product and underwriting facts.
 
 ## Practical Boundary
-
 - Manual-first.
 - Do not send automatically.
 - Do not write CRM/calendar records automatically.
 - Do not submit applications, file claims, change policies, or make binding representations.
 - Customer-facing drafts remain drafts for licensed/compliance review.
+
+## Product Principle
+- Never ask the agent to manually fill the profile template; the template is an internal storage format, not a user-facing form.
+- Use New Agent Default Mode when the agent says `I don't know yet` or cannot define a mature positioning statement.
+- Agents provide messy real-world context; AI converts it into structured scenarios, safer drafts, profile updates, reusable examples, and eval intents.
+- evals are internal quality fixtures; agents do not write JSON eval cases.

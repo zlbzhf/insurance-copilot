@@ -80,6 +80,7 @@ REQUIRED = [
     ROOT / "tests" / "test_private_dry_run.py",
     ROOT / "tests" / "test_practitioner_mvp_surface.py",
     ROOT / "examples" / "practical-mvp" / "agent-first-session.md",
+    ROOT / "examples" / "practical-mvp" / "agent-friendly-onboarding.md",
     ROOT / "examples" / "local-connectors" / "synthetic-agent-workspace" / "README.md",
     ROOT / "examples" / "local-connectors" / "expected-daily-workbench.md",
     ROOT / "examples" / "renewal-watcher" / "synthetic-renewal-alert.md",
@@ -308,6 +309,13 @@ def main() -> int:
         "workflow router, not a menu bot",
         "manual-first",
         "Recommended First Session",
+        "New Agent Default Mode",
+        "I don't know yet",
+        "Never ask the agent to manually fill the profile template",
+        "template is an internal storage format",
+        "Agents provide messy real-world context",
+        "evals are internal quality fixtures",
+        "agents do not write JSON eval cases",
         "examples/practical-mvp/agent-first-session.md",
         "Advanced / Later: Local Connectors and Watchers",
         "Developer Validation",
@@ -355,6 +363,13 @@ def main() -> int:
     workflow_surface = (ROOT / "docs" / "workflow-surface.md").read_text()
     for name in [
         "Agency Playbook Builder",
+        "New Agent Default Mode",
+        "I don't know yet",
+        "Never ask the agent to manually fill the profile template",
+        "template is an internal storage format",
+        "Agents provide messy real-world context",
+        "evals are internal quality fixtures",
+        "agents do not write JSON eval cases",
         "Daily Agent Workbench",
         "Client Plan Draft",
         "Compliance Copy Checker",
@@ -366,7 +381,16 @@ def main() -> int:
             return fail(f"workflow surface missing workflow: {name}")
 
     quickstart = (ROOT / "docs" / "quickstart.md").read_text()
-    for phrase in ["Quickstart: Practical Insurance Agent Loop", "The 30-Minute Useful Loop", "Advanced Appendix", "manual-first"]:
+    for phrase in [
+        "Quickstart: Practical Insurance Agent Loop",
+        "The 30-Minute Useful Loop",
+        "Advanced Appendix",
+        "manual-first",
+        "New Agent Default Mode",
+        "I don't know yet",
+        "Never ask the agent to manually fill the profile template",
+        "template is an internal storage format",
+    ]:
         if phrase not in quickstart:
             return fail(f"quickstart missing practical MVP phrase: {phrase}")
     if quickstart.index("The 30-Minute Useful Loop") > quickstart.index("Advanced Appendix"):
@@ -376,6 +400,23 @@ def main() -> int:
     for phrase in ["Practical MVP Example", "Input 1 — Set the Practice Profile", "Input 2 — Daily Workbench", "Input 3 — Client Intake", "Input 4 — Safer WeChat Draft", "Do not send automatically"]:
         if phrase not in practical_example:
             return fail(f"practical MVP example missing phrase: {phrase}")
+
+    agent_friendly_example = (ROOT / "examples" / "practical-mvp" / "agent-friendly-onboarding.md").read_text()
+    for phrase in [
+        "Agent-Friendly Onboarding Example",
+        "New Agent Default Mode",
+        "I don't know yet",
+        "Never ask the agent to manually fill the profile template",
+        "template is an internal storage format",
+        "Agents provide messy real-world context",
+        "AI converts it into structured scenarios",
+        "AI-generated scenario card",
+        "AI-generated eval intent",
+        "evals are internal quality fixtures",
+        "agents do not write JSON eval cases",
+    ]:
+        if phrase not in agent_friendly_example:
+            return fail(f"agent-friendly onboarding example missing phrase: {phrase}")
 
     workflow = (ROOT / ".github" / "workflows" / "validate.yml").read_text()
     for cmd in [

@@ -2,6 +2,12 @@
 
 Use this workflow before substantive production use. The goal is to create or update the agency practice profile that all other Insurance Copilot workflows read.
 
+## Product Principle
+
+Never ask the agent to manually fill the profile template. The template is an internal storage format, not a user-facing form. The agent-facing experience is guided onboarding: short questions, safe defaults, choices, and a draft profile the agent can confirm or correct.
+
+New or busy agents should be able to say `I don't know yet` and still get a useful conservative setup. Use conservative defaults when the agent is unsure.
+
 ## Output Location
 
 Write the resulting profile only to a user-approved practice profile path, commonly:
@@ -9,6 +15,40 @@ Write the resulting profile only to a user-approved practice profile path, commo
 `profiles/insurance-copilot-practice-profile.md`
 
 If file access is unavailable or the user has not approved a destination, output a complete profile draft the user can save.
+
+## New Agent Default Mode
+
+Use **New Agent Default Mode** when the agent is new, unsure, cannot clearly state positioning, or asks to start quickly.
+
+Behavior:
+
+1. Acknowledge uncertainty as normal; do not make the agent define a complete positioning statement.
+2. Ask no more than three onboarding questions before producing a provisional profile.
+3. Every question must allow `I don't know yet` or `use conservative default`.
+4. Generate a provisional profile using conservative insurance-assistant defaults.
+5. Immediately show how the profile enables the next useful job: daily workbench, client notes, customer message, policy review, or compliance copy check.
+
+Operational rule: ask no more than three onboarding questions before producing a provisional profile.
+
+Recommended three questions:
+
+1. **Market / jurisdiction:** Where do you mainly serve customers? Options: Hong Kong, Mainland China, Singapore, other, `I don't know yet`.
+2. **Current work focus:** What are you mostly handling now? Options: family protection, medical/critical illness, savings/retirement, policy review, referrals, service/renewal, `I don't know yet`.
+3. **Customer communication:** Where do you usually talk to customers? Options: WeChat, WhatsApp, phone, in-person, email, mixed, `I don't know yet`.
+
+If the agent gives only one sentence such as “I am a new AIA agent serving Chinese-speaking families,” produce a provisional profile instead of asking a long questionnaire.
+
+Default assumptions for New Agent Default Mode:
+
+- Agent stage: new or unspecified; use conservative guidance.
+- Institution: AIA/友邦 only if the agent says so; otherwise `[verify carrier/institution]`.
+- Customer segment: Chinese-speaking family clients only if stated; otherwise general retail clients `[verify]`.
+- Product posture: education, intake, policy organization, and review-ready drafts before product recommendations.
+- Communication style: warm, low-pressure, plain-language, no fear tactics.
+- Product facts: mark product, underwriting, claims, renewal, and payment facts `[verify]` unless source documents are supplied.
+- Prohibited certainty: no guaranteed approval, payout, returns, savings, best, risk-free, or “everyone should buy” claims.
+- Escalation: replacement/surrender/cancellation, claims disputes, health disclosure, vulnerable customers, investment-linked/returns language, complaints, and external sending.
+- Customer data: use minimum necessary data, prefer de-identified notes, do not persist sensitive customer data without explicit destination approval.
 
 ## Quick Start vs Full Setup
 
@@ -28,6 +68,18 @@ Before the profile exists, downstream workflows must remain generic/provisional:
 ## Interview Method
 
 Ask only the questions needed for the user's situation. Do not interrogate unnecessarily. Start broad, then ask follow-ups for product lines or channels the agency actually uses.
+
+Good onboarding questions:
+
+- “Which market should I assume for now? You can say `I don't know yet` and I will mark it `[verify]`.”
+- “Which customer conversations do you most want help with this week?”
+- “Should I use a new-agent conservative mode where every customer-facing line is a draft for review?”
+
+Avoid questions that require the agent to already know their mature positioning, such as:
+
+- “Describe your full value proposition.”
+- “Write your complete compliance policy.”
+- “List every approved sales script and product boundary before we start.”
 
 ## Interview Sections
 
@@ -85,6 +137,12 @@ Ask only the questions needed for the user's situation. Do not interrogate unnec
 ```markdown
 # Insurance Copilot Practice Profile
 
+## Profile Status
+- Mode: New Agent Default / Quick Start / Full Setup
+- Confidence: provisional / reviewed / production-ready
+- Last updated:
+- Unknowns: [verify] items
+
 ## Agency Context
 - Agency:
 - Jurisdictions:
@@ -127,7 +185,55 @@ Ask only the questions needed for the user's situation. Do not interrogate unnec
 - Customer script:
 - Compliance check:
 - Stakeholder summary:
+
+## Next Useful Jobs
+1. Daily Agent Workbench
+2. Client Needs Intake
+3. Compliance Copy Checker
 ```
+
+## Profile Update Behavior
+
+Treat the profile as dynamic. Update it when the agent corrects a default, adopts a new workflow, receives compliance feedback, or repeatedly uses the same scenario.
+
+Examples:
+
+- Agent says: “不要用太销售的语气。” → propose profile update: “Customer messages should be warm, low-pressure, and friend-like.”
+- Agent says: “主管说不能说锁定收益。” → propose forbidden phrase update: “锁定收益,” with safer alternatives.
+- Agent says: “我主要服务刚成家的家庭。” → propose customer-segment update.
+
+Ask before persisting updates. If not persisting, include the update as a copyable patch in the response.
+
+## Scenario and Eval Capture
+
+Agents provide messy real-world context; AI converts it into structured scenarios. When an agent shares a recurring customer question, customer objection, unsafe draft, or compliance correction, offer to turn it into a scenario card.
+
+The agent should not write tests or JSON. evals are internal quality fixtures; agents do not write JSON eval cases.
+
+Agent-facing scenario card format:
+
+```markdown
+## Scenario
+- Customer says:
+- Agent goal:
+- Risk level:
+- What to verify:
+- Draft response:
+- Forbidden / risky phrases:
+- Escalation triggers:
+```
+
+Maintainer-facing eval intent, if useful:
+
+```markdown
+## AI-generated eval intent
+- must include:
+- must not include:
+- escalation expected:
+- expected workflow:
+```
+
+Only maintainers or the repository automation convert eval intent into `evals/cases/*.json`.
 
 ## Completion Criteria
 
@@ -135,6 +241,8 @@ Ask only the questions needed for the user's situation. Do not interrogate unnec
 - It lists required facts before recommendations.
 - It defines escalation gates and side-effect boundaries.
 - It includes source hierarchy, citation expectations, privacy/data-handling expectations, and approval workflow.
+- A new or unsure agent can start from New Agent Default Mode without manually filling a template.
+- The output includes `Next Useful Jobs` so onboarding leads directly into daily work.
 
 ## Guardrails
 
@@ -142,3 +250,4 @@ Ask only the questions needed for the user's situation. Do not interrogate unnec
 - Do not treat starter compliance text as jurisdiction-specific legal advice.
 - Do not write sensitive customer data into the practice profile.
 - If the user cannot answer compliance questions, create a draft profile with `[confirm with compliance/legal]` markers.
+- Do not require full setup before providing safe internal drafts.

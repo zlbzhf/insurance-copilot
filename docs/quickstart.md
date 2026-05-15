@@ -1,6 +1,6 @@
 # Quickstart: Practical Insurance Agent Loop
 
-Use this guide when you want a usable first version of Insurance Copilot in Hermes. It is deliberately **manual-first**: no cron, no deployment, no customer sending, no CRM writes.
+Use this guide when you want a usable first version of Insurance Copilot in Hermes. It is deliberately **manual-first**: the agent talks naturally, the assistant organizes the work, and every customer-facing result remains a draft for licensed/compliance review.
 
 ## The 30-Minute Useful Loop
 
@@ -17,18 +17,23 @@ In Hermes:
 /skill insurance-copilot
 ```
 
-### 2. Create the Practice Profile
+### 2. Create the Practice Profile Without a Form
+
+Never ask the agent to manually fill the profile template. The template is an internal storage format, not a user-facing form. Start with **New Agent Default Mode** if the agent is new, busy, or says `I don't know yet`.
 
 Prompt:
 
 ```text
-Use Agency Playbook Builder in Quick Start mode. Help me create a practical insurance-agent profile. Ask only the essential questions: jurisdiction/market, license scope, product lines, carriers, client segments, compliance reviewer, escalation rules, approved sources/scripts, communication channels, and output tone. Manual-first only.
+Use Agency Playbook Builder in New Agent Default Mode. I am a new AIA/友邦 agent serving Chinese-speaking clients. I don't know yet how to define my full positioning. Ask at most three simple questions, use conservative defaults where I am unsure, then generate a provisional practice profile and show what I can do next.
 ```
 
 Expected behavior:
 
-- asks only essential setup questions;
-- marks unknown compliance/legal items as `[confirm with compliance/legal]`;
+- asks no more than three onboarding questions before producing a provisional profile;
+- every question accepts `I don't know yet` or conservative defaults;
+- uses New Agent Default Mode instead of a long form;
+- marks unknown compliance/legal/product facts as `[confirm with compliance/legal]` or `[verify]`;
+- explains that the profile is dynamic and can be updated as the agent receives feedback or repeats scenarios;
 - does not draft reusable customer scripts or product-fit conclusions until enough context exists.
 
 ### 3. Run Daily Agent Workbench

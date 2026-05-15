@@ -1,5 +1,15 @@
 # Insurance Copilot Practice Profile
 
+## Internal Storage Note
+
+Never ask the agent to manually fill the profile template. The template is an internal storage format, not a user-facing form. Use Agency Playbook Builder, New Agent Default Mode, Quick Start, or Full Setup to generate this file from guided questions, defaults, and agent confirmation.
+
+## Profile Status
+- Mode: New Agent Default / Quick Start / Full Setup
+- Confidence: provisional / reviewed / production-ready
+- Last updated:
+- Unknowns / [verify] items:
+
 ## Agency Context
 - Agency:
 - Role / license owner:

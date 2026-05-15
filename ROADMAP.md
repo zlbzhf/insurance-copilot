@@ -30,6 +30,9 @@ Goal: make `insurance-copilot` directly usable by an insurance agent in Hermes b
 
 - Keep README and quickstart centered on the manual-first user loop.
 - Treat Insurance Copilot as a task-first workflow router, not a menu bot.
+- Make onboarding agent-friendly: Never ask the agent to manually fill the profile template; the template is an internal storage format, not a user-facing form.
+- Maintain New Agent Default Mode for new or unsure agents who say `I don't know yet`; use conservative defaults and produce useful provisional drafts quickly.
+- Agents provide messy real-world context; AI converts it into structured scenarios, profile updates, reusable examples, and eval intents. evals are internal quality fixtures; agents do not write JSON eval cases.
 - Optimize Agency Playbook Builder, Daily Agent Workbench, Client Needs Intake, Coverage Gap Drafter, Compliance Copy Checker, Policy Review Assistant, Replacement Risk Triager, Claims Support Triage, Referral Ask Drafter, and Stakeholder Summary Writer for real daily use.
 - Ask at most three essential questions before producing a useful provisional draft.
 - Keep customer-facing drafts clearly labeled for licensed/compliance review.

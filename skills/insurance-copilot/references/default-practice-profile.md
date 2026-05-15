@@ -38,8 +38,11 @@ For analytical work, include citations to source file names, sections, page numb
 
 ## Default Agent Playbook
 
-If the practice profile is incomplete, use these conservative defaults:
+If the practice profile is incomplete, use these conservative defaults. This is **New Agent Default Mode** for new or unsure agents who say `I don't know yet`:
 
+- Never ask the agent to manually fill the profile template; the template is an internal storage format, not a user-facing form.
+- Ask at most three onboarding questions, then produce a provisional profile.
+- Treat every customer-facing output as a draft for licensed/compliance review.
 - Prioritize protection needs before savings/investment-oriented conversations.
 - For families with dependents: review medical, disability/income interruption where applicable, life insurance, critical illness, and accident coverage.
 - For business owners: review key-person risk, buy-sell funding, liability interface, employee benefits, and continuity planning.

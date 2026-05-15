@@ -104,3 +104,36 @@ def test_practical_mvp_eval_forbidden_terms_are_not_safe_negative_language() -> 
     }
     assert forbidden.isdisjoint(phrases_that_may_be_quoted_or_negated_in_safe_outputs)
     assert all(term == term.upper() or term == "cronjob(" for term in forbidden)
+
+
+def test_onboarding_is_guided_not_manual_profile_form() -> None:
+    skill = read("skills/insurance-copilot/SKILL.md")
+    cold_start = read("skills/insurance-copilot/references/cold-start-interview.md")
+    quickstart = read("docs/quickstart.md")
+    workflow_surface = read("docs/workflow-surface.md")
+
+    for text in [skill, cold_start, quickstart, workflow_surface]:
+        assert "Never ask the agent to manually fill the profile template" in text
+        assert "template is an internal storage format" in text
+        assert "New Agent Default Mode" in text
+        assert "I don't know yet" in text
+
+    assert "ask no more than three onboarding questions before producing a provisional profile" in cold_start
+    assert "Use conservative defaults when the agent is unsure" in cold_start
+
+
+def test_scenarios_and_evals_are_ai_assisted_not_agent_homework() -> None:
+    skill = read("skills/insurance-copilot/SKILL.md")
+    workflow_surface = read("docs/workflow-surface.md")
+    example = read("examples/practical-mvp/agent-friendly-onboarding.md")
+    eval_readme = read("evals/README.md")
+
+    for text in [skill, workflow_surface, eval_readme, example]:
+        assert "Agents provide messy real-world context" in text
+        assert "AI converts it into structured scenarios" in text
+        assert "evals are internal quality fixtures" in text
+        assert "agents do not write JSON eval cases" in text
+
+    assert "customer says: I already have insurance" in example
+    assert "AI-generated scenario card" in example
+    assert "AI-generated eval intent" in example

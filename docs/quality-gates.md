@@ -2,6 +2,20 @@
 
 Use these gates to keep Insurance Copilot reliable across new sessions, context compression, and future contributors.
 
+## Agent-Friendly Onboarding Gate
+
+The practice profile template is an internal storage format, not a user-facing form.
+
+Required:
+
+- Never ask the agent to manually fill the profile template.
+- New Agent Default Mode exists for new, busy, or unsure agents who say `I don't know yet`.
+- Onboarding asks no more than three questions before producing a provisional profile.
+- Each onboarding question allows `I don't know yet` or conservative defaults.
+- The profile is treated as dynamic and updateable through agent corrections, compliance feedback, and repeated scenarios.
+- Agents provide messy real-world context; AI converts it into structured scenarios, profile updates, reusable examples, and eval intents.
+- evals are internal quality fixtures; agents do not write JSON eval cases.
+
 ## Gate 1 — Hermes Skill Packaging
 
 Required:

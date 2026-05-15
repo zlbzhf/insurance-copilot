@@ -6,23 +6,27 @@ All public examples must be synthetic or de-identified. Every customer-facing ou
 
 ## How to Use This Surface
 
-1. Confirm a practice profile exists or run **Agency Playbook Builder** in Quick Start mode.
-2. Choose the job-style workflow that matches the user's immediate task.
-3. Ask only for missing facts needed for that workflow.
-4. Produce a review-ready draft with `[verify]` markers where source facts are incomplete.
-5. Name the human review owner before any customer-facing or external-use draft.
+1. Confirm a practice profile exists or run **Agency Playbook Builder** in New Agent Default Mode / Quick Start mode.
+2. Never ask the agent to manually fill the profile template. The template is an internal storage format, not a user-facing form.
+3. If the agent is new, unsure, or says `I don't know yet`, use **New Agent Default Mode** with conservative defaults.
+4. Choose the job-style workflow that matches the user's immediate task.
+5. Ask only for missing facts needed for that workflow.
+6. Produce a review-ready draft with `[verify]` markers where source facts are incomplete.
+7. Name the human review owner before any customer-facing or external-use draft.
+
+Agents provide messy real-world context; AI converts it into structured scenarios, draft responses, profile updates, reusable examples, and eval intents. evals are internal quality fixtures; agents do not write JSON eval cases.
 
 ## Workflow 1: Agency Playbook Builder
 
-- **When to use:** The agency/practice context is unknown, outdated, or too thin to support customer-facing work.
-- **Required inputs:** Role/license scope, jurisdictions, carrier/product lines, approved script sources, compliance reviewer, escalation path, customer data policy, CRM/tool status, AIA/public pack preference, output style.
-- **Output:** Practice profile draft or update using `skills/insurance-copilot/templates/practice-profile.md`.
+- **When to use:** The agency/practice context is unknown, outdated, too thin, or the agent is new and needs a safe starting point.
+- **Required inputs:** New Agent Default Mode can start from one sentence plus up to three questions. Quick Start asks for role/license scope, jurisdictions, carrier/product lines, approved script sources, compliance reviewer, escalation path, customer data policy, CRM/tool status, AIA/public pack preference, and output style only when needed.
+- **Output:** Provisional or reviewed practice profile draft/update using `skills/insurance-copilot/templates/practice-profile.md` as internal storage format, plus `Next Useful Jobs`.
 - **Review owner:** Agency principal, licensed supervisor, compliance reviewer, or legal/compliance contact named in the profile.
-- **Forbidden actions:** Inventing agency rules, storing sensitive customer data in the profile, treating starter language as jurisdiction-specific legal advice.
+- **Forbidden actions:** Inventing agency rules, storing sensitive customer data in the profile, treating starter language as jurisdiction-specific legal advice, forcing a new agent to define a mature positioning statement before any useful work.
 - **Standard prompt:**
 
 ```text
-Use the Agency Playbook Builder. Help me create or update an Insurance Copilot practice profile. Start in Quick Start mode unless I ask for Full Setup. Ask only the essential missing questions first, mark unknowns as [confirm with compliance/legal], and do not draft customer-facing scripts yet.
+Use Agency Playbook Builder in New Agent Default Mode. I am a new insurance agent and I don't know yet how to define my full profile. Ask at most three simple questions, allow conservative defaults, generate a provisional profile, and show what I can do next.
 ```
 
 ## Workflow 2: Daily Agent Workbench

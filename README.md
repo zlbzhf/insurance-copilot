@@ -14,7 +14,7 @@ practice profile -> task-specific workflow -> source/private facts -> review-rea
 
 Start with these practical jobs:
 
-1. **Set my practice profile** — establish jurisdiction, license scope, product lines, carriers, review owner, escalation rules, and writing style.
+1. **Set my practice profile** — answer a few guided questions or use New Agent Default Mode; the assistant generates the profile, the agent confirms/corrects it.
 2. **Plan my day** — meetings, renewals, claim-support items, referrals, objections, and follow-up messages.
 3. **Organize client notes** — turn messy notes or transcripts into a structured fact-find and missing-question list.
 4. **Review a policy or coverage situation** — summarize known facts, likely gap areas, replacement/lapse/claim risks, and verification needs.
@@ -30,8 +30,10 @@ After installing the skill, use this prompt:
 
 ```text
 /skill insurance-copilot
-Use Agency Playbook Builder in Quick Start mode. Help me set up a practical insurance-agent profile. Ask only the essential questions first, then show how I can use it for daily workbench, client intake, policy review, customer message drafting, and compliance copy checking. Manual-first only; do not discuss cron, deployment, or automation unless I ask.
+Use Agency Playbook Builder in New Agent Default Mode. I am a new or busy insurance agent and I don't know yet how to define my full profile. Ask at most three simple questions, allow conservative defaults, generate a provisional practice profile, then show how I can use it for daily workbench, client intake, policy review, customer message drafting, and compliance copy checking. Manual-first only; do not discuss cron, deployment, or automation unless I ask.
 ```
+
+Never ask the agent to manually fill the profile template. The template is an internal storage format, not a user-facing form. Agents provide messy real-world context; AI converts it into structured scenarios, profile updates, reusable examples, and eval intents. evals are internal quality fixtures; agents do not write JSON eval cases.
 
 Then use one of these task-first prompts:
 
@@ -47,7 +49,7 @@ Use Client Needs Intake. Turn these client notes into a structured fact-find. Se
 Use Compliance Copy Checker. Review this WeChat draft before customer use. Quote risky phrases, suggest safer language, and say who must review it.
 ```
 
-See `docs/quickstart.md`, `docs/workflow-surface.md`, and `examples/practical-mvp/agent-first-session.md` for the complete workflow surface and practical loop.
+See `docs/quickstart.md`, `docs/workflow-surface.md`, `examples/practical-mvp/agent-first-session.md`, and `examples/practical-mvp/agent-friendly-onboarding.md` for the complete workflow surface, practical loop, and low-burden new-agent onboarding example.
 
 ## What It Does
 
@@ -119,7 +121,7 @@ In Hermes, try:
 
 ```text
 /skill insurance-copilot
-Use Agency Playbook Builder in Quick Start mode. Ask only the essential questions needed to create a practical profile.
+Use Agency Playbook Builder in New Agent Default Mode. Ask no more than three onboarding questions needed to create a practical provisional profile. If I answer `I don't know yet`, use conservative defaults.
 ```
 
 ## Public Institution Packs

@@ -1,0 +1,29 @@
+{
+  "id": "agent-friendly-onboarding",
+  "workflow": "agency-playbook-builder-new-agent-default",
+  "input_summary": "New/unsure insurance agent starts without a clear profile and shares a messy customer objection.",
+  "must_include": [
+    "New Agent Default Mode",
+    "I don't know yet",
+    "Never ask the agent to manually fill the profile template",
+    "template is an internal storage format",
+    "provisional profile",
+    "Agents provide messy real-world context",
+    "AI converts it into structured scenarios",
+    "AI-generated scenario card",
+    "AI-generated eval intent",
+    "evals are internal quality fixtures",
+    "agents do not write JSON eval cases",
+    "draft for licensed/compliance review",
+    "[verify]"
+  ],
+  "must_not_include": [
+    "MANUAL_PROFILE_FORM_REQUIRED",
+    "AGENT_MUST_WRITE_JSON_EVAL",
+    "FORCE_FULL_SETUP_BEFORE_USE",
+    "AUTO_APPROVE_CUSTOMER_SCRIPT",
+    "REPLACEMENT_RECOMMENDED_WITHOUT_REVIEW"
+  ],
+  "escalation_expected": true,
+  "expected_output": "evals/expected/agent-friendly-onboarding.md"
+}
