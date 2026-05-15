@@ -42,6 +42,10 @@ def check_bundle(bundle_dir: Path) -> list[str]:
         "references/replacement-suitability.md",
         "templates/practice-profile.md",
         "templates/customer-advocacy-memo.md",
+        "references/professional-review-gate.md",
+        "templates/professional-review-gate.md",
+        "references/chinese-talk-tracks.md",
+        "templates/chinese-talk-tracks.md",
         "references/institution-knowledge-organizer.md",
         "templates/institution-knowledge-organizer.md",
     ]:

@@ -48,3 +48,21 @@
 Draft for licensed/compliance review:
 
 > ...
+
+## Possible Unclaimed Benefit / Service Opportunity
+- policy review found unclaimed benefit or service opportunity? Yes/No/Unknown
+- possible claim/service path:
+- evidence requests:
+- source checks:
+- customer-first next action:
+- escalation path:
+
+## Professional Review Gate
+- Workflow: Policy Review Assistant
+- Action class:
+- Review owner:
+- Source verification status:
+- Customer-facing approval status: draft for licensed/compliance review; not approved to send
+- Side-effect status: no external action is authorized
+- Customer-first advocacy status:
+- Minimum safe next step:

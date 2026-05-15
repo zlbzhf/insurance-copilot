@@ -28,7 +28,7 @@ At minimum, a renewal/lapse register should include:
 - last contact date;
 - assigned agent/owner.
 
-If carrier status is missing, mark status `[verify with carrier]`.
+If carrier status is missing, mark status `[verify with carrier]`. For lapse, reinstatement, complaint, or ambiguous coverage-status matters, use the **Customer Advocacy Memo** pattern and close with the **Professional Review Gate**. The output must preserve **customer-first advocacy within compliance boundaries**, remain a draft for licensed/compliance review, state `no external action is authorized`, and identify the minimum safe next step before any outreach.
 
 ## Review Procedure
 

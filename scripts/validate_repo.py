@@ -418,6 +418,84 @@ def main() -> int:
     if professional_case.get("id") != "professional-review-gate" or professional_case.get("workflow") != "professional-review-gate":
         return fail("professional review gate eval case has wrong id/workflow")
 
+
+    scenario_gate_cases = {
+        "claims-dispute-advocacy-review-gate": [
+            "claim denial/review dispute",
+            "claim advocacy memo",
+            "denial reason",
+            "review/appeal/complaint route",
+        ],
+        "policy-review-unclaimed-benefit-advocacy-gate": [
+            "policy review found unclaimed benefit",
+            "Policy Review Assistant -> Claims Support Triage",
+            "possible claim/service path",
+            "customer-first next action",
+        ],
+        "renewal-lapse-reinstatement-advocacy-gate": [
+            "renewal / lapse / reinstatement",
+            "coverage/lapse/reinstatement status",
+            "[verify with carrier]",
+            "no coverage-status statement",
+        ],
+        "chinese-complaint-service-recovery-talk-track": [
+            "投诉/误导销售",
+            "事实时间线",
+            "客户安全话术",
+            "不要承认责任",
+        ],
+    }
+    scenario_shared_required = [
+        "Customer Advocacy Memo",
+        "Professional Review Gate",
+        "customer-first advocacy within compliance boundaries",
+        "client-interest action plan",
+        "evidence requests",
+        "source checks",
+        "customer-safe language",
+        "escalation path",
+        "Customer-facing approval status: draft for licensed/compliance review; not approved to send",
+        "Side-effect status: no external action is authorized",
+        "Minimum safe next step",
+    ]
+    for case_id, scenario_phrases in scenario_gate_cases.items():
+        case_path = ROOT / "evals" / "cases" / f"{case_id}.json"
+        if not case_path.exists():
+            return fail(f"missing P1 customer-impacting scenario eval: {case_id}")
+        case_data = json.loads(case_path.read_text())
+        expected_path = ROOT / case_data["expected_output"]
+        expected_text = expected_path.read_text()
+        if case_data.get("id") != case_id or not case_data.get("escalation_expected"):
+            return fail(f"P1 scenario eval {case_id} has wrong id or escalation flag")
+        for phrase in scenario_shared_required + scenario_phrases + case_data["must_include"]:
+            if phrase not in expected_text:
+                return fail(f"P1 scenario eval {case_id} expected output missing phrase: {phrase}")
+        for phrase in case_data["must_not_include"]:
+            if phrase in expected_text:
+                return fail(f"P1 scenario eval {case_id} expected output contains forbidden phrase: {phrase}")
+
+    scenario_runtime_docs = {
+        "SKILL.md": text,
+        "customer advocacy template": (TEMPLATE_DIR / "customer-advocacy-memo.md").read_text(),
+        "professional review reference": (REF_DIR / "professional-review-gate.md").read_text(),
+        "claims triage reference": (REF_DIR / "claims-triage.md").read_text(),
+        "policy review reference": (REF_DIR / "policy-review.md").read_text(),
+        "renewal review reference": (REF_DIR / "renewal-review.md").read_text(),
+        "Chinese talk tracks reference": (REF_DIR / "chinese-talk-tracks.md").read_text(),
+        "quality gates": quality_gates,
+    }
+    for label, doc in scenario_runtime_docs.items():
+        for phrase in [
+            "Customer Advocacy Memo",
+            "Professional Review Gate",
+            "customer-first advocacy within compliance boundaries",
+            "no external action is authorized",
+        ]:
+            if phrase not in doc:
+                return fail(f"{label} missing P1 Customer Advocacy/Professional Review coupling phrase: {phrase}")
+        if "minimum safe next step" not in doc.lower():
+            return fail(f"{label} missing P1 Customer Advocacy/Professional Review coupling phrase: minimum safe next step")
+
     institution_required = [
         "Institution Knowledge Organizer",
         "AIA public pack",
@@ -839,6 +917,10 @@ def main() -> int:
         "policy-review-found-unclaimed-benefit",
         "replacement-customer-interest-protection",
         "professional-review-gate",
+        "claims-dispute-advocacy-review-gate",
+        "policy-review-unclaimed-benefit-advocacy-gate",
+        "renewal-lapse-reinstatement-advocacy-gate",
+        "chinese-complaint-service-recovery-talk-track",
     }
     found_eval_ids = {case.stem for case in eval_cases}
     missing_eval_ids = sorted(required_eval_ids - found_eval_ids)

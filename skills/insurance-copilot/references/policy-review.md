@@ -19,7 +19,7 @@ Prefer primary policy sources. Mark missing items clearly.
 1. Identify policy type, insured, owner, beneficiary, carrier, issue date, premium, coverage amount, term, riders, and renewal features.
 2. Summarize benefits in plain language.
 3. Extract exclusions, waiting periods, renewal terms, cash value/surrender terms, loan provisions, fees, and important limitations.
-4. If the policy review finds a possible unclaimed benefit, service right, reinstatement path, claim path, or unresolved customer harm, route into the Customer Advocacy Operating Model rather than stopping at a summary.
+4. If the policy review finds a possible unclaimed benefit, service right, reinstatement path, claim path, or unresolved customer harm, route into the Customer Advocacy Operating Model rather than stopping at a summary. Use the **Customer Advocacy Memo** pattern and close with the **Professional Review Gate** when the output may affect customer rights. The output must preserve **customer-first advocacy within compliance boundaries**, remain a draft for licensed/compliance review, state `no external action is authorized`, and identify the minimum safe next step.
 5. Compare the policy to current customer needs and known gaps.
 6. Flag missing source pages or uncertainty with `[verify]`.
 7. If replacement is contemplated, list replacement risks and require escalation.

@@ -6,6 +6,8 @@ This is an internal agent-support memo and draft workspace. Each customer-facing
 
 Empty neutrality is insufficient. If the memo says `the carrier decides`, `以保险公司审核为准`, `subject to review`, or similar caveats, pair that language with concrete next steps, evidence requests, source checks, customer-safe language, agent internal notes, and an escalation path.
 
+Pair this **Customer Advocacy Memo** with the **Professional Review Gate** whenever the output becomes customer-facing, external-use, regulated decision-support, or side-effect-adjacent. The combined handoff must preserve **customer-first advocacy within compliance boundaries**, state `no external action is authorized`, and identify the minimum safe next step.
+
 ## Scope
 
 - Workflow trigger:
@@ -134,6 +136,15 @@ Do not:
 - Complaint or service review owner:
 - Legal/tax/investment professional, if outside agent authority:
 - Regulator/ombudsman route, if appropriate for review and not presented as a guaranteed strategy:
+
+## Professional Review Gate Handoff
+
+- Review owner:
+- Source verification status:
+- Customer-facing approval status: draft for licensed/compliance review; not approved to send
+- Side-effect status: no external action is authorized
+- Customer-first advocacy status:
+- Minimum safe next step:
 
 ## Final Review Checklist
 

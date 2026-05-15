@@ -551,3 +551,77 @@ def test_aia_public_pack_source_backed_slice_is_runtime_effective() -> None:
         assert phrase in expected
     for phrase in case["must_not_include"]:
         assert phrase not in expected
+
+
+def test_customer_impacting_scenarios_link_advocacy_and_professional_review_gate() -> None:
+    """P1 scenario evals must make advocacy + review gate runtime-effective."""
+    required_cases = {
+        "claims-dispute-advocacy-review-gate": [
+            "claim denial/review dispute",
+            "claim advocacy memo",
+            "denial reason",
+            "review/appeal/complaint route",
+        ],
+        "policy-review-unclaimed-benefit-advocacy-gate": [
+            "policy review found unclaimed benefit",
+            "Policy Review Assistant -> Claims Support Triage",
+            "possible claim/service path",
+            "customer-first next action",
+        ],
+        "renewal-lapse-reinstatement-advocacy-gate": [
+            "renewal / lapse / reinstatement",
+            "coverage/lapse/reinstatement status",
+            "[verify with carrier]",
+            "no coverage-status statement",
+        ],
+        "chinese-complaint-service-recovery-talk-track": [
+            "投诉/误导销售",
+            "事实时间线",
+            "客户安全话术",
+            "不要承认责任",
+        ],
+    }
+    shared_required = [
+        "Customer Advocacy Memo",
+        "Professional Review Gate",
+        "customer-first advocacy within compliance boundaries",
+        "client-interest action plan",
+        "evidence requests",
+        "source checks",
+        "customer-safe language",
+        "escalation path",
+        "Customer-facing approval status: draft for licensed/compliance review; not approved to send",
+        "Side-effect status: no external action is authorized",
+        "Minimum safe next step",
+    ]
+    for case_id, scenario_phrases in required_cases.items():
+        case_path = ROOT / "evals" / "cases" / f"{case_id}.json"
+        data = json.loads(case_path.read_text(encoding="utf-8"))
+        expected = read(data["expected_output"])
+        assert data["id"] == case_id
+        assert data["escalation_expected"] is True
+        for phrase in shared_required + scenario_phrases + data["must_include"]:
+            assert phrase in expected
+        for phrase in data["must_not_include"]:
+            assert phrase not in expected
+
+    skill = read("skills/insurance-copilot/SKILL.md")
+    advocacy_template = read("skills/insurance-copilot/templates/customer-advocacy-memo.md")
+    professional_gate = read("skills/insurance-copilot/references/professional-review-gate.md")
+    for text in [skill, advocacy_template, professional_gate]:
+        assert "Customer Advocacy Memo" in text
+        assert "Professional Review Gate" in text
+        assert "customer-first advocacy within compliance boundaries" in text
+        assert "no external action is authorized" in text
+        assert "minimum safe next step" in text.lower()
+
+    for rel in [
+        "skills/insurance-copilot/references/claims-triage.md",
+        "skills/insurance-copilot/references/policy-review.md",
+        "skills/insurance-copilot/references/renewal-review.md",
+        "skills/insurance-copilot/references/chinese-talk-tracks.md",
+    ]:
+        text = read(rel)
+        assert "Customer Advocacy Memo" in text
+        assert "Professional Review Gate" in text
+        assert "draft for licensed/compliance review" in text

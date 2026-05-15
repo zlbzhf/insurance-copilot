@@ -35,6 +35,7 @@ Knowledge architecture:
 - Templates for core outputs.
 - Synthetic examples and expected output sketches.
 - Static eval fixtures and runner.
+- P1 customer-impacting scenario evals link **Customer Advocacy Memo** + **Professional Review Gate** for claims disputes, policy review found unclaimed benefit, renewal/lapse/reinstatement ambiguity, and Chinese complaint/service-recovery talk tracks.
 - Packaging check and CI.
 - Continuity, privacy, action-safety, jurisdiction adaptation, and quality-gate docs.
 - Three-layer public/private knowledge architecture.

@@ -8,6 +8,8 @@ Do not state that a claim is covered, payable, denied correctly, or guaranteed. 
 
 Customer-first claims support means do not stop at `the carrier decides`. Develop the strongest good-faith claim-support position the facts and policy can support, identify evidence to gather, preserve deadlines, and escalate review paths. Do not invent facts, alter documents, give unauthorized legal advice, or guarantee outcomes.
 
+For a denial, dispute, complaint, late notice, or low-settlement question, use the **Customer Advocacy Memo** pattern and close with the **Professional Review Gate**. The result must preserve **customer-first advocacy within compliance boundaries**, remain a draft for licensed/compliance review, state `no external action is authorized`, and identify the minimum safe next step.
+
 ## Required Inputs
 
 - Policy source and relevant coverage section if available.

@@ -48,3 +48,22 @@ Required disclaimer/caveat:
 
 ## Customer Draft Language
 > Draft for licensed/compliance review; do not send automatically.
+
+## Customer Advocacy Memo Trigger
+- renewal / lapse / reinstatement issue? Yes/No/Unknown
+- coverage/lapse/reinstatement status: [verify with carrier]
+- evidence requests:
+- source checks:
+- client-interest action plan:
+- customer-safe language:
+- escalation path:
+
+## Professional Review Gate
+- Workflow: Renewal/Lapse Follow-up Planner
+- Action class:
+- Review owner:
+- Source verification status:
+- Customer-facing approval status: draft for licensed/compliance review; not approved to send
+- Side-effect status: no external action is authorized
+- Customer-first advocacy status:
+- Minimum safe next step:

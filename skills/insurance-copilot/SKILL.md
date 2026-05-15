@@ -41,7 +41,8 @@ When an agent shares a product idea or real-world example, first confirm the pro
 - Separate internal agent notes from customer-safe language.
 - For substantive workflow work, load the matching reference before drafting; if a user asks for claims triage, policy review, replacement analysis, compliance checking, or another named workflow, use the router below and consult that `references/*.md` playbook before producing the draft.
 - docs/ is not the runtime source by itself. runtime-effective constraints must live in SKILL.md, references, templates, evals, or validators.
-- For customer-impacting advocacy matters, use `templates/customer-advocacy-memo.md` as the concrete output structure when a full memo is needed.
+- For customer-impacting advocacy matters, use `templates/customer-advocacy-memo.md` as the concrete output structure when a full memo is needed. Treat it as the **Customer Advocacy Memo** runtime pattern.
+- For claims disputes, policy review found unclaimed benefit, renewal/lapse/reinstatement ambiguity, complaints, and Chinese service-recovery talk tracks, link **Customer Advocacy Memo** to **Professional Review Gate**: preserve **customer-first advocacy within compliance boundaries**, include evidence requests, source checks, customer-safe language, escalation path, state `no external action is authorized`, and end with the minimum safe next step.
 - For any customer-facing, regulated, external-use, or side-effect-adjacent output, apply the **Professional Review Gate** from `references/professional-review-gate.md` and shape the review block with `templates/professional-review-gate.md`. The gate must name action class, review owner, source verification status, customer-facing approval status, side-effect status, state `draft for licensed/compliance review`, state `not approved to send`, state `no external action is authorized`, and end with the minimum safe next step.
 
 ### Agent-Friendly Product Principle

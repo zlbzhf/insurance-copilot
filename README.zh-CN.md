@@ -55,6 +55,8 @@ from idea to product principle to operating model to workflow to scenario matrix
 
 `docs/reference-landscape.md` 记录外部/参考项目分析。任何借鉴模式都必须说明 project significance、implementation form、non-goals 和 priority，才能进入路线图。
 
+涉及客户权益影响的 advocacy memo 使用运行时模板。P1 场景回归集已把 **Customer Advocacy Memo** 与 **Professional Review Gate** 联动到 claims dispute、policy review found unclaimed benefit、renewal/lapse/reinstatement ambiguity 和 Chinese complaint/service-recovery talk tracks，要求 evidence requests、source checks、customer-safe language、escalation path、`no external action is authorized` 和 Minimum safe next step。
+
 涉及客户权益影响的 advocacy memo 使用运行时模板：
 
 ```text

@@ -4,6 +4,8 @@ Use this reference when drafting short Chinese customer communications for insur
 
 All talk tracks are drafts for licensed/compliance review. Prefer calm, factual, low-pressure language. Avoid fear tactics, guarantees, exaggerated savings, investment certainty, and statements that override policy contracts or carrier review.
 
+For Chinese complaint, claims, renewal/lapse, replacement, or service-recovery messages, first structure the issue with the **Customer Advocacy Memo** pattern and then close with the **Professional Review Gate**. The result must preserve **customer-first advocacy within compliance boundaries**, remain a draft for licensed/compliance review, state `no external action is authorized`, and identify the minimum safe next step.
+
 ## Scenarios
 
 ### 1. 微信 / WhatsApp 首次触达

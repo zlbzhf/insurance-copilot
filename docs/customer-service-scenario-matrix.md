@@ -54,7 +54,7 @@ For each customer situation:
 - **Compliance boundary:** do not decide coverage or payout; do not give unauthorized legal advice.
 - **Forbidden moves:** promising payout, altering documents, fabricating evidence, or giving up because `the carrier decides`.
 - **Escalate when:** denial, limitation period, vulnerable customer, complaint, legal threat, suspected fraud, or unresolved coverage dispute.
-- **Eval targets:** `claims-payout-guarantee`, `property-claim-late-notice-advocacy`, `claim-denial-appeal-path`.
+- **Eval targets:** `claims-payout-guarantee`, `property-claim-late-notice-advocacy`, `claim-denial-appeal-path`, `claims-dispute-advocacy-review-gate`.
 
 ### 4. Late Notice / Limitation Period
 
@@ -76,7 +76,7 @@ For each customer situation:
 - **Compliance boundary:** no guarantee of benefit or claim acceptance.
 - **Forbidden moves:** dismissing the opportunity solely because time passed or another agent sold it.
 - **Escalate when:** possible claim, complaint, mis-selling, or limitation issue appears.
-- **Eval targets:** `policy-review-found-unclaimed-benefit`.
+- **Eval targets:** `policy-review-found-unclaimed-benefit`, `policy-review-unclaimed-benefit-advocacy-gate`.
 
 ### 6. Replacement / Surrender
 
@@ -98,7 +98,18 @@ For each customer situation:
 - **Compliance boundary:** do not admit liability, threaten, retaliate, or give legal conclusions.
 - **Forbidden moves:** telling the customer they have no case without review, deleting records, or coaching inconsistent statements.
 - **Escalate when:** sales conduct, vulnerable customer, complaint, regulator, or legal demand is mentioned.
-- **Eval targets:** future `complaint-mis-selling-review-path`.
+- **Eval targets:** `chinese-complaint-service-recovery-talk-track`; future `complaint-mis-selling-review-path`.
+
+### 8A. Chinese Talk Tracks / Service Recovery
+
+- **Customer goal:** receive a calm, factual Chinese response when a complaint, claim, renewal/lapse, replacement, or service-recovery issue appears.
+- **Assistant should:** structure the issue with Customer Advocacy Memo, draft 客户安全话术, preserve 事实时间线 and evidence, and close with Professional Review Gate.
+- **Workflow:** Chinese Talk Tracks + Compliance Copy Checker + routed substantive workflow.
+- **Good service:** acknowledge concern, avoid pressure, preserve records, and give concrete next steps.
+- **Compliance boundary:** 不要承认责任, do not guarantee payout/complaint result, and do not send automatically.
+- **Forbidden moves:** polished unsafe persuasion, deleting records, admission of liability before review, or promising outcomes.
+- **Escalate when:** 投诉/误导销售, claim dispute, lapse, replacement, vulnerable customer, regulator, or legal threat appears.
+- **Eval targets:** `chinese-talk-tracks`, `chinese-complaint-service-recovery-talk-track`.
 
 ### 8. Renewal / Lapse / Reinstatement
 
@@ -109,7 +120,7 @@ For each customer situation:
 - **Compliance boundary:** do not say coverage is active or reinstatement is guaranteed without carrier source.
 - **Forbidden moves:** misleading urgency, automatic sending, or guaranteeing reinstatement.
 - **Escalate when:** lapse, vulnerable customer, claim near lapse, or complaint appears.
-- **Eval targets:** `renewal-lapse-uncertainty`.
+- **Eval targets:** `renewal-lapse-uncertainty`, `renewal-lapse-reinstatement-advocacy-gate`.
 
 ### 9. New Agent Coach Mode
 

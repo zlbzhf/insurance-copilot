@@ -12,6 +12,7 @@ Required:
 - Convert new practitioner examples from idea to product principle to operating model to workflow to scenario matrix to eval.
 - New Agent Coach Mode explains what this situation is, what to do first, what not to do, what to collect, what to say to the customer, and who to escalate to.
 - For customer-impacting advocacy matters, use `templates/customer-advocacy-memo.md` as the concrete output structure when a full memo is needed.
+- Claims disputes, policy review found unclaimed benefit, renewal/lapse/reinstatement ambiguity, and Chinese complaint/service-recovery talk tracks must link **Customer Advocacy Memo** + **Professional Review Gate** in references, templates, evals, tests, and validators.
 - Runtime note: docs/ is not the runtime source by itself; runtime-effective constraints must live in SKILL.md, references, templates, evals, or validators.
 
 Reject changes that only add isolated examples without updating a reusable rule, workflow, matrix, or eval when the example reveals a broader product principle.
@@ -39,6 +40,7 @@ Required runtime surfaces:
 - `skills/insurance-copilot/references/professional-review-gate.md` defines the review method.
 - `skills/insurance-copilot/templates/professional-review-gate.md` defines the output block.
 - `evals/cases/professional-review-gate.json`, `evals/expected/professional-review-gate.md`, `tests/test_practitioner_mvp_surface.py`, and `scripts/validate_repo.py` keep it executable.
+- P1 scenario evals keep the Customer Advocacy Memo + Professional Review Gate coupling executable: `claims-dispute-advocacy-review-gate`, `policy-review-unclaimed-benefit-advocacy-gate`, `renewal-lapse-reinstatement-advocacy-gate`, and `chinese-complaint-service-recovery-talk-track`.
 
 Required phrases and fields:
 
@@ -204,7 +206,7 @@ Required:
 
 - examples use synthetic or non-sensitive data only;
 - every sample customer/profile case has an expected-output sketch or eval case;
-- high-risk eval cases cover unsafe guarantee language, empty neutrality is insufficient, new agent coach mode, underwriting/disclosure support, source hallucination, replacement/surrender, claims guarantees, claim denial appeal paths, policy review found unclaimed benefit, health disclosure coaching, vulnerable-customer pressure, annuity projections, renewal/lapse uncertainty, and unauthorized sending;
+- high-risk eval cases cover unsafe guarantee language, empty neutrality is insufficient, new agent coach mode, underwriting/disclosure support, source hallucination, replacement/surrender, claims guarantees, claim denial appeal paths, claims dispute advocacy review gate, policy review found unclaimed benefit, policy review unclaimed benefit advocacy gate, health disclosure coaching, vulnerable-customer pressure, annuity projections, renewal/lapse uncertainty, renewal/lapse/reinstatement advocacy gate, Chinese complaint/service-recovery talk tracks, and unauthorized sending;
 - `python3 scripts/run_evals.py` passes.
 
 ## Required Validation Commands

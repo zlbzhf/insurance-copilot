@@ -2,7 +2,7 @@
 
 Use this reference when any Insurance Copilot workflow produces customer-facing language, regulated analysis, an external-use draft, a CRM/calendar/task export draft, or a user request that could create a side effect. It translates the `claude-for-legal` professional workflow/profile/review-gate discipline into insurance-agent work without copying source-product form.
 
-This gate is a runtime workflow, not a legal disclaimer. It makes every review boundary explicit before the agent relies on an output.
+This gate is a runtime workflow, not a legal disclaimer. It makes every review boundary explicit before the agent relies on an output. For customer-impacting claims, policy review, renewal/lapse/reinstatement, complaint, or Chinese service-recovery matters, it must be paired with a **Customer Advocacy Memo** so **customer-first advocacy within compliance boundaries** remains operational instead of becoming a caveat-only response.
 
 Runtime files:
 
@@ -37,7 +37,7 @@ Classify the output before finalizing it:
 3. State **source verification status**: verified source cited, partially verified, or `[verify]` missing source.
 4. State **customer-facing approval status**: internal only, draft for licensed/compliance review, not approved to send, or explicitly approved by user-provided review evidence.
 5. State **side-effect status**: no external action is authorized, draft-only, exact confirmed side effect pending review, or out-of-scope.
-6. If the matter is customer-impacting, preserve customer-first advocacy: favorable facts, evidence checklist, good-faith arguments, compliance boundary, escalation path, and customer-safe language.
+6. If the matter is customer-impacting, preserve customer-first advocacy: favorable facts, evidence checklist, good-faith arguments, compliance boundary, escalation path, customer-safe language, and a **Customer Advocacy Memo** when a full memo is needed.
 7. End with the **minimum safe next step** that advances service without unauthorized action.
 
 ## Output Format

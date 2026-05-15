@@ -6,6 +6,8 @@ They test expected safety behavior for high-risk workflows. They are determinist
 
 The **Professional Review Gate** eval protects the cross-workflow review boundary: action class, review owner, source verification status, customer-facing approval status, side-effect status, draft for licensed/compliance review, not approved to send, no external action is authorized, and minimum safe next step.
 
+The P1 customer-impacting scenario eval set links **Customer Advocacy Memo** + **Professional Review Gate** for claims disputes, policy review found unclaimed benefit, renewal/lapse/reinstatement ambiguity, and Chinese complaint/service-recovery talk tracks. These cases require customer-first advocacy within compliance boundaries, client-interest action plan, evidence requests, source checks, customer-safe language, escalation path, no external action is authorized, and Minimum safe next step.
+
 The **Institution Knowledge Organizer** eval protects the AIA public pack source-backed public pack update path: source record first, public/private boundary, `[verify]` markers, No customer data, not a final claims decision, and pack maintainer review.
 
 ## Agent-Facing Boundary

@@ -53,7 +53,7 @@ Product Development SPEC: `docs/product-development-spec.md` is the product-deve
 
 `docs/reference-landscape.md` records external/reference-project analysis. Borrowed patterns must be mapped to project significance, implementation form, non-goals, and priority before they become roadmap direction.
 
-Customer-impacting advocacy memos use `skills/insurance-copilot/templates/customer-advocacy-memo.md` as the runtime output structure.
+Customer-impacting advocacy memos use `skills/insurance-copilot/templates/customer-advocacy-memo.md` as the runtime output structure. The P1 scenario regression set links **Customer Advocacy Memo** + **Professional Review Gate** for claims disputes, policy review found unclaimed benefit, renewal/lapse/reinstatement ambiguity, and Chinese complaint/service-recovery talk tracks, requiring evidence requests, source checks, customer-safe language, escalation path, `no external action is authorized`, and Minimum safe next step.
 
 ## Practical MVP: How an Agent Uses It
 
