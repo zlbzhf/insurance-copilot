@@ -10,6 +10,7 @@ This project is currently pre-1.0 and milestone-based. The changelog follows a h
 
 ### Added
 
+- Added Coach_me Guided Reasoning Mode as a single Insurance Copilot workflow (`references/coach-me.md`, `templates/coach-me.md`, eval, tests, validator, and docs) for broad, messy, strategic, document-dependent, or customer-situation questions; it uses source discovery order, exactly three targeted questions, answer-now/continue choice, automatic stop rules, durable working/final documents, Q&A-as-raw-input, and Karpathy-style LLM wiki backfeed proposals with no automatic persistence.
 - Added Chinese Telegram onboarding docs/examples/eval coverage and validator checks for `/skill insurance_copilot`, institution/role confirmation, `[待核实]` explanation, and existing-profile summary behavior.
 - Added `docs/product-development-spec.md` as the durable product-development source of truth and usable-state definition.
 - Added `docs/reference-landscape.md` to map external/reference projects to project significance, implementation form, non-goals, and priority.

@@ -1,0 +1,34 @@
+{
+  "id": "coach-me-guided-document-grounded-answer",
+  "workflow": "coach-me",
+  "input_summary": "Synthetic agent asks a messy document-grounded question: a customer wants to know whether an old policy and a new claim note support a review path. The agent has incomplete public institution notes, a private customer policy summary, and wants guided follow-up before a final answer.",
+  "must_include": [
+    "Coach_me Guided Reasoning Mode",
+    "one workflow, not two skills",
+    "ask exactly three most precise and relevant questions",
+    "answer now or continue questioning",
+    "automatically stop questioning when information is sufficient",
+    "Coach_me Working Document",
+    "source discovery order",
+    "public institution knowledge",
+    "agent-private workspace",
+    "customer-specific materials",
+    "Q&A intake is raw source input",
+    "Karpathy-style LLM wiki backfeed proposal",
+    "no automatic persistence",
+    "Source Grounding and Data Boundary Gate",
+    "Professional Review Gate",
+    "draft for licensed/compliance review",
+    "not approved to send",
+    "no external action is authorized"
+  ],
+  "must_not_include": [
+    "guaranteed payout approved",
+    "send this to the customer now",
+    "automatically update the customer file",
+    "copy customer data into public packs",
+    "create a separate document-grounded skill"
+  ],
+  "escalation_expected": true,
+  "expected_output": "evals/expected/coach-me-guided-document-grounded-answer.md"
+}

@@ -245,6 +245,11 @@ Implication:
 - Keep deterministic validators, eval fixtures, PII-like scans, forbidden-action rules, and runtime-effective documentation gates.
 - Future connector work needs least-privilege, read-only defaults, audit logging, retention rules, and explicit review.
 
+## Borrowed Pattern Map
+
+## Coach_me Guided Reasoning Mode
+
+The **Coach_me Guided Reasoning Mode** borrows grill-style questioning and document-grounded clarification only as a practitioner workflow pattern. In Insurance Copilot it becomes **one workflow, not two skills** under `references/coach-me.md` and `templates/coach-me.md`: first use the **source discovery order**, then ask exactly three most precise and relevant questions, offer **answer now or continue questioning**, **automatically stop questioning when information is sufficient**, keep a **Coach_me Working Document**, and treat **Q&A intake is raw source input**. It must preserve **public institution knowledge**, **agent-private workspace**, and **customer-specific materials** boundaries, produce a **Karpathy-style LLM wiki backfeed proposal**, apply **Source Grounding and Data Boundary Gate** and **Professional Review Gate** when needed, and perform **no automatic persistence**.
 
 ## Private Workspace Trace and Readiness Gate
 
@@ -287,7 +292,8 @@ Insurance Copilot uniquely combines:
 - insurance-agent workflow router;
 - customer-first advocacy within compliance boundaries;
 - manual-first draft/review/action model;
-- guided onboarding and New Agent Coach Mode;
+- guided onboarding, New Agent Coach Mode, and Coach_me Guided Reasoning Mode;
+- source discovery order across public institution knowledge, agent-private workspace, customer-specific materials, and Q&A intake;
 - public insurer knowledge packs;
 - agent-private customer/non-public workspace separation;
 - evidence-driven public knowledge standards;

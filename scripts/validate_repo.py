@@ -146,6 +146,7 @@ REQUIRED_REFERENCES = [
     "source-grounding-guardrails.md",
     "private-workspace-trace-readiness.md",
     "external-write-action-boundary.md",
+    "coach-me.md",
 ]
 
 REQUIRED_TEMPLATES = [
@@ -171,6 +172,7 @@ REQUIRED_TEMPLATES = [
     "source-grounding-guardrails.md",
     "private-workspace-audit-trace.md",
     "external-write-action-boundary.md",
+    "coach-me.md",
 ]
 
 REQUIRED_MCP_CONTRACTS = [
@@ -720,6 +722,57 @@ def main() -> int:
     for phrase in private_trace_case["must_not_include"]:
         if phrase in private_trace_expected:
             return fail(f"Private Workspace Trace eval expected output contains forbidden phrase: {phrase}")
+
+    coach_me_required = [
+        "Coach_me Guided Reasoning Mode",
+        "one workflow, not two skills",
+        "ask exactly three most precise and relevant questions",
+        "answer now or continue questioning",
+        "automatically stop questioning when information is sufficient",
+        "Coach_me Working Document",
+        "source discovery order",
+        "public institution knowledge",
+        "agent-private workspace",
+        "customer-specific materials",
+        "Q&A intake is raw source input",
+        "Karpathy-style LLM wiki backfeed proposal",
+        "no automatic persistence",
+        "Source Grounding and Data Boundary Gate",
+        "Professional Review Gate",
+    ]
+    coach_me_docs = {
+        "SKILL.md": text,
+        "coach-me reference": (REF_DIR / "coach-me.md").read_text(),
+        "coach-me template": (TEMPLATE_DIR / "coach-me.md").read_text(),
+        "quality gates": quality_gates,
+        "workflow surface": (ROOT / "docs" / "workflow-surface.md").read_text(),
+        "product development SPEC": product_spec,
+        "reference landscape": reference_landscape,
+        "README": (ROOT / "README.md").read_text(),
+        "Chinese README": (ROOT / "README.zh-CN.md").read_text(),
+        "evals README": (ROOT / "evals" / "README.md").read_text(),
+    }
+    for label, doc in coach_me_docs.items():
+        for phrase in coach_me_required:
+            if phrase not in doc:
+                return fail(f"{label} missing Coach_me runtime phrase: {phrase}")
+    for rel in ["references/coach-me.md", "templates/coach-me.md"]:
+        if rel not in text:
+            return fail(f"SKILL.md missing Coach_me runtime path: {rel}")
+
+    coach_me_case_path = ROOT / "evals" / "cases" / "coach-me-guided-document-grounded-answer.json"
+    if not coach_me_case_path.exists():
+        return fail("missing Coach_me eval case")
+    coach_me_case = json.loads(coach_me_case_path.read_text())
+    coach_me_expected = (ROOT / coach_me_case["expected_output"]).read_text()
+    if coach_me_case.get("id") != "coach-me-guided-document-grounded-answer" or coach_me_case.get("workflow") != "coach-me" or not coach_me_case.get("escalation_expected"):
+        return fail("Coach_me eval case has wrong id/workflow/escalation flag")
+    for phrase in coach_me_required + coach_me_case["must_include"]:
+        if phrase not in coach_me_expected:
+            return fail(f"Coach_me eval expected output missing phrase: {phrase}")
+    for phrase in coach_me_case["must_not_include"]:
+        if phrase in coach_me_expected:
+            return fail(f"Coach_me eval expected output contains forbidden phrase: {phrase}")
 
     external_write_required = [
         "External Write Action Boundary Gate",

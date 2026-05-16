@@ -87,6 +87,8 @@ practice profile -> task-specific workflow -> source/private facts -> review-rea
 
 如果用户已经说明任务，助手不应该列出全部工作流，而应该直接路由，最多追问三个必要问题，并输出清晰标注的草稿。
 
+对于宽泛、凌乱、策略性、依赖资料或客户场景的问题，使用 **Coach_me Guided Reasoning Mode**（`skills/insurance_copilot/references/coach-me.md` 和 `skills/insurance_copilot/templates/coach-me.md`）。Coach_me 是 **one workflow, not two skills**：先检查 **source discovery order**，再 ask exactly three most precise and relevant questions，提供 **answer now or continue questioning** 选择，并在 **automatically stop questioning when information is sufficient** 时停止追问。它维护 **Coach_me Working Document**，区分 **public institution knowledge**、**agent-private workspace** 与 **customer-specific materials**，把 **Q&A intake is raw source input**，最终给出 **Karpathy-style LLM wiki backfeed proposal**；必要时套用 **Source Grounding and Data Boundary Gate** / **Professional Review Gate**，并保持 **no automatic persistence**。
+
 不要要求代理人手动填写 profile 模板。模板是内部存储格式，不是用户表单。Agents provide messy real-world context; AI converts it into structured scenarios, profile updates, reusable examples, and eval intents. evals are internal quality fixtures; agents do not write JSON eval cases.
 
 ## 适用对象

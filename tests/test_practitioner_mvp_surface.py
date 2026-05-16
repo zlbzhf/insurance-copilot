@@ -467,6 +467,56 @@ def test_new_agent_coach_mode_is_first_class_service_pattern() -> None:
         assert "who to escalate to" in text
 
 
+def test_coach_me_guided_mode_is_single_runtime_workflow_not_split_skill() -> None:
+    skill = read("skills/insurance_copilot/SKILL.md")
+    reference = read("skills/insurance_copilot/references/coach-me.md")
+    template = read("skills/insurance_copilot/templates/coach-me.md")
+    quality = read("docs/quality-gates.md")
+    surface = read("docs/workflow-surface.md")
+    spec = read("docs/product-development-spec.md")
+    landscape = read("docs/reference-landscape.md")
+    readme = read("README.md")
+    zh_readme = read("README.zh-CN.md")
+    eval_readme = read("evals/README.md")
+
+    required_phrases = [
+        "Coach_me Guided Reasoning Mode",
+        "one workflow, not two skills",
+        "ask exactly three most precise and relevant questions",
+        "answer now or continue questioning",
+        "automatically stop questioning when information is sufficient",
+        "Coach_me Working Document",
+        "source discovery order",
+        "public institution knowledge",
+        "agent-private workspace",
+        "customer-specific materials",
+        "Q&A intake is raw source input",
+        "Karpathy-style LLM wiki backfeed proposal",
+        "no automatic persistence",
+        "Source Grounding and Data Boundary Gate",
+        "Professional Review Gate",
+    ]
+    for text in [skill, reference, template, quality, surface, spec, landscape, readme, zh_readme, eval_readme]:
+        for phrase in required_phrases:
+            assert phrase in text
+
+    assert "references/coach-me.md" in skill
+    assert "templates/coach-me.md" in skill
+    assert "Default trigger" in reference
+    assert "Question Round" in template
+    assert "Final Answer Document" in template
+
+    case = json.loads((ROOT / "evals/cases/coach-me-guided-document-grounded-answer.json").read_text(encoding="utf-8"))
+    expected = read(case["expected_output"])
+    assert case["id"] == "coach-me-guided-document-grounded-answer"
+    assert case["workflow"] == "coach-me"
+    assert case["escalation_expected"] is True
+    for phrase in case["must_include"]:
+        assert phrase in expected
+    for phrase in case["must_not_include"]:
+        assert phrase not in expected
+
+
 def test_empty_neutrality_gate_requires_action_plan() -> None:
     quality = read("docs/quality-gates.md")
     compliance = read("skills/insurance_copilot/references/compliance-starter.md")

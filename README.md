@@ -81,6 +81,8 @@ Start with practical jobs, not infrastructure:
 
 If the user already states a job, do **not** list every workflow. Route directly, ask at most three essential missing questions, and produce a clearly labeled draft.
 
+For broad, messy, strategic, document-dependent, or customer-situation questions, use **Coach_me Guided Reasoning Mode** (`skills/insurance_copilot/references/coach-me.md` and `skills/insurance_copilot/templates/coach-me.md`). Coach_me is **one workflow, not two skills**: check the **source discovery order** first, ask exactly three most precise and relevant questions, offer **answer now or continue questioning**, and **automatically stop questioning when information is sufficient**. It keeps a **Coach_me Working Document**, respects **public institution knowledge**, **agent-private workspace**, and **customer-specific materials**, treats **Q&A intake is raw source input**, ends with a **Karpathy-style LLM wiki backfeed proposal**, applies **Source Grounding and Data Boundary Gate** / **Professional Review Gate** where needed, and performs **no automatic persistence**.
+
 Never ask the agent to manually fill the profile template. The template is an internal storage format, not a user-facing form. Agents provide messy real-world context; AI converts it into structured scenarios, profile updates, reusable examples, and eval intents. evals are internal quality fixtures; agents do not write JSON eval cases.
 
 ## Who It Is For

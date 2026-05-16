@@ -18,7 +18,8 @@ All public examples must be synthetic or de-identified. Every customer-facing ou
 6. Ask only for missing facts needed for that workflow.
 7. Produce a review-ready draft with `[verify]` markers where source facts are incomplete.
 8. Name the human review owner before any customer-facing or external-use draft.
-9. Apply **Professional Review Gate** for customer-facing, regulated, external-use, or side-effect-adjacent outputs: name action class, review owner, source verification status, customer-facing approval status, side-effect status, mark customer copy as draft for licensed/compliance review and not approved to send, state no external action is authorized, and give the minimum safe next step.
+9. Use **Coach_me Guided Reasoning Mode** for broad, messy, strategic, document-dependent, or customer-situation questions. Coach_me is **one workflow, not two skills**: use the **source discovery order**, ask exactly three most precise and relevant questions, offer **answer now or continue questioning**, **automatically stop questioning when information is sufficient**, keep a **Coach_me Working Document**, treat **Q&A intake is raw source input**, respect **public institution knowledge**, **agent-private workspace**, and **customer-specific materials**, propose a **Karpathy-style LLM wiki backfeed proposal**, and perform **no automatic persistence**.
+10. Apply **Professional Review Gate** for customer-facing, regulated, external-use, or side-effect-adjacent outputs: name action class, review owner, source verification status, customer-facing approval status, side-effect status, mark customer copy as draft for licensed/compliance review and not approved to send, state no external action is authorized, and give the minimum safe next step.
 
 Agents provide messy real-world context; AI converts it into structured scenarios, draft responses, profile updates, reusable examples, and eval intents. evals are internal quality fixtures; agents do not write JSON eval cases.
 
@@ -87,6 +88,21 @@ Use Agency Playbook Builder in New Agent Default Mode. I am a new insurance agen
 
 ```text
 Use New Agent Coach Mode. I am not sure what this situation is. Explain what this situation is, what to do first, what not to do, what facts/documents to collect, what customer-safe words I can use, who to escalate to, and which workflow should handle the full draft.
+```
+
+## Workflow 2B: Coach_me Guided Reasoning Mode
+
+- **When to use:** The agent asks a broad, messy, strategic, document-dependent, or customer-situation question where a one-shot answer may miss material facts.
+- **Required inputs:** One natural-language question is enough to start. Use available sources before asking. Coach_me is **one workflow, not two skills**; do not split context-only and document-grounded variants.
+- **Source discovery order:** Current conversation, practice profile/defaults, active workflow references, **public institution knowledge**, official supplied sources, **agent-private workspace**, **customer-specific materials**, and Q&A intake.
+- **Question rule:** Ask exactly three most precise and relevant questions per round, then offer **answer now or continue questioning**. State that Coach_me will **automatically stop questioning when information is sufficient**.
+- **Output:** **Coach_me Working Document** and, when ready, a final answer document using `skills/insurance_copilot/templates/coach-me.md`. Treat **Q&A intake is raw source input** and include a **Karpathy-style LLM wiki backfeed proposal**.
+- **Review owner:** Licensed agent, supervisor, compliance reviewer, claims/underwriting specialist, private workspace owner, or pack maintainer as applicable.
+- **Forbidden actions:** Asking broad questionnaires, asking questions before reading available sources, persisting private or customer facts automatically, copying customer data into public packs, or bypassing **Source Grounding and Data Boundary Gate** / **Professional Review Gate** where required. **no automatic persistence**.
+- **Standard prompt:**
+
+```text
+Use Coach_me Guided Reasoning Mode. Start a Coach_me Working Document, check source discovery order first, then ask exactly three most precise and relevant questions. After the three questions, let me choose answer now or continue questioning. Automatically stop questioning when information is sufficient. Treat Q&A intake as raw source input, and end with a Karpathy-style LLM wiki backfeed proposal. No automatic persistence.
 ```
 
 ## Workflow 2: Daily Agent Workbench

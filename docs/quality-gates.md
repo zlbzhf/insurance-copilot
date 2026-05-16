@@ -91,6 +91,37 @@ Required phrases and fields:
 
 Reject changes that create live automation, omit read-only verification, copy private source content into traces/public artifacts, write output inside the private workspace, treat readiness as deployment approval, or blur private workspace content into public packs/examples/evals.
 
+## Coach_me Guided Reasoning Gate
+
+Document-grounded questioning patterns must become one insurance-specific guided reasoning workflow, not a split skill surface. The **Coach_me Guided Reasoning Mode** is the cross-workflow reasoning loop for broad, messy, strategic, document-dependent, or customer-situation questions. It turns follow-up Q&A into structured raw input, then produces a durable final answer and backfeed proposal.
+
+Required runtime surfaces:
+
+- `skills/insurance_copilot/SKILL.md` routes to `references/coach-me.md`.
+- `skills/insurance_copilot/references/coach-me.md` defines the method.
+- `skills/insurance_copilot/templates/coach-me.md` defines the working/final document.
+- `evals/cases/coach-me-guided-document-grounded-answer.json`, `evals/expected/coach-me-guided-document-grounded-answer.md`, `tests/test_practitioner_mvp_surface.py`, and `scripts/validate_repo.py` keep it executable.
+
+Required phrases and fields:
+
+- Coach_me Guided Reasoning Mode;
+- one workflow, not two skills;
+- ask exactly three most precise and relevant questions;
+- answer now or continue questioning;
+- automatically stop questioning when information is sufficient;
+- Coach_me Working Document;
+- source discovery order;
+- public institution knowledge;
+- agent-private workspace;
+- customer-specific materials;
+- Q&A intake is raw source input;
+- Karpathy-style LLM wiki backfeed proposal;
+- no automatic persistence;
+- Source Grounding and Data Boundary Gate;
+- Professional Review Gate.
+
+Reject changes that split Coach_me into separate context-only/document-grounded skills, ask broad questionnaires, ask more than three questions in a round, skip available-source review, fail to offer answer now or continue questioning, persist sensitive or customer facts without explicit destination approval, or copy private/customer data into public packs.
+
 ## Source Grounding and Data Boundary Gate
 
 Insurance RAG and policy-assistant patterns must become an insurance-specific runtime source gate, not a generic chatbot or cloud-app clone. The **Source Grounding and Data Boundary Gate** is the cross-workflow source/citation/data-boundary block for public insurer knowledge, private policy/customer material, connector-fed content, mixed source bundles, and public-pack contributions.
