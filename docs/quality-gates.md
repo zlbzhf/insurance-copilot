@@ -122,6 +122,9 @@ Required phrases and fields:
 - limitations become product states;
 - Backfeed Decision Packet;
 - ask exactly three most precise and relevant questions;
+- one question at a time;
+- Question 1/3 / Question 2/3 / Question 3/3;
+- Do not batch all three questions unless an offline checklist is requested;
 - answer now or continue questioning;
 - automatically stop questioning when information is sufficient;
 - Coach_me Working Document;
@@ -136,7 +139,7 @@ Required phrases and fields:
 - Source Grounding and Data Boundary Gate;
 - Professional Review Gate.
 
-Reject changes that split Coach_me into separate context-only/document-grounded skills, ask broad questionnaires, ask more than three questions in a round, skip available-source review, fail to use the **information sufficiency score**, fail to apply the **three-question decision algorithm**, fail to offer answer now or continue questioning, collapse boundary states into bare caveats, persist sensitive or customer facts without explicit destination approval, or copy private/customer data into public packs.
+Reject changes that split Coach_me into separate context-only/document-grounded skills, ask broad questionnaires, ask more than three questions in a round, batch all three questions in conversational/Telegram mode when an offline checklist was not requested, skip available-source review, fail to use the **information sufficiency score**, fail to apply the **three-question decision algorithm**, fail to offer answer now or continue questioning, collapse boundary states into bare caveats, persist sensitive or customer facts without explicit destination approval, or copy private/customer data into public packs.
 
 ## Source Grounding and Data Boundary Gate
 

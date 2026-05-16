@@ -45,17 +45,22 @@ Because this is document-grounded and may mix public/private sources, use **Sour
 
 ## Question Round
 
-Operating rule: **ask exactly three most precise and relevant questions**.
+Operating rule: **ask exactly three most precise and relevant questions**. In Telegram/chat mode, ask **one question at a time**: send `Question 1/3`, wait for the answer, then `Question 2/3`, then `Question 3/3`. **Do not batch all three questions** unless the agent asks for an **offline checklist**.
 
-1. Question: Which exact policy/rider section or benefit is being considered, and do you have the current contract or only a summary?
-   - Why this matters: contract/rider language outranks summaries and marketing material.
-   - Good answer format: “contract section name/page + source status” or “summary only, contract missing.”
-2. Question: What is the current claim or service timeline: event date, submission date, carrier reply date, and any appeal/review deadline?
-   - Why this matters: deadlines and status determine the safe next step and escalation path.
-   - Good answer format: four dates/status bullets; use `[待核实]` if unknown.
-3. Question: May I use a private workspace or customer-specific materials for this answer, and if yes which de-identified files/pages are in scope?
-   - Why this matters: private facts must stay out of public packs and must be cited only within the private/review packet.
-   - Good answer format: workspace path or pasted redacted excerpts; otherwise “no private workspace.”
+### Question 1/3
+Question: Which exact policy/rider section or benefit is being considered, and do you have the current contract or only a summary?
+- Why this matters: contract/rider language outranks summaries and marketing material.
+- Good answer format: “contract section name/page + source status” or “summary only, contract missing.”
+
+### Question 2/3
+Question: What is the current claim or service timeline: event date, submission date, carrier reply date, and any appeal/review deadline?
+- Why this matters: deadlines and status determine the safe next step and escalation path.
+- Good answer format: four dates/status bullets; use `[待核实]` if unknown.
+
+### Question 3/3
+Question: May I use a private workspace or customer-specific materials for this answer, and if yes which de-identified files/pages are in scope?
+- Why this matters: private facts must stay out of public packs and must be cited only within the private/review packet.
+- Good answer format: workspace path or pasted redacted excerpts; otherwise “no private workspace.”
 
 ## Choice Point
 

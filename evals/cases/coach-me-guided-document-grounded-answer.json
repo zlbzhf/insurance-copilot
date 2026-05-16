@@ -20,7 +20,13 @@
     "Professional Review Gate",
     "draft for licensed/compliance review",
     "not approved to send",
-    "no external action is authorized"
+    "no external action is authorized",
+    "one question at a time",
+    "Question 1/3",
+    "Question 2/3",
+    "Question 3/3",
+    "Do not batch all three questions",
+    "offline checklist"
   ],
   "must_not_include": [
     "guaranteed payout approved",

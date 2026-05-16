@@ -1,6 +1,6 @@
 # Coach_me Working Document
 
-> Use this template for **Coach_me Guided Reasoning Mode** and **Coach_me v2 Productized Workflow**. Coach_me is **one workflow, not two skills**. It moves **from questioning feature to agent workbench center**. It asks **ask exactly three most precise and relevant questions** per round, using the **three-question decision algorithm**: **one direction question, one risk question, one action/source question** under **Direction / Risk / Source / Action**. It offers **answer now or continue questioning** and will **automatically stop questioning when information is sufficient**. Q&A intake is raw source input, but there is **no automatic persistence**. **no automatic persistence is a product boundary, not a dead end**. This is a **manual-first practitioner workflow**.
+> Use this template for **Coach_me Guided Reasoning Mode** and **Coach_me v2 Productized Workflow**. Coach_me is **one workflow, not two skills**. It moves **from questioning feature to agent workbench center**. It asks **ask exactly three most precise and relevant questions** per round, using the **three-question decision algorithm**: **one direction question, one risk question, one action/source question** under **Direction / Risk / Source / Action**. In Telegram/chat mode, ask **one question at a time** (`Question 1/3`, wait, `Question 2/3`, wait, `Question 3/3`, wait). Do not batch all three questions unless an **offline checklist** is requested. It offers **answer now or continue questioning** and will **automatically stop questioning when information is sufficient**. Q&A intake is raw source input, but there is **no automatic persistence**. **no automatic persistence is a product boundary, not a dead end**. This is a **manual-first practitioner workflow**.
 
 ## Why Coach_me Activated
 
@@ -73,21 +73,29 @@ Use the **capability ladder** so **limitations become product states**.
 
 ## Question Round — Direction / Risk / Source / Action
 
-Ask exactly three most precise and relevant questions.
+Ask exactly three most precise and relevant questions. In Telegram/chat mode, ask **one question at a time**; send only the active question and wait for the answer. Do not batch all three questions unless the agent asks for an **offline checklist**.
 
-1. Direction question:
-   - Why this matters:
-   - Good answer format:
-2. Risk question:
-   - Why this matters:
-   - Good answer format:
-3. Action/source question:
-   - Why this matters:
-   - Good answer format:
+### Question 1/3 — Direction question
+- Question:
+- Why this matters:
+- Good answer format:
+- User answer:
+
+### Question 2/3 — Risk question
+- Question:
+- Why this matters:
+- Good answer format:
+- User answer:
+
+### Question 3/3 — Action/source question
+- Question:
+- Why this matters:
+- Good answer format:
+- User answer:
 
 ## Choice Point
 
-- Answer now or continue questioning:
+- After `Question 3/3`, offer **answer now or continue questioning**:
 - Message to agent: 信息充分时我会自动停止追问并给出最终文档；你也可以随时说“先给结论/停止追问/按现有信息回答”。
 
 ---

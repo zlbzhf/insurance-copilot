@@ -361,6 +361,16 @@ def main() -> int:
     for phrase in ["已有资料", "先展示摘要并请代理人确认", "不得默认机构", "不得默认角色", "主动询问机构", "主动询问角色"]:
         if phrase not in text or phrase not in (REF_DIR / "cold-start-interview.md").read_text():
             return fail(f"Chinese onboarding/profile behavior missing from runtime docs: {phrase}")
+    for phrase in [
+        "Skill-start / no-task entry",
+        "do **not** reply with a bare greeting",
+        "practice-profile summary",
+        "[待核实] profile status",
+        "3–5 next useful jobs",
+        "not the full catalog",
+    ]:
+        if phrase not in text:
+            return fail(f"SKILL.md missing skill-start/no-task entry behavior: {phrase}")
     profile_template = (TEMPLATE_DIR / "practice-profile.md").read_text()
     for section in ["## 1. 资料状态", "## 2. 执业身份确认", "## 3. 业务边界与产品范围", "## 4. 客户与服务场景", "## 5. 合规与升级规则", "## 6. 输出偏好与下一步"]:
         if section not in profile_template:
@@ -758,6 +768,23 @@ def main() -> int:
         "manual-first practitioner workflow",
     ]
     coach_me_required = coach_me_base_required + coach_me_v2_required
+    coach_me_conversational_required = [
+        "one question at a time",
+        "Question 1/3",
+        "Question 2/3",
+        "Question 3/3",
+        "Do not batch all three questions",
+        "offline checklist",
+    ]
+    coach_me_conversational_docs = {
+        "SKILL.md": text,
+        "coach-me reference": (REF_DIR / "coach-me.md").read_text(),
+        "coach-me template": (TEMPLATE_DIR / "coach-me.md").read_text(),
+    }
+    for label, doc in coach_me_conversational_docs.items():
+        for phrase in coach_me_conversational_required:
+            if phrase not in doc:
+                return fail(f"{label} missing Coach_me conversational one-at-a-time phrase: {phrase}")
     coach_me_docs = {
         "SKILL.md": text,
         "coach-me reference": (REF_DIR / "coach-me.md").read_text(),
@@ -785,7 +812,7 @@ def main() -> int:
     coach_me_expected = (ROOT / coach_me_case["expected_output"]).read_text()
     if coach_me_case.get("id") != "coach-me-guided-document-grounded-answer" or coach_me_case.get("workflow") != "coach-me" or not coach_me_case.get("escalation_expected"):
         return fail("Coach_me eval case has wrong id/workflow/escalation flag")
-    for phrase in coach_me_base_required + coach_me_case["must_include"]:
+    for phrase in coach_me_base_required + coach_me_conversational_required + coach_me_case["must_include"]:
         if phrase not in coach_me_expected:
             return fail(f"Coach_me eval expected output missing phrase: {phrase}")
     for phrase in coach_me_case["must_not_include"]:
@@ -799,7 +826,7 @@ def main() -> int:
     coach_me_v2_expected = (ROOT / coach_me_v2_case["expected_output"]).read_text()
     if coach_me_v2_case.get("id") != "coach-me-v2-productized-workflow" or coach_me_v2_case.get("workflow") != "coach-me-v2" or not coach_me_v2_case.get("escalation_expected"):
         return fail("Coach_me v2 eval case has wrong id/workflow/escalation flag")
-    for phrase in coach_me_required + coach_me_v2_case["must_include"]:
+    for phrase in coach_me_required + coach_me_conversational_required + coach_me_v2_case["must_include"]:
         if phrase not in coach_me_v2_expected:
             return fail(f"Coach_me v2 eval expected output missing phrase: {phrase}")
     for phrase in coach_me_v2_case["must_not_include"]:

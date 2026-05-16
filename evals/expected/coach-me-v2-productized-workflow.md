@@ -4,7 +4,7 @@
 
 This expected output demonstrates **Coach_me v2 Productized Workflow** moving **from questioning feature to agent workbench center**. The assistant should not merely say that it cannot persist, send, or decide. It should show how **limitations become product states** inside a **manual-first practitioner workflow**.
 
-Base runtime contract: **Coach_me Guided Reasoning Mode** remains **one workflow, not two skills**. It must use **source discovery order**, **ask exactly three most precise and relevant questions**, offer **answer now or continue questioning**, and later include a **Karpathy-style LLM wiki backfeed proposal**.
+Base runtime contract: **Coach_me Guided Reasoning Mode** remains **one workflow, not two skills**. It must use **source discovery order**, **ask exactly three most precise and relevant questions**, ask **one question at a time** in Telegram/chat (`Question 1/3`, wait, `Question 2/3`, wait, `Question 3/3`, wait), **Do not batch all three questions** unless the agent asks for an **offline checklist**, offer **answer now or continue questioning**, and later include a **Karpathy-style LLM wiki backfeed proposal**.
 
 ## Coach_me Working Document
 
@@ -57,19 +57,22 @@ This makes **no automatic persistence is a product boundary, not a dead end**.
 
 ## Question Round — Direction / Risk / Source / Action
 
-Apply the **three-question decision algorithm**: **one direction question, one risk question, one action/source question**.
+Apply the **three-question decision algorithm**: **one direction question, one risk question, one action/source question**. In Telegram/chat mode, ask **one question at a time** and **Do not batch all three questions** unless the agent asks for an **offline checklist**.
 
-1. Direction question: 你现在最需要我帮你形成哪一种输出：内部判断备忘、客户安全话术、理赔/复核材料清单，还是主管/合规复核包？
-   - Why this matters: determines whether the next output is default safe draft mode or review-ready packet.
-   - Good answer format: “先要内部判断 + 客户话术” or another selected output.
+### Question 1/3 — Direction question
+你现在最需要我帮你形成哪一种输出：内部判断备忘、客户安全话术、理赔/复核材料清单，还是主管/合规复核包？
+- Why this matters: determines whether the next output is default safe draft mode or review-ready packet.
+- Good answer format: “先要内部判断 + 客户话术” or another selected output.
 
-2. Risk question: 这个客户问题是否涉及理赔时效、拒赔/争议、保单失效/复效、替换退保、健康告知、投诉或老年/弱势客户？
-   - Why this matters: determines action class, escalation path, and Professional Review Gate level.
-   - Good answer format: list yes/no for each risk, with dates if known.
+### Question 2/3 — Risk question
+这个客户问题是否涉及理赔时效、拒赔/争议、保单失效/复效、替换退保、健康告知、投诉或老年/弱势客户？
+- Why this matters: determines action class, escalation path, and Professional Review Gate level.
+- Good answer format: list yes/no for each risk, with dates if known.
 
-3. Action/source question: 你现在手里有哪些来源：保单合同/批注/附加险、理赔通知、保险公司系统截图、客户聊天记录、主管意见，或 agent-private workspace 路径？
-   - Why this matters: determines Source Ledger and what remains `[待核实]`.
-   - Good answer format: provide redacted file names, source dates, or say not available.
+### Question 3/3 — Action/source question
+你现在手里有哪些来源：保单合同/批注/附加险、理赔通知、保险公司系统截图、客户聊天记录、主管意见，或 agent-private workspace 路径？
+- Why this matters: determines Source Ledger and what remains `[待核实]`.
+- Good answer format: provide redacted file names, source dates, or say not available.
 
 ## Choice Point
 

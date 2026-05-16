@@ -79,9 +79,11 @@ If sources are mixed, citation-sensitive, public/private mixed, connector-fed, o
 - Start a **Coach_me Working Document** with known facts, source ledger, missing facts, risk flags, provisional direction, information sufficiency score, capability ladder state, and the first question round.
 - If the case is customer-facing, regulated, external-use, or side-effect-adjacent, plan a **Professional Review Gate** from the start.
 
-### 2. Ask one round of exactly three questions
+### 2. Ask one conversational round of exactly three questions
 
 Ask exactly **three** focused questions: **ask exactly three most precise and relevant questions** for the current uncertainty. Each question should include why it matters and what a good answer looks like. Do not ask broad questionnaires. Do not dump the workflow catalog.
+
+In Telegram/chat mode, deliver the round **one question at a time**: send `Question 1/3` and wait for the agent's answer, then `Question 2/3`, then `Question 3/3`. Do not batch all three questions unless the agent explicitly asks for an offline checklist.
 
 Use the **three-question decision algorithm**:
 
@@ -149,13 +151,14 @@ Use `templates/coach-me.md` for both in-progress and final outputs. The minimum 
 ## Missing Facts / [待核实]
 
 ## Question Round — Direction / Risk / Source / Action
-1. Direction question:
+Runtime note: in Telegram/chat mode, ask **one question at a time** and do not batch all three questions unless the agent asks for an offline checklist.
+### Question 1/3 — Direction question
    - Why this matters:
    - Good answer format:
-2. Risk question:
+### Question 2/3 — Risk question
    - Why this matters:
    - Good answer format:
-3. Action/source question:
+### Question 3/3 — Action/source question
    - Why this matters:
    - Good answer format:
 
@@ -175,6 +178,7 @@ Use `templates/coach-me.md` for both in-progress and final outputs. The minimum 
 
 - Coach_me is **one workflow, not two skills**. Do not create separate user-facing or internal skills for context-only versus document-grounded questions; use one source-aware workflow.
 - Do not ask more than three questions in a round.
+- In conversational / Telegram mode, ask **one question at a time** (`Question 1/3`, wait, `Question 2/3`, wait, `Question 3/3`, wait), and do not batch all three questions unless an offline checklist is requested.
 - Do not ask questions for facts that can be read from supplied sources or existing context.
 - Do not let the **three-question decision algorithm** become a rigid form when a question is irrelevant; still ask exactly three, but choose the three most useful Direction / Risk / Source / Action questions.
 - Do not answer as if public summaries, marketing materials, private notes, or Q&A intake override current policy contracts, official carrier status, compliance rules, or legal/regulatory boundaries.

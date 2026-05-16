@@ -124,6 +124,26 @@ def test_skill_contains_task_first_routing_rules() -> None:
     assert "customer-facing drafts remain drafts" in text
 
 
+def test_skill_start_no_task_entry_shows_profile_status_and_work_entries() -> None:
+    skill = read("skills/insurance_copilot/SKILL.md")
+
+    for phrase in [
+        "Skill-start / no-task entry",
+        "do **not** reply with a bare greeting",
+        "practice-profile summary",
+        "[待核实] profile status",
+        "3–5 next useful jobs",
+        "not the full catalog",
+        "Daily Agent Workbench",
+        "Client Needs Intake",
+        "customer-message draft",
+        "Policy Review Assistant",
+        "Compliance Copy Checker",
+        "Product Fit Reviewer",
+    ]:
+        assert phrase in skill
+
+
 def test_practical_playbook_example_exists_and_avoids_deployment_language() -> None:
     text = read("examples/practical-mvp/agent-first-session.md")
     assert "# Practical MVP Example: First Agent Session" in text
@@ -506,12 +526,26 @@ def test_coach_me_guided_mode_is_single_runtime_workflow_not_split_skill() -> No
     assert "Question Round" in template
     assert "Final Answer Document" in template
 
+    conversational_phrases = [
+        "one question at a time",
+        "Question 1/3",
+        "Question 2/3",
+        "Question 3/3",
+        "Do not batch all three questions",
+        "offline checklist",
+    ]
+    for text_surface in [skill, reference, template]:
+        for phrase in conversational_phrases:
+            assert phrase in text_surface
+
     case = json.loads((ROOT / "evals/cases/coach-me-guided-document-grounded-answer.json").read_text(encoding="utf-8"))
     expected = read(case["expected_output"])
     assert case["id"] == "coach-me-guided-document-grounded-answer"
     assert case["workflow"] == "coach-me"
     assert case["escalation_expected"] is True
     for phrase in case["must_include"]:
+        assert phrase in expected
+    for phrase in conversational_phrases:
         assert phrase in expected
     for phrase in case["must_not_include"]:
         assert phrase not in expected
@@ -556,6 +590,8 @@ def test_coach_me_v2_productization_turns_limits_into_workflow_capabilities() ->
     assert case["workflow"] == "coach-me-v2"
     assert case["escalation_expected"] is True
     for phrase in v2_phrases + case["must_include"]:
+        assert phrase in expected
+    for phrase in ["one question at a time", "Question 1/3", "Question 2/3", "Question 3/3", "Do not batch all three questions", "offline checklist"]:
         assert phrase in expected
     for phrase in case["must_not_include"]:
         assert phrase not in expected
