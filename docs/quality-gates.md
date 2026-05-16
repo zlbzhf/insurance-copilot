@@ -121,8 +121,13 @@ Required phrases and fields:
 - one direction question, one risk question, one action/source question;
 - limitations become product states;
 - Backfeed Decision Packet;
+- product recommendation intent routes Coach_me before Client Needs Intake;
+- interactive conversational gateway;
+- sequential question protocol;
 - ask exactly three most precise and relevant questions;
 - one question at a time;
+- send only the active question in the current turn;
+- recommended default answer;
 - Question 1/3 / Question 2/3 / Question 3/3;
 - Do not batch all three questions unless an offline checklist is requested;
 - answer now or continue questioning;
@@ -139,7 +144,7 @@ Required phrases and fields:
 - Source Grounding and Data Boundary Gate;
 - Professional Review Gate.
 
-Reject changes that split Coach_me into separate context-only/document-grounded skills, ask broad questionnaires, ask more than three questions in a round, batch all three questions in conversational/Telegram mode when an offline checklist was not requested, skip available-source review, fail to use the **information sufficiency score**, fail to apply the **three-question decision algorithm**, fail to offer answer now or continue questioning, collapse boundary states into bare caveats, persist sensitive or customer facts without explicit destination approval, or copy private/customer data into public packs.
+Reject changes that split Coach_me into separate context-only/document-grounded skills, route product recommendation intent straight to Client Needs Intake or product advice before Coach_me clarification, ask broad questionnaires, ask more than three questions in a round, batch all three questions in an **interactive conversational gateway** when an offline checklist was not requested, fail to use the **sequential question protocol**, fail to **send only the active question** in the **current turn**, omit a **recommended default answer** for unsure/new-agent questions, skip available-source review, fail to use the **information sufficiency score**, fail to apply the **three-question decision algorithm**, fail to offer answer now or continue questioning, collapse boundary states into bare caveats, persist sensitive or customer facts without explicit destination approval, or copy private/customer data into public packs.
 
 ## Source Grounding and Data Boundary Gate
 

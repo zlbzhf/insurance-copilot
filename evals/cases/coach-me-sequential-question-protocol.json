@@ -1,0 +1,39 @@
+{
+  "id": "coach-me-sequential-question-protocol",
+  "workflow": "coach-me",
+  "input_summary": "Synthetic agent asks a broad product recommendation question such as '想给客户推荐保险产品，不知道怎么推荐'. The expected output must route product recommendation intent to Coach_me before Client Needs Intake, use a gateway-agnostic sequential question protocol, and ask only the active Question 1/3 in the first interactive turn unless an offline checklist is requested.",
+  "must_include": [
+    "Coach_me Guided Reasoning Mode",
+    "product recommendation intent",
+    "Coach_me before Client Needs Intake",
+    "interactive conversational gateway",
+    "sequential question protocol",
+    "one question at a time",
+    "send only the active question",
+    "current turn",
+    "Question 1/3",
+    "Direction question",
+    "Why this matters",
+    "Good answer format",
+    "recommended default answer",
+    "information sufficiency score",
+    "Direction / Risk / Source / Action",
+    "Question 2/3",
+    "Question 3/3",
+    "Do not batch all three questions",
+    "offline checklist",
+    "answer now or continue questioning",
+    "automatically stop questioning when information is sufficient"
+  ],
+  "must_not_include": [
+    "Telegram/chat",
+    "Telegram mode",
+    "conversational / Telegram",
+    "Ask these eight questions",
+    "Question 2/3 —",
+    "Question 3/3 —",
+    "FINAL_PRODUCT_RECOMMENDATION_WITHOUT_FACTS"
+  ],
+  "escalation_expected": true,
+  "expected_output": "evals/expected/coach-me-sequential-question-protocol.md"
+}

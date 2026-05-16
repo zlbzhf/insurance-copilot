@@ -29,7 +29,7 @@ Use Agency Playbook Builder in New Agent Default Mode. 默认使用中文 / defa
 
 Expected behavior:
 
-- defaults to Chinese for Chinese Telegram use, while keeping necessary regulated English terms;
+- defaults to Chinese for Chinese interactive conversational gateway use, while keeping necessary regulated English terms;
 - asks no more than three onboarding questions before producing a provisional profile;
 - actively confirms institution / 机构 and role / 角色; never assumes them from examples, memory, or seed packs;
 - every question accepts `I don't know yet` / `不确定` or conservative defaults;

@@ -11,7 +11,7 @@ This example shows the intended first usable Insurance Copilot loop. It is synth
 
 Expected assistant behavior:
 
-- default to Chinese for Chinese Telegram use and explain `[待核实]` / `[verify]` before relying on uncertain facts;
+- default to Chinese for Chinese interactive conversational gateway use and explain `[待核实]` / `[verify]` before relying on uncertain facts;
 - actively confirm institution and role; never assume them from examples, memory, or an AIA seed pack;
 - ask at most three onboarding questions before producing a provisional profile;
 - if existing profile information is supplied, summarize existing facts first, ask the agent to confirm, mark gaps `[待核实]`, and then route to Daily Agent Workbench rather than restarting onboarding;

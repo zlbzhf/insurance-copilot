@@ -375,20 +375,40 @@ def main() -> int:
     for section in ["## 1. 资料状态", "## 2. 执业身份确认", "## 3. 业务边界与产品范围", "## 4. 客户与服务场景", "## 5. 合规与升级规则", "## 6. 输出偏好与下一步"]:
         if section not in profile_template:
             return fail(f"Chinese profile template missing section: {section}")
-    for rel in [
+    chinese_interactive_docs = [
         "README.zh-CN.md",
         "docs/quickstart.md",
         "examples/practical-mvp/agent-first-session.md",
         "examples/practical-mvp/agent-friendly-onboarding.md",
-        "evals/expected/chinese-telegram-onboarding.md",
-    ]:
+        "evals/expected/chinese-interactive-onboarding.md",
+    ]
+    for rel in chinese_interactive_docs:
         doc_text = (ROOT / rel).read_text()
         for phrase in ["[待核实]", "机构", "角色"]:
             if phrase not in doc_text:
-                return fail(f"Chinese onboarding docs/examples missing {phrase}: {rel}")
-    chinese_eval = ROOT / "evals" / "cases" / "chinese-telegram-onboarding.json"
+                return fail(f"Chinese interactive onboarding docs/examples missing {phrase}: {rel}")
+        if "Chinese Telegram use" in doc_text or "中文 Telegram" in doc_text:
+            return fail(f"Chinese interactive onboarding doc contains stale platform-specific wording: {rel}")
+    cold_start = (REF_DIR / "cold-start-interview.md").read_text()
+    for phrase in ["Chinese Interactive", "中文交互", "interactive conversational gateway", "not limited to any single platform"]:
+        if phrase not in cold_start:
+            return fail(f"cold-start interview missing gateway-agnostic Chinese onboarding phrase: {phrase}")
+    for forbidden in ["中文 Telegram", "Chinese Telegram use"]:
+        if forbidden in cold_start:
+            return fail(f"cold-start interview contains stale platform-specific onboarding wording: {forbidden}")
+    chinese_eval = ROOT / "evals" / "cases" / "chinese-interactive-onboarding.json"
     if not chinese_eval.exists():
-        return fail("missing Chinese Telegram onboarding eval case")
+        return fail("missing Chinese interactive onboarding eval case")
+    chinese_eval_data = json.loads(chinese_eval.read_text())
+    chinese_expected = (ROOT / chinese_eval_data["expected_output"]).read_text()
+    if chinese_eval_data.get("id") != "chinese-interactive-onboarding" or "interactive" not in chinese_eval_data.get("workflow", ""):
+        return fail("Chinese interactive onboarding eval case has stale id/workflow")
+    for phrase in chinese_eval_data["must_include"]:
+        if phrase not in chinese_expected:
+            return fail(f"Chinese interactive onboarding expected output missing phrase: {phrase}")
+    for phrase in chinese_eval_data["must_not_include"]:
+        if phrase in chinese_expected:
+            return fail(f"Chinese interactive onboarding expected output contains forbidden phrase: {phrase}")
     hermes_design = (ROOT / "docs" / "hermes-first-design.md").read_text()
     for phrase in [
         "Unified Project Identity and Telegram Runtime Limit",
@@ -769,12 +789,16 @@ def main() -> int:
     ]
     coach_me_required = coach_me_base_required + coach_me_v2_required
     coach_me_conversational_required = [
+        "interactive conversational gateway",
+        "sequential question protocol",
         "one question at a time",
+        "send only the active question",
         "Question 1/3",
         "Question 2/3",
         "Question 3/3",
         "Do not batch all three questions",
         "offline checklist",
+        "recommended default answer",
     ]
     coach_me_conversational_docs = {
         "SKILL.md": text,
@@ -801,9 +825,52 @@ def main() -> int:
         for phrase in coach_me_required:
             if phrase not in doc:
                 return fail(f"{label} missing Coach_me runtime phrase: {phrase}")
+    coach_me_gateway_required = [
+        "product recommendation intent",
+        "Coach_me before Client Needs Intake",
+        "current turn",
+    ]
+    coach_me_gateway_docs = {
+        "SKILL.md": text,
+        "coach-me reference": (REF_DIR / "coach-me.md").read_text(),
+        "coach-me template": (TEMPLATE_DIR / "coach-me.md").read_text(),
+        "quality gates": quality_gates,
+        "workflow surface": (ROOT / "docs" / "workflow-surface.md").read_text(),
+        "product development SPEC": product_spec,
+        "README": (ROOT / "README.md").read_text(),
+        "Chinese README": (ROOT / "README.zh-CN.md").read_text(),
+        "evals README": (ROOT / "evals" / "README.md").read_text(),
+    }
+    for label, doc in coach_me_gateway_docs.items():
+        for phrase in coach_me_gateway_required:
+            if phrase not in doc:
+                return fail(f"{label} missing Coach_me gateway-agnostic phrase: {phrase}")
+        for forbidden in ["Telegram/chat", "Telegram mode", "conversational / Telegram"]:
+            if forbidden in doc:
+                return fail(f"{label} contains platform-specific Coach_me sequential wording: {forbidden}")
+    intake_ref = (REF_DIR / "client-needs-intake.md").read_text()
+    if "Coach_me before Client Needs Intake" not in intake_ref:
+        return fail("client needs intake missing product-recommendation Coach_me routing rule")
+    if "recommend insurance" not in intake_ref.lower() and "推荐保险" not in intake_ref:
+        return fail("client needs intake missing product recommendation trigger wording")
+
     for rel in ["references/coach-me.md", "templates/coach-me.md"]:
         if rel not in text:
             return fail(f"SKILL.md missing Coach_me runtime path: {rel}")
+
+    coach_me_seq_case_path = ROOT / "evals" / "cases" / "coach-me-sequential-question-protocol.json"
+    if not coach_me_seq_case_path.exists():
+        return fail("missing Coach_me sequential question protocol eval case")
+    coach_me_seq_case = json.loads(coach_me_seq_case_path.read_text())
+    coach_me_seq_expected = (ROOT / coach_me_seq_case["expected_output"]).read_text()
+    if coach_me_seq_case.get("id") != "coach-me-sequential-question-protocol" or coach_me_seq_case.get("workflow") != "coach-me" or not coach_me_seq_case.get("escalation_expected"):
+        return fail("Coach_me sequential protocol eval case has wrong id/workflow/escalation flag")
+    for phrase in coach_me_base_required + coach_me_conversational_required + coach_me_gateway_required + coach_me_seq_case["must_include"]:
+        if phrase not in coach_me_seq_expected:
+            return fail(f"Coach_me sequential protocol eval expected output missing phrase: {phrase}")
+    for phrase in coach_me_seq_case["must_not_include"]:
+        if phrase in coach_me_seq_expected:
+            return fail(f"Coach_me sequential protocol eval expected output contains forbidden phrase: {phrase}")
 
     coach_me_case_path = ROOT / "evals" / "cases" / "coach-me-guided-document-grounded-answer.json"
     if not coach_me_case_path.exists():

@@ -2,6 +2,12 @@
 
 Use this workflow to turn messy notes, chat transcripts, call notes, or a conversation into a structured insurance fact-find. It is the default first substantive workflow before needs analysis or product review.
 
+## Routing Rule — Coach_me Before Client Needs Intake for Recommendation Reasoning
+
+When the agent shows **product recommendation intent** — for example “recommend insurance,” “recommend a product,” “how should I recommend,” “怎么推荐保险,” or “推荐保险产品” — and is asking how to think through the recommendation, route **Coach_me before Client Needs Intake**. Coach_me should first clarify direction, risk, and action/source using the gateway-agnostic sequential question protocol; Client Needs Intake then collects the structured fact-find once the direction is clear.
+
+Use Client Needs Intake directly only when the user is specifically asking to collect/organize facts and not asking for recommendation reasoning.
+
 ## Safety Rule
 
 Do not recommend products from incomplete facts. If material facts are missing, produce questions first and label product discussion as premature.

@@ -1,7 +1,8 @@
-# Chinese Telegram Onboarding Expected Output
+# Chinese Interactive Onboarding Expected Output
 
 ## 默认使用中文
-- 如果用户在 Telegram 中使用中文，Insurance Copilot 默认使用中文输出；必要保险专业术语可保留英文以避免歧义。
+- Chinese interactive conversational gateway: 如果用户使用中文或未指定其他输出语言，Insurance Copilot 默认使用中文输出；必要保险专业术语可保留英文以避免歧义。
+- This onboarding behavior is not limited to any single platform; it applies across chat UIs, messaging gateways, CLI conversations, and future Hermes gateways.
 
 ## 首次身份确认
 - 主动询问机构：例如友邦/AIA、平安、中国人寿、多家机构或“不确定”。

@@ -11,8 +11,8 @@
 ### 新增
 
 - 新增 Coach_me v2 Productized Workflow：`docs/plans/2026-05-16-coach-me-v2-productization.md`、升级后的 runtime reference/template、新 eval case/expected output、pytest 覆盖和 validator 覆盖，用于保护 capability ladder、information sufficiency score、Direction/Risk/Source/Action 追问轮、Backfeed Decision Packet，以及 manual-first 产品状态边界。
-- 新增 Coach_me Guided Reasoning Mode，作为 Insurance Copilot 内的单一工作流（`references/coach-me.md`、`templates/coach-me.md`、eval、tests、validator 和 docs），用于宽泛、凌乱、策略性、依赖资料或客户场景的问题；它包含 source discovery order、每轮三个精准问题、answer-now/continue 选择、信息充分自动停止、可沉淀的 working/final documents、Q&A-as-raw-input，以及 Karpathy-style LLM wiki backfeed proposals，并保持 no automatic persistence。
-- 新增中文 Telegram onboarding 文档、示例、eval 和 validator 覆盖，保护 `/skill insurance_copilot`、机构/角色确认、`[待核实]` 解释，以及已有资料先摘要确认的行为。
+- 新增 Coach_me Guided Reasoning Mode，作为 Insurance Copilot 内的单一工作流（`references/coach-me.md`、`templates/coach-me.md`、eval、tests、validator 和 docs），用于宽泛、凌乱、策略性、依赖资料、客户场景或 product recommendation intent 的问题；它包含 source discovery order、每轮三个精准问题、gateway-agnostic sequential question protocol、answer-now/continue 选择、信息充分自动停止、可沉淀的 working/final documents、Q&A-as-raw-input，以及 Karpathy-style LLM wiki backfeed proposals，并保持 no automatic persistence。
+- 新增中文 interactive onboarding 文档、示例、eval 和 validator 覆盖，保护 `/skill insurance_copilot`、机构/角色确认、`[待核实]` 解释，以及已有资料先摘要确认的行为。
 - 新增 `docs/product-development-spec.md`，作为持久的产品开发事实来源和可用状态定义。
 - 新增 `docs/reference-landscape.md`，用于把外部/参考项目映射到 project significance、implementation form、non-goals 和 priority。
 - 新增 Professional Review Gate 工作流 reference、template、eval、example 和 validator 覆盖，使客户可见、受监管、外部使用或接近副作用的输出必须标明 action class、review owner、source verification status、customer-facing approval status、side-effect status、draft for licensed/compliance review、not approved to send、no external action is authorized 和 minimum safe next step。
@@ -24,6 +24,8 @@
 
 ### 变更
 
+- 将 Coach_me 一问一答规则从平台限定表述泛化为适用于任何 interactive conversational gateway：使用 sequential question protocol、send only the active question in the current turn，并在适合时给出 recommended default answer。
+- 将 product recommendation intent 路由到 Coach_me before Client Needs Intake，先澄清 direction、risk、action/source，再进入结构化 fact-find。
 - 将 Coach_me 从追问机制升级为代理人工作流中心，把限制转化为产品状态：default safe draft mode、review-ready packet、confirmed persistence packet 和 external action handoff packet。
 - 将仓库/产品 slug、可安装 Hermes 技能身份、Telegram 命令和私有工作区根路径统一到 Telegram 安全的 `insurance_copilot` 命名。
 - 明确 Insurance Copilot 目前已经可作为 manual-first Hermes skill beta 使用，但还不是可直接用于 live automation、客户发送、CRM 写入、投保提交、理赔提交、保单变更、报价引擎或最终监管建议的生产系统。
@@ -32,7 +34,7 @@
 
 ### 修复
 
-- 修复已安装 `insurance_copilot` skill 与源码仓库之间的运行时漂移：将 skill 启动/无明确任务时先展示资料状态与工作入口、以及 Telegram Coach_me 一问一答追问轮，写入源码、eval、tests 和 validator。
+- 修复已安装 `insurance_copilot` skill 与源码仓库之间的运行时漂移：将 skill 启动/无明确任务时先展示资料状态与工作入口、以及 gateway-agnostic Coach_me 一问一答追问轮，写入源码、eval、tests 和 validator。
 - 修复本地开发者直接运行裸 `pytest` 时可能无法导入仓库辅助模块的问题；通过 repo-root `pythonpath` 配置，让 `pytest` 与 `python3 -m pytest` 行为一致。
 - 修复旧的连字符技能安装指引可能导致 Telegram 命令/菜单漂移的问题；记录 Hermes 内部连字符 key 与 Telegram 下划线命令的映射，以及发布前清理旧 runtime 安装目录的步骤。
 - 修复会让通用产品层看起来绑定 AIA 的过拟合表述和默认值。

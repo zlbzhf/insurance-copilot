@@ -11,8 +11,8 @@ This project is currently pre-1.0 and milestone-based. The changelog follows a h
 ### Added
 
 - Added Coach_me v2 Productized Workflow: `docs/plans/2026-05-16-coach-me-v2-productization.md`, upgraded runtime reference/template, new eval case/expected output, pytest coverage, and validator coverage for the capability ladder, information sufficiency score, Direction/Risk/Source/Action question round, Backfeed Decision Packet, and manual-first product-state boundaries.
-- Added Coach_me Guided Reasoning Mode as a single Insurance Copilot workflow (`references/coach-me.md`, `templates/coach-me.md`, eval, tests, validator, and docs) for broad, messy, strategic, document-dependent, or customer-situation questions; it uses source discovery order, exactly three targeted questions, answer-now/continue choice, automatic stop rules, durable working/final documents, Q&A-as-raw-input, and Karpathy-style LLM wiki backfeed proposals with no automatic persistence.
-- Added Chinese Telegram onboarding docs/examples/eval coverage and validator checks for `/skill insurance_copilot`, institution/role confirmation, `[待核实]` explanation, and existing-profile summary behavior.
+- Added Coach_me Guided Reasoning Mode as a single Insurance Copilot workflow (`references/coach-me.md`, `templates/coach-me.md`, eval, tests, validator, and docs) for broad, messy, strategic, document-dependent, customer-situation, or product recommendation intent questions; it uses source discovery order, exactly three targeted questions, gateway-agnostic sequential question protocol, answer-now/continue choice, automatic stop rules, durable working/final documents, Q&A-as-raw-input, and Karpathy-style LLM wiki backfeed proposals with no automatic persistence.
+- Added Chinese interactive onboarding docs/examples/eval coverage and validator checks for `/skill insurance_copilot`, institution/role confirmation, `[待核实]` explanation, and existing-profile summary behavior.
 - Added `docs/product-development-spec.md` as the durable product-development source of truth and usable-state definition.
 - Added `docs/reference-landscape.md` to map external/reference projects to project significance, implementation form, non-goals, and priority.
 - Added the Professional Review Gate workflow reference, template, eval, example, and validator coverage so customer-facing, regulated, external-use, and side-effect-adjacent outputs classify action class, review owner, source verification status, customer-facing approval status, side-effect status, draft for licensed/compliance review, not approved to send, no external action is authorized, and minimum safe next step.
@@ -24,6 +24,8 @@ This project is currently pre-1.0 and milestone-based. The changelog follows a h
 
 ### Changed
 
+- Generalized Coach_me one-question-at-a-time behavior from platform-specific chat wording to any interactive conversational gateway: use the sequential question protocol, send only the active question in the current turn, and include a recommended default answer when useful.
+- Routed product recommendation intent through Coach_me before Client Needs Intake so recommendation reasoning clarifies direction, risk, and action/source before structured fact-find collection.
 - Upgraded Coach_me from a follow-up-question mechanism into an agent workbench center that converts limitations into product states: default safe draft mode, review-ready packet, confirmed persistence packet, and external action handoff packet.
 - Unified the repository/product slug, installable Hermes skill identity, Telegram command, and private workspace root on the underscore-safe `insurance_copilot` naming convention.
 - Clarified that Insurance Copilot is usable now as a manual-first Hermes skill beta, but not production-complete for live automation, customer sending, CRM writes, application submission, claims filing, policy changes, quote generation, or final regulated advice.
@@ -32,7 +34,7 @@ This project is currently pre-1.0 and milestone-based. The changelog follows a h
 
 ### Fixed
 
-- Fixed runtime drift between the installed `insurance_copilot` skill and the source repository by encoding skill-start/no-task profile-status entry behavior and Telegram Coach_me one-question-at-a-time rounds in source, evals, tests, and validators.
+- Fixed runtime drift between the installed `insurance_copilot` skill and the source repository by encoding skill-start/no-task profile-status entry behavior and gateway-agnostic Coach_me one-question-at-a-time rounds in source, evals, tests, and validators.
 - Fixed local developer test invocation so bare `pytest` can import repository helper modules consistently by adding repo-root `pythonpath` configuration.
 - Fixed stale hyphenated skill-install guidance that could cause Telegram command/menu drift; documented the Hermes internal hyphen-key versus Telegram underscore-command mapping and release cleanup steps.
 - Fixed AIA-overfit wording and defaults that could make the generic product layer appear AIA-specific.

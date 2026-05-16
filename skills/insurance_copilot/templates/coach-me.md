@@ -1,10 +1,12 @@
 # Coach_me Working Document
 
-> Use this template for **Coach_me Guided Reasoning Mode** and **Coach_me v2 Productized Workflow**. Coach_me is **one workflow, not two skills**. It moves **from questioning feature to agent workbench center**. It asks **ask exactly three most precise and relevant questions** per round, using the **three-question decision algorithm**: **one direction question, one risk question, one action/source question** under **Direction / Risk / Source / Action**. In Telegram/chat mode, ask **one question at a time** (`Question 1/3`, wait, `Question 2/3`, wait, `Question 3/3`, wait). Do not batch all three questions unless an **offline checklist** is requested. It offers **answer now or continue questioning** and will **automatically stop questioning when information is sufficient**. Q&A intake is raw source input, but there is **no automatic persistence**. **no automatic persistence is a product boundary, not a dead end**. This is a **manual-first practitioner workflow**.
+> Use this template for **Coach_me Guided Reasoning Mode** and **Coach_me v2 Productized Workflow**. Coach_me is **one workflow, not two skills**. It moves **from questioning feature to agent workbench center** and applies to broad, messy, customer-situation, document-dependent, or **product recommendation intent** questions. For recommend/judge/handle-product questions, route **Coach_me before Client Needs Intake**. It asks **ask exactly three most precise and relevant questions** per round, using the **three-question decision algorithm**: **one direction question, one risk question, one action/source question** under **Direction / Risk / Source / Action**. In any **interactive conversational gateway**, use the **sequential question protocol**: ask **one question at a time**, **send only the active question** in the **current turn** (`Question 1/3`, wait, `Question 2/3`, wait, `Question 3/3`, wait), include why it matters, good answer format, and a **recommended default answer** when useful. Do not batch all three questions unless an **offline checklist** is requested. It offers **answer now or continue questioning** and will **automatically stop questioning when information is sufficient**. Q&A intake is raw source input, but there is **no automatic persistence**. **no automatic persistence is a product boundary, not a dead end**. This is a **manual-first practitioner workflow**.
 
 ## Why Coach_me Activated
 
 - Trigger:
+- product recommendation intent status:
+- Route decision: Coach_me before Client Needs Intake / direct named workflow / direct answer:
 - Immediate insurance workflow classification:
 - Why a one-shot answer is unsafe or incomplete:
 - Review-sensitive status:
@@ -73,24 +75,27 @@ Use the **capability ladder** so **limitations become product states**.
 
 ## Question Round — Direction / Risk / Source / Action
 
-Ask exactly three most precise and relevant questions. In Telegram/chat mode, ask **one question at a time**; send only the active question and wait for the answer. Do not batch all three questions unless the agent asks for an **offline checklist**.
+Ask exactly three most precise and relevant questions. In any **interactive conversational gateway**, use the **sequential question protocol**: ask **one question at a time**, **send only the active question** in the **current turn**, and wait for the answer before sending the next question. Include why it matters, good answer format, and a **recommended default answer** when useful. Do not batch all three questions unless the agent asks for an **offline checklist**.
 
 ### Question 1/3 — Direction question
 - Question:
 - Why this matters:
 - Good answer format:
+- recommended default answer:
 - User answer:
 
 ### Question 2/3 — Risk question
 - Question:
 - Why this matters:
 - Good answer format:
+- recommended default answer:
 - User answer:
 
 ### Question 3/3 — Action/source question
 - Question:
 - Why this matters:
 - Good answer format:
+- recommended default answer:
 - User answer:
 
 ## Choice Point

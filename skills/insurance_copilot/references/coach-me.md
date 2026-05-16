@@ -1,10 +1,10 @@
 # Coach_me Guided Reasoning Mode
 
-Use this workflow when an insurance agent asks a broad, messy, strategic, document-dependent, or customer-situation question where a direct one-shot answer would likely miss important facts. Coach_me is the guided reasoning function inside Insurance Copilot. It is **one workflow, not two skills**: whether the answer comes from conversation context, public institution knowledge, private workspace notes, customer-specific materials, or uploaded documents, the process is the same.
+Use this workflow when an insurance agent asks a broad, messy, strategic, document-dependent, **product recommendation intent**, or customer-situation question where a direct one-shot answer would likely miss important facts. Coach_me is the guided reasoning function inside Insurance Copilot. It is **one workflow, not two skills**: whether the answer comes from conversation context, public institution knowledge, private workspace notes, customer-specific materials, uploaded documents, or an interactive conversational gateway, the process is the same.
 
 ## Default trigger
 
-Default trigger: activate **Coach_me Guided Reasoning Mode** when the user asks for guidance, asks “what should I do / how should I judge this / help me think through this,” provides an incomplete customer situation, asks a question whose answer depends on facts not yet stated, or asks for a precise answer grounded in multiple insurance sources.
+Default trigger: activate **Coach_me Guided Reasoning Mode** when the user asks for guidance, asks “what should I do / how should I judge this / help me think through this / how should I recommend,” provides an incomplete customer situation, asks a question whose answer depends on facts not yet stated, asks for a precise answer grounded in multiple insurance sources, or shows product recommendation intent such as “recommend insurance,” “recommend a product,” “怎么推荐保险,” or “推荐保险产品.” Route **Coach_me before Client Needs Intake** when the agent needs recommendation reasoning before a fact-find form; after the first direction/risk/action-source questions clarify the work item, Client Needs Intake can collect structured facts if needed.
 
 Do not activate Coach_me for simple lookups, direct formatting requests, explicit named workflows with enough facts, or purely administrative repository-development tasks. If a named workflow already has sufficient facts, route there directly.
 
@@ -81,9 +81,9 @@ If sources are mixed, citation-sensitive, public/private mixed, connector-fed, o
 
 ### 2. Ask one conversational round of exactly three questions
 
-Ask exactly **three** focused questions: **ask exactly three most precise and relevant questions** for the current uncertainty. Each question should include why it matters and what a good answer looks like. Do not ask broad questionnaires. Do not dump the workflow catalog.
+Ask exactly **three** focused questions: **ask exactly three most precise and relevant questions** for the current uncertainty. Each question should include why it matters, what a good answer looks like, and a **recommended default answer** when the agent is new, unsure, or says `I don't know yet`. Do not ask broad questionnaires. Do not dump the workflow catalog.
 
-In Telegram/chat mode, deliver the round **one question at a time**: send `Question 1/3` and wait for the agent's answer, then `Question 2/3`, then `Question 3/3`. Do not batch all three questions unless the agent explicitly asks for an offline checklist.
+In any **interactive conversational gateway**, use the **sequential question protocol**: deliver the round **one question at a time**, **send only the active question** in the **current turn**, and wait for the agent's answer before sending the next question. Start with `Question 1/3`; only after the answer send `Question 2/3`; only after that answer send `Question 3/3`. Do not batch all three questions unless the agent explicitly asks for an offline checklist.
 
 Use the **three-question decision algorithm**:
 
@@ -151,16 +151,19 @@ Use `templates/coach-me.md` for both in-progress and final outputs. The minimum 
 ## Missing Facts / [待核实]
 
 ## Question Round — Direction / Risk / Source / Action
-Runtime note: in Telegram/chat mode, ask **one question at a time** and do not batch all three questions unless the agent asks for an offline checklist.
+Runtime note: in any **interactive conversational gateway**, use the **sequential question protocol**. Ask **one question at a time**, **send only the active question** in the **current turn**, and do not batch all three questions unless the agent asks for an offline checklist.
 ### Question 1/3 — Direction question
    - Why this matters:
    - Good answer format:
+   - recommended default answer:
 ### Question 2/3 — Risk question
    - Why this matters:
    - Good answer format:
+   - recommended default answer:
 ### Question 3/3 — Action/source question
    - Why this matters:
    - Good answer format:
+   - recommended default answer:
 
 ## Choice Point
 - answer now or continue questioning:
@@ -178,7 +181,7 @@ Runtime note: in Telegram/chat mode, ask **one question at a time** and do not b
 
 - Coach_me is **one workflow, not two skills**. Do not create separate user-facing or internal skills for context-only versus document-grounded questions; use one source-aware workflow.
 - Do not ask more than three questions in a round.
-- In conversational / Telegram mode, ask **one question at a time** (`Question 1/3`, wait, `Question 2/3`, wait, `Question 3/3`, wait), and do not batch all three questions unless an offline checklist is requested.
+- In any **interactive conversational gateway**, use the **sequential question protocol**: ask **one question at a time**, **send only the active question** in the **current turn**, and do not batch all three questions unless an offline checklist is requested.
 - Do not ask questions for facts that can be read from supplied sources or existing context.
 - Do not let the **three-question decision algorithm** become a rigid form when a question is irrelevant; still ask exactly three, but choose the three most useful Direction / Risk / Source / Action questions.
 - Do not answer as if public summaries, marketing materials, private notes, or Q&A intake override current policy contracts, official carrier status, compliance rules, or legal/regulatory boundaries.

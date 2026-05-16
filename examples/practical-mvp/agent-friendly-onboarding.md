@@ -10,7 +10,7 @@ Use Agency Playbook Builder in New Agent Default Mode. I am a new insurance agen
 
 Expected assistant behavior:
 
-- 默认使用中文 for Chinese Telegram use;
+- 默认使用中文 for Chinese interactive conversational gateway use;
 - reassure the agent that `I don't know yet` is acceptable;
 - ask at most three simple onboarding questions;
 - every question allows `I don't know yet` or conservative defaults;
@@ -62,7 +62,7 @@ customer says: I already have insurance, why should I look again?
 
 Expected assistant behavior:
 
-- 默认使用中文 for Chinese Telegram use;
+- 默认使用中文 for Chinese interactive conversational gateway use;
 - do not require the agent to write a scenario template;
 - detect this as a reusable objection / policy-review invitation scenario;
 - create an AI-generated scenario card;

@@ -43,24 +43,27 @@ Because this is document-grounded and may mix public/private sources, use **Sour
 - Claim timeline, carrier correspondence, and deadline.
 - The exact customer objective: claim support, complaint, policy review, renewal/lapse issue, or needs review.
 
-## Question Round
+## Question Round — Direction / Risk / Source / Action
 
-Operating rule: **ask exactly three most precise and relevant questions**. In Telegram/chat mode, ask **one question at a time**: send `Question 1/3`, wait for the answer, then `Question 2/3`, then `Question 3/3`. **Do not batch all three questions** unless the agent asks for an **offline checklist**.
+Operating rule: **ask exactly three most precise and relevant questions**. In any **interactive conversational gateway**, use the **sequential question protocol**: ask **one question at a time**, **send only the active question** in the **current turn** (`Question 1/3`, wait for the answer, then `Question 2/3`, then `Question 3/3`), include a **recommended default answer** when useful, and **Do not batch all three questions** unless the agent asks for an **offline checklist**.
 
 ### Question 1/3
 Question: Which exact policy/rider section or benefit is being considered, and do you have the current contract or only a summary?
 - Why this matters: contract/rider language outranks summaries and marketing material.
 - Good answer format: “contract section name/page + source status” or “summary only, contract missing.”
+- recommended default answer: 如果暂时没有合同原文，先回答“summary only, contract missing”，并把合同/批注/附加险列为 `[待核实]`。
 
 ### Question 2/3
 Question: What is the current claim or service timeline: event date, submission date, carrier reply date, and any appeal/review deadline?
 - Why this matters: deadlines and status determine the safe next step and escalation path.
 - Good answer format: four dates/status bullets; use `[待核实]` if unknown.
+- recommended default answer: 如果日期不全，先列出已知日期并把缺失节点标为 `[待核实]`，不要推断时效。
 
 ### Question 3/3
 Question: May I use a private workspace or customer-specific materials for this answer, and if yes which de-identified files/pages are in scope?
 - Why this matters: private facts must stay out of public packs and must be cited only within the private/review packet.
 - Good answer format: workspace path or pasted redacted excerpts; otherwise “no private workspace.”
+- recommended default answer: 如果未确认授权，先回答“no private workspace”，只使用当前对话中的脱敏事实。
 
 ## Choice Point
 

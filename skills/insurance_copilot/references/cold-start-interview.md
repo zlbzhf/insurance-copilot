@@ -8,9 +8,9 @@ Never ask the agent to manually fill the profile template. The template is an in
 
 New or busy agents should be able to say `I don't know yet` and still get a useful conservative setup. Use conservative defaults when the agent is unsure.
 
-## 中文 Telegram 首次入口与资料确认
+## Chinese Interactive First Entry and Profile Confirmation / 中文交互首次入口与资料确认
 
-- 默认使用中文 unless the agent explicitly asks for another language. Use bilingual terms only when a regulated English term avoids ambiguity.
+- These defaults apply across any interactive conversational gateway and are not limited to any single platform. 默认使用中文 unless the agent explicitly asks for another language. Use bilingual terms only when a regulated English term avoids ambiguity.
 - `[待核实]` is the Chinese-facing equivalent of `[verify]`. 含义：该事实目前没有足够来源支撑，必须向客户、保单、保险公司系统、主管、合规、核保、理赔或正式文件复核后才能用于客户发送或结论。
 - If no usable profile exists, ask at most three onboarding questions and then create a provisional profile. The first-run questions must 主动询问机构 and 主动询问角色; 不得默认机构 and 不得默认角色 from examples, memories, seed packs, or inferred context.
 - If 已有资料, an uploaded profile, or a private workspace summary exists, do not restart onboarding. 先展示摘要并请代理人确认, mark uncertain fields `[待核实]`, ask only the missing deltas, and then route into the daily work entry.

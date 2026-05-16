@@ -299,7 +299,7 @@ def test_hermes_core_runtime_limit_and_telegram_menu_cap_are_documented() -> Non
 
 
 def test_chinese_onboarding_profile_and_verify_marker_are_runtime_effective() -> None:
-    """Cold-start/profile runtime docs should match the Chinese Telegram product surface."""
+    """Cold-start/profile runtime docs should match the Chinese interactive gateway product surface."""
     skill = read("skills/insurance_copilot/SKILL.md")
     cold_start = read("skills/insurance_copilot/references/cold-start-interview.md")
     profile_template = read("skills/insurance_copilot/templates/practice-profile.md")
@@ -311,12 +311,17 @@ def test_chinese_onboarding_profile_and_verify_marker_are_runtime_effective() ->
         assert "含义：" in text or "表示：" in text
 
     for text in [skill, cold_start]:
+        assert "Chinese Interactive" in text or "中文交互" in text
+        assert "interactive conversational gateway" in text
+        assert "not limited to any single platform" in text or "不限定" in text
         assert "已有资料" in text
         assert "先展示摘要并请代理人确认" in text
         assert "不得默认机构" in text
         assert "不得默认角色" in text
         assert "主动询问机构" in text
         assert "主动询问角色" in text
+    assert "中文 Telegram" not in cold_start
+    assert "Chinese Telegram use" not in cold_start
 
     for section in [
         "## 1. 资料状态",
@@ -338,21 +343,25 @@ def test_chinese_onboarding_profile_and_verify_marker_are_runtime_effective() ->
         assert phrase in review_gate
 
 
-def test_chinese_telegram_first_session_docs_examples_and_eval_are_protected() -> None:
+def test_chinese_interactive_first_session_docs_examples_and_eval_are_protected() -> None:
     docs = [
         read("README.zh-CN.md"),
         read("docs/quickstart.md"),
         read("examples/practical-mvp/agent-first-session.md"),
         read("examples/practical-mvp/agent-friendly-onboarding.md"),
-        read("evals/expected/chinese-telegram-onboarding.md"),
+        read("evals/expected/chinese-interactive-onboarding.md"),
     ]
     for text in docs:
         assert "[待核实]" in text
         assert "默认中文" in text or "默认使用中文" in text or "default to Chinese" in text
+        assert "interactive conversational gateway" in text or "交互" in text
+        assert "Chinese Telegram use" not in text
+        assert "中文 Telegram" not in text
     for phrase in ["主动询问机构", "主动询问角色", "不得默认机构", "不得默认角色", "已有资料", "先展示摘要并请代理人确认"]:
-        assert phrase in read("evals/expected/chinese-telegram-onboarding.md")
-    case = read("evals/cases/chinese-telegram-onboarding.json")
-    assert "chinese-telegram-onboarding" in case
+        assert phrase in read("evals/expected/chinese-interactive-onboarding.md")
+    case = read("evals/cases/chinese-interactive-onboarding.json")
+    assert "chinese-interactive-onboarding" in case
+    assert "Chinese interactive conversational gateway" in case
     assert "Daily Agent Workbench" in case
 
 
@@ -527,12 +536,16 @@ def test_coach_me_guided_mode_is_single_runtime_workflow_not_split_skill() -> No
     assert "Final Answer Document" in template
 
     conversational_phrases = [
+        "interactive conversational gateway",
+        "sequential question protocol",
         "one question at a time",
+        "send only the active question",
         "Question 1/3",
         "Question 2/3",
         "Question 3/3",
         "Do not batch all three questions",
         "offline checklist",
+        "recommended default answer",
     ]
     for text_surface in [skill, reference, template]:
         for phrase in conversational_phrases:
@@ -546,6 +559,50 @@ def test_coach_me_guided_mode_is_single_runtime_workflow_not_split_skill() -> No
     for phrase in case["must_include"]:
         assert phrase in expected
     for phrase in conversational_phrases:
+        assert phrase in expected
+    for phrase in case["must_not_include"]:
+        assert phrase not in expected
+
+
+def test_coach_me_sequential_protocol_is_gateway_agnostic_and_product_recommendation_first() -> None:
+    skill = read("skills/insurance_copilot/SKILL.md")
+    reference = read("skills/insurance_copilot/references/coach-me.md")
+    template = read("skills/insurance_copilot/templates/coach-me.md")
+    intake = read("skills/insurance_copilot/references/client-needs-intake.md")
+    quality = read("docs/quality-gates.md")
+    surface = read("docs/workflow-surface.md")
+    spec = read("docs/product-development-spec.md")
+    readme = read("README.md")
+    zh_readme = read("README.zh-CN.md")
+    eval_readme = read("evals/README.md")
+
+    gateway_agnostic_phrases = [
+        "interactive conversational gateway",
+        "sequential question protocol",
+        "send only the active question",
+        "current turn",
+        "recommended default answer",
+        "product recommendation intent",
+        "Coach_me before Client Needs Intake",
+    ]
+    for text in [skill, reference, template, quality, surface, spec, readme, zh_readme, eval_readme]:
+        for phrase in gateway_agnostic_phrases:
+            assert phrase in text
+
+    for text in [skill, reference, template, quality, surface, spec, readme, zh_readme, eval_readme]:
+        assert "Telegram/chat" not in text
+        assert "Telegram mode" not in text
+        assert "conversational / Telegram" not in text
+
+    for text in [skill, reference, intake]:
+        assert "recommend insurance" in text.lower() or "推荐保险" in text
+        assert "Coach_me before Client Needs Intake" in text
+
+    case = json.loads((ROOT / "evals/cases/coach-me-sequential-question-protocol.json").read_text(encoding="utf-8"))
+    expected = read(case["expected_output"])
+    assert case["id"] == "coach-me-sequential-question-protocol"
+    assert case["workflow"] == "coach-me"
+    for phrase in case["must_include"]:
         assert phrase in expected
     for phrase in case["must_not_include"]:
         assert phrase not in expected
@@ -591,7 +648,18 @@ def test_coach_me_v2_productization_turns_limits_into_workflow_capabilities() ->
     assert case["escalation_expected"] is True
     for phrase in v2_phrases + case["must_include"]:
         assert phrase in expected
-    for phrase in ["one question at a time", "Question 1/3", "Question 2/3", "Question 3/3", "Do not batch all three questions", "offline checklist"]:
+    for phrase in [
+        "interactive conversational gateway",
+        "sequential question protocol",
+        "one question at a time",
+        "send only the active question",
+        "Question 1/3",
+        "Question 2/3",
+        "Question 3/3",
+        "Do not batch all three questions",
+        "offline checklist",
+        "recommended default answer",
+    ]:
         assert phrase in expected
     for phrase in case["must_not_include"]:
         assert phrase not in expected
