@@ -32,6 +32,7 @@
 
 ### 修复
 
+- 修复本地开发者直接运行裸 `pytest` 时可能无法导入仓库辅助模块的问题；通过 repo-root `pythonpath` 配置，让 `pytest` 与 `python3 -m pytest` 行为一致。
 - 修复旧的连字符技能安装指引可能导致 Telegram 命令/菜单漂移的问题；记录 Hermes 内部连字符 key 与 Telegram 下划线命令的映射，以及发布前清理旧 runtime 安装目录的步骤。
 - 修复会让通用产品层看起来绑定 AIA 的过拟合表述和默认值。
 - 修复验证覆盖，将通用 Institution Knowledge Organizer 行为与 AIA seed-pack 行为分开检查。

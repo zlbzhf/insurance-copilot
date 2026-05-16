@@ -32,6 +32,7 @@ This project is currently pre-1.0 and milestone-based. The changelog follows a h
 
 ### Fixed
 
+- Fixed local developer test invocation so bare `pytest` can import repository helper modules consistently by adding repo-root `pythonpath` configuration.
 - Fixed stale hyphenated skill-install guidance that could cause Telegram command/menu drift; documented the Hermes internal hyphen-key versus Telegram underscore-command mapping and release cleanup steps.
 - Fixed AIA-overfit wording and defaults that could make the generic product layer appear AIA-specific.
 - Fixed validation coverage so generic Institution Knowledge Organizer behavior and AIA seed-pack behavior are checked separately.
