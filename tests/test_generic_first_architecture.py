@@ -17,9 +17,9 @@ def read(rel: str) -> str:
 def test_institution_knowledge_organizer_is_generic_first_in_runtime_surfaces() -> None:
     """Layer-1 workflow docs must define the organizer generically, with AIA only as a seed example."""
     runtime_docs = {
-        "SKILL.md": "skills/insurance-copilot/SKILL.md",
-        "institution reference": "skills/insurance-copilot/references/institution-knowledge-organizer.md",
-        "institution template": "skills/insurance-copilot/templates/institution-knowledge-organizer.md",
+        "SKILL.md": "skills/insurance_copilot/SKILL.md",
+        "institution reference": "skills/insurance_copilot/references/institution-knowledge-organizer.md",
+        "institution template": "skills/insurance_copilot/templates/institution-knowledge-organizer.md",
         "README": "README.md",
         "README zh": "README.zh-CN.md",
         "workflow surface": "docs/workflow-surface.md",
@@ -72,8 +72,8 @@ def test_generic_templates_do_not_default_to_aia() -> None:
         "contributions/templates/contribution.yaml",
         "contributions/templates/proposed-product-page.md",
         "intake/templates/intake.yaml",
-        "skills/insurance-copilot/templates/practice-profile.md",
-        "skills/insurance-copilot/references/cold-start-interview.md",
+        "skills/insurance_copilot/templates/practice-profile.md",
+        "skills/insurance_copilot/references/cold-start-interview.md",
     ]
 
     forbidden = [
@@ -90,7 +90,7 @@ def test_generic_templates_do_not_default_to_aia() -> None:
     assert "institution: <institution-pack-id>" in read("contributions/templates/source-record.yaml")
     assert "institution: <institution-pack-id>" in read("contributions/templates/contribution.yaml")
     assert "institution: <institution-pack-id>" in read("intake/templates/intake.yaml")
-    assert "Institution/public pack preference" in read("skills/insurance-copilot/templates/practice-profile.md")
+    assert "Institution/public pack preference" in read("skills/insurance_copilot/templates/practice-profile.md")
 
 
 def test_generic_public_pack_eval_exists_separate_from_aia_seed_eval() -> None:

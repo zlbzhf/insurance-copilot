@@ -8,7 +8,7 @@ Read these files first in a fresh session:
 
 1. `AGENTS.md` — project rules and non-negotiables.
 2. `README.md` — user-facing install/use docs.
-3. `skills/insurance-copilot/SKILL.md` — canonical Hermes skill entry point.
+3. `skills/insurance_copilot/SKILL.md` — canonical Hermes skill entry point.
 4. `docs/product-development-spec.md` — product-development source of truth and usable-state definition.
 5. `docs/reference-landscape.md` — external/reference-project borrow/avoid mapping.
 6. `docs/architecture.md` — three-layer knowledge architecture.
@@ -33,7 +33,7 @@ python3 scripts/validate_repo.py
 Then read the relevant workflow reference under:
 
 ```text
-skills/insurance-copilot/references/
+skills/insurance_copilot/references/
 ```
 
 For institution-pack work, orient like an LLM wiki and standards-controlled ingestion project:
@@ -62,7 +62,7 @@ Do not infer project state from an old conversation summary. If chat context and
 ## Compression-Safe Development Rules
 
 - Keep project intent in committed docs, not only in chat.
-- Every structural decision should be reflected in `AGENTS.md`, `README.md`, `docs/`, or `skills/insurance-copilot/SKILL.md`.
+- Every structural decision should be reflected in `AGENTS.md`, `README.md`, `docs/`, or `skills/insurance_copilot/SKILL.md`.
 - Product direction belongs in `docs/product-development-spec.md` and `ROADMAP.md`; external inspiration and competitor/reference analysis belong in `docs/reference-landscape.md`.
 - Every new workflow should have at least one reference file, one template or example if practical, and validator coverage if it affects structure.
 - Every new institution pack should include `PACK.md`, `SCHEMA.md`, `index.md`, `log.md`, and validation coverage.
@@ -74,7 +74,7 @@ Do not infer project state from an old conversation summary. If chat context and
 Insurance Copilot is a Hermes-first skill and layered insurance knowledge repository for licensed insurance professionals:
 
 ```text
-skills/insurance-copilot/SKILL.md
+skills/insurance_copilot/SKILL.md
 standards/
 schemas/
 prompts/

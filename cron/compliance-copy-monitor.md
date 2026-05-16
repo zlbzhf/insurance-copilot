@@ -5,7 +5,7 @@ Use Hermes cron to review a folder of draft ads, posts, scripts, emails, or rene
 ## Recommended Prompt
 
 ```text
-Load the insurance-copilot skill. Review markdown/text files under <path> using references/compliance-check.md. Output only risk findings, exact risky phrases, safer replacement language, and escalation requirements. Do not publish, send, edit live production files, or mark content approved.
+Load the insurance_copilot skill. Review markdown/text files under <path> using references/compliance-check.md. Output only risk findings, exact risky phrases, safer replacement language, and escalation requirements. Do not publish, send, edit live production files, or mark content approved.
 ```
 
 ## Safety

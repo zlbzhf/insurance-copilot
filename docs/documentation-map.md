@@ -8,9 +8,9 @@ Important: not every document is end-user reading. Final insurance-agent users s
 
 A principle is **runtime-effective** only when it appears in at least one of these places:
 
-1. `skills/insurance-copilot/SKILL.md` — loaded into Hermes as the canonical runtime skill.
-2. `skills/insurance-copilot/references/*.md` — loaded for the matching workflow before drafting.
-3. `skills/insurance-copilot/templates/*.md` — shapes generated output.
+1. `skills/insurance_copilot/SKILL.md` — loaded into Hermes as the canonical runtime skill.
+2. `skills/insurance_copilot/references/*.md` — loaded for the matching workflow before drafting.
+3. `skills/insurance_copilot/templates/*.md` — shapes generated output.
 4. `evals/cases/*.json` and `evals/expected/*.md` — regression fixtures.
 5. `scripts/validate_repo.py` or `tests/*.py` — executable gates that fail when the constraint disappears.
 
@@ -45,7 +45,7 @@ Primary reader: Hermes at use time.
 
 Files:
 
-- `skills/insurance-copilot/SKILL.md`
+- `skills/insurance_copilot/SKILL.md`
 
 Purpose:
 
@@ -62,7 +62,7 @@ Primary reader: Hermes when a specific workflow is active.
 
 Files:
 
-- `skills/insurance-copilot/references/*.md`
+- `skills/insurance_copilot/references/*.md`
 
 Purpose:
 
@@ -79,7 +79,7 @@ Primary reader: Hermes and maintainers.
 
 Files:
 
-- `skills/insurance-copilot/templates/*.md`
+- `skills/insurance_copilot/templates/*.md`
 
 Purpose:
 
@@ -174,10 +174,10 @@ Files:
 - `docs/script-only-cron-wrapper.md`
 - `docs/private-workspace-readiness.md`
 - `docs/private-dry-run-harness.md`
-- `skills/insurance-copilot/references/private-workspace-trace-readiness.md`
-- `skills/insurance-copilot/templates/private-workspace-audit-trace.md`
-- `skills/insurance-copilot/references/external-write-action-boundary.md`
-- `skills/insurance-copilot/templates/external-write-action-boundary.md`
+- `skills/insurance_copilot/references/private-workspace-trace-readiness.md`
+- `skills/insurance_copilot/templates/private-workspace-audit-trace.md`
+- `skills/insurance_copilot/references/external-write-action-boundary.md`
+- `skills/insurance_copilot/templates/external-write-action-boundary.md`
 
 Purpose:
 

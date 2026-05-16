@@ -106,7 +106,7 @@ scripts/private_dry_run.py
 Required CLI:
 
 ```bash
-python3 scripts/private_dry_run.py   --workspace examples/local-connectors/synthetic-agent-workspace   --as-of 2026-05-14   --out /tmp/insurance-copilot-dry-run
+python3 scripts/private_dry_run.py   --workspace examples/local-connectors/synthetic-agent-workspace   --as-of 2026-05-14   --out /tmp/insurance_copilot-dry-run
 ```
 
 Optional flags:

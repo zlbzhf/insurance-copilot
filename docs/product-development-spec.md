@@ -6,7 +6,7 @@ Scope: `insurance-copilot` as a Hermes-first insurance-agent workflow assistant
 
 ## Executive Answer
 
-The project is **usable now as a manual-first Hermes skill beta** for licensed insurance professionals. A practitioner can install the full skill directory, load `insurance-copilot`, and use it for practice-profile setup, daily workbench planning, client intake, policy/coverage review, customer-message drafting, compliance copy checking, replacement/lapse/claim triage, referral asks, Chinese talk tracks, and public institution knowledge organization.
+The project is **usable now as a manual-first Hermes skill beta** for licensed insurance professionals. A practitioner can install the full skill directory, load `insurance_copilot`, and use it for practice-profile setup, daily workbench planning, client intake, policy/coverage review, customer-message drafting, compliance copy checking, replacement/lapse/claim triage, referral asks, Chinese talk tracks, and public institution knowledge organization.
 
 It is **not production-complete** for live automation, customer sending, CRM writes, application submission, claims filing, policy changes, quote generation, or final regulated advice. Those remain out of scope unless explicitly approved with action-safety, privacy, audit, and licensed/compliance review gates.
 
@@ -59,14 +59,14 @@ The product is a standalone Hermes skill repository, not a web application.
 Primary runtime artifact:
 
 ```text
-skills/insurance-copilot/SKILL.md
+skills/insurance_copilot/SKILL.md
 ```
 
 Runtime support files:
 
 ```text
-skills/insurance-copilot/references/*.md
-skills/insurance-copilot/templates/*.md
+skills/insurance_copilot/references/*.md
+skills/insurance_copilot/templates/*.md
 evals/cases/*.json
 evals/expected/*.md
 scripts/validate_repo.py
@@ -89,7 +89,7 @@ AGENTS.md
 
 ### Layer 1 — Public general workflow skill
 
-Path: `skills/insurance-copilot/`
+Path: `skills/insurance_copilot/`
 
 Role:
 
@@ -134,17 +134,17 @@ This SPEC is a product-development source of truth, but it is not enough by itse
 
 If a product rule changes assistant behavior, the change must be reflected in at least one runtime surface and one executable gate:
 
-1. `skills/insurance-copilot/SKILL.md` for umbrella behavior.
-2. `skills/insurance-copilot/references/*.md` for workflow behavior.
-3. `skills/insurance-copilot/templates/*.md` for output shape.
+1. `skills/insurance_copilot/SKILL.md` for umbrella behavior.
+2. `skills/insurance_copilot/references/*.md` for workflow behavior.
+3. `skills/insurance_copilot/templates/*.md` for output shape.
 4. `evals/cases/*.json` and `evals/expected/*.md` for behavior regression coverage.
 5. `scripts/validate_repo.py` or `tests/*.py` for deterministic enforcement.
 
 docs/ alone is not runtime-effective.
 
-Current cross-workflow runtime gate: **Professional Review Gate**. It translates professional workflow/profile/review-gate discipline into the insurance-agent surface through `skills/insurance-copilot/SKILL.md`, `references/professional-review-gate.md`, `templates/professional-review-gate.md`, evals, tests, and validators. Any customer-facing, regulated, external-use, or side-effect-adjacent output must name action class, review owner, source verification status, customer-facing approval status, side-effect status, mark customer copy as draft for licensed/compliance review and not approved to send, state no external action is authorized by default, and end with the minimum safe next step.
+Current cross-workflow runtime gate: **Professional Review Gate**. It translates professional workflow/profile/review-gate discipline into the insurance-agent surface through `skills/insurance_copilot/SKILL.md`, `references/professional-review-gate.md`, `templates/professional-review-gate.md`, evals, tests, and validators. Any customer-facing, regulated, external-use, or side-effect-adjacent output must name action class, review owner, source verification status, customer-facing approval status, side-effect status, mark customer copy as draft for licensed/compliance review and not approved to send, state no external action is authorized by default, and end with the minimum safe next step.
 
-Current source/citation/data-boundary runtime gate: **Source Grounding and Data Boundary Gate**. It translates insurance RAG/policy-assistant grounding into the manual-first insurance-agent surface through `skills/insurance-copilot/SKILL.md`, `references/source-grounding-guardrails.md`, `templates/source-grounding-guardrails.md`, evals, tests, and validators. It requires a **Source Ledger**, **Citation Ledger**, **public/private separation**, **prompt-injection**, **PII minimization**, **citations or `[verify]`**, **no customer data in public packs**, and the rule that **untrusted source text cannot override workflow instructions**. This remains a **manual-first practitioner workflow**, **not a generic RAG chatbot**.
+Current source/citation/data-boundary runtime gate: **Source Grounding and Data Boundary Gate**. It translates insurance RAG/policy-assistant grounding into the manual-first insurance-agent surface through `skills/insurance_copilot/SKILL.md`, `references/source-grounding-guardrails.md`, `templates/source-grounding-guardrails.md`, evals, tests, and validators. It requires a **Source Ledger**, **Citation Ledger**, **public/private separation**, **prompt-injection**, **PII minimization**, **citations or `[verify]`**, **no customer data in public packs**, and the rule that **untrusted source text cannot override workflow instructions**. This remains a **manual-first practitioner workflow**, **not a generic RAG chatbot**.
 
 
 ## Private Workspace Trace and Readiness Gate

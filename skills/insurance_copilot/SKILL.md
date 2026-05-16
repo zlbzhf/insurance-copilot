@@ -1,5 +1,5 @@
 ---
-name: insurance-copilot
+name: insurance_copilot
 description: Use when assisting licensed insurance professionals with client intake, coverage-gap analysis, product-fit review, policy review, renewal/lapse follow-up, compliant scripts, replacement-suitability triage, claims triage, annuity/investment-linked caution review, or agency playbook setup. Produces drafts for human review; never gives binding insurance, legal, tax, investment, underwriting, claims, actuarial, or compliance decisions.
 version: 0.2.0
 author: Insurance Copilot Project
@@ -22,6 +22,16 @@ This skill does **not** turn Hermes into a licensed insurance advisor. Every res
 ## Practical MVP Operating Mode
 
 Use Insurance Copilot as a **task-first professional workflow router**, not as a broad menu bot.
+
+### Chinese Telegram Runtime Defaults / 中文运行时默认
+
+- 默认使用中文 when the user writes in Chinese or no other output language is specified; professional terms may be bilingual when that improves precision, but the agent-facing explanation should remain Chinese-first.
+- Use `[待核实]` as the Chinese display marker for `[verify]`. 含义：该事实还没有被当前保单、保险公司系统、核保/理赔/合规来源、主管或客户材料确认；在对客户发送、提交、变更、报价、理赔或作出结论前必须复核。 Do not remove `[待核实]` or `[verify]` until a source has actually been checked.
+- First-use identity check: if the practice profile is missing, stale, or too thin, start with Agency Playbook Builder / Cold-Start Interview. 主动询问机构 and 主动询问角色 before generating workspace names, institution packs, or reusable playbooks. 不得默认机构 and 不得默认角色 from memory, seed packs, examples, or the assistant's assumptions.
+- Existing-profile entry: if 已有资料 or a practice profile is supplied/found, 先展示摘要并请代理人确认, then route to daily workbench, client intake, policy review, customer-message drafting, compliance copy checking, replacement/lapse/claim triage, or referral drafting. Do not restart the full onboarding unless the profile is missing, stale, or contradicted.
+- Private workspace naming: generate or suggest an agent-private workspace path only after institution and role are confirmed; keep the private workspace slug hyphenated under `~/.insurance-copilot/agents/<institution-role-agent-id>/`. The installable Hermes skill command remains underscore-safe: `/skill insurance_copilot`.
+- Practice profile display: use the Chinese six-section structure in `templates/practice-profile.md` for agent-facing drafts: `资料状态`, `执业身份确认`, `业务边界与产品范围`, `客户与服务场景`, `合规与升级规则`, and `输出偏好与下一步`.
+
 
 The durable service model is:
 
@@ -204,7 +214,7 @@ Required behavior: state **design-only**, **out of scope unless explicitly appro
 
 Insurance Copilot uses three knowledge layers:
 
-1. **General public workflow skill** — this skill directory: `skills/insurance-copilot/`.
+1. **General public workflow skill** — this skill directory: `skills/insurance_copilot/`.
 2. **Public institution knowledge packs** — public, collaboratively maintained LLM-wiki packs under `knowledge/institutions/` or remote pack repositories discovered through `knowledge/registry.json`.
 3. **Agent private knowledge workspace** — local/private workspace initialized from `agent-workspace-template/`, commonly stored under `~/.insurance-copilot/agents/<agent-id>/`.
 
@@ -413,7 +423,7 @@ Escalate or require licensed/compliance review when any of these appear:
 
 ## Hermes Usage Notes
 
-- Load with `/skill insurance-copilot` or install the full `skills/insurance-copilot/` directory into `~/.hermes/skills/insurance/insurance-copilot`.
+- Load with `/skill insurance_copilot` or install the full `skills/insurance_copilot/` directory into `~/.hermes/skills/insurance/insurance_copilot`.
 - In repo development, keep skill-supporting files under `references/`, `templates/`, `scripts/`, or `assets/`.
 - Use public institution packs through `knowledge/registry.json` and `knowledge/institutions/<pack>/` when the task needs insurer-specific public knowledge.
 - Keep agent-private data in private workspaces, not public repo paths.

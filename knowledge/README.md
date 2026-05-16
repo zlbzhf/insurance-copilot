@@ -4,7 +4,7 @@ This directory contains public knowledge assets that complement the general `ins
 
 The project uses three layers:
 
-1. **General public layer** — the Hermes skill and domain workflows under `skills/insurance-copilot/`.
+1. **General public layer** — the Hermes skill and domain workflows under `skills/insurance_copilot/`.
 2. **Public institution knowledge layer** — collaboratively maintained public institution packs under `knowledge/institutions/`.
 3. **Agent private knowledge layer** — local/private agent workspaces based on `agent-workspace-template/`.
 

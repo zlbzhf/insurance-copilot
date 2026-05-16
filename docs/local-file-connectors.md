@@ -1,6 +1,6 @@
 # Local File Connectors
 
-Local file connectors are the first read-only connector slice for Insurance Copilot. They turn private-workspace-shaped local files into a Daily Agent Workbench bundle that can be pasted into Hermes after loading the `insurance-copilot` skill.
+Local file connectors are the first read-only connector slice for Insurance Copilot. They turn private-workspace-shaped local files into a Daily Agent Workbench bundle that can be pasted into Hermes after loading the `insurance_copilot` skill.
 
 This is intentionally not a production CRM/carrier integration. It reads local Markdown/CSV files and emits Markdown or JSON. It does not send messages, update CRM/calendar systems, contact carriers, file claims, submit applications, or change policies.
 
@@ -35,7 +35,7 @@ python3 scripts/local_file_connectors.py daily-workbench   --workspace examples/
 Use the output as input to Hermes:
 
 ```text
-/skill insurance-copilot
+/skill insurance_copilot
 Use Daily Agent Workbench on this connector bundle. Preserve [verify] markers, do not send or write anything automatically, and produce licensed/compliance review drafts only.
 ```
 

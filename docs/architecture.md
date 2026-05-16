@@ -13,7 +13,7 @@ Layer 3: Agent Private Knowledge Workspace
 Path:
 
 ```text
-skills/insurance-copilot/
+skills/insurance_copilot/
 ```
 
 Purpose:

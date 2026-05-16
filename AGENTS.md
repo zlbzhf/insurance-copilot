@@ -9,7 +9,7 @@ If chat context, compression summaries, or memory conflict with repository files
 Before substantive changes, read:
 
 - `README.md`
-- `skills/insurance-copilot/SKILL.md`
+- `skills/insurance_copilot/SKILL.md`
 - `docs/product-development-spec.md`
 - `docs/reference-landscape.md`
 - `docs/architecture.md`
@@ -31,7 +31,7 @@ python3 scripts/validate_repo.py
 
 ## Three-Layer Architecture
 
-1. `skills/insurance-copilot/` — public general Hermes workflow skill.
+1. `skills/insurance_copilot/` — public general Hermes workflow skill.
 2. `knowledge/institutions/` — public institution LLM wiki packs only.
 3. `agent-workspace-template/` — template for private agent workspaces stored outside this repo.
 
@@ -47,8 +47,8 @@ When borrowing from external/reference projects, use `docs/reference-landscape.m
 
 ## Development Rules
 
-- Primary installable artifact: `skills/insurance-copilot/SKILL.md` plus its full support directory.
-- Supporting skill files must live under `skills/insurance-copilot/references/`, `templates/`, `scripts/`, or `assets/`.
+- Primary installable artifact: `skills/insurance_copilot/SKILL.md` plus its full support directory.
+- Supporting skill files must live under `skills/insurance_copilot/references/`, `templates/`, `scripts/`, or `assets/`.
 - Keep public institution packs public-source-only and schema-validated.
 - Keep agent workspace template free of real customer data.
 - Keep insurance outputs as drafts for licensed/compliance review.
@@ -73,7 +73,7 @@ python3 scripts/ingest_gateway.py --help
 ## Repository Layout
 
 ```text
-skills/insurance-copilot/   Hermes skill package
+skills/insurance_copilot/   Hermes skill package
 standards/                   Evidence-driven public knowledge standard
 schemas/                     Machine-readable schemas
 prompts/                     Controlled LLM gateway prompt contracts

@@ -36,9 +36,9 @@ Write-capable integration patterns must become an insurance-specific runtime act
 
 Required runtime surfaces:
 
-- `skills/insurance-copilot/SKILL.md` routes to `references/external-write-action-boundary.md`.
-- `skills/insurance-copilot/references/external-write-action-boundary.md` defines the method.
-- `skills/insurance-copilot/templates/external-write-action-boundary.md` defines the output block.
+- `skills/insurance_copilot/SKILL.md` routes to `references/external-write-action-boundary.md`.
+- `skills/insurance_copilot/references/external-write-action-boundary.md` defines the method.
+- `skills/insurance_copilot/templates/external-write-action-boundary.md` defines the output block.
 - `evals/cases/external-write-boundary-crm-claims-customer-send.json`, `evals/expected/external-write-boundary-crm-claims-customer-send.md`, `tests/test_practitioner_mvp_surface.py`, and `scripts/validate_repo.py` keep it executable.
 
 Required phrases and fields:
@@ -69,9 +69,9 @@ Private connector and readiness patterns must become an insurance-specific runti
 
 Required runtime surfaces:
 
-- `skills/insurance-copilot/SKILL.md` routes to `references/private-workspace-trace-readiness.md`.
-- `skills/insurance-copilot/references/private-workspace-trace-readiness.md` defines the method.
-- `skills/insurance-copilot/templates/private-workspace-audit-trace.md` defines the output block.
+- `skills/insurance_copilot/SKILL.md` routes to `references/private-workspace-trace-readiness.md`.
+- `skills/insurance_copilot/references/private-workspace-trace-readiness.md` defines the method.
+- `skills/insurance_copilot/templates/private-workspace-audit-trace.md` defines the output block.
 - `evals/cases/private-dry-run-harness.json`, `evals/expected/private-dry-run-harness.md`, `tests/test_private_dry_run.py`, `tests/test_local_file_connectors.py`, `tests/test_practitioner_mvp_surface.py`, `scripts/local_file_connectors.py`, `scripts/private_dry_run.py`, and `scripts/validate_repo.py` keep it executable.
 
 Required phrases and fields:
@@ -97,9 +97,9 @@ Insurance RAG and policy-assistant patterns must become an insurance-specific ru
 
 Required runtime surfaces:
 
-- `skills/insurance-copilot/SKILL.md` routes to `references/source-grounding-guardrails.md`.
-- `skills/insurance-copilot/references/source-grounding-guardrails.md` defines the method.
-- `skills/insurance-copilot/templates/source-grounding-guardrails.md` defines the output block.
+- `skills/insurance_copilot/SKILL.md` routes to `references/source-grounding-guardrails.md`.
+- `skills/insurance_copilot/references/source-grounding-guardrails.md` defines the method.
+- `skills/insurance_copilot/templates/source-grounding-guardrails.md` defines the output block.
 - `evals/cases/source-grounding-public-private-injection.json`, `evals/expected/source-grounding-public-private-injection.md`, `evals/cases/private-policy-citation-grounding.json`, `evals/expected/private-policy-citation-grounding.md`, `tests/test_practitioner_mvp_surface.py`, and `scripts/validate_repo.py` keep it executable.
 
 Required phrases and fields:
@@ -123,9 +123,9 @@ Every professional-service borrowed pattern must become an insurance-specific ru
 
 Required runtime surfaces:
 
-- `skills/insurance-copilot/SKILL.md` routes to `references/professional-review-gate.md`.
-- `skills/insurance-copilot/references/professional-review-gate.md` defines the review method.
-- `skills/insurance-copilot/templates/professional-review-gate.md` defines the output block.
+- `skills/insurance_copilot/SKILL.md` routes to `references/professional-review-gate.md`.
+- `skills/insurance_copilot/references/professional-review-gate.md` defines the review method.
+- `skills/insurance_copilot/templates/professional-review-gate.md` defines the output block.
 - `evals/cases/professional-review-gate.json`, `evals/expected/professional-review-gate.md`, `tests/test_practitioner_mvp_surface.py`, and `scripts/validate_repo.py` keep it executable.
 - P1 scenario evals keep the Customer Advocacy Memo + Professional Review Gate coupling executable: `claims-dispute-advocacy-review-gate`, `policy-review-unclaimed-benefit-advocacy-gate`, `renewal-lapse-reinstatement-advocacy-gate`, and `chinese-complaint-service-recovery-talk-track`.
 
@@ -176,9 +176,9 @@ Required:
 
 Required:
 
-- `skills/insurance-copilot/SKILL.md` exists.
+- `skills/insurance_copilot/SKILL.md` exists.
 - `SKILL.md` starts with valid YAML frontmatter.
-- Frontmatter has `name: insurance-copilot`.
+- Frontmatter has `name: insurance_copilot`.
 - Description is present and no longer than 1024 characters.
 - Supporting files stay under `references/`, `templates/`, `scripts/`, or `assets/` inside the skill directory.
 - README documents full-directory local Hermes installation.
@@ -306,7 +306,7 @@ python3 scripts/validate_all_knowledge_packs.py
 python3 scripts/validate_knowledge_pack.py knowledge/institutions/_template --template
 python3 scripts/validate_agent_workspace.py agent-workspace-template --template
 python3 scripts/private_workspace_readiness.py --workspace examples/local-connectors/synthetic-agent-workspace --as-of 2026-05-14 --format json || test $? -eq 1
-python3 scripts/private_dry_run.py --workspace examples/local-connectors/synthetic-agent-workspace --as-of 2026-05-14 --out /tmp/insurance-copilot-dry-run --force || test $? -eq 1
+python3 scripts/private_dry_run.py --workspace examples/local-connectors/synthetic-agent-workspace --as-of 2026-05-14 --out /tmp/insurance_copilot-dry-run --force || test $? -eq 1
 python3 scripts/ingest_gateway.py --help
 ```
 

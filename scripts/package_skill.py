@@ -9,7 +9,7 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILL_DIR = ROOT / "skills" / "insurance-copilot"
+SKILL_DIR = ROOT / "skills" / "insurance_copilot"
 REQUIRED_SUBDIRS = ["references", "templates"]
 
 
@@ -57,10 +57,13 @@ def check_bundle(bundle_dir: Path) -> list[str]:
     ]:
         if not (bundle_dir / rel).exists():
             errors.append(f"missing referenced bundle file: {rel}")
-    if "name: insurance-copilot" not in text:
-        errors.append("SKILL.md does not declare name: insurance-copilot")
+    if "name: insurance_copilot" not in text:
+        errors.append("SKILL.md does not declare name: insurance_copilot")
     if "Practical MVP Operating Mode" not in text:
         errors.append("SKILL.md missing Practical MVP Operating Mode")
+    for phrase in ["默认使用中文", "[待核实]", "不得默认机构", "主动询问角色"]:
+        if phrase not in text:
+            errors.append(f"SKILL.md missing Chinese runtime phrase: {phrase}")
     return errors
 
 
@@ -75,7 +78,7 @@ def main() -> int:
 
     if args.check or not args.out:
         with tempfile.TemporaryDirectory(prefix="insurance-copilot-bundle-") as tmp:
-            dest = Path(tmp) / "insurance-copilot"
+            dest = Path(tmp) / "insurance_copilot"
             copy_skill(dest)
             errors = check_bundle(dest)
             if errors:

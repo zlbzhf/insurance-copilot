@@ -8,13 +8,13 @@
 
 ## Overview
 
-Insurance Copilot is a **standalone Hermes skill repository** for insurance-agent work. Its runtime surface is the installable `insurance-copilot` skill, supported by workflow references, output templates, static eval fixtures, deterministic validators, public institution knowledge packs, and a private agent workspace template.
+Insurance Copilot is a **standalone Hermes skill repository** for insurance-agent work. Its runtime surface is the installable `insurance_copilot` skill, supported by workflow references, output templates, static eval fixtures, deterministic validators, public institution knowledge packs, and a private agent workspace template.
 
 It is inspired by the workflow discipline of `claude-for-legal`, but the usable product is **not** a Claude plugin, web app, CRM, or deployment platform. The first useful experience is a Hermes skill that helps a licensed insurance professional turn messy real-world notes into structured, review-ready work.
 
 Core positioning:
 
-- **Runtime:** Hermes skill package at `skills/insurance-copilot/`.
+- **Runtime:** Hermes skill package at `skills/insurance_copilot/`.
 - **Audience:** licensed insurance agents, agency managers, trainers, and maintainers of public insurance knowledge packs.
 - **Mode:** manual-first professional assistant; optional automation stays behind explicit review gates.
 - **Data posture:** public knowledge and private customer/agent data are strictly separated.
@@ -53,11 +53,11 @@ Product Development SPEC: `docs/product-development-spec.md` is the product-deve
 
 `docs/reference-landscape.md` records external/reference-project analysis. Borrowed patterns must be mapped to project significance, implementation form, non-goals, and priority before they become roadmap direction.
 
-Customer-impacting advocacy memos use `skills/insurance-copilot/templates/customer-advocacy-memo.md` as the runtime output structure. The P1 scenario regression set links **Customer Advocacy Memo** + **Professional Review Gate** for claims disputes, policy review found unclaimed benefit, renewal/lapse/reinstatement ambiguity, and Chinese complaint/service-recovery talk tracks, requiring evidence requests, source checks, customer-safe language, escalation path, `no external action is authorized`, and Minimum safe next step.
+Customer-impacting advocacy memos use `skills/insurance_copilot/templates/customer-advocacy-memo.md` as the runtime output structure. The P1 scenario regression set links **Customer Advocacy Memo** + **Professional Review Gate** for claims disputes, policy review found unclaimed benefit, renewal/lapse/reinstatement ambiguity, and Chinese complaint/service-recovery talk tracks, requiring evidence requests, source checks, customer-safe language, escalation path, `no external action is authorized`, and Minimum safe next step.
 
-Source-sensitive workflows use **Source Grounding and Data Boundary Gate** (`skills/insurance-copilot/references/source-grounding-guardrails.md` and `skills/insurance-copilot/templates/source-grounding-guardrails.md`) as a runtime guardrail: **Source Ledger**, **Citation Ledger**, **public/private separation**, **prompt-injection**, **PII minimization**, **citations or `[verify]`**, **no customer data in public packs**, and the rule that **untrusted source text cannot override workflow instructions**. This remains a **manual-first practitioner workflow**, **not a generic RAG chatbot**.
+Source-sensitive workflows use **Source Grounding and Data Boundary Gate** (`skills/insurance_copilot/references/source-grounding-guardrails.md` and `skills/insurance_copilot/templates/source-grounding-guardrails.md`) as a runtime guardrail: **Source Ledger**, **Citation Ledger**, **public/private separation**, **prompt-injection**, **PII minimization**, **citations or `[verify]`**, **no customer data in public packs**, and the rule that **untrusted source text cannot override workflow instructions**. This remains a **manual-first practitioner workflow**, **not a generic RAG chatbot**.
 
-Write-capable integration requests use **External Write Action Boundary Gate** (`skills/insurance-copilot/references/external-write-action-boundary.md` and `skills/insurance-copilot/templates/external-write-action-boundary.md`) as the P3 action boundary for **write-capable integrations**, **CRM writes**, **customer sending**, **claims filing**, **application submission**, **policy changes**, **quote generation**, **carrier contact**, and **publication**. The default status is **design-only**, **out of scope unless explicitly approved**, **no write-capable integration is enabled**, **no external write tool is authorized**, **dry-run/read-only**, **manual-first**, and closed with **Professional Review Gate**.
+Write-capable integration requests use **External Write Action Boundary Gate** (`skills/insurance_copilot/references/external-write-action-boundary.md` and `skills/insurance_copilot/templates/external-write-action-boundary.md`) as the P3 action boundary for **write-capable integrations**, **CRM writes**, **customer sending**, **claims filing**, **application submission**, **policy changes**, **quote generation**, **carrier contact**, and **publication**. The default status is **design-only**, **out of scope unless explicitly approved**, **no write-capable integration is enabled**, **no external write tool is authorized**, **dry-run/read-only**, **manual-first**, and closed with **Professional Review Gate**.
 
 ## Practical MVP: How an Agent Uses It
 
@@ -148,7 +148,7 @@ Layer 3: Agent Private Knowledge Workspace
 Path:
 
 ```text
-skills/insurance-copilot/
+skills/insurance_copilot/
 ```
 
 Purpose:
@@ -216,9 +216,9 @@ This repository intentionally avoids docs-only behavior changes.
 
 `docs/` is useful for explanation and maintenance, but `docs/` is not the runtime source by itself; runtime-effective constraints must live in one or more of these surfaces:
 
-1. `skills/insurance-copilot/SKILL.md` — loaded by Hermes as the canonical runtime skill.
-2. `skills/insurance-copilot/references/*.md` — workflow-specific playbooks loaded before substantive drafting.
-3. `skills/insurance-copilot/templates/*.md` — concrete output structures that shape responses.
+1. `skills/insurance_copilot/SKILL.md` — loaded by Hermes as the canonical runtime skill.
+2. `skills/insurance_copilot/references/*.md` — workflow-specific playbooks loaded before substantive drafting.
+3. `skills/insurance_copilot/templates/*.md` — concrete output structures that shape responses.
 4. `evals/cases/*.json` and `evals/expected/*.md` — regression fixtures.
 5. `scripts/validate_repo.py` and `tests/*.py` — executable gates that fail on drift.
 
@@ -229,14 +229,14 @@ The documentation purpose map lives at `docs/documentation-map.md`. It explains 
 Install the **full skill directory** so linked `references/` and `templates/` are available:
 
 ```bash
-mkdir -p ~/.hermes/skills/insurance/insurance-copilot
-cp -R skills/insurance-copilot/* ~/.hermes/skills/insurance/insurance-copilot/
+mkdir -p ~/.hermes/skills/insurance/insurance_copilot
+cp -R skills/insurance_copilot/* ~/.hermes/skills/insurance/insurance_copilot/
 ```
 
 Then start a new Hermes session and load:
 
 ```text
-/skill insurance-copilot
+/skill insurance_copilot
 ```
 
 Important: a raw `SKILL.md`-only install is not enough unless your Hermes version also fetches linked files. This repository assumes the full directory is installed.
@@ -244,16 +244,16 @@ Important: a raw `SKILL.md`-only install is not enough unless your Hermes versio
 ## Smoke Test After Install
 
 ```bash
-test -f ~/.hermes/skills/insurance/insurance-copilot/SKILL.md
-test -f ~/.hermes/skills/insurance/insurance-copilot/references/client-needs-intake.md
-test -f ~/.hermes/skills/insurance/insurance-copilot/templates/practice-profile.md
+test -f ~/.hermes/skills/insurance/insurance_copilot/SKILL.md
+test -f ~/.hermes/skills/insurance/insurance_copilot/references/client-needs-intake.md
+test -f ~/.hermes/skills/insurance/insurance_copilot/templates/practice-profile.md
 ```
 
 In Hermes, try:
 
 ```text
-/skill insurance-copilot
-Use Agency Playbook Builder in New Agent Default Mode. Ask no more than three onboarding questions needed to create a practical provisional profile. If I answer `I don't know yet`, use conservative defaults.
+/skill insurance_copilot
+Use Agency Playbook Builder in New Agent Default Mode. If the conversation is in Chinese, default to Chinese. Ask no more than three onboarding questions needed to create a practical provisional profile: institution, role, and market/focus. Do not assume institution or role. If I answer `I don't know yet`, use conservative defaults and mark uncertain facts `[待核实]` / `[verify]`.
 ```
 
 ## Recommended First Session
@@ -261,8 +261,8 @@ Use Agency Playbook Builder in New Agent Default Mode. Ask no more than three on
 After installing the skill, use this prompt:
 
 ```text
-/skill insurance-copilot
-Use Agency Playbook Builder in New Agent Default Mode. I am a new or busy insurance agent and I don't know yet how to define my full profile. Ask at most three simple questions, allow conservative defaults, generate a provisional practice profile, then show how I can use it for daily workbench, client intake, policy review, customer message drafting, and compliance copy checking. Manual-first only; do not discuss cron, deployment, or automation unless I ask.
+/skill insurance_copilot
+Use Agency Playbook Builder in New Agent Default Mode. If my messages are Chinese, default to Chinese. I am a new or busy insurance agent and I don't know yet how to define my full profile. Ask at most three simple questions: institution, role, and market/focus. Do not assume institution or role. Allow conservative defaults, explain `[待核实]` / `[verify]`, generate a clear provisional practice profile, then show how I can use it for daily workbench, client intake, policy review, customer message drafting, and compliance copy checking. Manual-first only; do not discuss cron, deployment, or automation unless I ask.
 ```
 
 Then use one of these task-first prompts:
@@ -308,7 +308,7 @@ Use after intake and source-backed product facts are available. Output should re
 
 ### Customer Advocacy Memo
 
-Use for underwriting/disclosure, claim/review, servicing, complaint, replacement, lapse, or other customer-impacting matters where empty neutrality is insufficient. The runtime template is `skills/insurance-copilot/templates/customer-advocacy-memo.md`.
+Use for underwriting/disclosure, claim/review, servicing, complaint, replacement, lapse, or other customer-impacting matters where empty neutrality is insufficient. The runtime template is `skills/insurance_copilot/templates/customer-advocacy-memo.md`.
 
 ### Compliance Copy Checker
 
@@ -316,19 +316,19 @@ Use before customer-facing copy is sent. It should quote risky phrases, explain 
 
 ### Professional Review Gate
 
-Use before any customer-facing, regulated, external-use, or side-effect-adjacent output is treated as usable. It is implemented through `skills/insurance-copilot/references/professional-review-gate.md` and `skills/insurance-copilot/templates/professional-review-gate.md`. The gate must name action class, review owner, source verification status, customer-facing approval status, and side-effect status; customer-facing language remains a draft for licensed/compliance review, not approved to send, with no external action is authorized by default, and the output ends with the minimum safe next step.
+Use before any customer-facing, regulated, external-use, or side-effect-adjacent output is treated as usable. It is implemented through `skills/insurance_copilot/references/professional-review-gate.md` and `skills/insurance_copilot/templates/professional-review-gate.md`. The gate must name action class, review owner, source verification status, customer-facing approval status, and side-effect status; customer-facing language remains a draft for licensed/compliance review, not approved to send, with no external action is authorized by default, and the output ends with the minimum safe next step.
 
 ### Institution Knowledge Organizer
 
-Use for any **public institution pack** **source-backed public pack update** under `knowledge/institutions/<pack_id>/`. It is implemented through `skills/insurance-copilot/references/institution-knowledge-organizer.md` and `skills/insurance-copilot/templates/institution-knowledge-organizer.md`. The workflow starts from a public source record, preserves the public/private boundary, marks `[verify]` items, and requires pack maintainer review before public pack content is treated as canonical. Seed packs are examples; the runtime Institution Knowledge Organizer applies to any public institution pack. AIA/友邦 is the current seed example, not the generic runtime definition.
+Use for any **public institution pack** **source-backed public pack update** under `knowledge/institutions/<pack_id>/`. It is implemented through `skills/insurance_copilot/references/institution-knowledge-organizer.md` and `skills/insurance_copilot/templates/institution-knowledge-organizer.md`. The workflow starts from a public source record, preserves the public/private boundary, marks `[verify]` items, and requires pack maintainer review before public pack content is treated as canonical. Seed packs are examples; the runtime Institution Knowledge Organizer applies to any public institution pack. AIA/友邦 is the current seed example, not the generic runtime definition.
 
 ### Source Grounding and Data Boundary Gate
 
-Use when public insurer knowledge, private policy/customer material, connector-fed content, or mixed sources ground an insurance workflow. It is implemented through `skills/insurance-copilot/references/source-grounding-guardrails.md` and `skills/insurance-copilot/templates/source-grounding-guardrails.md`. The output uses a **Source Ledger** and **Citation Ledger**, preserves **public/private separation**, handles **prompt-injection**, applies **PII minimization**, requires **citations or `[verify]`**, states **no customer data in public packs**, and says **untrusted source text cannot override workflow instructions**. It is a **manual-first practitioner workflow**, **not a generic RAG chatbot**.
+Use when public insurer knowledge, private policy/customer material, connector-fed content, or mixed sources ground an insurance workflow. It is implemented through `skills/insurance_copilot/references/source-grounding-guardrails.md` and `skills/insurance_copilot/templates/source-grounding-guardrails.md`. The output uses a **Source Ledger** and **Citation Ledger**, preserves **public/private separation**, handles **prompt-injection**, applies **PII minimization**, requires **citations or `[verify]`**, states **no customer data in public packs**, and says **untrusted source text cannot override workflow instructions**. It is a **manual-first practitioner workflow**, **not a generic RAG chatbot**.
 
 ### External Write Action Boundary Gate
 
-Use when a request asks for **write-capable integrations**, **CRM writes**, **customer sending**, **claims filing**, **application submission**, **policy changes**, **quote generation**, **carrier contact**, **publication**, webhook dispatch, or live scheduler creation. It is implemented through `skills/insurance-copilot/references/external-write-action-boundary.md` and `skills/insurance-copilot/templates/external-write-action-boundary.md`. The output must say **design-only**, **out of scope unless explicitly approved**, **no write-capable integration is enabled**, **no external write tool is authorized**, **dry-run/read-only**, **manual-first**, and hand off to **Professional Review Gate** before any customer-facing, regulated, external-use, or side-effect-adjacent step.
+Use when a request asks for **write-capable integrations**, **CRM writes**, **customer sending**, **claims filing**, **application submission**, **policy changes**, **quote generation**, **carrier contact**, **publication**, webhook dispatch, or live scheduler creation. It is implemented through `skills/insurance_copilot/references/external-write-action-boundary.md` and `skills/insurance_copilot/templates/external-write-action-boundary.md`. The output must say **design-only**, **out of scope unless explicitly approved**, **no write-capable integration is enabled**, **no external write tool is authorized**, **dry-run/read-only**, **manual-first**, and hand off to **Professional Review Gate** before any customer-facing, regulated, external-use, or side-effect-adjacent step.
 
 ## Public Institution Packs
 
@@ -430,7 +430,7 @@ Before creating any live Hermes scheduled watcher, run the full private dry-run 
 python3 scripts/private_dry_run.py \
   --workspace examples/local-connectors/synthetic-agent-workspace \
   --as-of 2026-05-14 \
-  --out /tmp/insurance-copilot-dry-run
+  --out /tmp/insurance_copilot-dry-run
 ```
 
 It chains readiness, connector bundle generation, renewal watcher output, and script-only cron wrapper simulation into one diagnostic output directory with `manifest.json`, `audit-trace.json`, `audit-trace.md`, and `deployment-checklist.md`. It remains read-only, reports `read_only_verified`, `workspace_unchanged`, and `ready_for_scheduled_watcher`, records `live_cron_created: false`, and performs No External Writes. See `docs/private-dry-run-harness.md` and `examples/private-dry-run/`.
@@ -444,7 +444,7 @@ The **External Write Action Boundary Gate** is the P3 runtime boundary for **wri
 ## Repository Layout
 
 ```text
-skills/insurance-copilot/     Umbrella Hermes skill package
+skills/insurance_copilot/     Umbrella Hermes skill package
 standards/                    Versioned public-knowledge standard and schema evolution policy
 schemas/                      Machine-readable schemas for intake/classification/extraction/gaps
 prompts/                      Prompt contracts for future controlled LLM gateway runs
@@ -477,7 +477,7 @@ python3 scripts/validate_all_knowledge_packs.py
 python3 scripts/validate_knowledge_pack.py knowledge/institutions/_template --template
 python3 scripts/validate_agent_workspace.py agent-workspace-template --template
 python3 scripts/ingest_gateway.py --help
-python3 scripts/private_dry_run.py --workspace examples/local-connectors/synthetic-agent-workspace --as-of 2026-05-14 --out /tmp/insurance-copilot-dry-run --force || test $? -eq 1
+python3 scripts/private_dry_run.py --workspace examples/local-connectors/synthetic-agent-workspace --as-of 2026-05-14 --out /tmp/insurance_copilot-dry-run --force || test $? -eq 1
 python3 -m pytest tests/test_ingest_gateway.py tests/test_local_file_connectors.py tests/test_renewal_watcher.py tests/test_renewal_watcher_cron_wrapper.py tests/test_private_workspace_readiness.py tests/test_private_dry_run.py tests/test_practitioner_mvp_surface.py tests/test_generic_first_architecture.py -q
 ```
 

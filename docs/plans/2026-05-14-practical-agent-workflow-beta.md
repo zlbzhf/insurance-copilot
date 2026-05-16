@@ -1,6 +1,6 @@
 # Practical Agent Workflow Beta Implementation Plan
 
-> **For Hermes:** This plan is the durable handoff artifact for improving Insurance Copilot without context loss. If a conversation is compressed or interrupted, resume by reading this file, `AGENTS.md`, `README.md`, `skills/insurance-copilot/SKILL.md`, and running the validation commands at the bottom. Use subagent-driven-development for independent tasks when context is tight.
+> **For Hermes:** This plan is the durable handoff artifact for improving Insurance Copilot without context loss. If a conversation is compressed or interrupted, resume by reading this file, `AGENTS.md`, `README.md`, `skills/insurance_copilot/SKILL.md`, and running the validation commands at the bottom. Use subagent-driven-development for independent tasks when context is tight.
 
 **Goal:** Move Insurance Copilot from an architecture-first insurance knowledge framework toward a practitioner-facing assistant whose feasibility, usability, and professional discipline are closer to `claude-for-legal`.
 
@@ -76,7 +76,7 @@ python3 -m pytest tests/test_ingest_gateway.py -q
 - Create: `docs/workflow-surface.md`
 - Modify: `README.md`
 - Modify: `docs/quickstart.md`
-- Modify: `skills/insurance-copilot/SKILL.md`
+- Modify: `skills/insurance_copilot/SKILL.md`
 
 **Required workflow names:**
 
@@ -110,9 +110,9 @@ python3 -m pytest tests/test_ingest_gateway.py -q
 **Objective:** Match `claude-for-legal` discipline: without a profile, do not pretend to know the agency's playbook.
 
 **Files:**
-- Modify: `skills/insurance-copilot/SKILL.md`
-- Modify: `skills/insurance-copilot/references/cold-start-interview.md`
-- Modify: `skills/insurance-copilot/templates/practice-profile.md`
+- Modify: `skills/insurance_copilot/SKILL.md`
+- Modify: `skills/insurance_copilot/references/cold-start-interview.md`
+- Modify: `skills/insurance_copilot/templates/practice-profile.md`
 - Modify: `docs/quickstart.md`
 
 **Acceptance criteria:**
@@ -159,8 +159,8 @@ python3 -m pytest tests/test_ingest_gateway.py -q
 **Objective:** Provide a daily operating loop for real insurance agents.
 
 **Files:**
-- Create: `skills/insurance-copilot/references/daily-agent-workbench.md`
-- Create: `skills/insurance-copilot/templates/daily-agent-workbench.md`
+- Create: `skills/insurance_copilot/references/daily-agent-workbench.md`
+- Create: `skills/insurance_copilot/templates/daily-agent-workbench.md`
 - Add synthetic example: `examples/expected-outputs/daily-agent-workbench.md`
 - Add eval case: `evals/cases/daily-agent-workbench.json`
 - Add expected eval: `evals/expected/daily-agent-workbench.md`
@@ -180,8 +180,8 @@ python3 -m pytest tests/test_ingest_gateway.py -q
 **Objective:** Turn intake + gap + product facts into a review-ready client proposal draft without pretending to make final recommendations.
 
 **Files:**
-- Create: `skills/insurance-copilot/references/client-plan-draft.md`
-- Create: `skills/insurance-copilot/templates/client-plan-draft.md`
+- Create: `skills/insurance_copilot/references/client-plan-draft.md`
+- Create: `skills/insurance_copilot/templates/client-plan-draft.md`
 - Add example: `examples/expected-outputs/client-plan-draft.md`
 - Add eval case: `evals/cases/client-plan-draft.json`
 - Add expected eval: `evals/expected/client-plan-draft.md`
@@ -200,10 +200,10 @@ python3 -m pytest tests/test_ingest_gateway.py -q
 **Objective:** Add practical Chinese-language daily communication support with compliance safeguards.
 
 **Files:**
-- Create: `skills/insurance-copilot/references/chinese-talk-tracks.md`
-- Create: `skills/insurance-copilot/references/referral-ask.md`
-- Create: `skills/insurance-copilot/templates/chinese-talk-tracks.md`
-- Create: `skills/insurance-copilot/templates/referral-ask.md`
+- Create: `skills/insurance_copilot/references/chinese-talk-tracks.md`
+- Create: `skills/insurance_copilot/references/referral-ask.md`
+- Create: `skills/insurance_copilot/templates/chinese-talk-tracks.md`
+- Create: `skills/insurance_copilot/templates/referral-ask.md`
 - Add examples/evals as needed.
 - Modify: `scripts/validate_repo.py`
 
@@ -220,8 +220,8 @@ python3 -m pytest tests/test_ingest_gateway.py -q
 **Objective:** Make renewal/lapse support operational, not just conceptual.
 
 **Files:**
-- Modify: `skills/insurance-copilot/references/renewal-review.md`
-- Modify: `skills/insurance-copilot/templates/renewal-review.md`
+- Modify: `skills/insurance_copilot/references/renewal-review.md`
+- Modify: `skills/insurance_copilot/templates/renewal-review.md`
 - Modify: `cron/renewal-watcher.md`
 - Create: `cron/renewal-watcher-cookbook.md`
 - Create or update examples/evals if needed.

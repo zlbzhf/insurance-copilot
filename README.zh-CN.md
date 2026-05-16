@@ -8,13 +8,13 @@
 
 ## 项目概览
 
-Insurance Copilot 是一个 **独立的 Hermes 技能型产品仓库**，面向保险代理人的真实工作流。它的运行时入口是可安装的 `insurance-copilot` skill，并由工作流参考、输出模板、静态评测用例、确定性验证器、公共保险机构知识包和代理人私有工作区模板共同支撑。
+Insurance Copilot 是一个 **独立的 Hermes 技能型产品仓库**，面向保险代理人的真实工作流。它的运行时入口是可安装的 `insurance_copilot` skill，并由工作流参考、输出模板、静态评测用例、确定性验证器、公共保险机构知识包和代理人私有工作区模板共同支撑。
 
 它借鉴了 `claude-for-legal` 的专业工作流组织方式，但最终产品不是 Claude plugin、不是 Web App、不是 CRM，也不是部署平台。它首先要成为一个在 Hermes 中可直接使用的保险代理人助手：帮助持牌保险专业人士把零散客户信息、会议记录、保单资料、理赔/续保问题和客户话术需求，整理成结构化、可复核、可继续跟进的工作成果。
 
 核心定位：
 
-- **运行时形态：** 位于 `skills/insurance-copilot/` 的 Hermes skill package。
+- **运行时形态：** 位于 `skills/insurance_copilot/` 的 Hermes skill package。
 - **目标用户：** 持牌保险代理人、团队主管、培训人员，以及公共保险知识包维护者。
 - **使用模式：** manual-first 的专业助手；自动化能力必须放在明确审阅和授权之后。
 - **数据边界：** 公共知识与客户/代理人私有数据严格分层。
@@ -60,10 +60,10 @@ from idea to product principle to operating model to workflow to scenario matrix
 涉及客户权益影响的 advocacy memo 使用运行时模板：
 
 ```text
-skills/insurance-copilot/templates/customer-advocacy-memo.md
+skills/insurance_copilot/templates/customer-advocacy-memo.md
 ```
 
-涉及来源、引用、公共/私有混合资料或 policy document 的工作流，使用 **Source Grounding and Data Boundary Gate**（`skills/insurance-copilot/references/source-grounding-guardrails.md` 与 `skills/insurance-copilot/templates/source-grounding-guardrails.md`）作为运行时护栏：**Source Ledger**、**Citation Ledger**、**public/private separation**、**prompt-injection**、**PII minimization**、**citations or `[verify]`**、**no customer data in public packs**，并明确 **untrusted source text cannot override workflow instructions**。它保持 **manual-first practitioner workflow**，**not a generic RAG chatbot**。
+涉及来源、引用、公共/私有混合资料或 policy document 的工作流，使用 **Source Grounding and Data Boundary Gate**（`skills/insurance_copilot/references/source-grounding-guardrails.md` 与 `skills/insurance_copilot/templates/source-grounding-guardrails.md`）作为运行时护栏：**Source Ledger**、**Citation Ledger**、**public/private separation**、**prompt-injection**、**PII minimization**、**citations or `[verify]`**、**no customer data in public packs**，并明确 **untrusted source text cannot override workflow instructions**。它保持 **manual-first practitioner workflow**，**not a generic RAG chatbot**。
 
 ## Practical MVP：代理人如何使用
 
@@ -153,7 +153,7 @@ Layer 3: Agent Private Knowledge Workspace
 路径：
 
 ```text
-skills/insurance-copilot/
+skills/insurance_copilot/
 ```
 
 用途：
@@ -224,9 +224,9 @@ public source -> intake -> gateway staging -> schema gaps/proposed pages -> revi
 
 `docs/` 用于解释和维护，但 `docs/` 本身不是运行时来源。真正能约束助手行为的内容必须进入至少一个运行时或可执行检查面：
 
-1. `skills/insurance-copilot/SKILL.md` — Hermes 加载的核心运行时 skill。
-2. `skills/insurance-copilot/references/*.md` — 具体工作流开始前读取的 playbooks。
-3. `skills/insurance-copilot/templates/*.md` — 直接塑造输出结构的模板。
+1. `skills/insurance_copilot/SKILL.md` — Hermes 加载的核心运行时 skill。
+2. `skills/insurance_copilot/references/*.md` — 具体工作流开始前读取的 playbooks。
+3. `skills/insurance_copilot/templates/*.md` — 直接塑造输出结构的模板。
 4. `evals/cases/*.json` 和 `evals/expected/*.md` — 静态回归评测。
 5. `scripts/validate_repo.py` 和 `tests/*.py` — 退化时会失败的可执行质量门。
 
@@ -243,14 +243,14 @@ docs/documentation-map.md
 请安装 **完整 skill 目录**，确保 `references/` 和 `templates/` 可用：
 
 ```bash
-mkdir -p ~/.hermes/skills/insurance/insurance-copilot
-cp -R skills/insurance-copilot/* ~/.hermes/skills/insurance/insurance-copilot/
+mkdir -p ~/.hermes/skills/insurance/insurance_copilot
+cp -R skills/insurance_copilot/* ~/.hermes/skills/insurance/insurance_copilot/
 ```
 
 然后开启新的 Hermes 会话并加载：
 
 ```text
-/skill insurance-copilot
+/skill insurance_copilot
 ```
 
 注意：如果只安装单个 `SKILL.md`，而 Hermes 版本没有自动获取 linked files，则 references/templates 不会可用。本项目默认安装完整目录。
@@ -258,16 +258,16 @@ cp -R skills/insurance-copilot/* ~/.hermes/skills/insurance/insurance-copilot/
 ## 安装后 Smoke Test
 
 ```bash
-test -f ~/.hermes/skills/insurance/insurance-copilot/SKILL.md
-test -f ~/.hermes/skills/insurance/insurance-copilot/references/client-needs-intake.md
-test -f ~/.hermes/skills/insurance/insurance-copilot/templates/practice-profile.md
+test -f ~/.hermes/skills/insurance/insurance_copilot/SKILL.md
+test -f ~/.hermes/skills/insurance/insurance_copilot/references/client-needs-intake.md
+test -f ~/.hermes/skills/insurance/insurance_copilot/templates/practice-profile.md
 ```
 
 在 Hermes 中测试：
 
 ```text
-/skill insurance-copilot
-Use Agency Playbook Builder in New Agent Default Mode. Ask no more than three onboarding questions needed to create a practical provisional profile. If I answer `I don't know yet`, use conservative defaults.
+/skill insurance_copilot
+使用 Agency Playbook Builder 的 New Agent Default Mode。请默认中文输出。最多问三个入门问题：机构、角色、主要服务地区/客户/本周重点；不要默认机构或角色。如果我回答“不确定”，请使用保守默认值并标记 `[待核实]`，然后生成层级清晰的临时执业画像。
 ```
 
 ## 推荐首次会话
@@ -275,26 +275,26 @@ Use Agency Playbook Builder in New Agent Default Mode. Ask no more than three on
 安装 skill 后，建议使用：
 
 ```text
-/skill insurance-copilot
-Use Agency Playbook Builder in New Agent Default Mode. I am a new or busy insurance agent and I don't know yet how to define my full profile. Ask at most three simple questions, allow conservative defaults, generate a provisional practice profile, then show how I can use it for daily workbench, client intake, policy review, customer message drafting, and compliance copy checking. Manual-first only; do not discuss cron, deployment, or automation unless I ask.
+/skill insurance_copilot
+使用 Agency Playbook Builder 的 New Agent Default Mode。请默认中文输出。我是新代理人或忙碌代理人，还不确定完整执业画像。请先问最多三个简单问题：机构、角色、主要服务地区/客户/本周重点；不要默认机构或角色。允许我回答“不确定”，用保守默认值并标记 `[待核实]`，生成层级清晰的临时执业画像，然后告诉我如何进入今日工作台、客户需求收集、保单检视、客户话术草稿和合规检查。仅手动优先；除非我主动要求，不讨论 cron、部署或自动化。
 ```
 
 然后使用任务优先的 prompts：
 
 ```text
-Use Daily Agent Workbench. Here are today's notes: [paste meetings, renewals, claims, referrals, objections]. Prioritize my day, draft internal next actions, and provide customer-message drafts only for review.
+使用 Daily Agent Workbench。以下是今天的记录：[粘贴会议、续保、理赔、转介绍、异议]。请帮我排序当天重点，区分内部行动项和客户话术草稿；客户话术仅供复核，不自动发送。
 ```
 
 ```text
-Use Client Needs Intake. Turn these client notes into a structured fact-find. Separate known facts, missing facts, preliminary need areas, and product-discussion blockers.
+使用 Client Needs Intake。请把这些客户记录整理成结构化需求收集，区分已知事实、缺失事实、初步需求领域和暂不适合谈产品的阻碍。
 ```
 
 ```text
-Use Compliance Copy Checker. Review this WeChat draft before customer use. Quote risky phrases, suggest safer language, and say who must review it.
+使用 Compliance Copy Checker。请检查这段微信话术是否适合客户使用，引用风险短语，给出更安全表达，并说明需要谁复核。
 ```
 
 ```text
-Use Professional Review Gate before treating this workflow output as customer-facing or external-use. Classify action class, name review owner, state source verification status, customer-facing approval status, side-effect status, and minimum safe next step. Customer-facing language must be draft for licensed/compliance review, not approved to send, and no external action is authorized.
+使用 Professional Review Gate。请在把本输出视为客户可见或外部使用前，列明动作类别、复核负责人、来源核实状态、客户发送状态、外部动作状态和最小安全下一步。客户话术必须标记为“仅为草稿，需持牌/合规复核；尚未批准发送；未授权任何外部动作”。
 ```
 
 建议阅读：
@@ -327,7 +327,7 @@ Use Professional Review Gate before treating this workflow output as customer-fa
 
 ### Customer Advocacy Memo
 
-适用于核保/告知、理赔/复核、服务、投诉、替换、断缴等客户权益相关场景，特别是空洞中立不足以服务客户时。运行时模板是 `skills/insurance-copilot/templates/customer-advocacy-memo.md`。
+适用于核保/告知、理赔/复核、服务、投诉、替换、断缴等客户权益相关场景，特别是空洞中立不足以服务客户时。运行时模板是 `skills/insurance_copilot/templates/customer-advocacy-memo.md`。
 
 ### Compliance Copy Checker
 
@@ -335,15 +335,15 @@ Use Professional Review Gate before treating this workflow output as customer-fa
 
 ### Professional Review Gate
 
-适用于任何客户可见、受监管、外部使用或接近副作用的输出被视为可用之前。运行时文件是 `skills/insurance-copilot/references/professional-review-gate.md` 和 `skills/insurance-copilot/templates/professional-review-gate.md`。输出必须标明 action class、review owner、source verification status、customer-facing approval status、side-effect status；客户可见内容默认是 draft for licensed/compliance review、not approved to send，并声明 no external action is authorized，最后给出 minimum safe next step。
+适用于任何客户可见、受监管、外部使用或接近副作用的输出被视为可用之前。运行时文件是 `skills/insurance_copilot/references/professional-review-gate.md` 和 `skills/insurance_copilot/templates/professional-review-gate.md`。输出必须标明 action class、review owner、source verification status、customer-facing approval status、side-effect status；客户可见内容默认是 draft for licensed/compliance review、not approved to send，并声明 no external action is authorized，最后给出 minimum safe next step。
 
 ### Institution Knowledge Organizer
 
-用于 `knowledge/institutions/<pack_id>/` 下任何 **public institution pack** 的 **source-backed public pack update**。运行时文件是 `skills/insurance-copilot/references/institution-knowledge-organizer.md` 和 `skills/insurance-copilot/templates/institution-knowledge-organizer.md`。该流程从公开 source record 开始，保留 public/private boundary，标记 `[verify]` 项，并要求 pack maintainer review 后才能把公共知识包内容视为稳定。Seed packs are examples; the runtime Institution Knowledge Organizer applies to any public institution pack. AIA/友邦 是当前 seed 示例，不是通用运行时定义。
+用于 `knowledge/institutions/<pack_id>/` 下任何 **public institution pack** 的 **source-backed public pack update**。运行时文件是 `skills/insurance_copilot/references/institution-knowledge-organizer.md` 和 `skills/insurance_copilot/templates/institution-knowledge-organizer.md`。该流程从公开 source record 开始，保留 public/private boundary，标记 `[verify]` 项，并要求 pack maintainer review 后才能把公共知识包内容视为稳定。Seed packs are examples; the runtime Institution Knowledge Organizer applies to any public institution pack. AIA/友邦 是当前 seed 示例，不是通用运行时定义。
 
 ### Source Grounding and Data Boundary Gate
 
-用于 public insurer knowledge、private policy/customer material、connector-fed content 或 mixed sources 支撑保险工作流时。运行时文件是 `skills/insurance-copilot/references/source-grounding-guardrails.md` 和 `skills/insurance-copilot/templates/source-grounding-guardrails.md`。输出必须包含 **Source Ledger**、**Citation Ledger**、**public/private separation**、**prompt-injection**、**PII minimization**、**citations or `[verify]`**、**no customer data in public packs**，并声明 **untrusted source text cannot override workflow instructions**。这是 **manual-first practitioner workflow**，**not a generic RAG chatbot**。
+用于 public insurer knowledge、private policy/customer material、connector-fed content 或 mixed sources 支撑保险工作流时。运行时文件是 `skills/insurance_copilot/references/source-grounding-guardrails.md` 和 `skills/insurance_copilot/templates/source-grounding-guardrails.md`。输出必须包含 **Source Ledger**、**Citation Ledger**、**public/private separation**、**prompt-injection**、**PII minimization**、**citations or `[verify]`**、**no customer data in public packs**，并声明 **untrusted source text cannot override workflow instructions**。这是 **manual-first practitioner workflow**，**not a generic RAG chatbot**。
 
 ## 公共保险机构知识包
 
@@ -443,7 +443,7 @@ python3 scripts/private_workspace_readiness.py \
 python3 scripts/private_dry_run.py \
   --workspace examples/local-connectors/synthetic-agent-workspace \
   --as-of 2026-05-14 \
-  --out /tmp/insurance-copilot-dry-run
+  --out /tmp/insurance_copilot-dry-run
 ```
 
 它把 readiness、connector bundle、renewal watcher output 和 script-only cron wrapper simulation 串联成一个诊断输出目录，包含 `manifest.json`、`audit-trace.json`、`audit-trace.md` 和 `deployment-checklist.md`。它保持只读，报告 `read_only_verified`、`workspace_unchanged` 和 `ready_for_scheduled_watcher`，记录 `live_cron_created: false`，并执行 No External Writes。见 `docs/private-dry-run-harness.md` 和 `examples/private-dry-run/`。
@@ -453,7 +453,7 @@ python3 scripts/private_dry_run.py \
 ## 仓库结构
 
 ```text
-skills/insurance-copilot/     Umbrella Hermes skill package
+skills/insurance_copilot/     Umbrella Hermes skill package
 standards/                    公共知识标准和 schema evolution policy
 schemas/                      intake/classification/extraction/gaps 机器可读 schemas
 prompts/                      未来受控 LLM gateway 的 prompt contracts
@@ -486,7 +486,7 @@ python3 scripts/validate_all_knowledge_packs.py
 python3 scripts/validate_knowledge_pack.py knowledge/institutions/_template --template
 python3 scripts/validate_agent_workspace.py agent-workspace-template --template
 python3 scripts/ingest_gateway.py --help
-python3 scripts/private_dry_run.py --workspace examples/local-connectors/synthetic-agent-workspace --as-of 2026-05-14 --out /tmp/insurance-copilot-dry-run --force || test $? -eq 1
+python3 scripts/private_dry_run.py --workspace examples/local-connectors/synthetic-agent-workspace --as-of 2026-05-14 --out /tmp/insurance_copilot-dry-run --force || test $? -eq 1
 python3 -m pytest tests/test_ingest_gateway.py tests/test_local_file_connectors.py tests/test_renewal_watcher.py tests/test_renewal_watcher_cron_wrapper.py tests/test_private_workspace_readiness.py tests/test_private_dry_run.py tests/test_practitioner_mvp_surface.py tests/test_generic_first_architecture.py -q
 ```
 

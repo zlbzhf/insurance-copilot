@@ -2,16 +2,19 @@
 
 This example shows the intended first usable Insurance Copilot loop. It is synthetic and manual-first.
 
-## Input 1 — Set the Practice Profile
+## Input 1 — Set the Practice Profile / 首次执业画像确认
 
 ```text
-Use Agency Playbook Builder in Quick Start mode. I am a licensed insurance agent serving Chinese-speaking family clients. Main work: life, health, critical illness, savings/retirement, and policy review. Help me create a practical profile. Ask only essential questions first.
+/skill insurance_copilot
+使用 Agency Playbook Builder 的 Quick Start mode。请默认中文输出。我是持牌保险代理人，服务中文家庭客户，主要做寿险、医疗、重疾、储蓄/养老和保单检视。请先问最多三个必要问题：机构、角色、主要服务地区/客户/本周重点；不要默认机构或角色。如果我说“不确定”，用保守默认值并标记 `[待核实]`。然后生成层级清晰的临时执业画像。
 ```
 
 Expected assistant behavior:
 
-- ask for jurisdiction/market, license scope, carriers/product lines, compliance reviewer, escalation rules, approved scripts/source hierarchy, client data policy, communication channels, and tone;
-- mark unknowns `[confirm with compliance/legal]`;
+- default to Chinese for Chinese Telegram use and explain `[待核实]` / `[verify]` before relying on uncertain facts;
+- actively confirm institution and role; never assume them from examples, memory, or an AIA seed pack;
+- ask at most three onboarding questions before producing a provisional profile;
+- if existing profile information is supplied, summarize existing facts first, ask the agent to confirm, mark gaps `[待核实]`, and then route to Daily Agent Workbench rather than restarting onboarding;
 - avoid final product recommendations or reusable customer scripts until profile context is confirmed.
 
 ## Input 2 — Daily Workbench
@@ -23,19 +26,19 @@ Use Daily Agent Workbench. Today I have: family-protection meeting at 2pm; renew
 Expected output shape:
 
 ```text
-## Today's Priority Order
-1. Renewal/payment status [verify carrier/payment status]
-2. Claim-support document checklist [verify policy/carrier claim guide]
-3. Family-protection meeting prep
-4. Referral thank-you draft
+## 今日优先级
+1. 续保/缴费状态 `[待核实 carrier/payment status]`
+2. 理赔资料清单 `[待核实 policy/carrier claim guide]`
+3. 家庭保障面谈准备
+4. 转介绍感谢话术草稿
 
-## Internal Next Actions
+## 内部行动项
 - ...
 
-## Customer Drafts for Review
+## 客户话术草稿（仅供复核）
 - ...
 
-## Compliance / Escalation Flags
+## 合规 / 升级提示
 - ...
 ```
 

@@ -114,7 +114,7 @@ def test_quickstart_is_short_practitioner_loop_before_advanced_appendix() -> Non
 
 
 def test_skill_contains_task_first_routing_rules() -> None:
-    text = read("skills/insurance-copilot/SKILL.md")
+    text = read("skills/insurance_copilot/SKILL.md")
     assert "## Practical MVP Operating Mode" in text
     assert "Do not start by dumping the full workflow catalog" in text
     assert "If the user already states a task, route directly" in text
@@ -169,8 +169,8 @@ def test_practical_mvp_eval_forbidden_terms_are_not_safe_negative_language() -> 
 
 
 def test_onboarding_is_guided_not_manual_profile_form() -> None:
-    skill = read("skills/insurance-copilot/SKILL.md")
-    cold_start = read("skills/insurance-copilot/references/cold-start-interview.md")
+    skill = read("skills/insurance_copilot/SKILL.md")
+    cold_start = read("skills/insurance_copilot/references/cold-start-interview.md")
     quickstart = read("docs/quickstart.md")
     workflow_surface = read("docs/workflow-surface.md")
 
@@ -184,8 +184,140 @@ def test_onboarding_is_guided_not_manual_profile_form() -> None:
     assert "Use conservative defaults when the agent is unsure" in cold_start
 
 
+def test_telegram_skill_identity_uses_underscore_command() -> None:
+    """Telegram-facing skill identity must be underscore-safe, not hyphen-only."""
+    skill = read("skills/insurance_copilot/SKILL.md")
+    package_script = read("scripts/package_skill.py")
+    validator = read("scripts/validate_repo.py")
+    readme_zh = read("README.zh-CN.md")
+    quickstart = read("docs/quickstart.md")
+    release_checklist = read("docs/release-checklist.md")
+    hermes_design = read("docs/hermes-first-design.md")
+
+    assert "name: insurance_copilot" in skill
+    assert "insurance_copilot" in package_script
+    assert "insurance_copilot" in validator
+    assert "/insurance_copilot" in readme_zh
+    assert "/insurance_copilot" in quickstart
+
+    # Command/install identity should be underscore-safe in runtime source,
+    # package script, quickstart, and user-facing README examples. Release and
+    # design docs may mention the legacy hyphenated install dir only as a stale
+    # runtime cleanup target. Repository and private workspace slugs stay
+    # hyphenated elsewhere by design.
+    for forbidden in [
+        "name: insurance-copilot",
+        "/skill insurance-copilot",
+        "~/.hermes/skills/insurance/insurance-copilot",
+        "skills/insurance-copilot",
+    ]:
+        for text in [skill, package_script, readme_zh, quickstart]:
+            assert forbidden not in text
+
+    assert "Stale installed runtime directory `~/.hermes/skills/insurance/insurance-copilot/`" in release_checklist
+    assert "clean stale installed runtime copies" in hermes_design
+    assert "does not provide a per-skill `on_load` hook" in hermes_design
+
+
+def test_repo_and_private_workspace_slugs_remain_hyphenated() -> None:
+    """Only Hermes skill command/install identity uses underscores; repo/private product slugs stay hyphenated."""
+    agents = read("AGENTS.md")
+    readme = read("README.md")
+    readme_zh = read("README.zh-CN.md")
+    skill = read("skills/insurance_copilot/SKILL.md")
+    registry = read("knowledge/registry.json")
+
+    assert "git@github.com-insurance-copilot:zlbzhf/insurance-copilot.git" in agents
+    assert "https://github.com/zlbzhf/insurance-copilot" in registry
+    for text in [readme, readme_zh, skill]:
+        assert "~/.insurance-copilot/agents/<agent-id>/" in text or "~/.insurance-copilot/agents/<institution-role-agent-id>/" in text
+        assert "~/.insurance_copilot" not in text
+
+
+def test_hermes_core_runtime_limit_and_telegram_menu_cap_are_documented() -> None:
+    """Document what repo can fix versus Hermes core/menu runtime limits."""
+    hermes_design = read("docs/hermes-first-design.md")
+    release_checklist = read("docs/release-checklist.md")
+    validator = read("scripts/validate_repo.py")
+
+    for text in [hermes_design, validator]:
+        assert "Hermes core behavior normalizes skill slash-command keys internally to hyphenated slugs" in text
+        assert "Telegram menu rendering sanitizes hyphens back to underscores" in text
+        assert "Gateway matching treats underscore and hyphen command input as aliases" in text
+        assert "does not provide a per-skill `on_load` hook" in text
+        assert "on_empty_invocation_prompt" in text
+
+    for phrase in [
+        "Telegram allows up to 100 bot menu commands",
+        "If the menu is already full",
+        "/skill insurance_copilot",
+        "/insurance_copilot",
+    ]:
+        assert phrase in hermes_design
+
+    assert "Bot API 100-command cap" in release_checklist
+
+
+def test_chinese_onboarding_profile_and_verify_marker_are_runtime_effective() -> None:
+    """Cold-start/profile runtime docs should match the Chinese Telegram product surface."""
+    skill = read("skills/insurance_copilot/SKILL.md")
+    cold_start = read("skills/insurance_copilot/references/cold-start-interview.md")
+    profile_template = read("skills/insurance_copilot/templates/practice-profile.md")
+    review_gate = read("skills/insurance_copilot/templates/professional-review-gate.md")
+
+    for text in [skill, cold_start, profile_template, review_gate]:
+        assert "默认使用中文" in text
+        assert "[待核实]" in text
+        assert "含义：" in text or "表示：" in text
+
+    for text in [skill, cold_start]:
+        assert "已有资料" in text
+        assert "先展示摘要并请代理人确认" in text
+        assert "不得默认机构" in text
+        assert "不得默认角色" in text
+        assert "主动询问机构" in text
+        assert "主动询问角色" in text
+
+    for section in [
+        "## 1. 资料状态",
+        "## 2. 执业身份确认",
+        "## 3. 业务边界与产品范围",
+        "## 4. 客户与服务场景",
+        "## 5. 合规与升级规则",
+        "## 6. 输出偏好与下一步",
+    ]:
+        assert section in profile_template
+
+    for phrase in [
+        "专业复核关口",
+        "复核负责人",
+        "客户发送状态：仅为草稿，需持牌/合规复核；尚未批准发送",
+        "外部动作状态：未授权任何外部动作",
+        "最小安全下一步",
+    ]:
+        assert phrase in review_gate
+
+
+def test_chinese_telegram_first_session_docs_examples_and_eval_are_protected() -> None:
+    docs = [
+        read("README.zh-CN.md"),
+        read("docs/quickstart.md"),
+        read("examples/practical-mvp/agent-first-session.md"),
+        read("examples/practical-mvp/agent-friendly-onboarding.md"),
+        read("evals/expected/chinese-telegram-onboarding.md"),
+    ]
+    for text in docs:
+        assert "[待核实]" in text
+        assert "默认中文" in text or "默认使用中文" in text or "default to Chinese" in text
+    for phrase in ["主动询问机构", "主动询问角色", "不得默认机构", "不得默认角色", "已有资料", "先展示摘要并请代理人确认"]:
+        assert phrase in read("evals/expected/chinese-telegram-onboarding.md")
+    case = read("evals/cases/chinese-telegram-onboarding.json")
+    assert "chinese-telegram-onboarding" in case
+    assert "Daily Agent Workbench" in case
+
+
 def test_scenarios_and_evals_are_ai_assisted_not_agent_homework() -> None:
-    skill = read("skills/insurance-copilot/SKILL.md")
+    skill = read("skills/insurance_copilot/SKILL.md")
     workflow_surface = read("docs/workflow-surface.md")
     example = read("examples/practical-mvp/agent-friendly-onboarding.md")
     eval_readme = read("evals/README.md")
@@ -202,7 +334,7 @@ def test_scenarios_and_evals_are_ai_assisted_not_agent_homework() -> None:
 
 
 def test_skill_customer_first_advocacy_not_empty_neutrality() -> None:
-    text = read("skills/insurance-copilot/SKILL.md")
+    text = read("skills/insurance_copilot/SKILL.md")
     workflow_surface = read("docs/workflow-surface.md")
 
     for phrase in [
@@ -217,8 +349,8 @@ def test_skill_customer_first_advocacy_not_empty_neutrality() -> None:
 
 
 def test_underwriting_disclosure_supports_approval_without_misrepresentation() -> None:
-    intake = read("skills/insurance-copilot/references/client-needs-intake.md")
-    compliance = read("skills/insurance-copilot/references/compliance-starter.md")
+    intake = read("skills/insurance_copilot/references/client-needs-intake.md")
+    compliance = read("skills/insurance_copilot/references/compliance-starter.md")
     expected = read("evals/expected/underwriting-disclosure-advocacy.md")
 
     for text in [intake, compliance, expected]:
@@ -233,7 +365,7 @@ def test_underwriting_disclosure_supports_approval_without_misrepresentation() -
 
 
 def test_claims_triage_preserves_customer_claim_arguments() -> None:
-    claims = read("skills/insurance-copilot/references/claims-triage.md")
+    claims = read("skills/insurance_copilot/references/claims-triage.md")
     expected = read("evals/expected/property-claim-late-notice-advocacy.md")
 
     for text in [claims, expected]:
@@ -303,7 +435,7 @@ def test_advocacy_operating_model_defines_standard_output() -> None:
 
 
 def test_new_agent_coach_mode_is_first_class_service_pattern() -> None:
-    skill = read("skills/insurance-copilot/SKILL.md")
+    skill = read("skills/insurance_copilot/SKILL.md")
     workflow = read("docs/workflow-surface.md")
     quickstart = read("docs/quickstart.md")
 
@@ -317,7 +449,7 @@ def test_new_agent_coach_mode_is_first_class_service_pattern() -> None:
 
 def test_empty_neutrality_gate_requires_action_plan() -> None:
     quality = read("docs/quality-gates.md")
-    compliance = read("skills/insurance-copilot/references/compliance-starter.md")
+    compliance = read("skills/insurance_copilot/references/compliance-starter.md")
 
     for text in [quality, compliance]:
         lowered = text.lower()
@@ -332,9 +464,9 @@ def test_empty_neutrality_gate_requires_action_plan() -> None:
 
 def test_runtime_constraints_are_not_docs_only() -> None:
     doc_map = read("docs/documentation-map.md")
-    skill = read("skills/insurance-copilot/SKILL.md")
+    skill = read("skills/insurance_copilot/SKILL.md")
     quality = read("docs/quality-gates.md")
-    template = read("skills/insurance-copilot/templates/customer-advocacy-memo.md")
+    template = read("skills/insurance_copilot/templates/customer-advocacy-memo.md")
 
     for phrase in [
         "runtime-effective",
@@ -450,9 +582,9 @@ def test_systemic_eval_cases_cover_beyond_two_examples() -> None:
 
 
 def test_professional_review_gate_is_runtime_effective() -> None:
-    skill = read("skills/insurance-copilot/SKILL.md")
-    reference = read("skills/insurance-copilot/references/professional-review-gate.md")
-    template = read("skills/insurance-copilot/templates/professional-review-gate.md")
+    skill = read("skills/insurance_copilot/SKILL.md")
+    reference = read("skills/insurance_copilot/references/professional-review-gate.md")
+    template = read("skills/insurance_copilot/templates/professional-review-gate.md")
     quality = read("docs/quality-gates.md")
     surface = read("docs/workflow-surface.md")
     spec = read("docs/product-development-spec.md")
@@ -489,9 +621,9 @@ def test_professional_review_gate_is_runtime_effective() -> None:
 
 
 def test_institution_knowledge_organizer_generic_runtime_and_aia_seed_are_separate() -> None:
-    skill = read("skills/insurance-copilot/SKILL.md")
-    reference = read("skills/insurance-copilot/references/institution-knowledge-organizer.md")
-    template = read("skills/insurance-copilot/templates/institution-knowledge-organizer.md")
+    skill = read("skills/insurance_copilot/SKILL.md")
+    reference = read("skills/insurance_copilot/references/institution-knowledge-organizer.md")
+    template = read("skills/insurance_copilot/templates/institution-knowledge-organizer.md")
     quality = read("docs/quality-gates.md")
     surface = read("docs/workflow-surface.md")
     spec = read("docs/product-development-spec.md")
@@ -619,9 +751,9 @@ def test_customer_impacting_scenarios_link_advocacy_and_professional_review_gate
         for phrase in data["must_not_include"]:
             assert phrase not in expected
 
-    skill = read("skills/insurance-copilot/SKILL.md")
-    advocacy_template = read("skills/insurance-copilot/templates/customer-advocacy-memo.md")
-    professional_gate = read("skills/insurance-copilot/references/professional-review-gate.md")
+    skill = read("skills/insurance_copilot/SKILL.md")
+    advocacy_template = read("skills/insurance_copilot/templates/customer-advocacy-memo.md")
+    professional_gate = read("skills/insurance_copilot/references/professional-review-gate.md")
     for text in [skill, advocacy_template, professional_gate]:
         assert "Customer Advocacy Memo" in text
         assert "Professional Review Gate" in text
@@ -630,10 +762,10 @@ def test_customer_impacting_scenarios_link_advocacy_and_professional_review_gate
         assert "minimum safe next step" in text.lower()
 
     for rel in [
-        "skills/insurance-copilot/references/claims-triage.md",
-        "skills/insurance-copilot/references/policy-review.md",
-        "skills/insurance-copilot/references/renewal-review.md",
-        "skills/insurance-copilot/references/chinese-talk-tracks.md",
+        "skills/insurance_copilot/references/claims-triage.md",
+        "skills/insurance_copilot/references/policy-review.md",
+        "skills/insurance_copilot/references/renewal-review.md",
+        "skills/insurance_copilot/references/chinese-talk-tracks.md",
     ]:
         text = read(rel)
         assert "Customer Advocacy Memo" in text
@@ -643,9 +775,9 @@ def test_customer_impacting_scenarios_link_advocacy_and_professional_review_gate
 
 def test_source_grounding_data_boundary_guardrails_are_runtime_effective() -> None:
     """P1/P2 grounding guardrails must be runtime-effective, not generic RAG prose."""
-    skill = read("skills/insurance-copilot/SKILL.md")
-    reference = read("skills/insurance-copilot/references/source-grounding-guardrails.md")
-    template = read("skills/insurance-copilot/templates/source-grounding-guardrails.md")
+    skill = read("skills/insurance_copilot/SKILL.md")
+    reference = read("skills/insurance_copilot/references/source-grounding-guardrails.md")
+    template = read("skills/insurance_copilot/templates/source-grounding-guardrails.md")
     quality = read("docs/quality-gates.md")
     surface = read("docs/workflow-surface.md")
     spec = read("docs/product-development-spec.md")
@@ -717,9 +849,9 @@ def test_source_grounding_data_boundary_guardrails_are_runtime_effective() -> No
 
 def test_private_workspace_trace_readiness_is_runtime_effective() -> None:
     """P2 private connector/readiness trace must be runtime-effective and read-only."""
-    skill = read("skills/insurance-copilot/SKILL.md")
-    reference = read("skills/insurance-copilot/references/private-workspace-trace-readiness.md")
-    template = read("skills/insurance-copilot/templates/private-workspace-audit-trace.md")
+    skill = read("skills/insurance_copilot/SKILL.md")
+    reference = read("skills/insurance_copilot/references/private-workspace-trace-readiness.md")
+    template = read("skills/insurance_copilot/templates/private-workspace-audit-trace.md")
     quality = read("docs/quality-gates.md")
     surface = read("docs/workflow-surface.md")
     spec = read("docs/product-development-spec.md")
@@ -768,9 +900,9 @@ def test_private_workspace_trace_readiness_is_runtime_effective() -> None:
 
 def test_external_write_action_boundary_gate_is_runtime_effective() -> None:
     """P3 write-capable integrations must stay design-only until explicitly approved."""
-    skill = read("skills/insurance-copilot/SKILL.md")
-    reference = read("skills/insurance-copilot/references/external-write-action-boundary.md")
-    template = read("skills/insurance-copilot/templates/external-write-action-boundary.md")
+    skill = read("skills/insurance_copilot/SKILL.md")
+    reference = read("skills/insurance_copilot/references/external-write-action-boundary.md")
+    template = read("skills/insurance_copilot/templates/external-write-action-boundary.md")
     quality = read("docs/quality-gates.md")
     surface = read("docs/workflow-surface.md")
     spec = read("docs/product-development-spec.md")

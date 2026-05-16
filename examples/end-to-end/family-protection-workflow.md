@@ -31,7 +31,7 @@ All amounts and product categories are `[verify]` until facts and methodology ar
 
 ## 4. Client Plan Draft
 
-Use `skills/insurance-copilot/templates/client-plan-draft.md` to create:
+Use `skills/insurance_copilot/templates/client-plan-draft.md` to create:
 - customer profile snapshot;
 - confirmed needs;
 - missing facts;

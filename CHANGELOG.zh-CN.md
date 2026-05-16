@@ -10,6 +10,7 @@
 
 ### 新增
 
+- 新增中文 Telegram onboarding 文档、示例、eval 和 validator 覆盖，保护 `/skill insurance_copilot`、机构/角色确认、`[待核实]` 解释，以及已有资料先摘要确认的行为。
 - 新增 `docs/product-development-spec.md`，作为持久的产品开发事实来源和可用状态定义。
 - 新增 `docs/reference-landscape.md`，用于把外部/参考项目映射到 project significance、implementation form、non-goals 和 priority。
 - 新增 Professional Review Gate 工作流 reference、template、eval、example 和 validator 覆盖，使客户可见、受监管、外部使用或接近副作用的输出必须标明 action class、review owner、source verification status、customer-facing approval status、side-effect status、draft for licensed/compliance review、not approved to send、no external action is authorized 和 minimum safe next step。
@@ -21,12 +22,14 @@
 
 ### 变更
 
+- 将可安装 Hermes 技能目录/frontmatter 身份改为 Telegram 安全的 `insurance_copilot`，同时保留公开仓库 slug `insurance-copilot` 和私有工作区根路径 `~/.insurance-copilot/agents/<agent-id>/`。
 - 明确 Insurance Copilot 目前已经可作为 manual-first Hermes skill beta 使用，但还不是可直接用于 live automation、客户发送、CRM 写入、投保提交、理赔提交、保单变更、报价引擎或最终监管建议的生产系统。
 - 将 Institution Knowledge Organizer 从 AIA-first 流程泛化为 `knowledge/institutions/<pack_id>/` 下的 pack-agnostic public institution pack 工作流；AIA/友邦 保留为当前 seed 示例，而不是通用运行时定义。
 - 更新 README、中文 README、CI、contribution templates、intake templates 和 private workspace 默认值，使其使用 registry-driven 验证和通用机构占位符。
 
 ### 修复
 
+- 修复旧的连字符技能安装指引可能导致 Telegram 命令/菜单漂移的问题；记录 Hermes 内部连字符 key 与 Telegram 下划线命令的映射，以及发布前清理旧 runtime 安装目录的步骤。
 - 修复会让通用产品层看起来绑定 AIA 的过拟合表述和默认值。
 - 修复验证覆盖，将通用 Institution Knowledge Organizer 行为与 AIA seed-pack 行为分开检查。
 
@@ -39,8 +42,8 @@
 
 ### 新增
 
-- 新增面向持牌保险专业人士的 Hermes-first `insurance-copilot` skill package。
-- 新增核心 umbrella skill：`skills/insurance-copilot/SKILL.md`，包含任务优先路由、安全边界、隐私规则、New Agent Default Mode、New Agent Coach Mode、客户优先倡导，以及 draft-only 操作安全规则。
+- 新增面向持牌保险专业人士的 Hermes-first `insurance_copilot` skill package。
+- 新增核心 umbrella skill：`skills/insurance_copilot/SKILL.md`，包含任务优先路由、安全边界、隐私规则、New Agent Default Mode、New Agent Coach Mode、客户优先倡导，以及 draft-only 操作安全规则。
 - 新增工作流 references，覆盖 agency playbook setup、daily workbench、client needs intake、coverage-gap drafting、client plan drafting、product-fit review、compliance copy checking、existing policy review、replacement/surrender suitability triage、claims support triage、renewal/lapse follow-up、objection response、referral asks、Chinese talk tracks、annuity/investment-linked caution review、stakeholder summaries 和 baseline compliance vocabulary。
 - 新增输出 templates，覆盖 practice profiles、client intake、coverage-gap analysis、product-fit review、compliance checks、policy review、replacement/surrender triage、claims triage、renewal review、stakeholder summaries、objection responses、daily workbench output、client plan drafts、Chinese talk tracks、referral asks 和 customer advocacy memos。
 - 新增 practical MVP 示例，包括首次会话 onboarding、agent-friendly New Agent Default Mode 和 customer-first advocacy 示例。

@@ -15,7 +15,7 @@ except Exception:  # pragma: no cover - validator works without PyYAML for top-l
     yaml = None
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILL_DIR = ROOT / "skills" / "insurance-copilot"
+SKILL_DIR = ROOT / "skills" / "insurance_copilot"
 SKILL = SKILL_DIR / "SKILL.md"
 REF_DIR = SKILL_DIR / "references"
 TEMPLATE_DIR = SKILL_DIR / "templates"
@@ -189,7 +189,7 @@ FORBIDDEN_PATHS = [
 
 BAD_TERMS = [
     "~/." + "claude/plugins/config",
-    "/insurance-copilot" + ":",
+    "/insurance_copilot" + ":",
     "." + "claude-plugin",
 ]
 
@@ -280,8 +280,20 @@ def main() -> int:
 
     text = SKILL.read_text()
     fm, body = parse_frontmatter(text)
-    if fm.get("name") != "insurance-copilot":
-        return fail("skill frontmatter name must be insurance-copilot")
+    if fm.get("name") != "insurance_copilot":
+        return fail("skill frontmatter name must be insurance_copilot")
+    repo_identity_checks = {
+        "AGENTS.md": "git@github.com-insurance-copilot:zlbzhf/insurance-copilot.git",
+        "knowledge/registry.json": "https://github.com/zlbzhf/insurance-copilot",
+        "README.md": "~/.insurance-copilot/agents/<agent-id>/",
+        "README.zh-CN.md": "~/.insurance-copilot/agents/<agent-id>/",
+    }
+    for rel, phrase in repo_identity_checks.items():
+        if phrase not in (ROOT / rel).read_text():
+            return fail(f"repo/private slug should stay hyphenated in {rel}: {phrase}")
+    for rel in ["README.md", "README.zh-CN.md", "skills/insurance_copilot/SKILL.md"]:
+        if "~/.insurance_copilot" in (ROOT / rel).read_text():
+            return fail(f"private workspace path must use ~/.insurance-copilot, not underscore: {rel}")
     desc = fm.get("description", "")
     if not desc or len(desc) > 1024:
         return fail("skill description missing or >1024 chars")
@@ -315,6 +327,65 @@ def main() -> int:
     ]:
         if phrase not in text:
             return fail(f"P0 runtime principle missing from SKILL.md: {phrase}")
+    chinese_runtime_files = [
+        SKILL,
+        REF_DIR / "cold-start-interview.md",
+        TEMPLATE_DIR / "practice-profile.md",
+        TEMPLATE_DIR / "professional-review-gate.md",
+    ]
+    for path in chinese_runtime_files:
+        ctext = path.read_text()
+        for phrase in ["默认使用中文", "[待核实]", "含义："]:
+            if phrase not in ctext:
+                return fail(f"Chinese runtime marker missing in {path.relative_to(ROOT)}: {phrase}")
+    for phrase in ["已有资料", "先展示摘要并请代理人确认", "不得默认机构", "不得默认角色", "主动询问机构", "主动询问角色"]:
+        if phrase not in text or phrase not in (REF_DIR / "cold-start-interview.md").read_text():
+            return fail(f"Chinese onboarding/profile behavior missing from runtime docs: {phrase}")
+    profile_template = (TEMPLATE_DIR / "practice-profile.md").read_text()
+    for section in ["## 1. 资料状态", "## 2. 执业身份确认", "## 3. 业务边界与产品范围", "## 4. 客户与服务场景", "## 5. 合规与升级规则", "## 6. 输出偏好与下一步"]:
+        if section not in profile_template:
+            return fail(f"Chinese profile template missing section: {section}")
+    for rel in [
+        "README.zh-CN.md",
+        "docs/quickstart.md",
+        "examples/practical-mvp/agent-first-session.md",
+        "examples/practical-mvp/agent-friendly-onboarding.md",
+        "evals/expected/chinese-telegram-onboarding.md",
+    ]:
+        doc_text = (ROOT / rel).read_text()
+        for phrase in ["[待核实]", "机构", "角色"]:
+            if phrase not in doc_text:
+                return fail(f"Chinese onboarding docs/examples missing {phrase}: {rel}")
+    chinese_eval = ROOT / "evals" / "cases" / "chinese-telegram-onboarding.json"
+    if not chinese_eval.exists():
+        return fail("missing Chinese Telegram onboarding eval case")
+    hermes_design = (ROOT / "docs" / "hermes-first-design.md").read_text()
+    for phrase in [
+        "Telegram Command Identity and Runtime Limit",
+        "insurance_copilot",
+        "insurance-copilot",
+        "~/.insurance-copilot/agents/<agent-id>/",
+        "Hermes core behavior normalizes skill slash-command keys internally to hyphenated slugs",
+        "Telegram menu rendering sanitizes hyphens back to underscores",
+        "Gateway matching treats underscore and hyphen command input as aliases",
+        "does not provide a per-skill `on_load` hook",
+        "on_empty_invocation_prompt",
+        "Telegram allows up to 100 bot menu commands",
+        "If the menu is already full",
+    ]:
+        if phrase not in hermes_design:
+            return fail(f"Hermes identity/runtime-limit doc missing phrase: {phrase}")
+    release_checklist = (ROOT / "docs" / "release-checklist.md").read_text()
+    for phrase in [
+        "~/.hermes/skills/insurance/insurance-copilot/",
+        "/skill insurance_copilot",
+        "/insurance_copilot",
+        "internal `/insurance-copilot` key still resolves from `/insurance_copilot`",
+        "do not rename repo/private slugs to underscores",
+        "Bot API 100-command cap",
+    ]:
+        if phrase not in release_checklist:
+            return fail(f"release checklist missing Telegram/runtime identity check: {phrase}")
     documentation_map = (ROOT / "docs" / "documentation-map.md").read_text()
     for phrase in [
         "runtime-effective",
@@ -902,7 +973,7 @@ def main() -> int:
         "from idea to product principle to operating model to workflow to scenario matrix to eval",
         "Advanced / Later: Local Connectors and Watchers",
         "Developer Validation",
-        "mkdir -p ~/.hermes/skills/insurance/insurance-copilot",
+        "mkdir -p ~/.hermes/skills/insurance/insurance_copilot",
         "python3 scripts/validate_repo.py",
         "python3 scripts/package_skill.py --check",
         "python3 scripts/run_evals.py",
@@ -914,7 +985,7 @@ def main() -> int:
         "agent-workspace-template/",
         "docs/workflow-surface.md",
         "docs/documentation-map.md",
-        "skills/insurance-copilot/templates/customer-advocacy-memo.md",
+        "skills/insurance_copilot/templates/customer-advocacy-memo.md",
         "Daily Agent Workbench",
         "Client Plan Draft",
         "scripts/local_file_connectors.py",
@@ -953,7 +1024,7 @@ def main() -> int:
         "docs/reference-landscape.md",
         "manual-first Hermes skill beta",
         "本身不是运行时来源",
-        "skills/insurance-copilot/templates/customer-advocacy-memo.md",
+        "skills/insurance_copilot/templates/customer-advocacy-memo.md",
         "公共保险机构知识包",
         "代理人私有工作区",
         "开发验证",
@@ -973,7 +1044,7 @@ def main() -> int:
         "### Changed",
         "### Fixed",
         "### Security and Compliance",
-        "Hermes-first `insurance-copilot` skill package",
+        "Hermes-first `insurance_copilot` skill package",
         "customer-first advocacy within compliance boundaries",
         "runtime-effective",
         "README.zh-CN.md",
@@ -994,7 +1065,7 @@ def main() -> int:
         "### 变更",
         "### 修复",
         "### 安全与合规",
-        "Hermes-first `insurance-copilot` skill package",
+        "Hermes-first `insurance_copilot` skill package",
         "customer-first advocacy within compliance boundaries",
         "runtime-effective constraints",
         "README.zh-CN.md",
@@ -1258,7 +1329,7 @@ def main() -> int:
         if phrase not in output:
             return fail(f"private workspace readiness smoke output missing phrase: {phrase}")
 
-    dry_run_out = Path("/tmp/insurance-copilot-validator-dry-run")
+    dry_run_out = Path("/tmp/insurance_copilot-validator-dry-run")
     if dry_run_out.exists():
         import shutil
         shutil.rmtree(dry_run_out)

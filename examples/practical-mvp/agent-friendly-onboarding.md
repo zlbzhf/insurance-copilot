@@ -10,6 +10,7 @@ Use Agency Playbook Builder in New Agent Default Mode. I am a new insurance agen
 
 Expected assistant behavior:
 
+- 默认使用中文 for Chinese Telegram use;
 - reassure the agent that `I don't know yet` is acceptable;
 - ask at most three simple onboarding questions;
 - every question allows `I don't know yet` or conservative defaults;
@@ -21,26 +22,33 @@ Expected assistant behavior:
 ## Expected Output Sketch — Provisional Profile
 
 ```markdown
-# Insurance Copilot Practice Profile
+# Insurance Copilot Practice Profile / 保险执业画像
 
-## Profile Status
+## 1. 资料状态
 - Mode: New Agent Default Mode
-- Confidence: provisional
-- Unknowns: jurisdiction, exact license scope, approved script source, compliance reviewer [verify]
+- Confidence: provisional / 临时草案
+- Unknowns / [待核实] items: jurisdiction, exact license scope, approved script source, compliance reviewer
+- `[待核实]` / `[verify]` 含义：该事实尚未被客户、保单、保险公司系统、主管、合规、核保、理赔或正式文件确认；客户发送、提交、变更、报价、理赔、替换或形成结论前必须复核。
 
-## Working Assumptions
-- Institution/public pack: [verify with agent; do not assume]
-- Primary customer language: Chinese [verify]
-- Communication style: warm, low-pressure, plain-language
+## 2. 执业身份确认
+- Agency / 机构: `[待核实；不得默认]`
+- Role / 角色: `[待核实；不得默认]`
+- Jurisdictions / 地区: `[待核实]`
+
+## 3. 业务边界与产品范围
 - Product posture: education, fact-find, policy organization, and review-ready drafts before product recommendations
+- Replacement/surrender rules: no replacement, surrender, cancellation, or policy change suggestions without review
 
-## Non-Negotiable Defaults
+## 4. 客户与服务场景
+- Primary customer language: Chinese `[待核实]`
+- Communication style: warm, low-pressure, plain-language
+
+## 5. 合规与升级规则
 - No guaranteed approval, payout, savings, returns, or risk-free language
 - No advice to conceal, minimize, or omit health/financial disclosures
-- No replacement, surrender, cancellation, or policy change suggestions without review
 - Customer-facing copy is draft language for licensed/compliance review
 
-## Next Useful Jobs
+## 6. 输出偏好与下一步
 1. Paste today's customer notes for Daily Agent Workbench
 2. Paste a customer question for Client Needs Intake or Objection Response Drafter
 3. Paste a WeChat draft for Compliance Copy Checker
@@ -54,6 +62,7 @@ customer says: I already have insurance, why should I look again?
 
 Expected assistant behavior:
 
+- 默认使用中文 for Chinese Telegram use;
 - do not require the agent to write a scenario template;
 - detect this as a reusable objection / policy-review invitation scenario;
 - create an AI-generated scenario card;

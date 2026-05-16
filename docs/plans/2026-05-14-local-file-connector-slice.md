@@ -1,6 +1,6 @@
 # Local File Connector Slice Implementation Plan
 
-> **For Hermes:** This plan is the durable handoff artifact. If context is compressed or the session is interrupted, resume by reading this file first, then `docs/plans/2026-05-14-practical-agent-workflow-beta.md`, `README.md`, `skills/insurance-copilot/SKILL.md`, and run `git status --short`. Do not rely on prior chat history.
+> **For Hermes:** This plan is the durable handoff artifact. If context is compressed or the session is interrupted, resume by reading this file first, then `docs/plans/2026-05-14-practical-agent-workflow-beta.md`, `README.md`, `skills/insurance_copilot/SKILL.md`, and run `git status --short`. Do not rely on prior chat history.
 
 **Goal:** Add a small read-only local-file connector slice that turns private workspace files into a Daily Agent Workbench input bundle without touching real systems or external side effects.
 

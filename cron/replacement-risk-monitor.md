@@ -5,7 +5,7 @@ Use Hermes cron or a manual workflow to scan internal notes for cancellation, su
 ## Recommended Prompt
 
 ```text
-Load the insurance-copilot skill. Review notes under <path> for replacement/surrender/cancellation risk indicators. Produce an internal escalation candidate list with source file, quoted phrase, risk category, and recommended next review step. Do not make compliance findings or contact customers.
+Load the insurance_copilot skill. Review notes under <path> for replacement/surrender/cancellation risk indicators. Produce an internal escalation candidate list with source file, quoted phrase, risk category, and recommended next review step. Do not make compliance findings or contact customers.
 ```
 
 ## Safety

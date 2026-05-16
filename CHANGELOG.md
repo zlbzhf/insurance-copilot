@@ -10,6 +10,7 @@ This project is currently pre-1.0 and milestone-based. The changelog follows a h
 
 ### Added
 
+- Added Chinese Telegram onboarding docs/examples/eval coverage and validator checks for `/skill insurance_copilot`, institution/role confirmation, `[待核实]` explanation, and existing-profile summary behavior.
 - Added `docs/product-development-spec.md` as the durable product-development source of truth and usable-state definition.
 - Added `docs/reference-landscape.md` to map external/reference projects to project significance, implementation form, non-goals, and priority.
 - Added the Professional Review Gate workflow reference, template, eval, example, and validator coverage so customer-facing, regulated, external-use, and side-effect-adjacent outputs classify action class, review owner, source verification status, customer-facing approval status, side-effect status, draft for licensed/compliance review, not approved to send, no external action is authorized, and minimum safe next step.
@@ -21,12 +22,14 @@ This project is currently pre-1.0 and milestone-based. The changelog follows a h
 
 ### Changed
 
+- Renamed the installable Hermes skill directory/frontmatter identity to underscore-safe `insurance_copilot` while preserving the public repo slug `insurance-copilot` and private workspace root `~/.insurance-copilot/agents/<agent-id>/`.
 - Clarified that Insurance Copilot is usable now as a manual-first Hermes skill beta, but not production-complete for live automation, customer sending, CRM writes, application submission, claims filing, policy changes, quote generation, or final regulated advice.
 - Generalized Institution Knowledge Organizer from an AIA-first workflow to a pack-agnostic public institution pack workflow under `knowledge/institutions/<pack_id>/`; AIA/友邦 remains the current seed example, not the generic runtime definition.
 - Updated README, Chinese README, CI, contribution templates, intake templates, and private workspace defaults to use registry-driven validation and generic institution placeholders.
 
 ### Fixed
 
+- Fixed stale hyphenated skill-install guidance that could cause Telegram command/menu drift; documented the Hermes internal hyphen-key versus Telegram underscore-command mapping and release cleanup steps.
 - Fixed AIA-overfit wording and defaults that could make the generic product layer appear AIA-specific.
 - Fixed validation coverage so generic Institution Knowledge Organizer behavior and AIA seed-pack behavior are checked separately.
 
@@ -39,8 +42,8 @@ This project is currently pre-1.0 and milestone-based. The changelog follows a h
 
 ### Added
 
-- Added the Hermes-first `insurance-copilot` skill package for licensed insurance professionals.
-- Added the umbrella skill at `skills/insurance-copilot/SKILL.md` with task-first routing, safety boundaries, privacy guidance, New Agent Default Mode, New Agent Coach Mode, customer-first advocacy, and draft-only action safety.
+- Added the Hermes-first `insurance_copilot` skill package for licensed insurance professionals.
+- Added the umbrella skill at `skills/insurance_copilot/SKILL.md` with task-first routing, safety boundaries, privacy guidance, New Agent Default Mode, New Agent Coach Mode, customer-first advocacy, and draft-only action safety.
 - Added workflow references for agency playbook setup, daily workbench, client needs intake, coverage-gap drafting, client plan drafting, product-fit review, compliance copy checking, existing policy review, replacement/surrender suitability triage, claims support triage, renewal/lapse follow-up, objection response, referral asks, Chinese talk tracks, annuity/investment-linked caution review, stakeholder summaries, and baseline compliance vocabulary.
 - Added output templates for practice profiles, client intake, coverage-gap analysis, product-fit review, compliance checks, policy review, replacement/surrender triage, claims triage, renewal review, stakeholder summaries, objection responses, daily workbench output, client plan drafts, Chinese talk tracks, referral asks, and customer advocacy memos.
 - Added practical MVP examples for first-session onboarding, agent-friendly New Agent Default Mode, and customer-first advocacy.

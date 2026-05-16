@@ -161,7 +161,7 @@
         "--format",
         "json",
         "--output",
-        "/tmp/insurance-copilot-synthetic-dry-run/workbench-bundle.json"
+        "/tmp/insurance_copilot-synthetic-dry-run/workbench-bundle.json"
       ],
       "exit_code": 0,
       "status": "ok",
@@ -177,7 +177,7 @@
         "--format",
         "markdown",
         "--output",
-        "/tmp/insurance-copilot-synthetic-dry-run/workbench-bundle.md"
+        "/tmp/insurance_copilot-synthetic-dry-run/workbench-bundle.md"
       ],
       "exit_code": 0,
       "status": "ok",
@@ -196,7 +196,7 @@
         "--format",
         "markdown",
         "--output",
-        "/tmp/insurance-copilot-synthetic-dry-run/cron-simulation.md"
+        "/tmp/insurance_copilot-synthetic-dry-run/cron-simulation.md"
       ],
       "exit_code": 0,
       "status": "ok",
@@ -215,7 +215,7 @@
         "--format",
         "json",
         "--output",
-        "/tmp/insurance-copilot-synthetic-dry-run/readiness-report.json"
+        "/tmp/insurance_copilot-synthetic-dry-run/readiness-report.json"
       ],
       "exit_code": 1,
       "status": "blocked",
@@ -234,7 +234,7 @@
         "--format",
         "markdown",
         "--output",
-        "/tmp/insurance-copilot-synthetic-dry-run/readiness-report.md"
+        "/tmp/insurance_copilot-synthetic-dry-run/readiness-report.md"
       ],
       "exit_code": 1,
       "status": "blocked",
@@ -245,7 +245,7 @@
         "python3",
         "scripts/renewal_watcher.py",
         "--bundle",
-        "/tmp/insurance-copilot-synthetic-dry-run/workbench-bundle.json",
+        "/tmp/insurance_copilot-synthetic-dry-run/workbench-bundle.json",
         "--workspace",
         "<repo-root>/examples/local-connectors/synthetic-agent-workspace",
         "--as-of",
@@ -253,7 +253,7 @@
         "--format",
         "json",
         "--output",
-        "/tmp/insurance-copilot-synthetic-dry-run/renewal-alert.json"
+        "/tmp/insurance_copilot-synthetic-dry-run/renewal-alert.json"
       ],
       "exit_code": 0,
       "status": "ok",
@@ -264,7 +264,7 @@
         "python3",
         "scripts/renewal_watcher.py",
         "--bundle",
-        "/tmp/insurance-copilot-synthetic-dry-run/workbench-bundle.json",
+        "/tmp/insurance_copilot-synthetic-dry-run/workbench-bundle.json",
         "--workspace",
         "<repo-root>/examples/local-connectors/synthetic-agent-workspace",
         "--as-of",
@@ -272,7 +272,7 @@
         "--format",
         "markdown",
         "--output",
-        "/tmp/insurance-copilot-synthetic-dry-run/renewal-alert.md"
+        "/tmp/insurance_copilot-synthetic-dry-run/renewal-alert.md"
       ],
       "exit_code": 0,
       "status": "ok",

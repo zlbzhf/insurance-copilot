@@ -21,7 +21,7 @@ It is designed for the last local review step before a human decides whether to 
 python3 scripts/private_dry_run.py \
   --workspace examples/local-connectors/synthetic-agent-workspace \
   --as-of 2026-05-14 \
-  --out /tmp/insurance-copilot-dry-run
+  --out /tmp/insurance_copilot-dry-run
 ```
 
 For a private workspace:
@@ -30,7 +30,7 @@ For a private workspace:
 python3 scripts/private_dry_run.py \
   --workspace ~/.insurance-copilot/agents/<agent-id> \
   --as-of "$(date +%F)" \
-  --out /tmp/insurance-copilot-dry-run-$(date +%F)
+  --out /tmp/insurance_copilot-dry-run-$(date +%F)
 ```
 
 Optional flags:

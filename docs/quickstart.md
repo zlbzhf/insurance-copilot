@@ -7,14 +7,14 @@ Use this guide when you want a usable first version of Insurance Copilot in Herm
 ### 1. Install and Load
 
 ```bash
-mkdir -p ~/.hermes/skills/insurance/insurance-copilot
-cp -R skills/insurance-copilot/* ~/.hermes/skills/insurance/insurance-copilot/
+mkdir -p ~/.hermes/skills/insurance/insurance_copilot
+cp -R skills/insurance_copilot/* ~/.hermes/skills/insurance/insurance_copilot/
 ```
 
 In Hermes:
 
 ```text
-/skill insurance-copilot
+/skill insurance_copilot
 ```
 
 ### 2. Create the Practice Profile Without a Form
@@ -24,16 +24,18 @@ Never ask the agent to manually fill the profile template. The template is an in
 Prompt:
 
 ```text
-Use Agency Playbook Builder in New Agent Default Mode. I am a new insurance agent serving retail clients. I don't know yet how to define my full positioning. Ask at most three simple questions, use conservative defaults where I am unsure, then generate a provisional practice profile and show what I can do next. If an institution is relevant, ask me to confirm the institution/public pack instead of assuming one.
+Use Agency Playbook Builder in New Agent Default Mode. 默认使用中文 / default to Chinese if my messages are Chinese. I am a new insurance agent and I don't know yet how to define my full profile. Ask at most three simple onboarding questions: institution, role, and market/focus. Do not assume institution or role from examples. Explain `[待核实]` / `[verify]`, use conservative defaults where I am unsure, then generate a visually clear provisional practice profile and show what I can do next. If an existing profile or notes are supplied, summarize them first and ask me to confirm instead of restarting onboarding.
 ```
 
 Expected behavior:
 
+- defaults to Chinese for Chinese Telegram use, while keeping necessary regulated English terms;
 - asks no more than three onboarding questions before producing a provisional profile;
-- every question accepts `I don't know yet` or conservative defaults;
+- actively confirms institution / 机构 and role / 角色; never assumes them from examples, memory, or seed packs;
+- every question accepts `I don't know yet` / `不确定` or conservative defaults;
 - uses New Agent Default Mode instead of a long form;
-- marks unknown compliance/legal/product facts as `[confirm with compliance/legal]` or `[verify]`;
-- explains that the profile is dynamic and can be updated as the agent receives feedback or repeats scenarios;
+- explains `[待核实]` / `[verify]`: unconfirmed facts must be checked against customer, policy, carrier system, supervisor, compliance, underwriting, claims, or formal source before customer use or conclusions;
+- if existing profile information is supplied, summarizes it first, asks the agent to confirm, marks gaps `[待核实]`, and routes into the daily work entry;
 - does not draft reusable customer scripts or product-fit conclusions until enough context exists.
 
 ### 3. Run Daily Agent Workbench
@@ -179,7 +181,7 @@ Only consider these before any scheduled monitoring is explicitly requested and 
 ```bash
 python3 scripts/private_workspace_readiness.py   --workspace examples/local-connectors/synthetic-agent-workspace   --as-of 2026-05-14   --format markdown
 
-python3 scripts/private_dry_run.py   --workspace examples/local-connectors/synthetic-agent-workspace   --as-of 2026-05-14   --out /tmp/insurance-copilot-dry-run   --force
+python3 scripts/private_dry_run.py   --workspace examples/local-connectors/synthetic-agent-workspace   --as-of 2026-05-14   --out /tmp/insurance_copilot-dry-run   --force
 ```
 
 They remain read-only and do not create live jobs.

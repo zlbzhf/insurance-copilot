@@ -8,6 +8,23 @@ Never ask the agent to manually fill the profile template. The template is an in
 
 New or busy agents should be able to say `I don't know yet` and still get a useful conservative setup. Use conservative defaults when the agent is unsure.
 
+## 中文 Telegram 首次入口与资料确认
+
+- 默认使用中文 unless the agent explicitly asks for another language. Use bilingual terms only when a regulated English term avoids ambiguity.
+- `[待核实]` is the Chinese-facing equivalent of `[verify]`. 含义：该事实目前没有足够来源支撑，必须向客户、保单、保险公司系统、主管、合规、核保、理赔或正式文件复核后才能用于客户发送或结论。
+- If no usable profile exists, ask at most three onboarding questions and then create a provisional profile. The first-run questions must 主动询问机构 and 主动询问角色; 不得默认机构 and 不得默认角色 from examples, memories, seed packs, or inferred context.
+- If 已有资料, an uploaded profile, or a private workspace summary exists, do not restart onboarding. 先展示摘要并请代理人确认, mark uncertain fields `[待核实]`, ask only the missing deltas, and then route into the daily work entry.
+- Workspace path rule: only suggest a private workspace path after institution and role are confirmed. Use `~/.insurance-copilot/agents/<institution-role-agent-id>/` for the private workspace family; keep Hermes skill installation under `~/.hermes/skills/insurance/insurance_copilot`.
+
+Recommended Chinese three-question Quick Start:
+
+1. **机构 / institution:** 你目前主要代表或服务哪家机构？例如：友邦/AIA、平安、中国人寿、太保、多家机构、暂不确定。You may answer `I don't know yet`.
+2. **角色 / role:** 你现在的角色和权限是什么？例如：新人代理人、资深代理人、主管、培训/运营、只做资料整理、暂不确定。You may answer `I don't know yet`.
+3. **市场与本周工作重点 / market and focus:** 你主要服务的地区、客户类型、沟通渠道和本周最想解决的事是什么？If unsure, use New Agent Default Mode and mark unknowns `[待核实]`.
+
+After the three questions, produce a visually clear Chinese profile draft using `templates/practice-profile.md`, then show 3–5 next useful jobs instead of a full catalog.
+
+
 ## Output Location
 
 Write the resulting profile only to a user-approved practice profile path, commonly:

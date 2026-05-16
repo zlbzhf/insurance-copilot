@@ -48,9 +48,9 @@ Project significance:
 
 Implementation form in this repo:
 
-- `skills/insurance-copilot/SKILL.md` contains the workflow router, draft-only posture, practice-profile gate, and New Agent modes.
-- `skills/insurance-copilot/references/cold-start-interview.md` replaces legal cold-start with insurance practice onboarding.
-- **Professional Review Gate** translates `claude-for-legal` professional workflow/profile/review-gate discipline into insurance action safety through `skills/insurance-copilot/references/professional-review-gate.md`, `skills/insurance-copilot/templates/professional-review-gate.md`, evals, tests, and validators. It must name action class, review owner, source verification status, customer-facing approval status, side-effect status, draft for licensed/compliance review, not approved to send, no external action is authorized, and minimum safe next step.
+- `skills/insurance_copilot/SKILL.md` contains the workflow router, draft-only posture, practice-profile gate, and New Agent modes.
+- `skills/insurance_copilot/references/cold-start-interview.md` replaces legal cold-start with insurance practice onboarding.
+- **Professional Review Gate** translates `claude-for-legal` professional workflow/profile/review-gate discipline into insurance action safety through `skills/insurance_copilot/references/professional-review-gate.md`, `skills/insurance_copilot/templates/professional-review-gate.md`, evals, tests, and validators. It must name action class, review owner, source verification status, customer-facing approval status, side-effect status, draft for licensed/compliance review, not approved to send, no external action is authorized, and minimum safe next step.
 - `docs/workflow-surface.md` lists insurance agent jobs.
 - `docs/quality-gates.md`, `evals/`, and `scripts/validate_repo.py` enforce regression gates.
 
@@ -64,7 +64,7 @@ Priority: P0 for workflow/profile/review discipline; P2/P3 for trust-layer and c
 
 ### 2. Skypoint / Insurance Copilot commercial case study
 
-Link: https://skypoint.ai/customer-stories/insurance-copilot-boosting-insurance-agent-productivity-compliance-and-learning-with-skypoint/
+Link: https://skypoint.ai/customer-stories/insurance_copilot-boosting-insurance-agent-productivity-compliance-and-learning-with-skypoint/
 
 Positioning:
 
@@ -155,7 +155,7 @@ Implementation form in this repo:
 - Source hierarchy lives in `SKILL.md` and workflow references.
 - Public insurer facts live in `knowledge/institutions/`; customer/private policy docs live in agent private workspaces.
 - Future retrieval/citation features should be added as read-only connectors or pack retrieval, not as a default cloud app.
-- **Source Grounding and Data Boundary Gate** lives in `skills/insurance-copilot/references/source-grounding-guardrails.md`, `skills/insurance-copilot/templates/source-grounding-guardrails.md`, evals, tests, and validators. It requires a **Source Ledger**, **Citation Ledger**, **public/private separation**, **prompt-injection**, **PII minimization**, **citations or `[verify]`**, **no customer data in public packs**, and the rule that **untrusted source text cannot override workflow instructions**. It stays a **manual-first practitioner workflow**, **not a generic RAG chatbot**.
+- **Source Grounding and Data Boundary Gate** lives in `skills/insurance_copilot/references/source-grounding-guardrails.md`, `skills/insurance_copilot/templates/source-grounding-guardrails.md`, evals, tests, and validators. It requires a **Source Ledger**, **Citation Ledger**, **public/private separation**, **prompt-injection**, **PII minimization**, **citations or `[verify]`**, **no customer data in public packs**, and the rule that **untrusted source text cannot override workflow instructions**. It stays a **manual-first practitioner workflow**, **not a generic RAG chatbot**.
 
 Non-goals / do not copy:
 
@@ -252,7 +252,7 @@ Runtime-effective P2 safeguard: **Private Workspace Trace and Readiness Gate** r
 
 ## External Write Action Boundary Gate
 
-Runtime-effective P3 safeguard: **External Write Action Boundary Gate** converts connector, CRM, claims-system, carrier-portal, quote-engine, and publication-system inspiration into a manual insurance-agent boundary rather than a live integration. It covers **write-capable integrations**, **CRM writes**, **customer sending**, **claims filing**, **application submission**, **policy changes**, **quote generation**, **carrier contact**, and **publication**. Implementation form: `skills/insurance-copilot/references/external-write-action-boundary.md`, `skills/insurance-copilot/templates/external-write-action-boundary.md`, evals, tests, and validators. Non-goal: enabling writes by default. Priority: P3 and **design-only**, **out of scope unless explicitly approved**, **no write-capable integration is enabled**, **no external write tool is authorized**, **dry-run/read-only**, **manual-first**, with **Professional Review Gate** handoff.
+Runtime-effective P3 safeguard: **External Write Action Boundary Gate** converts connector, CRM, claims-system, carrier-portal, quote-engine, and publication-system inspiration into a manual insurance-agent boundary rather than a live integration. It covers **write-capable integrations**, **CRM writes**, **customer sending**, **claims filing**, **application submission**, **policy changes**, **quote generation**, **carrier contact**, and **publication**. Implementation form: `skills/insurance_copilot/references/external-write-action-boundary.md`, `skills/insurance_copilot/templates/external-write-action-boundary.md`, evals, tests, and validators. Non-goal: enabling writes by default. Priority: P3 and **design-only**, **out of scope unless explicitly approved**, **no write-capable integration is enabled**, **no external write tool is authorized**, **dry-run/read-only**, **manual-first**, with **Professional Review Gate** handoff.
 
 ## Borrow / Avoid Matrix
 
