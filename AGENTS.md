@@ -41,9 +41,15 @@ Public institution pack standards evolve through `standards/`, `schemas/`, `prom
 
 ## Product Development SPEC
 
-`docs/product-development-spec.md` is the durable product-development source of truth. Treat the project as usable now as a manual-first Hermes skill beta, but not production-complete for live automation, customer sending, CRM writes, application submission, claims filing, policy changes, quote generation, or final regulated advice.
+`docs/product-development-spec.md` is the durable product-development source of truth and compact Product Operating Spec. Treat the project as usable now as a manual-first Hermes skill beta, but not production-complete for live automation, customer sending, CRM writes, application submission, claims filing, policy changes, quote generation, or final regulated advice.
 
 When borrowing from external/reference projects, use `docs/reference-landscape.md`. Every borrowed pattern must be mapped to project significance, implementation form, non-goals, and priority. Do not chase feature parity or drift into a generic RAG chatbot, web app, CRM, cloud deployment sample, or Claude plugin.
+
+## Spec Lifecycle
+
+implementation specs are temporary unless explicitly promoted. After a feature is implemented, runtime rules must live in SKILL.md, references, or templates; regression behavior must live in tests, evals, or validators; and completed implementation specs follow this exact rule: delete, archive, or compress into an ADR. archived specs have no runtime authority.
+
+Use `docs/decisions/ADR-*.md` for short durable decisions. Use `docs/archive/` only for historical files marked `Status: archived`, `Runtime authority: none`, and `Superseded by:`. Do not let completed feature plans become active control documents.
 
 ## Development Rules
 

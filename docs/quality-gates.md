@@ -213,6 +213,23 @@ Required:
 
 Reject changes that copy competitor/reference features without mapping what to borrow, what not to copy, and where the pattern belongs in this repository.
 
+## Spec Lifecycle Gate
+
+Completed feature specs must not keep accumulating as durable control documents.
+
+Required:
+
+- Spec Lifecycle is documented in `docs/documentation-map.md`, `docs/product-development-spec.md`, `docs/quality-gates.md`, and `AGENTS.md`.
+- implementation specs are temporary unless explicitly promoted.
+- runtime rules must live in SKILL.md, references, or templates.
+- regression behavior must live in tests, evals, or validators.
+- The completed implementation spec rule is: delete, archive, or compress into an ADR after completion.
+- archived specs have no runtime authority and must declare `Status: archived`, `Runtime authority: none`, and `Superseded by:`.
+- Durable design decisions should be compressed into short ADRs under `docs/decisions/`, not long process dossiers.
+- The product-development spec stays a compact Product Operating Spec and product-development source of truth, not a completed feature dossier.
+
+Reject changes that leave completed implementation plans as active control documents, add long new root-level `docs/*-spec.md` files without lifecycle justification, or treat archived material as runtime authority.
+
 ## Agent-Friendly Onboarding Gate
 
 The practice profile template is an internal storage format, not a user-facing form.

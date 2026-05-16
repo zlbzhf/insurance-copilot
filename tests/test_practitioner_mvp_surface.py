@@ -612,7 +612,6 @@ def test_coach_me_v2_productization_turns_limits_into_workflow_capabilities() ->
     skill = read("skills/insurance_copilot/SKILL.md")
     reference = read("skills/insurance_copilot/references/coach-me.md")
     template = read("skills/insurance_copilot/templates/coach-me.md")
-    plan = read("docs/plans/2026-05-16-coach-me-v2-productization.md")
     quality = read("docs/quality-gates.md")
     surface = read("docs/workflow-surface.md")
     spec = read("docs/product-development-spec.md")
@@ -637,7 +636,7 @@ def test_coach_me_v2_productization_turns_limits_into_workflow_capabilities() ->
         "no automatic persistence is a product boundary, not a dead end",
         "manual-first practitioner workflow",
     ]
-    for text in [skill, reference, template, plan, quality, surface, spec, readme, zh_readme, eval_readme]:
+    for text in [skill, reference, template, quality, surface, spec, readme, zh_readme, eval_readme]:
         for phrase in v2_phrases:
             assert phrase in text
 
@@ -729,6 +728,39 @@ def test_runtime_constraints_are_not_docs_only() -> None:
     assert "Empty neutrality is insufficient" in template
     assert "draft for licensed/compliance review" in template
     assert "do not send" in template.lower()
+
+
+def test_development_spec_lifecycle_prevents_documentation_sprawl() -> None:
+    doc_map = read("docs/documentation-map.md")
+    quality = read("docs/quality-gates.md")
+    spec = read("docs/product-development-spec.md")
+    agents = read("AGENTS.md")
+    adr = read("docs/decisions/ADR-0001-gateway-agnostic-interactive-protocol.md")
+
+    for text in [doc_map, quality, spec, agents]:
+        assert "Spec Lifecycle" in text
+        assert "implementation specs are temporary" in text
+        assert "archived specs have no runtime authority" in text
+        assert "runtime rules must live in SKILL.md, references, or templates" in text
+        assert "regression behavior must live in tests, evals, or validators" in text
+        assert "delete, archive, or compress into an ADR" in text
+
+    assert "Product Operating Spec" in spec
+    assert "product-development source of truth" in spec
+    assert "completed feature dossier" not in spec.lower()
+
+    assert "ADR-0001: Gateway-Agnostic Interactive Protocol" in adr
+    assert "Status: accepted" in adr
+    assert "Runtime authority: decision record only; current behavior lives in runtime surfaces and executable gates" in adr
+    for phrase in [
+        "interactive conversational gateway",
+        "sequential question protocol",
+        "Chinese interactive onboarding",
+        "Coach_me before Client Needs Intake",
+        "Runtime Surfaces",
+        "Executable Gates",
+    ]:
+        assert phrase in adr
 
 
 def test_product_development_spec_and_reference_landscape_are_gated() -> None:

@@ -191,6 +191,22 @@ Runtime effect:
 - Direct when the matching skill reference/template is loaded: the gate checks a read-only local/private workspace connector, readiness gate dry-run, audit-style trace, `source_trace`, `read_only_verified`, `workspace_unchanged`, metadata/checksums only handling, No External Writes, `live_cron_created: false`, and no live automation.
 - Direct when External Write Action Boundary Gate is loaded: write-capable integrations, CRM writes, customer sending, claims filing, application submission, policy changes, quote generation, carrier contact, and publication remain design-only, out of scope unless explicitly approved, no write-capable integration is enabled, no external write tool is authorized, dry-run/read-only, manual-first, and closed with Professional Review Gate.
 
+## Spec Lifecycle
+
+implementation specs are temporary unless explicitly promoted. Treat a feature spec, implementation plan, or session development dossier as scaffolding: useful while building, but not the durable runtime source of truth after the behavior is implemented.
+
+Required lifecycle after a feature is completed:
+
+1. runtime rules must live in SKILL.md, references, or templates.
+2. regression behavior must live in tests, evals, or validators.
+3. User-visible changes belong in README, quickstart, workflow-surface docs, examples, or changelog only when they help the practitioner or maintainer.
+4. The completed implementation spec must be handled with this rule: delete, archive, or compress into an ADR.
+5. archived specs have no runtime authority.
+
+Use ADRs for durable design decisions that should survive after implementation. Use `docs/archive/` only for historical material that may be useful later but must not control runtime behavior. Each archived file must declare `Status: archived`, `Runtime authority: none`, and `Superseded by:` pointers to runtime surfaces or executable gates.
+
+Do not keep adding long `*-spec.md`, `*-plan.md`, or implementation-note files to `docs/` root. Temporary plans should stay in working notes such as `.hermes/plans/` until promoted; before merge, delete, archive, or compress into an ADR so completed plan files do not accumulate as active docs.
+
 ## Product Principle Conversion Path
 
 When a new product lesson appears, do not leave it as prose only.

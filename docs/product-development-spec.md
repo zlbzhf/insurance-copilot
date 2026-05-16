@@ -1,7 +1,8 @@
 # Product Development SPEC
 
 Status: accepted product-development source of truth
-Last updated: 2026-05-15
+Document role: compact Product Operating Spec, not a feature dossier archive
+Last updated: 2026-05-17
 Scope: `insurance_copilot` as a Hermes-first insurance-agent workflow assistant
 
 ## Executive Answer
@@ -127,6 +128,24 @@ Role:
 - local-only readiness checks.
 
 The public repository contains the template and validators only. Real private workspaces stay outside this repo.
+
+## Product Operating Spec
+
+This file is the durable product-development source of truth, but it should stay compact. It records product posture, architecture, runtime-effectiveness rules, non-goals, source boundaries, and definition of done. It should not accumulate feature dossier archives, chat-handoff notes, or transient build dossiers.
+
+## Spec Lifecycle
+
+implementation specs are temporary unless explicitly promoted. Treat a feature spec, implementation plan, or session development dossier as scaffolding: useful during build, but not an active control document after completion.
+
+Required lifecycle after a feature is completed:
+
+1. runtime rules must live in SKILL.md, references, or templates.
+2. regression behavior must live in tests, evals, or validators.
+3. User-visible changes belong in README, quickstart, workflow-surface docs, examples, or changelog only when they help the practitioner or maintainer.
+4. The completed implementation spec must follow this rule: delete, archive, or compress into an ADR.
+5. archived specs have no runtime authority.
+
+Use `docs/decisions/ADR-*.md` for short durable decisions. Use `docs/archive/` only for historical material that may be useful later but must not control runtime behavior; archived files must declare `Status: archived`, `Runtime authority: none`, and `Superseded by:` pointers.
 
 ## Runtime-Effective Constraint Model
 

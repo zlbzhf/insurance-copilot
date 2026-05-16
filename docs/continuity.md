@@ -64,6 +64,7 @@ Do not infer project state from an old conversation summary. If chat context and
 - Keep project intent in committed docs, not only in chat.
 - Every structural decision should be reflected in `AGENTS.md`, `README.md`, `docs/`, or `skills/insurance_copilot/SKILL.md`.
 - Product direction belongs in `docs/product-development-spec.md` and `ROADMAP.md`; external inspiration and competitor/reference analysis belong in `docs/reference-landscape.md`.
+- Spec Lifecycle: implementation specs are temporary unless explicitly promoted. runtime rules must live in SKILL.md, references, or templates; regression behavior must live in tests, evals, or validators; and completed implementation specs follow this rule: delete, archive, or compress into an ADR. archived specs have no runtime authority.
 - Every new workflow should have at least one reference file, one template or example if practical, and validator coverage if it affects structure.
 - Every new institution pack should include `PACK.md`, `SCHEMA.md`, `index.md`, `log.md`, and validation coverage.
 - Before finalizing any development turn, run `python3 scripts/validate_repo.py` and commit/push unless the user explicitly asks not to.

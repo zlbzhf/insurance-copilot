@@ -48,13 +48,8 @@ REQUIRED = [
     ROOT / "docs" / "script-only-cron-wrapper.md",
     ROOT / "docs" / "private-workspace-readiness.md",
     ROOT / "docs" / "private-dry-run-harness.md",
-    ROOT / "docs" / "plans" / "2026-05-14-practical-agent-workflow-beta.md",
-    ROOT / "docs" / "plans" / "2026-05-14-local-file-connector-slice.md",
-    ROOT / "docs" / "plans" / "2026-05-14-local-renewal-watcher.md",
-    ROOT / "docs" / "plans" / "2026-05-14-script-only-cron-wrapper.md",
-    ROOT / "docs" / "plans" / "2026-05-14-private-workspace-readiness.md",
-    ROOT / "docs" / "plans" / "2026-05-14-private-dry-run-harness.md",
-    ROOT / "docs" / "plans" / "2026-05-15-practical-mvp-focus.md",
+    ROOT / "docs" / "decisions" / "ADR-0001-gateway-agnostic-interactive-protocol.md",
+    ROOT / "docs" / "archive" / "README.md",
     ROOT / "docs" / "privacy-and-data-handling.md",
     ROOT / "docs" / "action-safety.md",
     ROOT / "docs" / "jurisdiction-adaptation.md",
@@ -450,12 +445,20 @@ def main() -> int:
         "docs/reference-landscape.md",
         "product-development source of truth",
         "reference-project borrow/avoid decisions",
+        "Spec Lifecycle",
+        "implementation specs are temporary",
+        "archived specs have no runtime authority",
+        "runtime rules must live in SKILL.md, references, or templates",
+        "regression behavior must live in tests, evals, or validators",
+        "delete, archive, or compress into an ADR",
     ]:
         if phrase not in documentation_map:
             return fail(f"documentation map missing phrase: {phrase}")
     product_spec = (ROOT / "docs" / "product-development-spec.md").read_text()
     for phrase in [
         "Product Development SPEC",
+        "Product Operating Spec",
+        "product-development source of truth",
         "usable now as a manual-first Hermes skill beta",
         "not production-complete",
         "live automation, customer sending, CRM writes, application submission, claims filing, policy changes, quote generation, or final regulated advice",
@@ -470,10 +473,18 @@ def main() -> int:
         "non-goals",
         "priority",
         "Definition of Done for Product Changes",
+        "Spec Lifecycle",
+        "implementation specs are temporary",
+        "archived specs have no runtime authority",
+        "runtime rules must live in SKILL.md, references, or templates",
+        "regression behavior must live in tests, evals, or validators",
+        "delete, archive, or compress into an ADR",
         "First-session practitioner loop",
     ]:
         if phrase not in product_spec:
             return fail(f"product development SPEC missing phrase: {phrase}")
+    if "completed feature dossier" in product_spec.lower():
+        return fail("product development SPEC contains completed feature dossier wording")
     reference_landscape = (ROOT / "docs" / "reference-landscape.md").read_text()
     for phrase in [
         "Reference Landscape",
@@ -501,6 +512,7 @@ def main() -> int:
             return fail(f"quality gates missing runtime constraint phrase: {phrase}")
     for phrase in [
         "Product SPEC and Reference-Landscape Gate",
+        "Spec Lifecycle Gate",
         "docs/product-development-spec.md",
         "usable now as a manual-first Hermes skill beta",
         "not production-complete for live automation",
@@ -510,9 +522,31 @@ def main() -> int:
         "non-goals",
         "priority",
         "Hermes-first, manual-first, practitioner-facing, customer-first, public/private-separated, runtime-effective differentiation",
+        "implementation specs are temporary",
+        "archived specs have no runtime authority",
+        "runtime rules must live in SKILL.md, references, or templates",
+        "regression behavior must live in tests, evals, or validators",
+        "delete, archive, or compress into an ADR",
     ]:
         if phrase not in quality_gates:
             return fail(f"quality gates missing product SPEC/reference landscape phrase: {phrase}")
+    adr_path = ROOT / "docs" / "decisions" / "ADR-0001-gateway-agnostic-interactive-protocol.md"
+    if not adr_path.exists():
+        return fail("missing ADR for gateway-agnostic interactive protocol")
+    adr = adr_path.read_text()
+    for phrase in [
+        "ADR-0001: Gateway-Agnostic Interactive Protocol",
+        "Status: accepted",
+        "Runtime authority: decision record only; current behavior lives in runtime surfaces and executable gates",
+        "interactive conversational gateway",
+        "sequential question protocol",
+        "Chinese interactive onboarding",
+        "Coach_me before Client Needs Intake",
+        "Runtime Surfaces",
+        "Executable Gates",
+    ]:
+        if phrase not in adr:
+            return fail(f"gateway ADR missing phrase: {phrase}")
     professional_review_required = [
         "Professional Review Gate",
         "action class",

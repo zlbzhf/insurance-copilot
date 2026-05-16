@@ -10,7 +10,8 @@
 
 ### 新增
 
-- 新增 Coach_me v2 Productized Workflow：`docs/plans/2026-05-16-coach-me-v2-productization.md`、升级后的 runtime reference/template、新 eval case/expected output、pytest 覆盖和 validator 覆盖，用于保护 capability ladder、information sufficiency score、Direction/Risk/Source/Action 追问轮、Backfeed Decision Packet，以及 manual-first 产品状态边界。
+- 新增 Coach_me v2 Productized Workflow：升级后的 runtime reference/template、eval case/expected output、pytest 覆盖和 validator 覆盖，用于保护 capability ladder、information sufficiency score、Direction/Risk/Source/Action 追问轮、Backfeed Decision Packet，以及 manual-first 产品状态边界。
+- 新增 Spec Lifecycle 治理、`docs/decisions/ADR-0001-gateway-agnostic-interactive-protocol.md` 和 `docs/archive/README.md`，要求已完成 implementation specs 删除、以无运行时权限归档，或压缩为 ADR，避免控制文档持续堆积。
 - 新增 Coach_me Guided Reasoning Mode，作为 Insurance Copilot 内的单一工作流（`references/coach-me.md`、`templates/coach-me.md`、eval、tests、validator 和 docs），用于宽泛、凌乱、策略性、依赖资料、客户场景或 product recommendation intent 的问题；它包含 source discovery order、每轮三个精准问题、gateway-agnostic sequential question protocol、answer-now/continue 选择、信息充分自动停止、可沉淀的 working/final documents、Q&A-as-raw-input，以及 Karpathy-style LLM wiki backfeed proposals，并保持 no automatic persistence。
 - 新增中文 interactive onboarding 文档、示例、eval 和 validator 覆盖，保护 `/skill insurance_copilot`、机构/角色确认、`[待核实]` 解释，以及已有资料先摘要确认的行为。
 - 新增 `docs/product-development-spec.md`，作为持久的产品开发事实来源和可用状态定义。
