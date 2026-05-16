@@ -17,13 +17,13 @@ Identify policies with due, grace-period, lapse, or review windows in the next 3
 
 ```bash
 python3 scripts/local_file_connectors.py daily-workbench \
-  --workspace ~/.insurance-copilot/agents/<agent-id> \
+  --workspace ~/.insurance_copilot/agents/<agent-id> \
   --format json \
   --output /tmp/insurance-workbench-bundle.json
 
 python3 scripts/renewal_watcher.py \
   --bundle /tmp/insurance-workbench-bundle.json \
-  --workspace ~/.insurance-copilot/agents/<agent-id> \
+  --workspace ~/.insurance_copilot/agents/<agent-id> \
   --as-of "$(date +%F)" \
   --format markdown \
   --output /tmp/insurance-renewal-alert.md

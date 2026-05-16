@@ -2,7 +2,7 @@
 
 Status: accepted product-development source of truth
 Last updated: 2026-05-15
-Scope: `insurance-copilot` as a Hermes-first insurance-agent workflow assistant
+Scope: `insurance_copilot` as a Hermes-first insurance-agent workflow assistant
 
 ## Executive Answer
 
@@ -116,7 +116,7 @@ Public packs must never contain customer data, private agent notes, non-public i
 ### Layer 3 — Agent private knowledge workspace
 
 Path template: `agent-workspace-template/`
-Suggested private location: `~/.insurance-copilot/agents/<agent-id>/`
+Suggested private location: `~/.insurance_copilot/agents/<agent-id>/`
 
 Role:
 

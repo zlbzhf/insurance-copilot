@@ -5,7 +5,7 @@ The agent-private layer stores personal/customer knowledge and any non-public in
 ## Suggested Location
 
 ```text
-~/.insurance-copilot/agents/<agent-id>/
+~/.insurance_copilot/agents/<agent-id>/
 ```
 
 Initialize from:
@@ -28,7 +28,7 @@ If an institution material is not public/shareable, keep it here. Do not create 
 
 ```text
 knowledge/institutions/*       public only
-~/.insurance-copilot/agents/*  private agent knowledge
+~/.insurance_copilot/agents/*  private agent knowledge
 ```
 
 ## Promoting Private Notes to Public Contributions
@@ -49,7 +49,7 @@ Before connecting a private workspace to local connector, renewal watcher, or He
 
 ```bash
 python3 scripts/private_workspace_readiness.py \
-  --workspace ~/.insurance-copilot/agents/<agent-id> \
+  --workspace ~/.insurance_copilot/agents/<agent-id> \
   --as-of "$(date +%F)" \
   --format markdown
 ```

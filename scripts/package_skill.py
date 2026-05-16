@@ -77,7 +77,7 @@ def main() -> int:
         return fail(f"missing skill dir: {SKILL_DIR}")
 
     if args.check or not args.out:
-        with tempfile.TemporaryDirectory(prefix="insurance-copilot-bundle-") as tmp:
+        with tempfile.TemporaryDirectory(prefix="insurance_copilot-bundle-") as tmp:
             dest = Path(tmp) / "insurance_copilot"
             copy_skill(dest)
             errors = check_bundle(dest)

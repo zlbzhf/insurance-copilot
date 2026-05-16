@@ -188,7 +188,7 @@ agent-workspace-template/
 Suggested private location:
 
 ```text
-~/.insurance-copilot/agents/<agent-id>/
+~/.insurance_copilot/agents/<agent-id>/
 ```
 
 Purpose:
@@ -363,8 +363,8 @@ agent-workspace-template/
 Suggested private setup:
 
 ```bash
-mkdir -p ~/.insurance-copilot/agents/<agent-id>
-cp -R agent-workspace-template/* ~/.insurance-copilot/agents/<agent-id>/
+mkdir -p ~/.insurance_copilot/agents/<agent-id>
+cp -R agent-workspace-template/* ~/.insurance_copilot/agents/<agent-id>/
 ```
 
 See `docs/agent-private-knowledge.md`.

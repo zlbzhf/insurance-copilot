@@ -1,6 +1,6 @@
 # Public Knowledge Layer
 
-This directory contains public knowledge assets that complement the general `insurance-copilot` Hermes skill.
+This directory contains public knowledge assets that complement the general `insurance_copilot` Hermes skill.
 
 The project uses three layers:
 

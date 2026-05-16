@@ -22,7 +22,7 @@
 
 ### 变更
 
-- 将可安装 Hermes 技能目录/frontmatter 身份改为 Telegram 安全的 `insurance_copilot`，同时保留公开仓库 slug `insurance-copilot` 和私有工作区根路径 `~/.insurance-copilot/agents/<agent-id>/`。
+- 将仓库/产品 slug、可安装 Hermes 技能身份、Telegram 命令和私有工作区根路径统一到 Telegram 安全的 `insurance_copilot` 命名。
 - 明确 Insurance Copilot 目前已经可作为 manual-first Hermes skill beta 使用，但还不是可直接用于 live automation、客户发送、CRM 写入、投保提交、理赔提交、保单变更、报价引擎或最终监管建议的生产系统。
 - 将 Institution Knowledge Organizer 从 AIA-first 流程泛化为 `knowledge/institutions/<pack_id>/` 下的 pack-agnostic public institution pack 工作流；AIA/友邦 保留为当前 seed 示例，而不是通用运行时定义。
 - 更新 README、中文 README、CI、contribution templates、intake templates 和 private workspace 默认值，使其使用 registry-driven 验证和通用机构占位符。

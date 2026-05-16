@@ -4,7 +4,7 @@ This roadmap is durable project direction. Use it instead of relying on compress
 
 ## Current Phase: Practical Practitioner MVP
 
-Goal: make `insurance-copilot` directly usable by an insurance agent in Hermes before adding more infrastructure. The primary surface is manual-first practitioner work, supported by the three-layer knowledge architecture and public ingestion pipeline.
+Goal: make `insurance_copilot` directly usable by an insurance agent in Hermes before adding more infrastructure. The primary surface is manual-first practitioner work, supported by the three-layer knowledge architecture and public ingestion pipeline.
 
 Product direction: **customer-first advocacy within compliance boundaries**. Compliance is a guardrail for service. Empty neutrality is insufficient. User-provided examples should be generalized **from idea to product principle to operating model to workflow to scenario matrix to eval**, not copied as isolated case patches.
 

@@ -77,7 +77,7 @@ agent-workspace-template/
 Suggested private location:
 
 ```text
-~/.insurance-copilot/agents/<agent-id>/
+~/.insurance_copilot/agents/<agent-id>/
 ```
 
 Purpose:

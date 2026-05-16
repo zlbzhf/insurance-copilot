@@ -1,6 +1,6 @@
 # Skill Scripts
 
-Optional helper scripts for the `insurance-copilot` skill live here.
+Optional helper scripts for the `insurance_copilot` skill live here.
 
 Current repository-level validation is implemented at:
 

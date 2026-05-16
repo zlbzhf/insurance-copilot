@@ -5,8 +5,8 @@ This template shows how an individual insurance agent can keep private customer 
 Copy this directory to a private location, for example:
 
 ```bash
-mkdir -p ~/.insurance-copilot/agents/<agent-id>
-cp -R agent-workspace-template/* ~/.insurance-copilot/agents/<agent-id>/
+mkdir -p ~/.insurance_copilot/agents/<agent-id>
+cp -R agent-workspace-template/* ~/.insurance_copilot/agents/<agent-id>/
 ```
 
 ## What Belongs Here

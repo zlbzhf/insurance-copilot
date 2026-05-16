@@ -24,7 +24,7 @@ No External Writes
 
 ```bash
 bash cron/scripts/renewal_watcher.sh \
-  --workspace ~/.insurance-copilot/agents/<agent-id> \
+  --workspace ~/.insurance_copilot/agents/<agent-id> \
   --as-of "$(date +%F)" \
   --mode alert-only
 ```

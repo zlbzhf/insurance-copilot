@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -201,37 +202,56 @@ def test_telegram_skill_identity_uses_underscore_command() -> None:
     assert "/insurance_copilot" in quickstart
 
     # Command/install identity should be underscore-safe in runtime source,
-    # package script, quickstart, and user-facing README examples. Release and
-    # design docs may mention the legacy hyphenated install dir only as a stale
-    # runtime cleanup target. Repository and private workspace slugs stay
-    # hyphenated elsewhere by design.
+    # package script, quickstart, and user-facing README examples. Legacy
+    # hyphenated names may appear only in migration/runtime-limit docs.
     for forbidden in [
-        "name: insurance-copilot",
-        "/skill insurance-copilot",
-        "~/.hermes/skills/insurance/insurance-copilot",
-        "skills/insurance-copilot",
+        "name: insurance" + "-copilot",
+        "/skill insurance" + "-copilot",
+        "skills/insurance" + "-copilot",
     ]:
         for text in [skill, package_script, readme_zh, quickstart]:
             assert forbidden not in text
 
-    assert "Stale installed runtime directory `~/.hermes/skills/insurance/insurance-copilot/`" in release_checklist
+    assert "Stale installed runtime directory `~/.hermes/skills/insurance/insurance" + "-copilot/`" in release_checklist
     assert "clean stale installed runtime copies" in hermes_design
     assert "does not provide a per-skill `on_load` hook" in hermes_design
 
 
-def test_repo_and_private_workspace_slugs_remain_hyphenated() -> None:
-    """Only Hermes skill command/install identity uses underscores; repo/private product slugs stay hyphenated."""
+def test_project_identity_is_unified_on_underscore() -> None:
+    """Repo/product, skill command, and private workspace identity use insurance_copilot."""
     agents = read("AGENTS.md")
     readme = read("README.md")
     readme_zh = read("README.zh-CN.md")
     skill = read("skills/insurance_copilot/SKILL.md")
     registry = read("knowledge/registry.json")
 
-    assert "git@github.com-insurance-copilot:zlbzhf/insurance-copilot.git" in agents
-    assert "https://github.com/zlbzhf/insurance-copilot" in registry
+    assert "git@github.com-insurance_copilot:zlbzhf/insurance_copilot.git" in agents
+    assert "https://github.com/zlbzhf/insurance_copilot" in registry
     for text in [readme, readme_zh, skill]:
-        assert "~/.insurance-copilot/agents/<agent-id>/" in text or "~/.insurance-copilot/agents/<institution-role-agent-id>/" in text
-        assert "~/.insurance_copilot" not in text
+        assert "~/.insurance_copilot/agents/<agent-id>/" in text or "~/.insurance_copilot/agents/<institution-role-agent-id>/" in text
+    assert "Overriding explicit naming-unification intent" in skill
+
+    allowed_legacy_docs = {
+        "docs/hermes-first-design.md",
+        "docs/release-checklist.md",
+    }
+    legacy_terms = [
+        "insurance" + "-copilot",
+        "." + "insurance" + "-copilot",
+        "github.com-insurance" + "-copilot",
+        "zlbzhf/insurance" + "-copilot",
+    ]
+    legacy_pattern = re.compile("|".join(re.escape(term) for term in legacy_terms))
+    for path in ROOT.rglob("*"):
+        if not path.is_file() or path.suffix not in {".md", ".json", ".yaml", ".yml", ".py", ".txt"}:
+            continue
+        if any(part in {".git", ".venv", ".pytest_cache", "__pycache__", ".insurance_copilot", "." + "insurance" + "-copilot", "agent-workspaces", "private-workspaces"} for part in path.parts):
+            continue
+        rel = str(path.relative_to(ROOT))
+        if rel in allowed_legacy_docs or rel == ".gitignore":
+            continue
+        assert not legacy_pattern.search(rel), rel
+        assert not legacy_pattern.search(path.read_text(errors="ignore")), rel
 
 
 def test_hermes_core_runtime_limit_and_telegram_menu_cap_are_documented() -> None:

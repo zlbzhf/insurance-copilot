@@ -29,7 +29,7 @@ Use Insurance Copilot as a **task-first professional workflow router**, not as a
 - Use `[待核实]` as the Chinese display marker for `[verify]`. 含义：该事实还没有被当前保单、保险公司系统、核保/理赔/合规来源、主管或客户材料确认；在对客户发送、提交、变更、报价、理赔或作出结论前必须复核。 Do not remove `[待核实]` or `[verify]` until a source has actually been checked.
 - First-use identity check: if the practice profile is missing, stale, or too thin, start with Agency Playbook Builder / Cold-Start Interview. 主动询问机构 and 主动询问角色 before generating workspace names, institution packs, or reusable playbooks. 不得默认机构 and 不得默认角色 from memory, seed packs, examples, or the assistant's assumptions.
 - Existing-profile entry: if 已有资料 or a practice profile is supplied/found, 先展示摘要并请代理人确认, then route to daily workbench, client intake, policy review, customer-message drafting, compliance copy checking, replacement/lapse/claim triage, or referral drafting. Do not restart the full onboarding unless the profile is missing, stale, or contradicted.
-- Private workspace naming: generate or suggest an agent-private workspace path only after institution and role are confirmed; keep the private workspace slug hyphenated under `~/.insurance-copilot/agents/<institution-role-agent-id>/`. The installable Hermes skill command remains underscore-safe: `/skill insurance_copilot`.
+- Private workspace naming: generate or suggest an agent-private workspace path only after institution and role are confirmed; use the unified underscore-safe private workspace root `~/.insurance_copilot/agents/<institution-role-agent-id>/`. The installable Hermes skill command remains underscore-safe: `/skill insurance_copilot`.
 - Practice profile display: use the Chinese six-section structure in `templates/practice-profile.md` for agent-facing drafts: `资料状态`, `执业身份确认`, `业务边界与产品范围`, `客户与服务场景`, `合规与升级规则`, and `输出偏好与下一步`.
 
 
@@ -216,7 +216,7 @@ Insurance Copilot uses three knowledge layers:
 
 1. **General public workflow skill** — this skill directory: `skills/insurance_copilot/`.
 2. **Public institution knowledge packs** — public, collaboratively maintained LLM-wiki packs under `knowledge/institutions/` or remote pack repositories discovered through `knowledge/registry.json`.
-3. **Agent private knowledge workspace** — local/private workspace initialized from `agent-workspace-template/`, commonly stored under `~/.insurance-copilot/agents/<agent-id>/`.
+3. **Agent private knowledge workspace** — local/private workspace initialized from `agent-workspace-template/`, commonly stored under `~/.insurance_copilot/agents/<agent-id>/`.
 
 Public institution packs contain only public/shareable knowledge. Non-public institution materials and all customer-level data belong in the agent-private layer, not in public pack paths.
 
@@ -270,7 +270,7 @@ Use this order:
 Store the resulting profile only in a user-approved location, commonly:
 
 ```text
-profiles/insurance-copilot-practice-profile.md
+profiles/insurance_copilot-practice-profile.md
 ```
 
 If file writing is not appropriate, output the complete profile draft for the user to save.
@@ -442,6 +442,7 @@ Escalate or require licensed/compliance review when any of these appear:
 7. **Using non-Hermes or web-app conventions.** Hermes uses skills; keep the install path and docs Hermes-native.
 8. **Treating private dry-run readiness as deployment approval.** Private Workspace Trace and Readiness Gate evidence is review material only; do not create live automation or external writes from a dry-run result.
 9. **Treating write-capable integration design as authorization.** External Write Action Boundary Gate keeps CRM writes, customer sending, claims filing, application submission, policy changes, quote generation, carrier contact, and publication design-only and out of scope unless explicitly approved; no write-capable integration is enabled and no external write tool is authorized.
+10. **Overriding explicit naming-unification intent.** If the user asks to unify project naming, do not unilaterally preserve mixed separator identities for the repo slug, private workspace path, docs, or runtime paths just because they are historically stable. Separate hard platform constraints from discretionary project identity choices, then present a migration/compatibility plan before encoding invariants in tests, validators, docs, or memory.
 
 ## Verification Checklist
 

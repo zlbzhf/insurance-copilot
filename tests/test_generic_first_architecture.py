@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regression tests for generic-first insurance-copilot architecture."""
+"""Regression tests for generic-first insurance_copilot architecture."""
 from __future__ import annotations
 
 import json

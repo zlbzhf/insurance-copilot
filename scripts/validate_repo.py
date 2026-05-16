@@ -181,10 +181,13 @@ REQUIRED_MCP_CONTRACTS = [
     "renewal-register.md",
 ]
 
+CANONICAL_PROJECT_SLUG = "insurance_copilot"
+LEGACY_PROJECT_SLUG = "insurance" + "-copilot"
+
 FORBIDDEN_PATHS = [
-    ROOT / "insurance-copilot" / ("." + "claude-plugin"),
-    ROOT / "insurance-copilot" / "CLAUDE.md",
-    ROOT / "insurance-copilot" / ("." + "mcp.json"),
+    ROOT / slug / artifact
+    for slug in [CANONICAL_PROJECT_SLUG, LEGACY_PROJECT_SLUG]
+    for artifact in [("." + "claude-plugin"), "CLAUDE.md", ("." + "mcp.json")]
 ]
 
 BAD_TERMS = [
@@ -251,13 +254,13 @@ def parse_frontmatter(text: str) -> tuple[dict, str]:
 
 
 def markdown_files() -> list[Path]:
-    ignored = {".git", ".venv", ".pytest_cache"}
+    ignored = {".git", ".venv", ".pytest_cache", ".insurance_copilot", "." + LEGACY_PROJECT_SLUG, "agent-workspaces", "private-workspaces"}
     return [p for p in ROOT.rglob("*.md") if not any(part in ignored for part in p.parts)]
 
 
 def text_files_for_pii() -> list[Path]:
-    ignored = {".git", ".venv", ".pytest_cache"}
-    suffixes = {".md", ".json", ".csv", ".txt", ".yaml", ".yml"}
+    ignored = {".git", ".venv", ".pytest_cache", ".insurance_copilot", "." + LEGACY_PROJECT_SLUG, "agent-workspaces", "private-workspaces"}
+    suffixes = {".md", ".json", ".csv", ".txt", ".yaml", ".yml", ".py"}
     return [p for p in ROOT.rglob("*") if p.is_file() and p.suffix in suffixes and not any(part in ignored for part in p.parts)]
 
 
@@ -283,17 +286,32 @@ def main() -> int:
     if fm.get("name") != "insurance_copilot":
         return fail("skill frontmatter name must be insurance_copilot")
     repo_identity_checks = {
-        "AGENTS.md": "git@github.com-insurance-copilot:zlbzhf/insurance-copilot.git",
-        "knowledge/registry.json": "https://github.com/zlbzhf/insurance-copilot",
-        "README.md": "~/.insurance-copilot/agents/<agent-id>/",
-        "README.zh-CN.md": "~/.insurance-copilot/agents/<agent-id>/",
+        "AGENTS.md": "git@github.com-insurance_copilot:zlbzhf/insurance_copilot.git",
+        "knowledge/registry.json": "https://github.com/zlbzhf/insurance_copilot",
+        "README.md": "~/.insurance_copilot/agents/<agent-id>/",
+        "README.zh-CN.md": "~/.insurance_copilot/agents/<agent-id>/",
+        "skills/insurance_copilot/SKILL.md": "Overriding explicit naming-unification intent",
     }
     for rel, phrase in repo_identity_checks.items():
         if phrase not in (ROOT / rel).read_text():
-            return fail(f"repo/private slug should stay hyphenated in {rel}: {phrase}")
-    for rel in ["README.md", "README.zh-CN.md", "skills/insurance_copilot/SKILL.md"]:
-        if "~/.insurance_copilot" in (ROOT / rel).read_text():
-            return fail(f"private workspace path must use ~/.insurance-copilot, not underscore: {rel}")
+            return fail(f"unified insurance_copilot identity missing in {rel}: {phrase}")
+    legacy_hyphen_allowlist = {
+        "docs/hermes-first-design.md",
+        "docs/release-checklist.md",
+    }
+    legacy_hyphen_terms = [
+        "insurance" + "-copilot",
+        "." + "insurance" + "-copilot",
+        "github.com-insurance" + "-copilot",
+        "zlbzhf/insurance" + "-copilot",
+    ]
+    legacy_hyphen_pattern = re.compile("|".join(re.escape(term) for term in legacy_hyphen_terms))
+    for path in text_files_for_pii():
+        rel = str(path.relative_to(ROOT))
+        if rel in legacy_hyphen_allowlist or rel == ".gitignore":
+            continue
+        if legacy_hyphen_pattern.search(rel) or legacy_hyphen_pattern.search(path.read_text(errors="ignore")):
+            return fail(f"legacy hyphenated insurance_copilot identity outside migration/runtime-limit docs: {rel}")
     desc = fm.get("description", "")
     if not desc or len(desc) > 1024:
         return fail("skill description missing or >1024 chars")
@@ -361,10 +379,9 @@ def main() -> int:
         return fail("missing Chinese Telegram onboarding eval case")
     hermes_design = (ROOT / "docs" / "hermes-first-design.md").read_text()
     for phrase in [
-        "Telegram Command Identity and Runtime Limit",
-        "insurance_copilot",
-        "insurance-copilot",
-        "~/.insurance-copilot/agents/<agent-id>/",
+        "Unified Project Identity and Telegram Runtime Limit",
+        "https://github.com/zlbzhf/insurance_copilot",
+        "~/.insurance_copilot/agents/<agent-id>/",
         "Hermes core behavior normalizes skill slash-command keys internally to hyphenated slugs",
         "Telegram menu rendering sanitizes hyphens back to underscores",
         "Gateway matching treats underscore and hyphen command input as aliases",
@@ -377,11 +394,12 @@ def main() -> int:
             return fail(f"Hermes identity/runtime-limit doc missing phrase: {phrase}")
     release_checklist = (ROOT / "docs" / "release-checklist.md").read_text()
     for phrase in [
-        "~/.hermes/skills/insurance/insurance-copilot/",
+        "zlbzhf/insurance_copilot",
+        "~/.insurance_copilot/agents/<agent-id>/",
+        "~/.hermes/skills/insurance/insurance" + "-copilot/",
         "/skill insurance_copilot",
         "/insurance_copilot",
-        "internal `/insurance-copilot` key still resolves from `/insurance_copilot`",
-        "do not rename repo/private slugs to underscores",
+        "internal `/insurance" + "-copilot` alias still resolves from `/insurance_copilot`",
         "Bot API 100-command cap",
     ]:
         if phrase not in release_checklist:
@@ -1359,7 +1377,7 @@ def main() -> int:
     if manifest_artifact.get("checksum_recorded") is not False or manifest_artifact.get("sha256") != "self-referential-not-recorded" or manifest_artifact.get("size_recorded") is not False or manifest_artifact.get("size_bytes") is not None:
         return fail("private dry-run smoke manifest self-entry has stale checksum/size policy")
 
-    print("insurance-copilot Hermes-first repo ok")
+    print("insurance_copilot Hermes-first repo ok")
     print(f"references: {len(refs)}")
     print(f"templates: {len(list(TEMPLATE_DIR.glob('*.md')))}")
     print(f"eval_cases: {len(eval_cases)}")

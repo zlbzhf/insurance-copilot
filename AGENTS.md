@@ -95,5 +95,5 @@ docs/                       Architecture, privacy, action safety, continuity, qu
 Expected remote:
 
 ```text
-git@github.com-insurance-copilot:zlbzhf/insurance-copilot.git
+git@github.com-insurance_copilot:zlbzhf/insurance_copilot.git
 ```

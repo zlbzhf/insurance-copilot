@@ -10,7 +10,7 @@
 
 ---
 
-## Reference Shape: claude-for-legal -> insurance-copilot
+## Reference Shape: claude-for-legal -> insurance_copilot
 
 This phase maps the `claude-for-legal` connector idea into a safe Hermes-first insurance slice:
 

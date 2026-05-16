@@ -10,7 +10,7 @@
 
 ---
 
-## Reference Shape: claude-for-legal -> insurance-copilot
+## Reference Shape: claude-for-legal -> insurance_copilot
 
 `claude-for-legal` succeeds because it foregrounds:
 

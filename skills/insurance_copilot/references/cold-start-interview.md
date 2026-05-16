@@ -14,7 +14,7 @@ New or busy agents should be able to say `I don't know yet` and still get a usef
 - `[待核实]` is the Chinese-facing equivalent of `[verify]`. 含义：该事实目前没有足够来源支撑，必须向客户、保单、保险公司系统、主管、合规、核保、理赔或正式文件复核后才能用于客户发送或结论。
 - If no usable profile exists, ask at most three onboarding questions and then create a provisional profile. The first-run questions must 主动询问机构 and 主动询问角色; 不得默认机构 and 不得默认角色 from examples, memories, seed packs, or inferred context.
 - If 已有资料, an uploaded profile, or a private workspace summary exists, do not restart onboarding. 先展示摘要并请代理人确认, mark uncertain fields `[待核实]`, ask only the missing deltas, and then route into the daily work entry.
-- Workspace path rule: only suggest a private workspace path after institution and role are confirmed. Use `~/.insurance-copilot/agents/<institution-role-agent-id>/` for the private workspace family; keep Hermes skill installation under `~/.hermes/skills/insurance/insurance_copilot`.
+- Workspace path rule: only suggest a private workspace path after institution and role are confirmed. Use `~/.insurance_copilot/agents/<institution-role-agent-id>/` for the private workspace family; keep Hermes skill installation under `~/.hermes/skills/insurance/insurance_copilot`.
 
 Recommended Chinese three-question Quick Start:
 
@@ -29,7 +29,7 @@ After the three questions, produce a visually clear Chinese profile draft using 
 
 Write the resulting profile only to a user-approved practice profile path, commonly:
 
-`profiles/insurance-copilot-practice-profile.md`
+`profiles/insurance_copilot-practice-profile.md`
 
 If file access is unavailable or the user has not approved a destination, output a complete profile draft the user can save.
 

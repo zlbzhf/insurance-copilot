@@ -53,8 +53,8 @@ When `--workspace` is supplied, direct CSV inputs must remain inside that worksp
 
 ```bash
 python3 scripts/renewal_watcher.py \
-  --csv ~/.insurance-copilot/agents/synthetic/renewal-registers/register.csv \
-  --workspace ~/.insurance-copilot/agents/synthetic \
+  --csv ~/.insurance_copilot/agents/synthetic/renewal-registers/register.csv \
+  --workspace ~/.insurance_copilot/agents/synthetic \
   --as-of 2026-05-14 \
   --output /tmp/insurance-renewal-alert.md
 ```
@@ -101,7 +101,7 @@ For alert-only behavior:
 
 ```bash
 bash cron/scripts/renewal_watcher.sh \
-  --workspace ~/.insurance-copilot/agents/<agent-id> \
+  --workspace ~/.insurance_copilot/agents/<agent-id> \
   --as-of "$(date +%F)" \
   --mode alert-only
 ```
@@ -117,7 +117,7 @@ Example script wrapper:
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
-WORKSPACE="$HOME/.insurance-copilot/agents/<agent-id>"
+WORKSPACE="$HOME/.insurance_copilot/agents/<agent-id>"
 BUNDLE="/tmp/insurance-workbench-bundle.json"
 ALERT="/tmp/insurance-renewal-alert.md"
 python3 scripts/local_file_connectors.py daily-workbench \

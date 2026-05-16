@@ -26,7 +26,7 @@ Treat these as sensitive:
 
 - `examples/` and `evals/` must contain synthetic or de-identified data only.
 - `knowledge/institutions/` is public-source-only; do not add customer data or non-public institution materials.
-- `agent-workspace-template/` is only a template; real private workspaces should live outside the public repo, for example under `~/.insurance-copilot/agents/<agent-id>/`.
+- `agent-workspace-template/` is only a template; real private workspaces should live outside the public repo, for example under `~/.insurance_copilot/agents/<agent-id>/`.
 - Non-public institution notes belong in the agent-private workspace, not in a public pack.
 - No real customer documents should be committed.
 - If a sample resembles a real customer, rewrite it as synthetic.

@@ -47,7 +47,7 @@ Alert-only mode, useful for no-agent cron:
 
 ```bash
 bash cron/scripts/renewal_watcher.sh \
-  --workspace ~/.insurance-copilot/agents/<agent-id> \
+  --workspace ~/.insurance_copilot/agents/<agent-id> \
   --as-of "$(date +%F)" \
   --mode alert-only
 ```
@@ -56,7 +56,7 @@ Write a reviewed artifact outside the workspace:
 
 ```bash
 bash cron/scripts/renewal_watcher.sh \
-  --workspace ~/.insurance-copilot/agents/<agent-id> \
+  --workspace ~/.insurance_copilot/agents/<agent-id> \
   --as-of "$(date +%F)" \
   --mode always \
   --output /tmp/insurance-renewal-alert.md
@@ -122,7 +122,7 @@ Run the private workspace readiness gate before wrapper dry runs on real private
 
 ```bash
 python3 scripts/private_workspace_readiness.py \
-  --workspace ~/.insurance-copilot/agents/<agent-id> \
+  --workspace ~/.insurance_copilot/agents/<agent-id> \
   --as-of "$(date +%F)" \
   --format markdown
 ```

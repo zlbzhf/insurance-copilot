@@ -28,7 +28,7 @@ For a private workspace:
 
 ```bash
 python3 scripts/private_dry_run.py \
-  --workspace ~/.insurance-copilot/agents/<agent-id> \
+  --workspace ~/.insurance_copilot/agents/<agent-id> \
   --as-of "$(date +%F)" \
   --out /tmp/insurance_copilot-dry-run-$(date +%F)
 ```

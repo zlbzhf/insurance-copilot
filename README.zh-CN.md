@@ -193,7 +193,7 @@ agent-workspace-template/
 建议私有位置：
 
 ```text
-~/.insurance-copilot/agents/<agent-id>/
+~/.insurance_copilot/agents/<agent-id>/
 ```
 
 用途：
@@ -376,8 +376,8 @@ agent-workspace-template/
 建议初始化：
 
 ```bash
-mkdir -p ~/.insurance-copilot/agents/<agent-id>
-cp -R agent-workspace-template/* ~/.insurance-copilot/agents/<agent-id>/
+mkdir -p ~/.insurance_copilot/agents/<agent-id>
+cp -R agent-workspace-template/* ~/.insurance_copilot/agents/<agent-id>/
 ```
 
 见 `docs/agent-private-knowledge.md`。

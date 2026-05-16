@@ -9,7 +9,7 @@ public_upload_allowed: false
 
 # Agent Private Workspace
 
-This workspace is private. It may contain customer data and non-public institution notes. Do not copy it into the public `insurance-copilot` repository.
+This workspace is private. It may contain customer data and non-public institution notes. Do not copy it into the public `insurance_copilot` repository.
 
 ## Privacy Rules
 

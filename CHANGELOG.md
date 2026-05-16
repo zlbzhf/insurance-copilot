@@ -22,7 +22,7 @@ This project is currently pre-1.0 and milestone-based. The changelog follows a h
 
 ### Changed
 
-- Renamed the installable Hermes skill directory/frontmatter identity to underscore-safe `insurance_copilot` while preserving the public repo slug `insurance-copilot` and private workspace root `~/.insurance-copilot/agents/<agent-id>/`.
+- Unified the repository/product slug, installable Hermes skill identity, Telegram command, and private workspace root on the underscore-safe `insurance_copilot` naming convention.
 - Clarified that Insurance Copilot is usable now as a manual-first Hermes skill beta, but not production-complete for live automation, customer sending, CRM writes, application submission, claims filing, policy changes, quote generation, or final regulated advice.
 - Generalized Institution Knowledge Organizer from an AIA-first workflow to a pack-agnostic public institution pack workflow under `knowledge/institutions/<pack_id>/`; AIA/友邦 remains the current seed example, not the generic runtime definition.
 - Updated README, Chinese README, CI, contribution templates, intake templates, and private workspace defaults to use registry-driven validation and generic institution placeholders.

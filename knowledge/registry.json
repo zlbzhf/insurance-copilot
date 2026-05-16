@@ -7,7 +7,7 @@
       "display_name": "AIA / 友邦保险",
       "type": "public-institution-pack",
       "location": "knowledge/institutions/aia",
-      "repo": "https://github.com/zlbzhf/insurance-copilot",
+      "repo": "https://github.com/zlbzhf/insurance_copilot",
       "index_path": "knowledge/institutions/aia/index.md",
       "data_classification": "public",
       "languages": [

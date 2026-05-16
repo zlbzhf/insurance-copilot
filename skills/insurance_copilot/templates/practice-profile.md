@@ -23,7 +23,7 @@ Never ask the agent to manually fill the profile template. The template is an in
 - Jurisdictions / 执业或服务地区:
 - License scope / 牌照与产品权限:
 - Institution/public pack preference:
-- Agent-private workspace path, only after institution and role are confirmed: `~/.insurance-copilot/agents/<institution-role-agent-id>/`
+- Agent-private workspace path, only after institution and role are confirmed: `~/.insurance_copilot/agents/<institution-role-agent-id>/`
 - Identity notes: 不得默认机构；不得默认角色；如缺失，主动询问机构、主动询问角色，并标记 `[待核实]`。
 
 ## 3. 业务边界与产品范围
