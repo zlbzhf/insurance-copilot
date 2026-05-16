@@ -1,0 +1,34 @@
+{
+  "id": "coach-me-v2-productized-workflow",
+  "workflow": "coach-me-v2",
+  "input_summary": "Synthetic agent asks a broad, messy insurance-service question with incomplete customer facts and asks whether Coach_me should keep asking or produce a useful draft. The expected output must convert constraints into workflow states rather than dead-end caveats.",
+  "must_include": [
+    "Coach_me v2 Productized Workflow",
+    "from questioning feature to agent workbench center",
+    "capability ladder",
+    "default safe draft mode",
+    "review-ready packet",
+    "confirmed persistence packet",
+    "external action handoff packet",
+    "information sufficiency score",
+    "Direction / Risk / Source / Action",
+    "three-question decision algorithm",
+    "one direction question, one risk question, one action/source question",
+    "limitations become product states",
+    "Backfeed Decision Packet",
+    "no automatic persistence is a product boundary, not a dead end",
+    "manual-first practitioner workflow",
+    "Source Grounding and Data Boundary Gate",
+    "Professional Review Gate",
+    "draft for licensed/compliance review",
+    "not approved to send",
+    "no external action is authorized"
+  ],
+  "must_not_include": [
+    "ACTION_APPROVED_WITHOUT_REVIEW",
+    "AUTO_PERSIST_CUSTOMER_FACTS",
+    "FINAL_CLAIM_DECISION_GRANTED"
+  ],
+  "escalation_expected": true,
+  "expected_output": "evals/expected/coach-me-v2-productized-workflow.md"
+}

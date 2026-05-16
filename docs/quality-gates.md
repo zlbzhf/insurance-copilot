@@ -93,19 +93,34 @@ Reject changes that create live automation, omit read-only verification, copy pr
 
 ## Coach_me Guided Reasoning Gate
 
-Document-grounded questioning patterns must become one insurance-specific guided reasoning workflow, not a split skill surface. The **Coach_me Guided Reasoning Mode** is the cross-workflow reasoning loop for broad, messy, strategic, document-dependent, or customer-situation questions. It turns follow-up Q&A into structured raw input, then produces a durable final answer and backfeed proposal.
+Document-grounded questioning patterns must become one insurance-specific guided reasoning workflow, not a split skill surface. The **Coach_me Guided Reasoning Mode** is the cross-workflow reasoning loop for broad, messy, strategic, document-dependent, or customer-situation questions. It now uses **Coach_me v2 Productized Workflow** to move **from questioning feature to agent workbench center**: follow-up Q&A becomes structured raw input, source/risk/action status becomes visible, boundaries become next states, and the final output becomes a durable answer plus backfeed proposal. This is a **manual-first practitioner workflow**.
+
+Productized principle: use the **capability ladder** so **limitations become product states**. The ladder must include **default safe draft mode**, **review-ready packet**, **confirmed persistence packet**, and **external action handoff packet**. Treat **no automatic persistence is a product boundary, not a dead end**.
 
 Required runtime surfaces:
 
 - `skills/insurance_copilot/SKILL.md` routes to `references/coach-me.md`.
 - `skills/insurance_copilot/references/coach-me.md` defines the method.
 - `skills/insurance_copilot/templates/coach-me.md` defines the working/final document.
-- `evals/cases/coach-me-guided-document-grounded-answer.json`, `evals/expected/coach-me-guided-document-grounded-answer.md`, `tests/test_practitioner_mvp_surface.py`, and `scripts/validate_repo.py` keep it executable.
+- `evals/cases/coach-me-guided-document-grounded-answer.json`, `evals/expected/coach-me-guided-document-grounded-answer.md`, `evals/cases/coach-me-v2-productized-workflow.json`, `evals/expected/coach-me-v2-productized-workflow.md`, `tests/test_practitioner_mvp_surface.py`, and `scripts/validate_repo.py` keep it executable.
 
 Required phrases and fields:
 
 - Coach_me Guided Reasoning Mode;
+- Coach_me v2 Productized Workflow;
+- from questioning feature to agent workbench center;
 - one workflow, not two skills;
+- capability ladder;
+- default safe draft mode;
+- review-ready packet;
+- confirmed persistence packet;
+- external action handoff packet;
+- information sufficiency score;
+- Direction / Risk / Source / Action;
+- three-question decision algorithm;
+- one direction question, one risk question, one action/source question;
+- limitations become product states;
+- Backfeed Decision Packet;
 - ask exactly three most precise and relevant questions;
 - answer now or continue questioning;
 - automatically stop questioning when information is sufficient;
@@ -117,10 +132,11 @@ Required phrases and fields:
 - Q&A intake is raw source input;
 - Karpathy-style LLM wiki backfeed proposal;
 - no automatic persistence;
+- no automatic persistence is a product boundary, not a dead end;
 - Source Grounding and Data Boundary Gate;
 - Professional Review Gate.
 
-Reject changes that split Coach_me into separate context-only/document-grounded skills, ask broad questionnaires, ask more than three questions in a round, skip available-source review, fail to offer answer now or continue questioning, persist sensitive or customer facts without explicit destination approval, or copy private/customer data into public packs.
+Reject changes that split Coach_me into separate context-only/document-grounded skills, ask broad questionnaires, ask more than three questions in a round, skip available-source review, fail to use the **information sufficiency score**, fail to apply the **three-question decision algorithm**, fail to offer answer now or continue questioning, collapse boundary states into bare caveats, persist sensitive or customer facts without explicit destination approval, or copy private/customer data into public packs.
 
 ## Source Grounding and Data Boundary Gate
 

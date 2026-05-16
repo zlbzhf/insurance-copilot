@@ -10,6 +10,7 @@
 
 ### 新增
 
+- 新增 Coach_me v2 Productized Workflow：`docs/plans/2026-05-16-coach-me-v2-productization.md`、升级后的 runtime reference/template、新 eval case/expected output、pytest 覆盖和 validator 覆盖，用于保护 capability ladder、information sufficiency score、Direction/Risk/Source/Action 追问轮、Backfeed Decision Packet，以及 manual-first 产品状态边界。
 - 新增 Coach_me Guided Reasoning Mode，作为 Insurance Copilot 内的单一工作流（`references/coach-me.md`、`templates/coach-me.md`、eval、tests、validator 和 docs），用于宽泛、凌乱、策略性、依赖资料或客户场景的问题；它包含 source discovery order、每轮三个精准问题、answer-now/continue 选择、信息充分自动停止、可沉淀的 working/final documents、Q&A-as-raw-input，以及 Karpathy-style LLM wiki backfeed proposals，并保持 no automatic persistence。
 - 新增中文 Telegram onboarding 文档、示例、eval 和 validator 覆盖，保护 `/skill insurance_copilot`、机构/角色确认、`[待核实]` 解释，以及已有资料先摘要确认的行为。
 - 新增 `docs/product-development-spec.md`，作为持久的产品开发事实来源和可用状态定义。
@@ -23,6 +24,7 @@
 
 ### 变更
 
+- 将 Coach_me 从追问机制升级为代理人工作流中心，把限制转化为产品状态：default safe draft mode、review-ready packet、confirmed persistence packet 和 external action handoff packet。
 - 将仓库/产品 slug、可安装 Hermes 技能身份、Telegram 命令和私有工作区根路径统一到 Telegram 安全的 `insurance_copilot` 命名。
 - 明确 Insurance Copilot 目前已经可作为 manual-first Hermes skill beta 使用，但还不是可直接用于 live automation、客户发送、CRM 写入、投保提交、理赔提交、保单变更、报价引擎或最终监管建议的生产系统。
 - 将 Institution Knowledge Organizer 从 AIA-first 流程泛化为 `knowledge/institutions/<pack_id>/` 下的 pack-agnostic public institution pack 工作流；AIA/友邦 保留为当前 seed 示例，而不是通用运行时定义。

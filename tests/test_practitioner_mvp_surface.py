@@ -517,6 +517,50 @@ def test_coach_me_guided_mode_is_single_runtime_workflow_not_split_skill() -> No
         assert phrase not in expected
 
 
+def test_coach_me_v2_productization_turns_limits_into_workflow_capabilities() -> None:
+    skill = read("skills/insurance_copilot/SKILL.md")
+    reference = read("skills/insurance_copilot/references/coach-me.md")
+    template = read("skills/insurance_copilot/templates/coach-me.md")
+    plan = read("docs/plans/2026-05-16-coach-me-v2-productization.md")
+    quality = read("docs/quality-gates.md")
+    surface = read("docs/workflow-surface.md")
+    spec = read("docs/product-development-spec.md")
+    readme = read("README.md")
+    zh_readme = read("README.zh-CN.md")
+    eval_readme = read("evals/README.md")
+
+    v2_phrases = [
+        "Coach_me v2 Productized Workflow",
+        "from questioning feature to agent workbench center",
+        "capability ladder",
+        "default safe draft mode",
+        "review-ready packet",
+        "confirmed persistence packet",
+        "external action handoff packet",
+        "information sufficiency score",
+        "Direction / Risk / Source / Action",
+        "three-question decision algorithm",
+        "one direction question, one risk question, one action/source question",
+        "limitations become product states",
+        "Backfeed Decision Packet",
+        "no automatic persistence is a product boundary, not a dead end",
+        "manual-first practitioner workflow",
+    ]
+    for text in [skill, reference, template, plan, quality, surface, spec, readme, zh_readme, eval_readme]:
+        for phrase in v2_phrases:
+            assert phrase in text
+
+    case = json.loads((ROOT / "evals/cases/coach-me-v2-productized-workflow.json").read_text(encoding="utf-8"))
+    expected = read(case["expected_output"])
+    assert case["id"] == "coach-me-v2-productized-workflow"
+    assert case["workflow"] == "coach-me-v2"
+    assert case["escalation_expected"] is True
+    for phrase in v2_phrases + case["must_include"]:
+        assert phrase in expected
+    for phrase in case["must_not_include"]:
+        assert phrase not in expected
+
+
 def test_empty_neutrality_gate_requires_action_plan() -> None:
     quality = read("docs/quality-gates.md")
     compliance = read("skills/insurance_copilot/references/compliance-starter.md")

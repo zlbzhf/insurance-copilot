@@ -723,7 +723,7 @@ def main() -> int:
         if phrase in private_trace_expected:
             return fail(f"Private Workspace Trace eval expected output contains forbidden phrase: {phrase}")
 
-    coach_me_required = [
+    coach_me_base_required = [
         "Coach_me Guided Reasoning Mode",
         "one workflow, not two skills",
         "ask exactly three most precise and relevant questions",
@@ -740,6 +740,24 @@ def main() -> int:
         "Source Grounding and Data Boundary Gate",
         "Professional Review Gate",
     ]
+    coach_me_v2_required = [
+        "Coach_me v2 Productized Workflow",
+        "from questioning feature to agent workbench center",
+        "capability ladder",
+        "default safe draft mode",
+        "review-ready packet",
+        "confirmed persistence packet",
+        "external action handoff packet",
+        "information sufficiency score",
+        "Direction / Risk / Source / Action",
+        "three-question decision algorithm",
+        "one direction question, one risk question, one action/source question",
+        "limitations become product states",
+        "Backfeed Decision Packet",
+        "no automatic persistence is a product boundary, not a dead end",
+        "manual-first practitioner workflow",
+    ]
+    coach_me_required = coach_me_base_required + coach_me_v2_required
     coach_me_docs = {
         "SKILL.md": text,
         "coach-me reference": (REF_DIR / "coach-me.md").read_text(),
@@ -767,12 +785,26 @@ def main() -> int:
     coach_me_expected = (ROOT / coach_me_case["expected_output"]).read_text()
     if coach_me_case.get("id") != "coach-me-guided-document-grounded-answer" or coach_me_case.get("workflow") != "coach-me" or not coach_me_case.get("escalation_expected"):
         return fail("Coach_me eval case has wrong id/workflow/escalation flag")
-    for phrase in coach_me_required + coach_me_case["must_include"]:
+    for phrase in coach_me_base_required + coach_me_case["must_include"]:
         if phrase not in coach_me_expected:
             return fail(f"Coach_me eval expected output missing phrase: {phrase}")
     for phrase in coach_me_case["must_not_include"]:
         if phrase in coach_me_expected:
             return fail(f"Coach_me eval expected output contains forbidden phrase: {phrase}")
+
+    coach_me_v2_case_path = ROOT / "evals" / "cases" / "coach-me-v2-productized-workflow.json"
+    if not coach_me_v2_case_path.exists():
+        return fail("missing Coach_me v2 eval case")
+    coach_me_v2_case = json.loads(coach_me_v2_case_path.read_text())
+    coach_me_v2_expected = (ROOT / coach_me_v2_case["expected_output"]).read_text()
+    if coach_me_v2_case.get("id") != "coach-me-v2-productized-workflow" or coach_me_v2_case.get("workflow") != "coach-me-v2" or not coach_me_v2_case.get("escalation_expected"):
+        return fail("Coach_me v2 eval case has wrong id/workflow/escalation flag")
+    for phrase in coach_me_required + coach_me_v2_case["must_include"]:
+        if phrase not in coach_me_v2_expected:
+            return fail(f"Coach_me v2 eval expected output missing phrase: {phrase}")
+    for phrase in coach_me_v2_case["must_not_include"]:
+        if phrase in coach_me_v2_expected:
+            return fail(f"Coach_me v2 eval expected output contains forbidden phrase: {phrase}")
 
     external_write_required = [
         "External Write Action Boundary Gate",
