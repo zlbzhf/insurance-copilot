@@ -4,14 +4,14 @@ Runtime name: **Coach_me Guided Reasoning Mode**.
 
 Use this reference when an insurance agent brings a broad, messy, strategic, document-dependent, **product recommendation intent**, or customer-situation question where a one-shot insurance answer may miss material facts.
 
-Insurance Copilot now treats Coach_me as a **standalone coach-me skill** and uses this file only as the insurance-domain adapter. The generic method is: **question → obtain information → form a working document → recommend next route**. The insurance adapter adds regulated-domain boundaries, source hierarchy, customer-first advocacy, and workflow routing.
+Insurance Copilot now treats Coach_me as a **standalone Coach_me skill** and uses this file only as the insurance-domain adapter. The generic method is: **question → obtain information → form a working document → recommend next route**. The insurance adapter adds regulated-domain boundaries, source hierarchy, customer-first advocacy, and workflow routing.
 
 ## Runtime Relationship
 
 - **Coach_me is a method, not an insurance workflow by itself.** It develops facts and produces a **Coach_me Working Document**.
 - **Insurance Copilot is the domain router and guardrail layer.** It consumes the working document, then routes to Client Needs Intake, Policy Review Assistant, Claims Support Triage, Replacement Risk Triager, Compliance Copy Checker, Product Fit Reviewer, Customer Advocacy Memo, or a Professional Review Gate handoff.
 - Use **Coach_me before Client Needs Intake** when the agent asks how to recommend, judge, or handle insurance/product recommendation rather than merely requesting a structured fact-find.
-- Use the standalone `skills/coach_me/templates/working-document.md` as the cross-skill interface. Use `templates/coach-me.md` in this skill only for the insurance handoff wrapper.
+- Use the standalone `skills/coach_me/templates/working-document.md` as the cross-skill interface. Use `templates/coach_me.md` in this skill only for the insurance handoff wrapper.
 
 ## Insurance Source Discovery Order
 
@@ -92,5 +92,5 @@ Then hand off to the matching Insurance Copilot workflow. For customer-facing, r
 
 ## Coach_me Runtime Phrase Ledger
 
-This surface intentionally preserves these runtime concepts for deterministic gates: **standalone coach-me skill**, **Coach_me Guided Reasoning Mode**, **Coach_me before Client Needs Intake**, **source discovery order**, **dynamic questioning**, **not a fixed questionnaire**, **not a fixed question count**, **not fixed categories**, **one question at a time**, **interactive conversational gateway**, **recommended default answer**, **answer now or continue questioning**, **automatically stop questioning when information is sufficient**, **Coach_me Working Document**, **public institution knowledge**, **agent-private workspace**, **customer-specific materials**, **Q&A intake is raw source input**, **no automatic persistence**, **manual-first practitioner workflow**, **Source Grounding and Data Boundary Gate**, and **Professional Review Gate**.
+This surface intentionally preserves these runtime concepts for deterministic gates: **standalone Coach_me skill**, **Coach_me Guided Reasoning Mode**, **Coach_me before Client Needs Intake**, **source discovery order**, **dynamic questioning**, **not a fixed questionnaire**, **not a fixed question count**, **not fixed categories**, **one question at a time**, **interactive conversational gateway**, **recommended default answer**, **answer now or continue questioning**, **automatically stop questioning when information is sufficient**, **Coach_me Working Document**, **public institution knowledge**, **agent-private workspace**, **customer-specific materials**, **Q&A intake is raw source input**, **no automatic persistence**, **manual-first practitioner workflow**, **Source Grounding and Data Boundary Gate**, and **Professional Review Gate**.
 

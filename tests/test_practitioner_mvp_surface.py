@@ -500,8 +500,8 @@ def test_coach_me_uses_standalone_dynamic_method_and_insurance_adapter() -> None
     coach_skill = read("skills/coach_me/SKILL.md")
     coach_template = read("skills/coach_me/templates/working-document.md")
     skill = read("skills/insurance_copilot/SKILL.md")
-    reference = read("skills/insurance_copilot/references/coach-me.md")
-    template = read("skills/insurance_copilot/templates/coach-me.md")
+    reference = read("skills/insurance_copilot/references/coach_me.md")
+    template = read("skills/insurance_copilot/templates/coach_me.md")
     quality = read("docs/quality-gates.md")
     surface = read("docs/workflow-surface.md")
     spec = read("docs/product-development-spec.md")
@@ -523,7 +523,7 @@ def test_coach_me_uses_standalone_dynamic_method_and_insurance_adapter() -> None
     assert "## Next Questions (If Continuing)" in coach_template
 
     adapter_phrases = [
-        "standalone coach-me skill",
+        "standalone Coach_me skill",
         "Coach_me Guided Reasoning Mode",
         "Coach_me before Client Needs Intake",
         "source discovery order",
@@ -562,25 +562,25 @@ def test_coach_me_uses_standalone_dynamic_method_and_insurance_adapter() -> None
 
     assert "templates/working-document.md" in coach_skill
     assert "skills/coach_me/templates/working-document.md" in reference
-    assert "templates/coach-me.md" in skill
+    assert "templates/coach_me.md" in skill
     assert "## Next Question If Continuing" in template
     assert "Review Gates Needed" in template
 
 
 def test_coach_me_eval_cases_reject_old_fixed_three_question_contract() -> None:
     for case_file in [
-        "evals/cases/coach-me-guided-document-grounded-answer.json",
-        "evals/cases/coach-me-sequential-question-protocol.json",
+        "evals/cases/coach_me-guided-document-grounded-answer.json",
+        "evals/cases/coach_me-dynamic-questioning-protocol.json",
     ]:
         case = json.loads((ROOT / case_file).read_text(encoding="utf-8"))
         expected = read(case["expected_output"])
-        assert case["workflow"] == "coach-me"
+        assert case["workflow"] == "coach_me"
         assert case["escalation_expected"] is True
         for phrase in case["must_include"]:
             assert phrase in expected
         for phrase in case["must_not_include"]:
             assert phrase not in expected
-        assert "standalone coach-me skill" in expected
+        assert "standalone Coach_me skill" in expected
         assert "not a fixed question count" in expected
         assert "ask exactly three most precise and relevant questions" not in expected
         assert "Question 1/3" not in expected

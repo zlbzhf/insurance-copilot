@@ -4,7 +4,7 @@
 
 This expected output protects the **Coach_me Guided Reasoning Mode** behavior for a broad **product recommendation intent**, for example: “想给客户推荐保险产品，不知道怎么推荐.” The correct route is **Coach_me before Client Needs Intake** because the agent is asking how to think through a recommendation, not merely asking to format an intake form.
 
-The runtime rule is gateway-agnostic: in any **interactive conversational gateway**, use the standalone **coach-me** skill to ask **one question at a time**. Coach_me is **not a fixed questionnaire**, **not a fixed question count**, and **not fixed categories**. Batch multiple questions only when the agent asks for an offline checklist.
+The runtime rule is gateway-agnostic: in any **interactive conversational gateway**, use the standalone **coach_me** skill to ask **one question at a time**. Coach_me is **not a fixed questionnaire**, **not a fixed question count**, and **not fixed categories**. Batch multiple questions only when the agent asks for an offline checklist.
 
 ## Runtime Contract
 
@@ -18,7 +18,7 @@ The runtime rule is gateway-agnostic: in any **interactive conversational gatewa
 
 ### Why Coach_me Activated
 
-- Workflow: **Coach_me Guided Reasoning Mode** using the **standalone coach-me skill**.
+- Workflow: **Coach_me Guided Reasoning Mode** using the **standalone Coach_me skill**.
 - Trigger: product recommendation intent / 推荐保险产品, but customer facts, risk flags, sources, and immediate output goal are incomplete.
 - Route: **Coach_me before Client Needs Intake**. After the direction is clear, Client Needs Intake can collect structured facts.
 

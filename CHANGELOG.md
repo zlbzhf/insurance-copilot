@@ -10,7 +10,7 @@ This project is currently pre-1.0 and milestone-based. The changelog follows a h
 
 ### Changed
 
-- Updated Coach_me runtime architecture: Insurance Copilot now uses the standalone `coach_me` skill as the generic dynamic questioning-to-document method, while `skills/insurance_copilot/references/coach-me.md` and `templates/coach-me.md` are insurance-domain adapter/handoff surfaces. Removed the fixed three-question / fixed Direction-Risk-Source-Action contract from active runtime surfaces.
+- Updated Coach_me runtime architecture: Insurance Copilot now uses the standalone `coach_me` skill as the generic dynamic questioning-to-document method, while `skills/insurance_copilot/references/coach_me.md` and `templates/coach_me.md` are insurance-domain adapter/handoff surfaces. Removed the fixed three-question / fixed Direction-Risk-Source-Action contract from active runtime surfaces.
 
 ### Added
 

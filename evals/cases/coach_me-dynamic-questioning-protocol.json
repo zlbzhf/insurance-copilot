@@ -1,10 +1,10 @@
 {
-  "id": "coach-me-sequential-question-protocol",
-  "workflow": "coach-me",
+  "id": "coach_me-dynamic-questioning-protocol",
+  "workflow": "coach_me",
   "input_summary": "Synthetic agent asks a broad product recommendation question such as '想给客户推荐保险产品，不知道怎么推荐'. The expected output must route product recommendation intent to Coach_me before Client Needs Intake, use gateway-agnostic dynamic one-question-at-a-time clarification, and avoid fixed three-question batching unless an offline checklist is requested.",
   "must_include": [
     "Coach_me Guided Reasoning Mode",
-    "standalone coach-me skill",
+    "standalone Coach_me skill",
     "product recommendation intent",
     "Coach_me before Client Needs Intake",
     "interactive conversational gateway",
@@ -35,5 +35,5 @@
     "Direction / Risk / Source / Action"
   ],
   "escalation_expected": true,
-  "expected_output": "evals/expected/coach-me-sequential-question-protocol.md"
+  "expected_output": "evals/expected/coach_me-dynamic-questioning-protocol.md"
 }

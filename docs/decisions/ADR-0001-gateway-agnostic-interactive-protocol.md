@@ -8,7 +8,7 @@ Runtime authority: decision record only; current behavior lives in runtime surfa
 
 Insurance Copilot originally used several Chinese Telegram onboarding phrases because the first real runtime channel was Telegram. That created an accidental product constraint: the actual behavior should apply to any interactive conversational gateway, not only one platform.
 
-The project now uses standalone coach-me as the generic questioning-to-document method. Its one-question-at-a-time behavior is a conversational protocol, not a Telegram-specific behavior.
+The project now uses standalone coach_me as the generic questioning-to-document method. Its one-question-at-a-time behavior is a conversational protocol, not a Telegram-specific behavior.
 
 ## Decision
 
@@ -29,8 +29,8 @@ Current behavior lives in:
 - `skills/insurance_copilot/SKILL.md`
 - `skills/coach_me/SKILL.md`
 - `skills/coach_me/templates/working-document.md`
-- `skills/insurance_copilot/references/coach-me.md`
-- `skills/insurance_copilot/templates/coach-me.md`
+- `skills/insurance_copilot/references/coach_me.md`
+- `skills/insurance_copilot/templates/coach_me.md`
 - `skills/insurance_copilot/references/cold-start-interview.md`
 - `skills/insurance_copilot/references/client-needs-intake.md`
 - `docs/workflow-surface.md`
@@ -44,10 +44,10 @@ Regression protection lives in:
 
 - `tests/test_practitioner_mvp_surface.py`
 - `scripts/validate_repo.py`
-- `evals/cases/coach-me-sequential-question-protocol.json`
-- `evals/expected/coach-me-sequential-question-protocol.md`
-- `evals/cases/coach-me-guided-document-grounded-answer.json`
-- `evals/expected/coach-me-guided-document-grounded-answer.md`
+- `evals/cases/coach_me-dynamic-questioning-protocol.json`
+- `evals/expected/coach_me-dynamic-questioning-protocol.md`
+- `evals/cases/coach_me-guided-document-grounded-answer.json`
+- `evals/expected/coach_me-guided-document-grounded-answer.md`
 - `evals/cases/chinese-interactive-onboarding.json`
 - `evals/expected/chinese-interactive-onboarding.md`
 

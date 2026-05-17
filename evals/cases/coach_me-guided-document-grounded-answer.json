@@ -1,9 +1,9 @@
 {
-  "id": "coach-me-guided-document-grounded-answer",
-  "workflow": "coach-me",
+  "id": "coach_me-guided-document-grounded-answer",
+  "workflow": "coach_me",
   "input_summary": "Synthetic agent asks a messy document-grounded question: a customer wants to know whether an old policy and a new claim note support a review path. The agent has incomplete public institution notes, a private customer policy summary, and wants guided follow-up before a final answer.",
   "must_include": [
-    "standalone coach-me skill",
+    "standalone Coach_me skill",
     "Coach_me Guided Reasoning Mode",
     "not a fixed questionnaire",
     "not a fixed question count",
@@ -39,5 +39,5 @@
     "Do not batch all three questions"
   ],
   "escalation_expected": true,
-  "expected_output": "evals/expected/coach-me-guided-document-grounded-answer.md"
+  "expected_output": "evals/expected/coach_me-guided-document-grounded-answer.md"
 }

@@ -93,7 +93,7 @@ Reject changes that create live automation, omit read-only verification, copy pr
 
 ## Coach_me Guided Reasoning Gate
 
-Document-grounded questioning patterns must now use the standalone **coach-me** method plus the Insurance Copilot adapter, not a second insurance-only fixed questionnaire. The **Coach_me Guided Reasoning Mode** is the cross-workflow reasoning loop for broad, messy, strategic, document-dependent, or customer-situation questions.
+Document-grounded questioning patterns must now use the standalone **coach_me** method plus the Insurance Copilot adapter, not a second insurance-only fixed questionnaire. The **Coach_me Guided Reasoning Mode** is the cross-workflow reasoning loop for broad, messy, strategic, document-dependent, or customer-situation questions.
 
 Productized principle: Coach_me develops facts and forms a **Coach_me Working Document**; Insurance Copilot consumes that document, applies source hierarchy, public/private data boundaries, customer-first advocacy, and review gates, then routes to the correct insurance workflow.
 
@@ -101,14 +101,14 @@ Required runtime surfaces:
 
 - `skills/coach_me/SKILL.md` defines the generic method.
 - `skills/coach_me/templates/working-document.md` defines the cross-skill document interface.
-- `skills/insurance_copilot/SKILL.md` routes messy insurance questions to the standalone coach-me method.
-- `skills/insurance_copilot/references/coach-me.md` defines the insurance adapter.
-- `skills/insurance_copilot/templates/coach-me.md` defines the insurance handoff wrapper.
-- `evals/cases/coach-me-guided-document-grounded-answer.json`, `evals/expected/coach-me-guided-document-grounded-answer.md`, `evals/cases/coach-me-sequential-question-protocol.json`, `evals/expected/coach-me-sequential-question-protocol.md`, `tests/test_practitioner_mvp_surface.py`, and `scripts/validate_repo.py` keep it executable.
+- `skills/insurance_copilot/SKILL.md` routes messy insurance questions to the standalone coach_me method.
+- `skills/insurance_copilot/references/coach_me.md` defines the insurance adapter.
+- `skills/insurance_copilot/templates/coach_me.md` defines the insurance handoff wrapper.
+- `evals/cases/coach_me-guided-document-grounded-answer.json`, `evals/expected/coach_me-guided-document-grounded-answer.md`, `evals/cases/coach_me-dynamic-questioning-protocol.json`, `evals/expected/coach_me-dynamic-questioning-protocol.md`, `tests/test_practitioner_mvp_surface.py`, and `scripts/validate_repo.py` keep it executable.
 
 Required phrases and concepts:
 
-- standalone coach-me skill;
+- standalone Coach_me skill;
 - Coach_me Guided Reasoning Mode;
 - Coach_me before Client Needs Intake;
 - source discovery order;

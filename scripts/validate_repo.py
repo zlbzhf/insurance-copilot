@@ -141,7 +141,7 @@ REQUIRED_REFERENCES = [
     "source-grounding-guardrails.md",
     "private-workspace-trace-readiness.md",
     "external-write-action-boundary.md",
-    "coach-me.md",
+    "coach_me.md",
 ]
 
 REQUIRED_TEMPLATES = [
@@ -167,7 +167,7 @@ REQUIRED_TEMPLATES = [
     "source-grounding-guardrails.md",
     "private-workspace-audit-trace.md",
     "external-write-action-boundary.md",
-    "coach-me.md",
+    "coach_me.md",
 ]
 
 REQUIRED_MCP_CONTRACTS = [
@@ -807,7 +807,7 @@ def main() -> int:
         return fail("standalone coach_me working document missing continuation section")
 
     coach_me_required = [
-        "standalone coach-me skill",
+        "standalone Coach_me skill",
         "Coach_me Guided Reasoning Mode",
         "Coach_me before Client Needs Intake",
         "source discovery order",
@@ -832,8 +832,8 @@ def main() -> int:
     ]
     coach_me_docs = {
         "SKILL.md": text,
-        "coach-me reference": (REF_DIR / "coach-me.md").read_text(),
-        "coach-me template": (TEMPLATE_DIR / "coach-me.md").read_text(),
+        "Coach_me reference": (REF_DIR / "coach_me.md").read_text(),
+        "Coach_me template": (TEMPLATE_DIR / "coach_me.md").read_text(),
         "quality gates": quality_gates,
         "workflow surface": (ROOT / "docs" / "workflow-surface.md").read_text(),
         "product development SPEC": product_spec,
@@ -868,19 +868,19 @@ def main() -> int:
     if "recommend insurance" not in intake_ref.lower() and "推荐保险" not in intake_ref:
         return fail("client needs intake missing product recommendation trigger wording")
 
-    for rel in ["references/coach-me.md", "templates/coach-me.md"]:
+    for rel in ["references/coach_me.md", "templates/coach_me.md"]:
         if rel not in text:
             return fail(f"SKILL.md missing Coach_me adapter path: {rel}")
-    if "skills/coach_me/templates/working-document.md" not in (REF_DIR / "coach-me.md").read_text():
-        return fail("coach-me adapter reference missing standalone working-document interface path")
+    if "skills/coach_me/templates/working-document.md" not in (REF_DIR / "coach_me.md").read_text():
+        return fail("Coach_me reference missing standalone working-document interface path")
 
-    for case_name in ["coach-me-sequential-question-protocol", "coach-me-guided-document-grounded-answer"]:
+    for case_name in ["coach_me-dynamic-questioning-protocol", "coach_me-guided-document-grounded-answer"]:
         case_path = ROOT / "evals" / "cases" / f"{case_name}.json"
         if not case_path.exists():
             return fail(f"missing Coach_me eval case: {case_name}")
         case = json.loads(case_path.read_text())
         expected = (ROOT / case["expected_output"]).read_text()
-        if case.get("id") != case_name or case.get("workflow") != "coach-me" or not case.get("escalation_expected"):
+        if case.get("id") != case_name or case.get("workflow") != "coach_me" or not case.get("escalation_expected"):
             return fail(f"Coach_me eval case has wrong id/workflow/escalation flag: {case_name}")
         for phrase in case["must_include"]:
             if phrase not in expected:
@@ -889,8 +889,8 @@ def main() -> int:
             if phrase in expected:
                 return fail(f"Coach_me eval expected output contains forbidden phrase: {phrase}")
 
-    obsolete_v2_case = ROOT / "evals" / "cases" / "coach-me-v2-productized-workflow.json"
-    obsolete_v2_expected = ROOT / "evals" / "expected" / "coach-me-v2-productized-workflow.md"
+    obsolete_v2_case = ROOT / "evals" / "cases" / "coach_me-v2-productized-workflow.json"
+    obsolete_v2_expected = ROOT / "evals" / "expected" / "coach_me-v2-productized-workflow.md"
     if obsolete_v2_case.exists() or obsolete_v2_expected.exists():
         return fail("obsolete Coach_me v2 fixed-question eval files must not exist")
 
@@ -1109,7 +1109,7 @@ def main() -> int:
     if not COACH_ME_SKILL.exists():
         return fail("missing skills/coach_me/SKILL.md")
     cm_text = COACH_ME_SKILL.read_text()
-    for phrase in ["name: coach-me", "questioning-to-document", "## When to Use", "## Process"]:
+    for phrase in ["name: coach_me", "questioning-to-document", "## When to Use", "## Process"]:
         if phrase not in cm_text:
             return fail(f"skills/coach_me/SKILL.md missing phrase: {phrase}")
     cm_wd_template = COACH_ME_DIR / "templates" / "working-document.md"

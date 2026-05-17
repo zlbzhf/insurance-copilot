@@ -2,7 +2,7 @@
 
 ## Why Coach_me Activated
 
-- Workflow: **Coach_me Guided Reasoning Mode** using the **standalone coach-me skill** as the generic method.
+- Workflow: **Coach_me Guided Reasoning Mode** using the **standalone Coach_me skill** as the generic method.
 - Trigger: the agent asked a messy, document-grounded customer-situation question where a one-shot answer may miss material policy, claim, source, or escalation facts.
 - Operating rule: this is **not a fixed questionnaire**, **not a fixed question count**, and **not fixed categories**. The assistant asks the next most useful question and then routes back to Insurance Copilot for domain gates.
 

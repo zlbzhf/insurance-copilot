@@ -1,5 +1,5 @@
 ---
-name: coach-me
+name: coach_me
 description: "Use when the user brings a messy, incomplete, or strategic question. Iteratively ask the next most useful question until enough information exists to form a structured working document and recommend a next route or action."
 version: 1.0.0
 author: Insurance Copilot Project

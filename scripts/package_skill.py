@@ -51,12 +51,12 @@ SKILL_CHECKS: dict[str, dict] = {
         },
     },
     "coach_me": {
-        "name": "coach-me",
+        "name": "coach_me",
         "refs": [
             "templates/working-document.md",
         ],
         "text_checks": {
-            "name_check": "name: coach-me",
+            "name_check": "name: coach_me",
             "body_checks": [
                 "Not a fixed count",
                 "Not a fixed format",

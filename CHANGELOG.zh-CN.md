@@ -10,7 +10,7 @@
 
 ### Changed
 
-- 更新 Coach_me runtime 架构：Insurance Copilot 现在使用独立 `coach_me` skill 作为通用动态追问转文档方法，`skills/insurance_copilot/references/coach-me.md` 和 `templates/coach-me.md` 仅作为保险领域 adapter/handoff；active runtime surfaces 不再保留固定三问 / 固定 Direction-Risk-Source-Action 合同。
+- 更新 Coach_me runtime 架构：Insurance Copilot 现在使用独立 `coach_me` skill 作为通用动态追问转文档方法，`skills/insurance_copilot/references/coach_me.md` 和 `templates/coach_me.md` 仅作为保险领域 adapter/handoff；active runtime surfaces 不再保留固定三问 / 固定 Direction-Risk-Source-Action 合同。
 
 ### 新增
 

@@ -1,6 +1,6 @@
 # Coach_me Working Document — Insurance Handoff Template
 
-> Use after the standalone **coach-me** skill has clarified a messy insurance-agent question, or when Insurance Copilot needs to start that clarification. This template is the insurance-domain wrapper around `skills/coach_me/templates/working-document.md`; it is not a separate fixed questionnaire.
+> Use after the standalone **coach_me** skill has clarified a messy insurance-agent question, or when Insurance Copilot needs to start that clarification. This template is the insurance-domain wrapper around `skills/coach_me/templates/working-document.md`; it is not a separate fixed questionnaire.
 
 ---
 
@@ -86,5 +86,5 @@ Ask one dynamic question at a time in conversational interfaces.
 
 ## Coach_me Runtime Phrase Ledger
 
-This surface intentionally preserves these runtime concepts for deterministic gates: **standalone coach-me skill**, **Coach_me Guided Reasoning Mode**, **Coach_me before Client Needs Intake**, **source discovery order**, **dynamic questioning**, **not a fixed questionnaire**, **not a fixed question count**, **not fixed categories**, **one question at a time**, **interactive conversational gateway**, **recommended default answer**, **answer now or continue questioning**, **automatically stop questioning when information is sufficient**, **Coach_me Working Document**, **public institution knowledge**, **agent-private workspace**, **customer-specific materials**, **Q&A intake is raw source input**, **no automatic persistence**, **manual-first practitioner workflow**, **Source Grounding and Data Boundary Gate**, and **Professional Review Gate**.
+This surface intentionally preserves these runtime concepts for deterministic gates: **standalone Coach_me skill**, **Coach_me Guided Reasoning Mode**, **Coach_me before Client Needs Intake**, **source discovery order**, **dynamic questioning**, **not a fixed questionnaire**, **not a fixed question count**, **not fixed categories**, **one question at a time**, **interactive conversational gateway**, **recommended default answer**, **answer now or continue questioning**, **automatically stop questioning when information is sufficient**, **Coach_me Working Document**, **public institution knowledge**, **agent-private workspace**, **customer-specific materials**, **Q&A intake is raw source input**, **no automatic persistence**, **manual-first practitioner workflow**, **Source Grounding and Data Boundary Gate**, and **Professional Review Gate**.
 
