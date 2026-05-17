@@ -1143,6 +1143,22 @@ def main() -> int:
         if phrase not in arch_doc and phrase not in text:
             return fail(f"architecture phrase missing from docs/skill: {phrase}")
 
+    # ── coach_me standalone skill validation ──
+    COACH_ME_DIR = ROOT / "skills" / "coach_me"
+    COACH_ME_SKILL = COACH_ME_DIR / "SKILL.md"
+    if not COACH_ME_SKILL.exists():
+        return fail("missing skills/coach_me/SKILL.md")
+    cm_text = COACH_ME_SKILL.read_text()
+    for phrase in ["name: coach-me", "questioning-to-document", "## When to Use", "## Process"]:
+        if phrase not in cm_text:
+            return fail(f"skills/coach_me/SKILL.md missing phrase: {phrase}")
+    cm_wd_template = COACH_ME_DIR / "templates" / "working-document.md"
+    if not cm_wd_template.exists():
+        return fail("missing skills/coach_me/templates/working-document.md")
+    for phrase in ["Situation", "Known Facts", "Information Sufficiency", "Recommended Route"]:
+        if phrase not in cm_wd_template.read_text():
+            return fail(f"skills/coach_me/templates/working-document.md missing phrase: {phrase}")
+
     refs = sorted(REF_DIR.glob("*.md"))
     if len(refs) < len(REQUIRED_REFERENCES):
         return fail(f"expected at least {len(REQUIRED_REFERENCES)} workflow references, found {len(refs)}")

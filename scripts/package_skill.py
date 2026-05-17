@@ -9,8 +9,58 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILL_DIR = ROOT / "skills" / "insurance_copilot"
+SKILL_DIRS = [
+    ROOT / "skills" / "insurance_copilot",
+    ROOT / "skills" / "coach_me",
+]
 REQUIRED_SUBDIRS = ["references", "templates"]
+
+# Per-skill bundle checks
+SKILL_CHECKS: dict[str, dict] = {
+    "insurance_copilot": {
+        "name": "insurance_copilot",
+        "refs": [
+            "references/client-needs-intake.md",
+            "references/daily-agent-workbench.md",
+            "references/compliance-check.md",
+            "references/replacement-suitability.md",
+            "templates/practice-profile.md",
+            "templates/customer-advocacy-memo.md",
+            "references/professional-review-gate.md",
+            "templates/professional-review-gate.md",
+            "references/chinese-talk-tracks.md",
+            "templates/chinese-talk-tracks.md",
+            "references/institution-knowledge-organizer.md",
+            "templates/institution-knowledge-organizer.md",
+            "references/source-grounding-guardrails.md",
+            "templates/source-grounding-guardrails.md",
+            "references/private-workspace-trace-readiness.md",
+            "templates/private-workspace-audit-trace.md",
+            "references/external-write-action-boundary.md",
+            "templates/external-write-action-boundary.md",
+        ],
+        "text_checks": {
+            "name_check": "name: insurance_copilot",
+            "body_checks": [
+                "Practical MVP Operating Mode",
+                "默认使用中文",
+                "[待核实]",
+                "不得默认机构",
+                "主动询问角色",
+            ],
+        },
+    },
+    "coach_me": {
+        "name": "coach-me",
+        "refs": [
+            "templates/working-document.md",
+        ],
+        "text_checks": {
+            "name_check": "name: coach-me",
+            "body_checks": [],
+        },
+    },
+}
 
 
 def fail(msg: str) -> int:
@@ -18,52 +68,40 @@ def fail(msg: str) -> int:
     return 1
 
 
-def copy_skill(dest: Path) -> None:
-    if dest.exists():
-        shutil.rmtree(dest)
-    shutil.copytree(SKILL_DIR, dest)
+def copy_skill(src: Path, dest: Path) -> None:
+    bundle = dest / src.name
+    if bundle.exists():
+        shutil.rmtree(bundle)
+    shutil.copytree(src, bundle)
 
 
 def check_bundle(bundle_dir: Path) -> list[str]:
     errors: list[str] = []
-    if not (bundle_dir / "SKILL.md").exists():
-        errors.append("missing SKILL.md")
-    for subdir in REQUIRED_SUBDIRS:
-        p = bundle_dir / subdir
-        if not p.is_dir():
-            errors.append(f"missing {subdir}/")
-        elif not list(p.glob("*.md")):
-            errors.append(f"{subdir}/ has no markdown files")
+    skill_name = bundle_dir.name
+    checks = SKILL_CHECKS.get(skill_name)
+
+    if not checks:
+        errors.append(f"no checks defined for skill: {skill_name}")
+        return errors
+
     text = (bundle_dir / "SKILL.md").read_text(errors="ignore") if (bundle_dir / "SKILL.md").exists() else ""
-    for rel in [
-        "references/client-needs-intake.md",
-        "references/daily-agent-workbench.md",
-        "references/compliance-check.md",
-        "references/replacement-suitability.md",
-        "templates/practice-profile.md",
-        "templates/customer-advocacy-memo.md",
-        "references/professional-review-gate.md",
-        "templates/professional-review-gate.md",
-        "references/chinese-talk-tracks.md",
-        "templates/chinese-talk-tracks.md",
-        "references/institution-knowledge-organizer.md",
-        "templates/institution-knowledge-organizer.md",
-        "references/source-grounding-guardrails.md",
-        "templates/source-grounding-guardrails.md",
-        "references/private-workspace-trace-readiness.md",
-        "templates/private-workspace-audit-trace.md",
-        "references/external-write-action-boundary.md",
-        "templates/external-write-action-boundary.md",
-    ]:
+
+    if not text:
+        errors.append(f"missing SKILL.md in {skill_name}")
+        return errors
+
+    text_checks = checks.get("text_checks", {})
+    if text_checks.get("name_check") and text_checks["name_check"] not in text:
+        errors.append(f"SKILL.md does not declare {text_checks['name_check']}")
+
+    for phrase in text_checks.get("body_checks", []):
+        if phrase not in text:
+            errors.append(f"SKILL.md missing phrase: {phrase}")
+
+    for rel in checks.get("refs", []):
         if not (bundle_dir / rel).exists():
             errors.append(f"missing referenced bundle file: {rel}")
-    if "name: insurance_copilot" not in text:
-        errors.append("SKILL.md does not declare name: insurance_copilot")
-    if "Practical MVP Operating Mode" not in text:
-        errors.append("SKILL.md missing Practical MVP Operating Mode")
-    for phrase in ["默认使用中文", "[待核实]", "不得默认机构", "主动询问角色"]:
-        if phrase not in text:
-            errors.append(f"SKILL.md missing Chinese runtime phrase: {phrase}")
+
     return errors
 
 
@@ -73,26 +111,40 @@ def main() -> int:
     parser.add_argument("--check", action="store_true", help="build in a temp dir and verify contents")
     args = parser.parse_args()
 
-    if not SKILL_DIR.exists():
-        return fail(f"missing skill dir: {SKILL_DIR}")
+    missing = [str(d) for d in SKILL_DIRS if not d.exists()]
+    if missing:
+        return fail(f"missing skill dir(s): {missing}")
 
     if args.check or not args.out:
         with tempfile.TemporaryDirectory(prefix="insurance_copilot-bundle-") as tmp:
-            dest = Path(tmp) / "insurance_copilot"
-            copy_skill(dest)
-            errors = check_bundle(dest)
-            if errors:
-                return fail("; ".join(errors))
-            print(f"bundle check ok: {dest}")
-            return 0
+            bundle_root = Path(tmp)
+            for sd in SKILL_DIRS:
+                copy_skill(sd, bundle_root)
 
-    copy_skill(args.out)
-    errors = check_bundle(args.out)
-    if errors:
-        return fail("; ".join(errors))
-    print(f"bundle written: {args.out}")
+            all_errors = []
+            for sd in SKILL_DIRS:
+                errors = check_bundle(bundle_root / sd.name)
+                if errors:
+                    for e in errors:
+                        print(f"[{sd.name}] {e}")
+                    all_errors.extend(errors)
+
+            if all_errors:
+                return fail(f"{len(all_errors)} bundle error(s)")
+
+            if args.out:
+                for sd in SKILL_DIRS:
+                    copy_skill(sd, args.out)
+
+            print(f"bundle check ok: {bundle_root}")
+        return 0
+
+    if args.out:
+        for sd in SKILL_DIRS:
+            copy_skill(sd, args.out)
+        print(f"bundle copied to {args.out}")
     return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    sys.exit(main())

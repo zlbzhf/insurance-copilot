@@ -31,9 +31,10 @@ python3 scripts/validate_repo.py
 
 ## Three-Layer Architecture
 
-1. `skills/insurance_copilot/` — public general Hermes workflow skill.
-2. `knowledge/institutions/` — public institution LLM wiki packs only.
-3. `agent-workspace-template/` — template for private agent workspaces stored outside this repo.
+1. `skills/insurance_copilot/` — public general Hermes workflow skill for insurance agents.
+2. `skills/coach_me/` — standalone generic questioning-to-document skill, reusable outside insurance.
+3. `knowledge/institutions/` — public institution LLM wiki packs only.
+4. `agent-workspace-template/` — template for private agent workspaces stored outside this repo.
 
 Non-public institution materials belong in the agent-private layer, not in public institution packs.
 
@@ -79,7 +80,8 @@ python3 scripts/ingest_gateway.py --help
 ## Repository Layout
 
 ```text
-skills/insurance_copilot/   Hermes skill package
+skills/insurance_copilot/   Hermes insurance workflow skill package
+skills/coach_me/             Standalone questioning-to-document skill
 standards/                   Evidence-driven public knowledge standard
 schemas/                     Machine-readable schemas
 prompts/                     Controlled LLM gateway prompt contracts
