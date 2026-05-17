@@ -10,7 +10,15 @@
 
 Insurance Copilot is a **standalone Hermes skill repository** for insurance-agent work. Its runtime surface is the installable `insurance_copilot` skill, supported by workflow references, output templates, static eval fixtures, deterministic validators, public institution knowledge packs, and a private agent workspace template.
 
-It is inspired by the workflow discipline of `claude-for-legal`, but the usable product is **not** a Claude plugin, web app, CRM, or deployment platform. The first useful experience is a Hermes skill that helps a licensed insurance professional turn messy real-world notes into structured, review-ready work.
+It is inspired by the workflow discipline of [`claude-for-legal`](https://github.com/anthropics/claude-for-legal), but the usable product is **not** a Claude plugin, web app, CRM, or deployment platform. The first useful experience is a Hermes skill that helps a licensed insurance professional turn messy real-world notes into structured, review-ready work.
+
+Reference sources for the working style:
+
+- [`anthropics/claude-for-legal`](https://github.com/anthropics/claude-for-legal) — professional workflow discipline, source-grounded review, and human review gates.
+- [`mattpocock/skills: grill-me`](https://github.com/mattpocock/skills/tree/main/skills/productivity/grill-me) — relentless one-question-at-a-time interviewing until shared understanding is reached.
+- [`mattpocock/skills: grill-with-docs`](https://github.com/mattpocock/skills/tree/main/skills/engineering/grill-with-docs) — questioning that sharpens terminology and crystallizes decisions into lightweight project documents.
+
+These are inspiration sources, not runtime dependencies or skills that Insurance Copilot executes mechanically.
 
 Core positioning:
 

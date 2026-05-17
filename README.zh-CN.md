@@ -10,7 +10,15 @@
 
 Insurance Copilot 是一个 **独立的 Hermes 技能型产品仓库**，面向保险代理人的真实工作流。它的运行时入口是可安装的 `insurance_copilot` skill，并由工作流参考、输出模板、静态评测用例、确定性验证器、公共保险机构知识包和代理人私有工作区模板共同支撑。
 
-它借鉴了 `claude-for-legal` 的专业工作流组织方式，但最终产品不是 Claude plugin、不是 Web App、不是 CRM，也不是部署平台。它首先要成为一个在 Hermes 中可直接使用的保险代理人助手：帮助持牌保险专业人士把零散客户信息、会议记录、保单资料、理赔/续保问题和客户话术需求，整理成结构化、可复核、可继续跟进的工作成果。
+它借鉴了 [`claude-for-legal`](https://github.com/anthropics/claude-for-legal) 的专业工作流组织方式，但最终产品不是 Claude plugin、不是 Web App、不是 CRM，也不是部署平台。它首先要成为一个在 Hermes 中可直接使用的保险代理人助手：帮助持牌保险专业人士把零散客户信息、会议记录、保单资料、理赔/续保问题和客户话术需求，整理成结构化、可复核、可继续跟进的工作成果。
+
+工作方法的参考来源：
+
+- [`anthropics/claude-for-legal`](https://github.com/anthropics/claude-for-legal)：专业服务工作流、来源约束复核和人工审核门。
+- [`mattpocock/skills: grill-me`](https://github.com/mattpocock/skills/tree/main/skills/productivity/grill-me)：一问一答式持续追问，直到形成共同理解。
+- [`mattpocock/skills: grill-with-docs`](https://github.com/mattpocock/skills/tree/main/skills/engineering/grill-with-docs)：通过追问澄清术语和决策，并沉淀为轻量项目文档。
+
+这些是方法参考源，不是 Insurance Copilot 机械执行的运行时依赖或外部 skills。
 
 核心定位：
 
