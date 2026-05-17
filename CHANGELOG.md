@@ -8,11 +8,14 @@ This project is currently pre-1.0 and milestone-based. The changelog follows a h
 
 ## [Unreleased]
 
+### Changed
+
+- Updated Coach_me runtime architecture: Insurance Copilot now uses the standalone `coach_me` skill as the generic dynamic questioning-to-document method, while `skills/insurance_copilot/references/coach-me.md` and `templates/coach-me.md` are insurance-domain adapter/handoff surfaces. Removed the fixed three-question / fixed Direction-Risk-Source-Action contract from active runtime surfaces.
+
 ### Added
 
-- Added Coach_me v2 Productized Workflow with upgraded runtime reference/template, eval case/expected output, pytest coverage, and validator coverage for the capability ladder, information sufficiency score, Direction/Risk/Source/Action question round, Backfeed Decision Packet, and manual-first product-state boundaries.
 - Added Spec Lifecycle governance plus `docs/decisions/ADR-0001-gateway-agnostic-interactive-protocol.md` and `docs/archive/README.md` so completed implementation specs are deleted, archived with no runtime authority, or compressed into ADRs instead of accumulating as control documents.
-- Added Coach_me Guided Reasoning Mode as a single Insurance Copilot workflow (`references/coach-me.md`, `templates/coach-me.md`, eval, tests, validator, and docs) for broad, messy, strategic, document-dependent, customer-situation, or product recommendation intent questions; it uses source discovery order, exactly three targeted questions, gateway-agnostic sequential question protocol, answer-now/continue choice, automatic stop rules, durable working/final documents, Q&A-as-raw-input, and Karpathy-style LLM wiki backfeed proposals with no automatic persistence.
+- Added Coach_me Guided Reasoning Mode surfaces for broad, messy, strategic, document-dependent, customer-situation, or product recommendation intent questions; current runtime now delegates the generic method to standalone `coach_me` and keeps Insurance Copilot as the domain adapter.
 - Added Chinese interactive onboarding docs/examples/eval coverage and validator checks for `/skill insurance_copilot`, institution/role confirmation, `[待核实]` explanation, and existing-profile summary behavior.
 - Added `docs/product-development-spec.md` as the durable product-development source of truth and usable-state definition.
 - Added `docs/reference-landscape.md` to map external/reference projects to project significance, implementation form, non-goals, and priority.
@@ -25,8 +28,8 @@ This project is currently pre-1.0 and milestone-based. The changelog follows a h
 
 ### Changed
 
-- Generalized Coach_me one-question-at-a-time behavior from platform-specific chat wording to any interactive conversational gateway: use the sequential question protocol, send only the active question in the current turn, and include a recommended default answer when useful.
-- Routed product recommendation intent through Coach_me before Client Needs Intake so recommendation reasoning clarifies direction, risk, and action/source before structured fact-find collection.
+- Generalized Coach_me one-question-at-a-time behavior from platform-specific chat wording to any interactive conversational gateway: use the one-question-at-a-time protocol, send only the next useful question in the current turn, and include a recommended default answer when useful.
+- Routed product recommendation intent through Coach_me before Client Needs Intake so recommendation reasoning clarifies goal, risk, and source context before structured fact-find collection.
 - Upgraded Coach_me from a follow-up-question mechanism into an agent workbench center that converts limitations into product states: default safe draft mode, review-ready packet, confirmed persistence packet, and external action handoff packet.
 - Unified the repository/product slug, installable Hermes skill identity, Telegram command, and private workspace root on the underscore-safe `insurance_copilot` naming convention.
 - Clarified that Insurance Copilot is usable now as a manual-first Hermes skill beta, but not production-complete for live automation, customer sending, CRM writes, application submission, claims filing, policy changes, quote generation, or final regulated advice.

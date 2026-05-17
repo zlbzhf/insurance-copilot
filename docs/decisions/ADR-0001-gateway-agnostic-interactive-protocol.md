@@ -8,7 +8,7 @@ Runtime authority: decision record only; current behavior lives in runtime surfa
 
 Insurance Copilot originally used several Chinese Telegram onboarding phrases because the first real runtime channel was Telegram. That created an accidental product constraint: the actual behavior should apply to any interactive conversational gateway, not only one platform.
 
-The project also added Coach_me v2 as a productized workflow. Its one-question-at-a-time behavior is a conversational protocol, not a Telegram-specific behavior.
+The project now uses standalone coach-me as the generic questioning-to-document method. Its one-question-at-a-time behavior is a conversational protocol, not a Telegram-specific behavior.
 
 ## Decision
 
@@ -16,9 +16,9 @@ Use `interactive conversational gateway` as the generic runtime concept for chat
 
 The protocol decisions are:
 
-- Coach_me uses an interactive conversational gateway sequential question protocol.
-- In conversational use, Coach_me asks one question at a time and sends only the active question in the current turn.
-- The three-question round remains `Question 1/3`, `Question 2/3`, and `Question 3/3`; all three questions are batched only for an offline checklist request.
+- Coach_me uses an interactive conversational gateway one-question-at-a-time protocol.
+- In conversational use, Coach_me asks one question at a time and sends only the next useful question in the current turn.
+- Coach_me no longer requires a fixed three-question round; multiple questions are batched only when the agent asks for an offline checklist.
 - Product recommendation intent routes Coach_me before Client Needs Intake or product-fit drafting.
 - Chinese interactive onboarding defaults apply across interactive conversational gateways and are not limited to any single platform.
 
@@ -27,6 +27,8 @@ The protocol decisions are:
 Current behavior lives in:
 
 - `skills/insurance_copilot/SKILL.md`
+- `skills/coach_me/SKILL.md`
+- `skills/coach_me/templates/working-document.md`
 - `skills/insurance_copilot/references/coach-me.md`
 - `skills/insurance_copilot/templates/coach-me.md`
 - `skills/insurance_copilot/references/cold-start-interview.md`
@@ -44,8 +46,8 @@ Regression protection lives in:
 - `scripts/validate_repo.py`
 - `evals/cases/coach-me-sequential-question-protocol.json`
 - `evals/expected/coach-me-sequential-question-protocol.md`
-- `evals/cases/coach-me-v2-productized-workflow.json`
-- `evals/expected/coach-me-v2-productized-workflow.md`
+- `evals/cases/coach-me-guided-document-grounded-answer.json`
+- `evals/expected/coach-me-guided-document-grounded-answer.md`
 - `evals/cases/chinese-interactive-onboarding.json`
 - `evals/expected/chinese-interactive-onboarding.md`
 

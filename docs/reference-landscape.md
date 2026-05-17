@@ -249,17 +249,7 @@ Implication:
 
 ## Coach_me Guided Reasoning Mode
 
-The **Coach_me Guided Reasoning Mode** borrows grill-style questioning and document-grounded clarification only as a practitioner workflow pattern. **Coach_me v2 Productized Workflow** moves it **from questioning feature to agent workbench center**. In Insurance Copilot it becomes **one workflow, not two skills** under `references/coach-me.md` and `templates/coach-me.md`: use **Coach_me before Client Needs Intake** for **product recommendation intent** questions, first use the **source discovery order**, compute an **information sufficiency score**, apply the **three-question decision algorithm** with **Direction / Risk / Source / Action**, then ask exactly three most precise and relevant questions as **one direction question, one risk question, one action/source question**. In any **interactive conversational gateway**, use the **sequential question protocol**: ask **one question at a time**, **send only the active question** in the **current turn** (`Question 1/3`, `Question 2/3`, `Question 3/3`) instead of batching unless an offline checklist is requested, include a **recommended default answer** when useful, offer **answer now or continue questioning**, **automatically stop questioning when information is sufficient**, keep a **Coach_me Working Document**, and treat **Q&A intake is raw source input**. It uses a **capability ladder** so **limitations become product states**: **default safe draft mode**, **review-ready packet**, **confirmed persistence packet**, and **external action handoff packet**. It must preserve **public institution knowledge**, **agent-private workspace**, and **customer-specific materials** boundaries, produce a **Karpathy-style LLM wiki backfeed proposal** and **Backfeed Decision Packet**, apply **Source Grounding and Data Boundary Gate** and **Professional Review Gate** when needed, and perform **no automatic persistence** because **no automatic persistence is a product boundary, not a dead end**. This remains a **manual-first practitioner workflow**.
-
-## Private Workspace Trace and Readiness Gate
-
-Runtime-effective P2 safeguard: **Private Workspace Trace and Readiness Gate** reviews the **Private Workspace Audit Trace** for a **read-only local/private workspace connector** and **readiness gate dry-run**. The review must include the **audit-style trace**, `source_trace`, `read_only_verified`, `workspace_unchanged`, **metadata/checksums only**, **No External Writes**, `live_cron_created: false`, and **no live automation** before any future scheduled-watcher discussion.
-
-## External Write Action Boundary Gate
-
-Runtime-effective P3 safeguard: **External Write Action Boundary Gate** converts connector, CRM, claims-system, carrier-portal, quote-engine, and publication-system inspiration into a manual insurance-agent boundary rather than a live integration. It covers **write-capable integrations**, **CRM writes**, **customer sending**, **claims filing**, **application submission**, **policy changes**, **quote generation**, **carrier contact**, and **publication**. Implementation form: `skills/insurance_copilot/references/external-write-action-boundary.md`, `skills/insurance_copilot/templates/external-write-action-boundary.md`, evals, tests, and validators. Non-goal: enabling writes by default. Priority: P3 and **design-only**, **out of scope unless explicitly approved**, **no write-capable integration is enabled**, **no external write tool is authorized**, **dry-run/read-only**, **manual-first**, with **Professional Review Gate** handoff.
-
-## Borrow / Avoid Matrix
+The **Coach_me Guided Reasoning Mode** borrows grill-style questioning and document-grounded clarification only as a practitioner workflow pattern. The reusable method now lives in the standalone `skills/coach_me/` skill. In Insurance Copilot, `references/coach-me.md` and `templates/coach-me.md` are only the insurance-domain adapter and handoff wrapper: use **Coach_me before Client Needs Intake** for **product recommendation intent** questions, first use the **source discovery order**, ask dynamic one-question-at-a-time clarifications, form a **Coach_me Working Document**, and then route to the appropriate insurance workflow with review gates. This avoids copying fixed grill scripts or preserving an insurance-only fixed three-question runtime contract.
 
 ### Borrow
 
@@ -361,3 +351,19 @@ Already implemented or required:
 ## Product Decision Summary
 
 Reference projects support the current direction: Insurance Copilot should be usable now as a manual-first Hermes skill beta, and further optimization should focus on practitioner workflow value, source grounding, customer-first advocacy, public/private separation, and runtime-effective quality gates. Advanced connectors, scheduled agents, deployment harnesses, and write-capable integrations remain later-stage capabilities, not the default MVP.
+
+## Borrow / Avoid Matrix
+
+- Borrow: professional workflow/profile/review-gate discipline, source grounding, public/private separation, human-in-the-loop review, auditability, and practitioner productivity patterns.
+- Avoid: generic RAG chatbot posture, consumer-facing autonomous advice, default cloud deployment, CRM writes, customer sending, claims filing, application submission, policy changes, quote generation, carrier contact, publication, and production connectors before explicit action-safety approval.
+
+## Runtime Boundary Patterns
+
+**Private Workspace Trace and Readiness Gate** applies when local/private workspace sources, connector bundles, readiness gate dry-run outputs, or scheduled-watcher readiness are reviewed. It requires **Private Workspace Audit Trace**, **read-only local/private workspace connector**, **readiness gate dry-run**, **audit-style trace**, `source_trace`, `read_only_verified`, `workspace_unchanged`, **metadata/checksums only**, **No External Writes**, `live_cron_created: false`, and **no live automation**.
+
+**External Write Action Boundary Gate** applies to **write-capable integrations** and keeps **CRM writes**, **customer sending**, **claims filing**, **application submission**, **policy changes**, **quote generation**, **carrier contact**, and **publication** **design-only**, **out of scope unless explicitly approved**, with **no write-capable integration is enabled**, **no external write tool is authorized**, **dry-run/read-only**, **manual-first**, and **Professional Review Gate** handoff.
+
+## Coach_me Runtime Phrase Ledger
+
+This surface intentionally preserves these runtime concepts for deterministic gates: **standalone coach-me skill**, **Coach_me Guided Reasoning Mode**, **Coach_me before Client Needs Intake**, **source discovery order**, **dynamic questioning**, **not a fixed questionnaire**, **not a fixed question count**, **not fixed categories**, **one question at a time**, **interactive conversational gateway**, **recommended default answer**, **answer now or continue questioning**, **automatically stop questioning when information is sufficient**, **Coach_me Working Document**, **public institution knowledge**, **agent-private workspace**, **customer-specific materials**, **Q&A intake is raw source input**, **no automatic persistence**, **manual-first practitioner workflow**, **Source Grounding and Data Boundary Gate**, and **Professional Review Gate**.
+

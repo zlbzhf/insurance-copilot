@@ -539,7 +539,7 @@ def main() -> int:
         "Status: accepted",
         "Runtime authority: decision record only; current behavior lives in runtime surfaces and executable gates",
         "interactive conversational gateway",
-        "sequential question protocol",
+        "one-question-at-a-time protocol",
         "Chinese interactive onboarding",
         "Coach_me before Client Needs Intake",
         "Runtime Surfaces",
@@ -787,62 +787,49 @@ def main() -> int:
         if phrase in private_trace_expected:
             return fail(f"Private Workspace Trace eval expected output contains forbidden phrase: {phrase}")
 
-    coach_me_base_required = [
+    standalone_coach_skill = ROOT / "skills" / "coach_me" / "SKILL.md"
+    standalone_coach_template = ROOT / "skills" / "coach_me" / "templates" / "working-document.md"
+    if not standalone_coach_skill.exists() or not standalone_coach_template.exists():
+        return fail("missing standalone coach_me skill or working-document template")
+    standalone_coach_text = standalone_coach_skill.read_text()
+    standalone_coach_template_text = standalone_coach_template.read_text()
+    for phrase in [
+        "question → obtain information → form a working document → recommend next route",
+        "Not a fixed count",
+        "Not a fixed format",
+        "Dynamic, not frozen",
+        "One at a time in conversational mode",
+        "Coach_me Working Document",
+    ]:
+        if phrase not in standalone_coach_text:
+            return fail(f"standalone coach_me skill missing phrase: {phrase}")
+    if "## Next Questions (If Continuing)" not in standalone_coach_template_text:
+        return fail("standalone coach_me working document missing continuation section")
+
+    coach_me_required = [
+        "standalone coach-me skill",
         "Coach_me Guided Reasoning Mode",
-        "one workflow, not two skills",
-        "ask exactly three most precise and relevant questions",
+        "Coach_me before Client Needs Intake",
+        "source discovery order",
+        "dynamic questioning",
+        "not a fixed questionnaire",
+        "not a fixed question count",
+        "not fixed categories",
+        "one question at a time",
+        "interactive conversational gateway",
+        "recommended default answer",
         "answer now or continue questioning",
         "automatically stop questioning when information is sufficient",
         "Coach_me Working Document",
-        "source discovery order",
         "public institution knowledge",
         "agent-private workspace",
         "customer-specific materials",
         "Q&A intake is raw source input",
-        "Karpathy-style LLM wiki backfeed proposal",
         "no automatic persistence",
+        "manual-first practitioner workflow",
         "Source Grounding and Data Boundary Gate",
         "Professional Review Gate",
     ]
-    coach_me_v2_required = [
-        "Coach_me v2 Productized Workflow",
-        "from questioning feature to agent workbench center",
-        "capability ladder",
-        "default safe draft mode",
-        "review-ready packet",
-        "confirmed persistence packet",
-        "external action handoff packet",
-        "information sufficiency score",
-        "Direction / Risk / Source / Action",
-        "three-question decision algorithm",
-        "one direction question, one risk question, one action/source question",
-        "limitations become product states",
-        "Backfeed Decision Packet",
-        "no automatic persistence is a product boundary, not a dead end",
-        "manual-first practitioner workflow",
-    ]
-    coach_me_required = coach_me_base_required + coach_me_v2_required
-    coach_me_conversational_required = [
-        "interactive conversational gateway",
-        "sequential question protocol",
-        "one question at a time",
-        "send only the active question",
-        "Question 1/3",
-        "Question 2/3",
-        "Question 3/3",
-        "Do not batch all three questions",
-        "offline checklist",
-        "recommended default answer",
-    ]
-    coach_me_conversational_docs = {
-        "SKILL.md": text,
-        "coach-me reference": (REF_DIR / "coach-me.md").read_text(),
-        "coach-me template": (TEMPLATE_DIR / "coach-me.md").read_text(),
-    }
-    for label, doc in coach_me_conversational_docs.items():
-        for phrase in coach_me_conversational_required:
-            if phrase not in doc:
-                return fail(f"{label} missing Coach_me conversational one-at-a-time phrase: {phrase}")
     coach_me_docs = {
         "SKILL.md": text,
         "coach-me reference": (REF_DIR / "coach-me.md").read_text(),
@@ -855,33 +842,26 @@ def main() -> int:
         "Chinese README": (ROOT / "README.zh-CN.md").read_text(),
         "evals README": (ROOT / "evals" / "README.md").read_text(),
     }
+    fixed_contract_forbidden = [
+        "ask exactly three most precise and relevant questions",
+        "three-question decision algorithm",
+        "one direction question, one risk question, one action/source question",
+        "Question 1/3",
+        "Question 2/3",
+        "Question 3/3",
+        "Do not batch all three questions",
+        "Coach_me v2 Productized Workflow",
+    ]
     for label, doc in coach_me_docs.items():
         for phrase in coach_me_required:
             if phrase not in doc:
-                return fail(f"{label} missing Coach_me runtime phrase: {phrase}")
-    coach_me_gateway_required = [
-        "product recommendation intent",
-        "Coach_me before Client Needs Intake",
-        "current turn",
-    ]
-    coach_me_gateway_docs = {
-        "SKILL.md": text,
-        "coach-me reference": (REF_DIR / "coach-me.md").read_text(),
-        "coach-me template": (TEMPLATE_DIR / "coach-me.md").read_text(),
-        "quality gates": quality_gates,
-        "workflow surface": (ROOT / "docs" / "workflow-surface.md").read_text(),
-        "product development SPEC": product_spec,
-        "README": (ROOT / "README.md").read_text(),
-        "Chinese README": (ROOT / "README.zh-CN.md").read_text(),
-        "evals README": (ROOT / "evals" / "README.md").read_text(),
-    }
-    for label, doc in coach_me_gateway_docs.items():
-        for phrase in coach_me_gateway_required:
-            if phrase not in doc:
-                return fail(f"{label} missing Coach_me gateway-agnostic phrase: {phrase}")
+                return fail(f"{label} missing Coach_me adapter phrase: {phrase}")
+        for forbidden in fixed_contract_forbidden:
+            if forbidden in doc:
+                return fail(f"{label} still contains old fixed Coach_me contract phrase: {forbidden}")
         for forbidden in ["Telegram/chat", "Telegram mode", "conversational / Telegram"]:
             if forbidden in doc:
-                return fail(f"{label} contains platform-specific Coach_me sequential wording: {forbidden}")
+                return fail(f"{label} contains platform-specific Coach_me wording: {forbidden}")
     intake_ref = (REF_DIR / "client-needs-intake.md").read_text()
     if "Coach_me before Client Needs Intake" not in intake_ref:
         return fail("client needs intake missing product-recommendation Coach_me routing rule")
@@ -890,49 +870,29 @@ def main() -> int:
 
     for rel in ["references/coach-me.md", "templates/coach-me.md"]:
         if rel not in text:
-            return fail(f"SKILL.md missing Coach_me runtime path: {rel}")
+            return fail(f"SKILL.md missing Coach_me adapter path: {rel}")
+    if "skills/coach_me/templates/working-document.md" not in (REF_DIR / "coach-me.md").read_text():
+        return fail("coach-me adapter reference missing standalone working-document interface path")
 
-    coach_me_seq_case_path = ROOT / "evals" / "cases" / "coach-me-sequential-question-protocol.json"
-    if not coach_me_seq_case_path.exists():
-        return fail("missing Coach_me sequential question protocol eval case")
-    coach_me_seq_case = json.loads(coach_me_seq_case_path.read_text())
-    coach_me_seq_expected = (ROOT / coach_me_seq_case["expected_output"]).read_text()
-    if coach_me_seq_case.get("id") != "coach-me-sequential-question-protocol" or coach_me_seq_case.get("workflow") != "coach-me" or not coach_me_seq_case.get("escalation_expected"):
-        return fail("Coach_me sequential protocol eval case has wrong id/workflow/escalation flag")
-    for phrase in coach_me_base_required + coach_me_conversational_required + coach_me_gateway_required + coach_me_seq_case["must_include"]:
-        if phrase not in coach_me_seq_expected:
-            return fail(f"Coach_me sequential protocol eval expected output missing phrase: {phrase}")
-    for phrase in coach_me_seq_case["must_not_include"]:
-        if phrase in coach_me_seq_expected:
-            return fail(f"Coach_me sequential protocol eval expected output contains forbidden phrase: {phrase}")
+    for case_name in ["coach-me-sequential-question-protocol", "coach-me-guided-document-grounded-answer"]:
+        case_path = ROOT / "evals" / "cases" / f"{case_name}.json"
+        if not case_path.exists():
+            return fail(f"missing Coach_me eval case: {case_name}")
+        case = json.loads(case_path.read_text())
+        expected = (ROOT / case["expected_output"]).read_text()
+        if case.get("id") != case_name or case.get("workflow") != "coach-me" or not case.get("escalation_expected"):
+            return fail(f"Coach_me eval case has wrong id/workflow/escalation flag: {case_name}")
+        for phrase in case["must_include"]:
+            if phrase not in expected:
+                return fail(f"Coach_me eval expected output missing phrase: {phrase}")
+        for phrase in case["must_not_include"]:
+            if phrase in expected:
+                return fail(f"Coach_me eval expected output contains forbidden phrase: {phrase}")
 
-    coach_me_case_path = ROOT / "evals" / "cases" / "coach-me-guided-document-grounded-answer.json"
-    if not coach_me_case_path.exists():
-        return fail("missing Coach_me eval case")
-    coach_me_case = json.loads(coach_me_case_path.read_text())
-    coach_me_expected = (ROOT / coach_me_case["expected_output"]).read_text()
-    if coach_me_case.get("id") != "coach-me-guided-document-grounded-answer" or coach_me_case.get("workflow") != "coach-me" or not coach_me_case.get("escalation_expected"):
-        return fail("Coach_me eval case has wrong id/workflow/escalation flag")
-    for phrase in coach_me_base_required + coach_me_conversational_required + coach_me_case["must_include"]:
-        if phrase not in coach_me_expected:
-            return fail(f"Coach_me eval expected output missing phrase: {phrase}")
-    for phrase in coach_me_case["must_not_include"]:
-        if phrase in coach_me_expected:
-            return fail(f"Coach_me eval expected output contains forbidden phrase: {phrase}")
-
-    coach_me_v2_case_path = ROOT / "evals" / "cases" / "coach-me-v2-productized-workflow.json"
-    if not coach_me_v2_case_path.exists():
-        return fail("missing Coach_me v2 eval case")
-    coach_me_v2_case = json.loads(coach_me_v2_case_path.read_text())
-    coach_me_v2_expected = (ROOT / coach_me_v2_case["expected_output"]).read_text()
-    if coach_me_v2_case.get("id") != "coach-me-v2-productized-workflow" or coach_me_v2_case.get("workflow") != "coach-me-v2" or not coach_me_v2_case.get("escalation_expected"):
-        return fail("Coach_me v2 eval case has wrong id/workflow/escalation flag")
-    for phrase in coach_me_required + coach_me_conversational_required + coach_me_v2_case["must_include"]:
-        if phrase not in coach_me_v2_expected:
-            return fail(f"Coach_me v2 eval expected output missing phrase: {phrase}")
-    for phrase in coach_me_v2_case["must_not_include"]:
-        if phrase in coach_me_v2_expected:
-            return fail(f"Coach_me v2 eval expected output contains forbidden phrase: {phrase}")
+    obsolete_v2_case = ROOT / "evals" / "cases" / "coach-me-v2-productized-workflow.json"
+    obsolete_v2_expected = ROOT / "evals" / "expected" / "coach-me-v2-productized-workflow.md"
+    if obsolete_v2_case.exists() or obsolete_v2_expected.exists():
+        return fail("obsolete Coach_me v2 fixed-question eval files must not exist")
 
     external_write_required = [
         "External Write Action Boundary Gate",

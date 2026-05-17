@@ -496,7 +496,9 @@ def test_new_agent_coach_mode_is_first_class_service_pattern() -> None:
         assert "who to escalate to" in text
 
 
-def test_coach_me_guided_mode_is_single_runtime_workflow_not_split_skill() -> None:
+def test_coach_me_uses_standalone_dynamic_method_and_insurance_adapter() -> None:
+    coach_skill = read("skills/coach_me/SKILL.md")
+    coach_template = read("skills/coach_me/templates/working-document.md")
     skill = read("skills/insurance_copilot/SKILL.md")
     reference = read("skills/insurance_copilot/references/coach-me.md")
     template = read("skills/insurance_copilot/templates/coach-me.md")
@@ -508,160 +510,81 @@ def test_coach_me_guided_mode_is_single_runtime_workflow_not_split_skill() -> No
     zh_readme = read("README.zh-CN.md")
     eval_readme = read("evals/README.md")
 
-    required_phrases = [
+    standalone_phrases = [
+        "question → obtain information → form a working document → recommend next route",
+        "Not a fixed count",
+        "Not a fixed format",
+        "Dynamic, not frozen",
+        "One at a time in conversational mode",
+        "Coach_me Working Document",
+    ]
+    for phrase in standalone_phrases:
+        assert phrase in coach_skill
+    assert "## Next Questions (If Continuing)" in coach_template
+
+    adapter_phrases = [
+        "standalone coach-me skill",
         "Coach_me Guided Reasoning Mode",
-        "one workflow, not two skills",
-        "ask exactly three most precise and relevant questions",
+        "Coach_me before Client Needs Intake",
+        "source discovery order",
+        "dynamic questioning",
+        "not a fixed questionnaire",
+        "not a fixed question count",
+        "not fixed categories",
+        "one question at a time",
+        "interactive conversational gateway",
+        "recommended default answer",
         "answer now or continue questioning",
         "automatically stop questioning when information is sufficient",
         "Coach_me Working Document",
-        "source discovery order",
         "public institution knowledge",
         "agent-private workspace",
         "customer-specific materials",
         "Q&A intake is raw source input",
-        "Karpathy-style LLM wiki backfeed proposal",
         "no automatic persistence",
+        "manual-first practitioner workflow",
         "Source Grounding and Data Boundary Gate",
         "Professional Review Gate",
     ]
     for text in [skill, reference, template, quality, surface, spec, landscape, readme, zh_readme, eval_readme]:
-        for phrase in required_phrases:
+        for phrase in adapter_phrases:
             assert phrase in text
 
-    assert "references/coach-me.md" in skill
+    for text in [skill, reference, template, quality, surface, spec, landscape, readme, zh_readme, eval_readme]:
+        assert "ask exactly three most precise and relevant questions" not in text
+        assert "three-question decision algorithm" not in text
+        assert "one direction question, one risk question, one action/source question" not in text
+        assert "Question 1/3" not in text
+        assert "Question 2/3" not in text
+        assert "Question 3/3" not in text
+        assert "Do not batch all three questions" not in text
+        assert "Coach_me v2 Productized Workflow" not in text
+
+    assert "templates/working-document.md" in coach_skill
+    assert "skills/coach_me/templates/working-document.md" in reference
     assert "templates/coach-me.md" in skill
-    assert "Default trigger" in reference
-    assert "Question Round" in template
-    assert "Final Answer Document" in template
-
-    conversational_phrases = [
-        "interactive conversational gateway",
-        "sequential question protocol",
-        "one question at a time",
-        "send only the active question",
-        "Question 1/3",
-        "Question 2/3",
-        "Question 3/3",
-        "Do not batch all three questions",
-        "offline checklist",
-        "recommended default answer",
-    ]
-    for text_surface in [skill, reference, template]:
-        for phrase in conversational_phrases:
-            assert phrase in text_surface
-
-    case = json.loads((ROOT / "evals/cases/coach-me-guided-document-grounded-answer.json").read_text(encoding="utf-8"))
-    expected = read(case["expected_output"])
-    assert case["id"] == "coach-me-guided-document-grounded-answer"
-    assert case["workflow"] == "coach-me"
-    assert case["escalation_expected"] is True
-    for phrase in case["must_include"]:
-        assert phrase in expected
-    for phrase in conversational_phrases:
-        assert phrase in expected
-    for phrase in case["must_not_include"]:
-        assert phrase not in expected
+    assert "## Next Question If Continuing" in template
+    assert "Review Gates Needed" in template
 
 
-def test_coach_me_sequential_protocol_is_gateway_agnostic_and_product_recommendation_first() -> None:
-    skill = read("skills/insurance_copilot/SKILL.md")
-    reference = read("skills/insurance_copilot/references/coach-me.md")
-    template = read("skills/insurance_copilot/templates/coach-me.md")
-    intake = read("skills/insurance_copilot/references/client-needs-intake.md")
-    quality = read("docs/quality-gates.md")
-    surface = read("docs/workflow-surface.md")
-    spec = read("docs/product-development-spec.md")
-    readme = read("README.md")
-    zh_readme = read("README.zh-CN.md")
-    eval_readme = read("evals/README.md")
-
-    gateway_agnostic_phrases = [
-        "interactive conversational gateway",
-        "sequential question protocol",
-        "send only the active question",
-        "current turn",
-        "recommended default answer",
-        "product recommendation intent",
-        "Coach_me before Client Needs Intake",
-    ]
-    for text in [skill, reference, template, quality, surface, spec, readme, zh_readme, eval_readme]:
-        for phrase in gateway_agnostic_phrases:
-            assert phrase in text
-
-    for text in [skill, reference, template, quality, surface, spec, readme, zh_readme, eval_readme]:
-        assert "Telegram/chat" not in text
-        assert "Telegram mode" not in text
-        assert "conversational / Telegram" not in text
-
-    for text in [skill, reference, intake]:
-        assert "recommend insurance" in text.lower() or "推荐保险" in text
-        assert "Coach_me before Client Needs Intake" in text
-
-    case = json.loads((ROOT / "evals/cases/coach-me-sequential-question-protocol.json").read_text(encoding="utf-8"))
-    expected = read(case["expected_output"])
-    assert case["id"] == "coach-me-sequential-question-protocol"
-    assert case["workflow"] == "coach-me"
-    for phrase in case["must_include"]:
-        assert phrase in expected
-    for phrase in case["must_not_include"]:
-        assert phrase not in expected
-
-
-def test_coach_me_v2_productization_turns_limits_into_workflow_capabilities() -> None:
-    skill = read("skills/insurance_copilot/SKILL.md")
-    reference = read("skills/insurance_copilot/references/coach-me.md")
-    template = read("skills/insurance_copilot/templates/coach-me.md")
-    quality = read("docs/quality-gates.md")
-    surface = read("docs/workflow-surface.md")
-    spec = read("docs/product-development-spec.md")
-    readme = read("README.md")
-    zh_readme = read("README.zh-CN.md")
-    eval_readme = read("evals/README.md")
-
-    v2_phrases = [
-        "Coach_me v2 Productized Workflow",
-        "from questioning feature to agent workbench center",
-        "capability ladder",
-        "default safe draft mode",
-        "review-ready packet",
-        "confirmed persistence packet",
-        "external action handoff packet",
-        "information sufficiency score",
-        "Direction / Risk / Source / Action",
-        "three-question decision algorithm",
-        "one direction question, one risk question, one action/source question",
-        "limitations become product states",
-        "Backfeed Decision Packet",
-        "no automatic persistence is a product boundary, not a dead end",
-        "manual-first practitioner workflow",
-    ]
-    for text in [skill, reference, template, quality, surface, spec, readme, zh_readme, eval_readme]:
-        for phrase in v2_phrases:
-            assert phrase in text
-
-    case = json.loads((ROOT / "evals/cases/coach-me-v2-productized-workflow.json").read_text(encoding="utf-8"))
-    expected = read(case["expected_output"])
-    assert case["id"] == "coach-me-v2-productized-workflow"
-    assert case["workflow"] == "coach-me-v2"
-    assert case["escalation_expected"] is True
-    for phrase in v2_phrases + case["must_include"]:
-        assert phrase in expected
-    for phrase in [
-        "interactive conversational gateway",
-        "sequential question protocol",
-        "one question at a time",
-        "send only the active question",
-        "Question 1/3",
-        "Question 2/3",
-        "Question 3/3",
-        "Do not batch all three questions",
-        "offline checklist",
-        "recommended default answer",
+def test_coach_me_eval_cases_reject_old_fixed_three_question_contract() -> None:
+    for case_file in [
+        "evals/cases/coach-me-guided-document-grounded-answer.json",
+        "evals/cases/coach-me-sequential-question-protocol.json",
     ]:
-        assert phrase in expected
-    for phrase in case["must_not_include"]:
-        assert phrase not in expected
+        case = json.loads((ROOT / case_file).read_text(encoding="utf-8"))
+        expected = read(case["expected_output"])
+        assert case["workflow"] == "coach-me"
+        assert case["escalation_expected"] is True
+        for phrase in case["must_include"]:
+            assert phrase in expected
+        for phrase in case["must_not_include"]:
+            assert phrase not in expected
+        assert "standalone coach-me skill" in expected
+        assert "not a fixed question count" in expected
+        assert "ask exactly three most precise and relevant questions" not in expected
+        assert "Question 1/3" not in expected
+        assert "Direction / Risk / Source / Action" not in expected
 
 
 def test_empty_neutrality_gate_requires_action_plan() -> None:
@@ -754,7 +677,7 @@ def test_development_spec_lifecycle_prevents_documentation_sprawl() -> None:
     assert "Runtime authority: decision record only; current behavior lives in runtime surfaces and executable gates" in adr
     for phrase in [
         "interactive conversational gateway",
-        "sequential question protocol",
+        "one-question-at-a-time protocol",
         "Chinese interactive onboarding",
         "Coach_me before Client Needs Intake",
         "Runtime Surfaces",

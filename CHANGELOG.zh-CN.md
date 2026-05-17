@@ -8,11 +8,14 @@
 
 ## [未发布]
 
+### Changed
+
+- 更新 Coach_me runtime 架构：Insurance Copilot 现在使用独立 `coach_me` skill 作为通用动态追问转文档方法，`skills/insurance_copilot/references/coach-me.md` 和 `templates/coach-me.md` 仅作为保险领域 adapter/handoff；active runtime surfaces 不再保留固定三问 / 固定 Direction-Risk-Source-Action 合同。
+
 ### 新增
 
-- 新增 Coach_me v2 Productized Workflow：升级后的 runtime reference/template、eval case/expected output、pytest 覆盖和 validator 覆盖，用于保护 capability ladder、information sufficiency score、Direction/Risk/Source/Action 追问轮、Backfeed Decision Packet，以及 manual-first 产品状态边界。
 - 新增 Spec Lifecycle 治理、`docs/decisions/ADR-0001-gateway-agnostic-interactive-protocol.md` 和 `docs/archive/README.md`，要求已完成 implementation specs 删除、以无运行时权限归档，或压缩为 ADR，避免控制文档持续堆积。
-- 新增 Coach_me Guided Reasoning Mode，作为 Insurance Copilot 内的单一工作流（`references/coach-me.md`、`templates/coach-me.md`、eval、tests、validator 和 docs），用于宽泛、凌乱、策略性、依赖资料、客户场景或 product recommendation intent 的问题；它包含 source discovery order、每轮三个精准问题、gateway-agnostic sequential question protocol、answer-now/continue 选择、信息充分自动停止、可沉淀的 working/final documents、Q&A-as-raw-input，以及 Karpathy-style LLM wiki backfeed proposals，并保持 no automatic persistence。
+- 新增 Coach_me Guided Reasoning Mode surfaces，用于宽泛、凌乱、策略性、依赖资料、客户场景或 product recommendation intent 的问题；当前 runtime 已改为由独立 `coach_me` 承担通用方法，Insurance Copilot 只保留保险领域 adapter。
 - 新增中文 interactive onboarding 文档、示例、eval 和 validator 覆盖，保护 `/skill insurance_copilot`、机构/角色确认、`[待核实]` 解释，以及已有资料先摘要确认的行为。
 - 新增 `docs/product-development-spec.md`，作为持久的产品开发事实来源和可用状态定义。
 - 新增 `docs/reference-landscape.md`，用于把外部/参考项目映射到 project significance、implementation form、non-goals 和 priority。
@@ -25,8 +28,8 @@
 
 ### 变更
 
-- 将 Coach_me 一问一答规则从平台限定表述泛化为适用于任何 interactive conversational gateway：使用 sequential question protocol、send only the active question in the current turn，并在适合时给出 recommended default answer。
-- 将 product recommendation intent 路由到 Coach_me before Client Needs Intake，先澄清 direction、risk、action/source，再进入结构化 fact-find。
+- 将 Coach_me 一问一答规则从平台限定表述泛化为适用于任何 interactive conversational gateway：使用 one-question-at-a-time protocol、send only the next useful question in the current turn，并在适合时给出 recommended default answer。
+- 将 product recommendation intent 路由到 Coach_me before Client Needs Intake，先动态澄清目标、风险和来源，再进入结构化 fact-find。
 - 将 Coach_me 从追问机制升级为代理人工作流中心，把限制转化为产品状态：default safe draft mode、review-ready packet、confirmed persistence packet 和 external action handoff packet。
 - 将仓库/产品 slug、可安装 Hermes 技能身份、Telegram 命令和私有工作区根路径统一到 Telegram 安全的 `insurance_copilot` 命名。
 - 明确 Insurance Copilot 目前已经可作为 manual-first Hermes skill beta 使用，但还不是可直接用于 live automation、客户发送、CRM 写入、投保提交、理赔提交、保单变更、报价引擎或最终监管建议的生产系统。

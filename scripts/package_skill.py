@@ -57,7 +57,12 @@ SKILL_CHECKS: dict[str, dict] = {
         ],
         "text_checks": {
             "name_check": "name: coach-me",
-            "body_checks": [],
+            "body_checks": [
+                "Not a fixed count",
+                "Not a fixed format",
+                "Dynamic, not frozen",
+                "Coach_me Working Document",
+            ],
         },
     },
 }
